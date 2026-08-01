@@ -1,5 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "name": "say.yes.bz.charles-leticia",
   "cleanUrls": true,
   "rewrites": [
     { "source": "/", "destination": "/Pages/_invitation.html" },
