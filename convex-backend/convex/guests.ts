@@ -1,13 +1,6 @@
 import { httpAction } from "./_generated/server";
 import { internal } from "./_generated/api";
-import { getToken } from "./auth";
-
-function json(body: unknown, status = 200): Response {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
+import { getToken, json } from "./auth";
 
 async function hasSession(ctx: any, request: Request): Promise<boolean> {
   const token = getToken(request);
@@ -17,6 +10,7 @@ async function hasSession(ctx: any, request: Request): Promise<boolean> {
 }
 
 export const listGuests = httpAction(async (ctx, request) => {
+  if (request.method === "OPTIONS") return json({ ok: true });
   if (request.method !== "GET") return json({ error: "Method not allowed" }, 405);
   if (!(await hasSession(ctx, request))) return json({ error: "Unauthorized" }, 401);
   const guests = await ctx.runQuery(internal.db.listGuests);
@@ -24,6 +18,7 @@ export const listGuests = httpAction(async (ctx, request) => {
 });
 
 export const upsertGuest = httpAction(async (ctx, request) => {
+  if (request.method === "OPTIONS") return json({ ok: true });
   if (request.method !== "POST") return json({ error: "Method not allowed" }, 405);
   if (!(await hasSession(ctx, request))) return json({ error: "Unauthorized" }, 401);
 
@@ -70,6 +65,7 @@ export const upsertGuest = httpAction(async (ctx, request) => {
 });
 
 export const deleteGuest = httpAction(async (ctx, request) => {
+  if (request.method === "OPTIONS") return json({ ok: true });
   if (request.method !== "POST") return json({ error: "Method not allowed" }, 405);
   if (!(await hasSession(ctx, request))) return json({ error: "Unauthorized" }, 401);
 

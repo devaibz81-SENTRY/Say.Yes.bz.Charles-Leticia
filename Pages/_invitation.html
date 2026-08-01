@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
@@ -415,10 +415,20 @@ section[id] { scroll-margin-top: 5rem; }
 <div class="relative" style="width:min(117vw,750px);height:min(87vh,750px);">
 <img id="firstImg" src="../intro-first.png" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-300"/>
 <img id="gifImg" src="" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-300 opacity-0"/>
+<img id="lastImg" src="../intro-last.png" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-300 opacity-0"/>
 </div>
-<div class="mt-6 hint-pulse inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-gold/40" style="background:rgba(18,18,18,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);">
+<div id="hintPill" class="mt-6 hint-pulse inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-gold/40" style="background:rgba(18,18,18,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);">
 <span class="material-symbols-outlined text-gold text-lg" data-icon="touch_app">touch_app</span>
 <span id="hintText" class="font-label-sm text-gold-light uppercase tracking-[0.25em]">Tap to Begin</span>
+</div>
+<div id="loaderCard" class="hidden mt-6 flex flex-col items-center gap-3 px-6 py-4 rounded-2xl border border-gold/40 glass-panel shadow-[0_10px_30px_rgba(0,0,0,0.5)] min-w-[260px]">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-gold text-xl animate-spin" data-icon="auto_awesome">auto_awesome</span>
+<span id="loadText" class="font-label-sm text-gold-light uppercase tracking-[0.2em]">Loading your invitation…</span>
+</div>
+<div class="w-56 h-1.5 bg-white/10 rounded-full overflow-hidden relative border border-gold/20">
+<div id="loadProgress" class="h-full bg-gradient-to-r from-gold-light to-gold rounded-full w-0 transition-all duration-300"></div>
+</div>
 </div>
 </div>
 </div>
@@ -727,15 +737,20 @@ Bank Details
   var intro = document.getElementById('introScreen');
   var firstImg = document.getElementById('firstImg');
   var gifImg = document.getElementById('gifImg');
+  var lastImg = document.getElementById('lastImg');
+  var hintPill = document.getElementById('hintPill');
   var hint = document.getElementById('hintText');
+  var loaderCard = document.getElementById('loaderCard');
+  var loadText = document.getElementById('loadText');
+  var loadProgress = document.getElementById('loadProgress');
   var petalsWrap = document.getElementById('petals');
 
   var GIF_SRC = '../intro_1.gif';
-  var GIF_DURATION = 5080; // ms — 127 frames @ 40ms (higher-quality intro; loops continuously)
-  var state = 'idle';      // idle -> playing -> hold -> exit
+  var GIF_DURATION = 5080; // ms
+  var state = 'idle';      // idle -> playing -> hold -> loading -> exit
 
   var preloader = new Image();
-  preloader.src = GIF_SRC; // warm the cache so tapping starts the animation instantly
+  preloader.src = GIF_SRC;
 
   function unlockScroll() {
     document.documentElement.classList.remove('no-scroll');
@@ -745,6 +760,8 @@ Bank Details
   function hold() {
     if (state !== 'playing') return;
     state = 'hold';
+    if (lastImg) lastImg.classList.remove('opacity-0');
+    if (gifImg) gifImg.classList.add('opacity-0');
     if (hint) hint.textContent = 'Tap to Enter';
   }
 
@@ -758,8 +775,69 @@ Bank Details
     setTimeout(hold, GIF_DURATION);
   }
 
-  function exit() {
+  function startLoading() {
     if (state !== 'hold') return;
+    state = 'loading';
+
+    if (hintPill) hintPill.classList.add('hidden');
+    if (loaderCard) loaderCard.classList.remove('hidden');
+
+    var assetsToPreload = [
+      '../main.jpeg',
+      '../galery (1).jpeg',
+      '../galery (2).jpeg',
+      '../galery (3).jpeg',
+      '../galery (4).jpeg',
+      '../galery (5).jpeg',
+      '../dress code.png',
+      '../RSVP BUTTON.png',
+      '../Element (1).png',
+      '../Element (2).png',
+      '../Element (3).png',
+      '../Element (4).png',
+      '../Element (5).png',
+      '../Element (6).png'
+    ];
+
+    var total = assetsToPreload.length;
+    var loaded = 0;
+    var minDisplayTime = 1200;
+    var startTime = Date.now();
+
+    function updateProgress() {
+      var pct = Math.min(100, Math.round((loaded / total) * 100));
+      if (loadProgress) loadProgress.style.width = pct + '%';
+      if (loadText) loadText.textContent = 'Loading your invitation… ' + pct + '%';
+    }
+
+    function finish() {
+      var elapsed = Date.now() - startTime;
+      var remaining = Math.max(0, minDisplayTime - elapsed);
+      setTimeout(function () {
+        exit();
+      }, remaining);
+    }
+
+    if (total === 0) {
+      finish();
+      return;
+    }
+
+    assetsToPreload.forEach(function (src) {
+      var img = new Image();
+      img.onload = img.onerror = function () {
+        loaded++;
+        updateProgress();
+        if (loaded >= total) {
+          finish();
+        }
+      };
+      img.src = src;
+    });
+  }
+
+  function exit() {
+    if (state !== 'loading' && state !== 'hold') return;
     state = 'exit';
     intro.classList.add('scatter');
     intro.classList.add('intro-scroll-away');
@@ -783,7 +861,7 @@ Bank Details
 
   intro.addEventListener('click', function () {
     if (state === 'idle') play();
-    else if (state === 'hold') exit();
+    else if (state === 'hold') startLoading();
   });
 
   // ---- Falling interactive petals ----

@@ -9,14 +9,20 @@ export function getToken(request: Request): string | null {
   return null;
 }
 
-function json(body: unknown, status = 200): Response {
+export function json(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), {
     status,
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    },
   });
 }
 
 export const login = httpAction(async (ctx, request) => {
+  if (request.method === "OPTIONS") return json({ ok: true });
   if (request.method !== "POST") return json({ error: "Method not allowed" }, 405);
   const body = await request.json().catch(() => ({}));
   const password = body.password ?? "";
@@ -30,6 +36,7 @@ export const login = httpAction(async (ctx, request) => {
 });
 
 export const logout = httpAction(async (ctx, request) => {
+  if (request.method === "OPTIONS") return json({ ok: true });
   if (request.method !== "POST") return json({ error: "Method not allowed" }, 405);
   const token = getToken(request);
   if (token) {
@@ -40,6 +47,7 @@ export const logout = httpAction(async (ctx, request) => {
 });
 
 export const me = httpAction(async (ctx, request) => {
+  if (request.method === "OPTIONS") return json({ ok: true });
   if (request.method !== "GET") return json({ error: "Method not allowed" }, 405);
   const token = getToken(request);
   const session = token ? await ctx.runQuery(internal.db.getSessionByToken, { token }) : null;

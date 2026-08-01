@@ -1,14 +1,9 @@
 import { httpAction } from "./_generated/server";
 import { internal } from "./_generated/api";
-
-function json(body: unknown, status = 200): Response {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
+import { json } from "./auth";
 
 export const submitRsvp = httpAction(async (ctx, request) => {
+  if (request.method === "OPTIONS") return json({ ok: true });
   if (request.method !== "POST") return json({ error: "Method not allowed" }, 405);
 
   const body = await request.json().catch(() => ({}));
