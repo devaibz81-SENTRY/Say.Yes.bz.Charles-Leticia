@@ -1,0 +1,2050 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin - A&R Wedding Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Montserrat:wght@300;400;500&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --black: #0d0d0d;
+      --ivory: #f5f0e8;
+      --champagne: #d4b896;
+      --gold: #c9a84c;
+      --sidebar: #111;
+      --attending: #2ecc71;
+      --declined: #e74c3c;
+      --later: #f39c12;
+      --msg: #3498db;
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      min-height: 100vh;
+      background: #f0ede8;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      font-size: 16px;
+    }
+
+    /* Login */
+    #login-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #login-overlay.hidden {
+      display: none;
+    }
+
+    .login-box {
+      text-align: center;
+      padding: 3rem;
+      border: 1px solid rgba(201, 168, 76, 0.3);
+      min-width: 320px;
+    }
+
+    .login-box h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      color: var(--ivory);
+      margin-bottom: 0.5rem;
+    }
+
+    .login-box p {
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.4);
+      letter-spacing: 0.2em;
+      margin-bottom: 2rem;
+    }
+
+    .login-input {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(201, 168, 76, 0.3);
+      color: var(--ivory);
+      font-family: 'Montserrat', sans-serif;
+      outline: none;
+      margin-bottom: 1rem;
+      text-align: center;
+      letter-spacing: 0.2em;
+    }
+
+    .login-input:focus {
+      border-color: var(--gold);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 0.9rem;
+      background: var(--gold);
+      border: none;
+      color: var(--black);
+      cursor: pointer;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      transition: background 0.3s;
+    }
+
+    .login-btn:hover {
+      background: #a8863a;
+    }
+
+    /* Sidebar */
+    #sidebar {
+      width: 240px;
+      background: var(--sidebar);
+      display: flex;
+      flex-direction: column;
+      padding: 2rem 0;
+      min-height: 100vh;
+      flex-shrink: 0;
+    }
+
+    .sidebar-brand {
+      text-align: center;
+      padding: 0 1.5rem 2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .sidebar-brand .brand-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      color: var(--champagne);
+      font-style: italic;
+    }
+
+    .nav-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.25);
+      padding: 0 1.5rem;
+      margin: 1.5rem 0 0.5rem;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.7rem 1.5rem;
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.5);
+      border-left: 2px solid transparent;
+      font-size: 0.78rem;
+      transition: 0.2s;
+    }
+
+    .nav-item:hover,
+    .nav-item.active,
+    a.nav-item:hover {
+      color: var(--gold);
+      background: rgba(201, 168, 76, 0.06);
+      border-left-color: var(--gold);
+    }
+    
+    a.nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.7rem 1.5rem;
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.5);
+      border-left: 2px solid transparent;
+      font-size: 0.78rem;
+      transition: 0.2s;
+      text-decoration: none;
+    }
+
+    /* Main Area */
+    #main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .top-bar {
+      background: white;
+      padding: 1.2rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e5e0d8;
+    }
+
+    .sync-indicator {
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #777;
+      margin-top: 0.4rem;
+    }
+
+    .sync-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #2ecc71;
+      margin-right: 0.45rem;
+    }
+
+    .top-bar-actions {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn-sm {
+      padding: 0.5rem 1.2rem;
+      border: 1px solid var(--gold);
+      background: transparent;
+      color: var(--black);
+      cursor: pointer;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: 0.2s;
+    }
+
+    .btn-sm:hover {
+      background: var(--gold);
+      color: white;
+    }
+
+    .btn-sm.primary {
+      background: var(--gold);
+      color: white;
+    }
+
+    #content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 2rem;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 1.5rem;
+      border-bottom: 3px solid transparent;
+    }
+
+    .stat-card.green {
+      border-color: var(--attending);
+    }
+
+    .stat-card.red {
+      border-color: var(--declined);
+    }
+
+    .stat-card.yellow {
+      border-color: var(--later);
+    }
+
+    .stat-card.blue {
+      border-color: var(--msg);
+    }
+
+    .stat-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-num {
+      font-size: 2.5rem;
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--black);
+      line-height: 1;
+    }
+
+    /* Filters */
+    .filter-bar {
+      background: white;
+      padding: 1rem 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .filter-btn {
+      padding: 0.4rem 1rem;
+      border: 1px solid #ddd;
+      background: transparent;
+      font-size: 0.65rem;
+      cursor: pointer;
+      border-radius: 2px;
+    }
+
+    .filter-btn.active {
+      background: var(--black);
+      color: white;
+      border-color: var(--black);
+    }
+
+    .filter-btn:hover:not(.active) {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+
+    th {
+      padding: 0.8rem 1rem;
+      text-align: left;
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #aaa;
+      background: #fafaf9;
+    }
+
+    td {
+      padding: 0.9rem 1rem;
+      border-bottom: 1px solid #f8f5f0;
+      font-size: 0.8rem;
+      color: #333;
+    }
+
+    .status-pill {
+      display: inline-block;
+      padding: 0.25rem 0.8rem;
+      border-radius: 2px;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .pill-attending {
+      background: rgba(46, 204, 113, 0.1);
+      color: var(--attending);
+    }
+
+    .pill-declined {
+      background: rgba(231, 76, 60, 0.1);
+      color: var(--declined);
+    }
+
+    .pill-later {
+      background: rgba(243, 156, 18, 0.1);
+      color: var(--later);
+    }
+
+    .pill-invited {
+      background: rgba(149, 165, 166, 0.1);
+      color: #95a5a6;
+    }
+
+    .btn-link {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .table-shell {
+      overflow-x: auto;
+    }
+
+    .vault-hero {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .vault-copy {
+      background: linear-gradient(140deg, #171410 0%, #241c13 58%, #3b2f1a 100%);
+      color: var(--ivory);
+      padding: 2rem;
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      box-shadow: 0 16px 34px rgba(13, 13, 13, 0.15);
+    }
+
+    .vault-copy h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 0.75rem;
+    }
+
+    .vault-kicker {
+      display: inline-block;
+      margin-bottom: 0.85rem;
+      font-size: 0.58rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(245, 240, 232, 0.62);
+    }
+
+    .vault-copy p {
+      font-size: 0.92rem;
+      line-height: 1.7;
+      max-width: 32rem;
+      color: rgba(245, 240, 232, 0.85);
+    }
+
+    .vault-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+
+    .vault-preview {
+      position: relative;
+      min-height: 270px;
+      padding: 1.6rem;
+      background:
+        radial-gradient(circle at top left, rgba(212, 184, 150, 0.22), transparent 42%),
+        linear-gradient(180deg, #fffaf2 0%, #f6efe6 100%);
+      border: 1px solid #eadfce;
+      overflow: hidden;
+    }
+
+    .vault-stack {
+      position: relative;
+      height: 100%;
+      min-height: 236px;
+    }
+
+    .vault-card-mini {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: min(100%, 280px);
+      min-height: 180px;
+      padding: 1.25rem;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(201, 168, 76, 0.18);
+      box-shadow: 0 16px 30px rgba(13, 13, 13, 0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transform-origin: center bottom;
+    }
+
+    .vault-card-mini:nth-child(1) {
+      transform: translate(0, 0) rotate(-2deg);
+      z-index: 3;
+    }
+
+    .vault-card-mini:nth-child(2) {
+      transform: translate(-14px, 12px) rotate(2deg);
+      z-index: 2;
+    }
+
+    .vault-card-mini:nth-child(3) {
+      transform: translate(-28px, 24px) rotate(-4deg);
+      z-index: 1;
+    }
+
+    .vault-card-mini blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      line-height: 1.45;
+      color: #2f2418;
+      margin: 0;
+    }
+
+    .vault-card-mini footer {
+      margin-top: 1rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #826837;
+    }
+
+    .media-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .media-panel {
+      background: white;
+      border: 1px solid #e8e2d8;
+      box-shadow: 0 10px 28px rgba(13, 13, 13, 0.04);
+      overflow: hidden;
+    }
+
+    .media-panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 1rem;
+      padding: 1.4rem 1.5rem 1rem;
+      border-bottom: 1px solid #efe8dd;
+      background: linear-gradient(180deg, #fffdfb 0%, #fcf8f2 100%);
+    }
+
+    .media-panel-head h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.45rem;
+      font-weight: 400;
+      color: var(--black);
+    }
+
+    .media-kicker {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #8b7444;
+    }
+
+    .media-count {
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #6f6557;
+      text-align: right;
+    }
+
+    .media-note-cell {
+      max-width: 360px;
+      line-height: 1.55;
+      white-space: normal;
+    }
+
+    .media-empty {
+      text-align: center;
+      padding: 2rem;
+      color: #8b8276;
+      font-size: 0.84rem;
+    }
+
+    .song-tools {
+      padding: 1rem 1.5rem 1.2rem;
+      border-bottom: 1px solid #efe8dd;
+      background: #fffdfa;
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .song-tools-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .song-tools-row input {
+      flex: 1 1 220px;
+      min-width: 220px;
+      padding: 0.66rem 0.78rem;
+      border: 1px solid #ddd3c2;
+      background: white;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.78rem;
+      outline: none;
+    }
+
+    .song-tools-row input:focus {
+      border-color: var(--gold);
+    }
+
+    .song-help {
+      font-size: 0.73rem;
+      color: #70685c;
+      line-height: 1.55;
+    }
+
+    /* WhatsApp Inbox Build */
+    .wa-builder {
+      background: white;
+      padding: 2rem;
+      border: 1px solid #e8e2d8;
+      box-shadow: 0 8px 22px rgba(13, 13, 13, 0.04);
+    }
+
+    .wa-builder h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.55rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .wa-muted {
+      font-size: 0.84rem;
+      color: #5f5f5f;
+      margin-bottom: 1.4rem;
+      line-height: 1.55;
+    }
+
+    .wa-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .wa-panel {
+      border: 1px solid #ece6dc;
+      background: #fcfbf9;
+      padding: 1rem;
+    }
+
+    .wa-panel h3 {
+      font-size: 0.73rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #826837;
+      margin-bottom: 0.9rem;
+    }
+
+    .wa-panel small {
+      color: #717171;
+      font-size: 0.75rem;
+    }
+
+    .wa-kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .wa-kpi {
+      border: 1px solid #ece6dc;
+      background: #fcfbf9;
+      padding: 0.75rem 0.85rem;
+    }
+
+    .wa-kpi strong {
+      display: block;
+      font-size: 1.3rem;
+      font-family: 'Cormorant Garamond', serif;
+      color: #1f1f1f;
+      line-height: 1.1;
+    }
+
+    .wa-kpi span {
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #737373;
+    }
+
+    .wa-row {
+      display: flex;
+      gap: 0.7rem;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .wa-row select,
+    .wa-row input {
+      padding: 0.64rem;
+      border: 1px solid #ddd;
+      outline: none;
+      min-width: 260px;
+      background: white;
+    }
+
+    .wa-row select:focus,
+    .wa-row input:focus {
+      border-color: var(--gold);
+    }
+
+    .wa-template {
+      width: 100%;
+      min-height: 150px;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      resize: vertical;
+      margin-bottom: 1rem;
+    }
+
+    .wa-vars {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .wa-var {
+      padding: 0.3rem 0.7rem;
+      background: #f5f5f5;
+      font-size: 0.65rem;
+      cursor: pointer;
+      border: 1px solid #e0e0e0;
+    }
+
+    .wa-var:hover {
+      background: var(--gold);
+      color: white;
+    }
+
+    .wa-preview {
+      background: #f0ede8;
+      padding: 1rem;
+      border-left: 3px solid #25D366;
+      font-size: 0.82rem;
+      white-space: pre-wrap;
+      margin-bottom: 1rem;
+    }
+
+    .wa-actions {
+      display: flex;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    .wa-person-info {
+      font-size: 0.76rem;
+      color: #505050;
+      background: #fff;
+      border: 1px solid #ece6dc;
+      padding: 0.7rem 0.75rem;
+      min-height: 44px;
+    }
+
+    .action-btn {
+      padding: 0.38rem 0.65rem;
+      border: 1px solid #ddd;
+      background: transparent;
+      cursor: pointer;
+      font-size: 0.65rem;
+    }
+
+    .action-btn.wa {
+      border-color: #25D366;
+      color: #25D366;
+      font-weight: 600;
+      min-width: 96px;
+    }
+
+    .action-btn.wa:hover {
+      background: #25D366;
+      color: white;
+    }
+
+    .action-btn.danger {
+      border-color: #e74c3c;
+      color: #e74c3c;
+      font-weight: 600;
+    }
+
+    .action-btn.danger:hover {
+      background: #e74c3c;
+      color: #fff;
+    }
+
+    .table-actions {
+      display: flex;
+      gap: 0.4rem;
+      align-items: center;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      background: white;
+      padding: 2.5rem;
+      width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #eee;
+    }
+
+    .modal-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .modal-group label {
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #aaa;
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    .modal-group input,
+    .modal-group select {
+      width: 100%;
+      padding: 0.6rem;
+      border: 1px solid #ddd;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      outline: none;
+    }
+
+    .modal-group input:focus,
+    .modal-group select:focus {
+      border-color: var(--gold);
+    }
+
+    @media (max-width: 960px) {
+      .wa-kpis {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .vault-hero,
+      .media-layout,
+      .wa-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      #content {
+        padding: 1rem;
+      }
+
+      .wa-kpis {
+        grid-template-columns: 1fr;
+      }
+
+      .vault-copy,
+      .vault-preview {
+        padding: 1.2rem;
+      }
+
+      .vault-actions {
+        flex-direction: column;
+      }
+
+      .wa-row select,
+      .wa-row input {
+        min-width: 100%;
+        width: 100%;
+      }
+    }
+  
+    
+    /* --- COLOR & TRIM OVERRIDES V2 --- */
+    .hero-flourish, .hero-divider, 
+    .story-signature, .story-img-accent {
+        display: none !important;
+    }
+    
+    /* Restore Ampersand */
+    .hero-ampersand {
+        display: inline-block !important;
+        color: #000000 !important;
+    }
+    
+    /* Soft shadows on headings */
+    h1, h2, h3, .section-title, .hero-names, .gift-title {
+        text-shadow: 0 4px 15px rgba(0,0,0,0.08) !important;
+    }
+    
+    /* Black Nav Header & Buttons */
+    nav {
+        background: #000000 !important;
+        border-bottom: none !important;
+    }
+    nav a {
+        background: #000000 !important;
+        color: #ffffff !important;
+        border: 1px solid rgba(255,255,255,0.3) !important;
+    }
+    nav a:hover {
+        background: rgba(255,255,255,0.15) !important;
+        border-color: #ffffff !important;
+    }
+    
+    /* White Footer Text with Dark Background */
+    footer {
+        background: #000000 !important;
+        color: #ffffff !important;
+    }
+    footer .footer-names, footer p {
+        color: #ffffff !important;
+    }
+    /* Larger Date in Footer */
+    footer p:nth-of-type(1) {
+        font-size: clamp(2rem, 5vw, 3.2rem) !important;
+        margin-top: 1rem;
+    }
+    
+    /* Easy Mode Toggle for RSVP Testing */
+    .easy-toggle {
+        text-align: center;
+        padding: 0.8rem;
+        margin-bottom: 1rem;
+    }
+    .easy-toggle label {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        cursor: pointer;
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: rgba(255,255,240,0.6);
+        transition: color 0.2s;
+    }
+    .easy-toggle label:hover { color: var(--gold); }
+    .easy-toggle input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--gold);
+        cursor: pointer;
+    }
+
+    /* Seating */
+    .seating-row {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.7rem 1rem;
+      background: #fff;
+      border-radius: 8px;
+      margin-bottom: 0.4rem;
+      border-left: 4px solid var(--gold);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .seating-row:hover { background: #f5f0e8; }
+    .seating-row .s-name { flex: 1; font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; }
+    .seating-row .s-party { font-size: 0.75rem; color: #888; min-width: 40px; text-align: center; }
+    .seating-row .s-table-input { width: 70px; padding: 0.4rem; border: 1px solid #ccc; border-radius: 4px; text-align: center; font-size: 0.9rem; }
+    .seating-row .s-table-input:focus { border-color: var(--gold); outline: none; }
+    .seating-row .s-saved { font-size: 0.7rem; color: #2ecc71; min-width: 35px; }
+    .seating-table-group { margin-bottom: 1.5rem; }
+    .seating-table-group h4 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; padding: 0.5rem 1rem; background: var(--gold); color: #000; border-radius: 6px; display: inline-block; }
+    .seating-table-group .table-guests { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+    .seating-table-group .table-guest { background: #f5f0e8; padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.85rem; border-left: 3px solid var(--gold); }
+
+  </style>
+</head>
+
+<body>
+  <!-- Login -->
+  <div id="login-overlay">
+    <div class="login-box">
+      <h2>Wedding Admin</h2>
+      <p>Andrew &amp; Rosanna - 2026</p>
+      <input type="password" id="admin-pass" class="login-input" placeholder="Enter Password"
+        onkeydown="if(event.key==='Enter') doLogin()" />
+      <button class="login-btn" onclick="doLogin()">Enter</button>
+      <p id="login-err" style="color:#e74c3c;display:none;margin-top:1rem;">Incorrect password.</p>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-name">Andrew &amp; Rosanna</div>
+    </div>
+    <div class="nav-label">Management</div>
+    <div class="nav-item active" onclick="showView('guests', event)">Guests Data</div>
+    <div class="nav-item" onclick="showView('media', event)">Songs &amp; Messages</div>
+    <div class="nav-item" onclick="showView('whatsapp', event)">WhatsApp Inbox</div>
+    <div class="nav-item" onclick="showView('seating', event); loadSeating()">Seating</div>
+    <div class="nav-label">Public Pages</div>
+    <a href="index.html" class="nav-item" target="_blank">🎉 Invitation</a>
+    <a href="rsvp.html" class="nav-item" target="_blank">📋 RSVP</a>
+    <a href="rsvp.html?advanced=1" class="nav-item" target="_blank" style="font-size:0.7rem;opacity:0.7;">📋 RSVP (Full Form)</a>
+    <a href="checkin.html" class="nav-item" target="_blank">✓ Check-In</a>
+    <a href="tables.html" class="nav-item" target="_blank">🍽 Table Finder</a>
+    <a href="songs.html" class="nav-item" target="_blank">🎵 Song Requests</a>
+    <a href="playlist.html" class="nav-item" target="_blank">📻 Playlist</a>
+    <a href="messages.html" class="nav-item" target="_blank">💬 Messages</a>
+  </div>
+
+  <!-- Main -->
+  <div id="main">
+    <div class="top-bar">
+      <div>
+        <h1 id="view-title" style="font-size:1.1rem;font-weight:400;">Guest Management</h1>
+        <div id="sync-indicator" class="sync-indicator"><span class="sync-dot"></span>Live Sync Active</div>
+      </div>
+      <div class="top-bar-actions">
+        <button class="btn-sm" onclick="fetchGuests()">Refresh</button>
+        <button id="add-guest-btn" class="btn-sm primary" onclick="openAddGuest()">+ Add Guest / Family</button>
+        <button class="btn-sm" onclick="logout()">Logout</button>
+      </div>
+    </div>
+
+    <div id="content">
+      <!-- GUEST LIST VIEW -->
+      <div id="view-guests">
+        <div class="stats-grid">
+          <div class="stat-card green">
+            <div class="stat-label">Attending</div>
+            <div class="stat-num" id="st-attending">0</div>
+          </div>
+          <div class="stat-card red">
+            <div class="stat-label">Declined</div>
+            <div class="stat-num" id="st-declined">0</div>
+          </div>
+          <div class="stat-card yellow">
+            <div class="stat-label">Ask Later (Waitlist)</div>
+            <div class="stat-num" id="st-later">0</div>
+          </div>
+          <div class="stat-card blue">
+            <div class="stat-label">Total Invited Seats</div>
+            <div class="stat-num" id="st-total">0</div>
+          </div>
+        </div>
+
+        <div class="filter-bar">
+          <button class="filter-btn active" onclick="setFilter('all', this)">All</button>
+          <button class="filter-btn" onclick="setFilter('attending', this)">Attending</button>
+          <button class="filter-btn" onclick="setFilter('later', this)">Ask Again Later</button>
+          <button class="filter-btn" onclick="setFilter('invited', this)">Not Responded</button>
+          <button class="filter-btn" onclick="setFilter('single', this)">Singles</button>
+          <button class="filter-btn" onclick="setFilter('couple', this)">Couples</button>
+          <button class="filter-btn" onclick="setFilter('family', this)">Families</button>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Guest / Family Lead</th>
+              <th>Type</th>
+              <th>Max Size</th>
+              <th>Status</th>
+              <th>Contact</th>
+              <th>Deadline</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="guests-tbody">
+            <tr>
+              <td colspan="7" style="text-align:center;padding:3rem;">Loading data from Convex...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- SONGS & MESSAGES VIEW -->
+      <div id="view-media" style="display:none;">
+        <div style="max-width: 800px; margin: 0 auto; text-align: center; padding: 3rem 1rem;">
+          <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--black); margin-bottom: 2rem;">Songs & Messages</h2>
+          <p style="color: #888; margin-bottom: 2rem;">Guest song requests and messages are stored in Google Sheets.</p>
+          
+          <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
+            <!-- SONGS BUTTON -->
+            <div style="background: white; border: 1px solid #e8e2d8; border-radius: 12px; padding: 2rem; min-width: 280px; text-align: center;">
+              <div style="font-size: 3rem; margin-bottom: 1rem;">🎵</div>
+              <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--gold);">Song List</h3>
+              <p style="font-size: 0.85rem; color: #888; margin-bottom: 1.5rem;">View all song requests from guests</p>
+              <a href="songs.html" target="_blank" 
+                 style="display: inline-block; padding: 0.8rem 2rem; background: var(--gold); color: white; text-decoration: none; border-radius: 6px; font-size: 0.8rem; letter-spacing: 0.1em;">
+                OPEN SONG LIST
+              </a>
+              <br><br>
+              <button onclick="shareWithDj()" style="padding: 0.8rem 2rem; background: #25D366; color: white; border: none; border-radius: 6px; font-size: 0.8rem; cursor: pointer; letter-spacing: 0.1em;">
+                📱 Share with DJ
+              </button>
+            </div>
+            
+            <!-- MESSAGES BUTTON -->
+            <div style="background: white; border: 1px solid #e8e2d8; border-radius: 12px; padding: 2rem; min-width: 280px; text-align: center;">
+              <div style="font-size: 3rem; margin-bottom: 1rem;">💌</div>
+              <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--gold);">Messages</h3>
+              <p style="font-size: 0.85rem; color: #888; margin-bottom: 1.5rem;">Read guest messages one by one</p>
+              <a href="messages.html" target="_blank" 
+                 style="display: inline-block; padding: 0.8rem 2rem; background: var(--gold); color: white; text-decoration: none; border-radius: 6px; font-size: 0.8rem; letter-spacing: 0.1em;">
+                READ MESSAGES
+              </a>
+              <br><br>
+              <button onclick="downloadMessages()" style="padding: 0.8rem 2rem; background: #3498db; color: white; border: none; border-radius: 6px; font-size: 0.8rem; cursor: pointer; letter-spacing: 0.1em;">
+                📥 Download Messages
+              </button>
+            </div>
+          </div>
+      </div>
+
+      <!-- WHATSAPP VIEW -->
+      <div id="view-whatsapp" style="display:none;">
+        <div class="wa-builder">
+          <h2>WhatsApp Campaign Console</h2>
+          <p class="wa-muted">Send to groups or one guest at a time from a cleaner flow. Individual sends still use
+            RSVP-aware messages automatically.</p>
+
+          <div class="wa-kpis">
+            <div class="wa-kpi"><strong id="wa-kpi-phones">0</strong><span>With WhatsApp</span></div>
+            <div class="wa-kpi"><strong id="wa-kpi-invited">0</strong><span>Not Responded</span></div>
+            <div class="wa-kpi"><strong id="wa-kpi-later">0</strong><span>Ask Later</span></div>
+            <div class="wa-kpi"><strong id="wa-kpi-attending">0</strong><span>Attending</span></div>
+          </div>
+
+          <div class="wa-layout">
+            <div class="wa-panel">
+              <h3>Group Send</h3>
+              <div class="wa-row" style="margin-bottom:0.6rem;">
+                <select id="wa-group" onchange="updateWaPreview()">
+                  <option value="all">All Guests (Initial Invite)</option>
+                  <option value="invited">Not Responded Yet (Reminders)</option>
+                  <option value="later">Ask Later / Waitlist (Follow-ups)</option>
+                  <option value="attending">Attending (Event Updates)</option>
+                </select>
+                <button class="btn-sm primary" onclick="sendMassWA()">Open WhatsApp for Group</button>
+              </div>
+              <small>Opens a WhatsApp tab per matching guest with a saved phone number.</small>
+            </div>
+
+            <div class="wa-panel">
+              <h3>Send to Individual</h3>
+              <div class="wa-row" style="margin-bottom:0.6rem;">
+                <input id="wa-person-search" type="text" placeholder="Search by name or phone..."
+                  oninput="filterWaPeople()" />
+              </div>
+              <div class="wa-row" style="margin-bottom:0.6rem;">
+                <select id="wa-person" onchange="showSelectedPersonMeta()"></select>
+                <button class="btn-sm primary" onclick="sendOneWA()">Open WhatsApp for Person</button>
+              </div>
+              <div id="wa-person-meta" class="wa-person-info">Select a person to view details.</div>
+            </div>
+          </div>
+
+          <div class="wa-vars">
+            <span class="wa-var" onclick="insertVar('{{name}}')">{{name}}</span>
+            <span class="wa-var" onclick="insertVar('{{type}}')">{{type}}</span>
+            <span class="wa-var" onclick="insertVar('{{deadline}}')">{{deadline}}</span>
+            <span class="wa-var" onclick="insertVar('{{link}}')">{{link}}</span>
+          </div>
+
+          <!-- Default Template Box -->
+          <textarea id="wa-text" class="wa-template" oninput="updateWaPreview()">Hi {{name}},
+
+You are cordially invited to celebrate the wedding of Andrew and Rosanna.
+
+We have reserved your RSVP as a {{type}} invitation. Kindly reply by {{deadline}}.
+
+Open your invitation and respond here:
+{{link}}
+
+With love,
+Andrew and Rosanna</textarea>
+
+          <div style="font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#888;">Live Preview (First
+            match)</div>
+          <textarea class="wa-preview wa-template" id="wa-preview" style="min-height:220px;">Loading preview...</textarea>
+
+          <div class="wa-actions" style="margin-top:1.3rem;">
+            <button class="btn-sm" onclick="copyWA()">Copy Message</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEATING VIEW -->
+  <div id="view-seating" style="display:none;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+      <h2 style="font-size:1.2rem;font-weight:400;">Table Assignments</h2>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+        <button class="btn-sm" onclick="loadSeating()">Refresh</button>
+        <button class="btn-sm primary" onclick="saveSeating()">Save All</button>
+        <button class="btn-sm" onclick="loadPreassigned()" style="border-color:#2ecc71;color:#2ecc71;">Load Pre-assigned Tables</button>
+      </div>
+    </div>
+    <div style="margin-bottom:1rem;font-size:0.8rem;color:#666;">Assign table numbers to guests. Click a guest row to assign a table.</div>
+    <div id="seating-list">
+      <div class="loading">Loading guests...</div>
+    </div>
+    <div id="seating-table-view" style="margin-top:2rem;">
+      <h3 style="font-size:1rem;margin-bottom:1rem;">By Table</h3>
+      <div id="seating-by-table"></div>
+    </div>
+
+    <!-- QR Code Portal -->
+    <div style="margin-top:3rem;padding:2rem;background:#fff;border-radius:12px;border:2px dashed var(--gold);text-align:center;">
+      <h3 style="font-size:1.1rem;margin-bottom:0.5rem;font-weight:400;">Table Finder QR Code</h3>
+      <p style="font-size:0.8rem;color:#888;margin-bottom:1rem;">Scan to search your table assignment</p>
+      <div id="qr-code-container" style="display:inline-block;background:#fff;padding:1rem;border-radius:8px;"></div>
+      <div id="qr-url" style="margin-top:0.8rem;font-size:0.75rem;color:#999;word-break:break-all;"></div>
+      <button class="btn-sm" style="margin-top:1rem;" onclick="printQr()">Print QR</button>
+    </div>
+  </div>
+
+  <!-- ADD GUEST MODAL -->
+  <div class="modal-overlay" id="add-modal">
+    <div class="modal">
+      <h2>Add Guest / Household</h2>
+      <div class="modal-row">
+        <div class="modal-group">
+          <label>First Name (Lead Guest)</label>
+          <input type="text" id="m-fname" placeholder="John" />
+        </div>
+        <div class="modal-group">
+          <label>Last Name</label>
+          <input type="text" id="m-lname" placeholder="Doe" />
+        </div>
+      </div>
+      <div class="modal-row">
+        <div class="modal-group">
+          <label>Guest Type</label>
+          <select id="m-type" onchange="syncPartySize()">
+            <option value="single">Single</option>
+            <option value="couple">Couple</option>
+            <option value="family">Family (up to 4)</option>
+          </select>
+        </div>
+        <div class="modal-group">
+          <label>Max Party Size</label>
+          <input type="number" id="m-max" value="1" min="1" max="10" />
+        </div>
+      </div>
+      <div id="m-spouse-row" class="modal-row" style="display:none;">
+        <div class="modal-group" style="grid-column: 1 / -1;">
+          <label>Spouse / Partner First Name (Optional)</label>
+          <input type="text" id="m-spouse" placeholder="Jane" />
+        </div>
+      </div>
+      <div class="modal-row">
+        <div class="modal-group">
+          <label>WhatsApp Number</label>
+          <input type="tel" id="m-phone" placeholder="+501..." />
+        </div>
+        <div class="modal-group">
+          <label>RSVP Deadline</label>
+          <input type="date" id="m-due" value="2026-06-10" />
+        </div>
+      </div>
+      <div class="modal-row">
+        <div class="modal-group" style="grid-column: 1 / -1;">
+          <label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer;">
+            <input type="checkbox" id="m-easy" style="width:18px;height:18px;" />
+            Easy Mode RSVP (Simplified form - only first name & attendance)
+          </label>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:1rem;margin-top:2rem;">
+        <button class="btn-sm" onclick="document.getElementById('add-modal').classList.remove('open')">Cancel</button>
+        <button class="btn-sm primary" onclick="submitGuest()">Save Guest</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const CONVEX_HTTP_URL = 'https://canny-hummingbird-920.convex.site';
+    const WEDDING_URL = '';
+    const SESSION_KEY = 'ra_admin_token';
+    const LIVE_REFRESH_MS = 12000;
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw33IBpUacNLGAcqc4EGp5L2dlxaMkWSbEFvSTdFTDq6p9iO5oZCIWl6aS-BB6EIW-JUA/exec';
+    let guests = [];
+    let currentView = 'guests';
+    let currentFilter = 'all';
+    let waPersonQuery = '';
+    let adminToken = localStorage.getItem(SESSION_KEY) || '';
+    let refreshTimer = null;
+
+    async function doLogin() {
+      const pass = document.getElementById('admin-pass').value;
+      try {
+        const res = await fetch(`${CONVEX_HTTP_URL}/api/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: pass })
+        });
+        if (!res.ok) throw new Error('Invalid password');
+        const data = await res.json();
+        adminToken = data.token;
+        localStorage.setItem(SESSION_KEY, adminToken);
+        document.getElementById('login-overlay').classList.add('hidden');
+        document.getElementById('login-err').style.display = 'none';
+        await fetchGuests();
+        startLiveRefresh();
+      } catch (err) {
+        document.getElementById('login-err').style.display = 'block';
+      }
+    }
+
+    async function logout() {
+      if (refreshTimer) {
+        clearInterval(refreshTimer);
+        refreshTimer = null;
+      }
+      if (adminToken) {
+        await fetch(`${CONVEX_HTTP_URL}/api/auth/logout`, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${adminToken}` }
+        }).catch(() => { });
+      }
+      adminToken = '';
+      localStorage.removeItem(SESSION_KEY);
+      document.getElementById('login-overlay').classList.remove('hidden');
+      document.getElementById('admin-pass').value = '';
+    }
+
+    window.onload = async () => {
+      if (adminToken && await hasValidSession()) {
+        document.getElementById('login-overlay').classList.add('hidden');
+        await fetchGuests();
+        startLiveRefresh();
+      } else {
+        adminToken = '';
+        localStorage.removeItem(SESSION_KEY);
+        document.getElementById('login-overlay').classList.remove('hidden');
+      }
+    };
+
+    function authHeaders(extra = {}) {
+      return { ...extra, Authorization: `Bearer ${adminToken}` };
+    }
+
+    async function hasValidSession() {
+      if (!adminToken) return false;
+      try {
+        const res = await fetch(`${CONVEX_HTTP_URL}/api/auth/me`, {
+          headers: authHeaders()
+        });
+        return res.ok;
+      } catch {
+        return false;
+      }
+    }
+
+    function showView(view, evt) {
+      currentView = view;
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+      if (evt && evt.currentTarget) evt.currentTarget.classList.add('active');
+
+      document.getElementById('view-guests').style.display = view === 'guests' ? 'block' : 'none';
+      document.getElementById('view-media').style.display = view === 'media' ? 'block' : 'none';
+      document.getElementById('view-whatsapp').style.display = view === 'whatsapp' ? 'block' : 'none';
+      document.getElementById('view-seating').style.display = view === 'seating' ? 'block' : 'none';
+      document.getElementById('add-guest-btn').style.display = view === 'guests' ? 'inline-flex' : 'none';
+
+      const titles = {
+        guests: 'Guest Management',
+        media: 'Songs & Messages',
+        whatsapp: 'WhatsApp Inbox',
+        seating: 'Seating'
+      };
+      document.getElementById('view-title').textContent = titles[view] || 'Guest Management';
+
+      if (view === 'media') renderMediaView();
+      if (view === 'whatsapp') updateWaPreview();
+    }
+
+    // Seating functions
+    let seatingData = {};
+
+    async function loadSeating() {
+      const el = document.getElementById('seating-list');
+      if (!el) return;
+      
+      el.innerHTML = '<div class="loading">Loading guests...</div>';
+      
+      // Ensure guests are loaded from Convex
+      if (!guests.length) await fetchGuests({ showLoading: false });
+      if (!guests.length) { el.innerHTML = '<div class="loading">Could not load guests. Check admin token.</div>'; return; }
+      
+      // Load existing seating from Google Sheets
+      let seatingMap = {};
+      try {
+        const res = await fetch(`${APPS_SCRIPT_URL}?action=getSeating`);
+        const data = await res.json();
+        if (data && data.seating) {
+          data.seating.forEach(s => { seatingMap[s.guestId] = s.content || s.tableNum; });
+        }
+      } catch {}
+      
+      // Merge: localStorage overrides Sheets (for local edits before Save All)
+      try {
+        const local = JSON.parse(localStorage.getItem('ra_seating') || '{}');
+        Object.keys(local).forEach(k => { seatingMap[k] = local[k]; });
+      } catch {}
+      
+      seatingData = seatingMap;
+      
+      el.innerHTML = guests.map(g => {
+        const id = String(g._id || g.id || '');
+        const name = `${g.first_name || ''} ${g.last_name || ''}`.trim() || 'Unknown';
+        const table = seatingMap[id] || '';
+        return `<div class="seating-row">
+          <div class="s-name">${escapeHtml(name)}</div>
+          <div class="s-party">${g.max_party || 1}</div>
+          <input class="s-table-input" type="text" value="${escapeHtml(table)}" data-guest-id="${escapeHtml(id)}" data-guest-name="${escapeHtml(name)}" placeholder="Table #" onchange="onTableChange(this)" />
+          <span class="s-saved" id="saved-${escapeHtml(id)}"></span>
+        </div>`;
+      }).join('');
+      
+      renderSeatingByTable();
+      initQrCode();
+    }
+
+    function saveSeatingLocal() {
+      try { localStorage.setItem('ra_seating', JSON.stringify(seatingData)); } catch {}
+    }
+
+    function onTableChange(input) {
+      const id = input.dataset.guestId;
+      seatingData[id] = input.value.trim();
+      const saved = document.getElementById(`saved-${id}`);
+      if (saved) { saved.textContent = 'unsaved'; saved.style.color = '#e74c3c'; }
+      saveSeatingLocal();
+    }
+
+    async function saveSeating() {
+      const assignments = Object.entries(seatingData)
+        .filter(([id, table]) => id && table)
+        .map(([id, table]) => ({
+          guestId: id,
+          guestName: guests.find(g => String(g._id || g.id) === id)?.first_name || 'Guest',
+          tableNum: table
+        }));
+      
+      const res = await fetch(`${APPS_SCRIPT_URL}?action=saveSeating`, {
+        method: 'POST', mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'saveSeating', assignments })
+      });
+      
+      document.querySelectorAll('.s-saved').forEach(el => {
+        el.textContent = 'saved';
+        el.style.color = '#2ecc71';
+      });
+      
+      try { localStorage.removeItem('ra_seating'); } catch {}
+      
+      renderSeatingByTable();
+    }
+
+    function renderSeatingByTable() {
+      const el = document.getElementById('seating-by-table');
+      if (!el) return;
+      
+      const tableMap = {};
+      Object.entries(seatingData).forEach(([id, table]) => {
+        if (!table) return;
+        if (!tableMap[table]) tableMap[table] = [];
+        const g = guests.find(x => String(x._id || x.id) === id);
+        if (g) tableMap[table].push(`${g.first_name || ''} ${g.last_name || ''}`.trim());
+      });
+      
+      const keys = Object.keys(tableMap).sort((a,b) => {
+        const na = parseInt(a), nb = parseInt(b);
+        if (!isNaN(na) && !isNaN(nb)) return na - nb;
+        return a.localeCompare(b);
+      });
+      
+      if (!keys.length) { el.innerHTML = '<div style="color:#888;font-size:0.9rem;">No tables assigned yet.</div>'; return; }
+      
+      el.innerHTML = keys.map(key => `
+        <div class="seating-table-group">
+          <h4>Table ${escapeHtml(key)}</h4>
+          <div class="table-guests">
+            ${tableMap[key].map(name => `<span class="table-guest">${escapeHtml(name)}</span>`).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function initQrCode() {
+      const container = document.getElementById('qr-code-container');
+      const urlEl = document.getElementById('qr-url');
+      if (!container || !urlEl) return;
+      const tablesUrl = `${String(WEDDING_URL || '').replace(/\/+$/, '')}/tables`;
+      urlEl.textContent = tablesUrl;
+      container.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(tablesUrl)}" alt="QR Code for Table Finder" style="max-width:200px;height:auto;" />`;
+    }
+
+    function printQr() {
+      const tablesUrl = `${String(WEDDING_URL || '').replace(/\/+$/, '')}/tables`;
+      const win = window.open('', '_blank');
+      win.document.write(`<!DOCTYPE html><html><head><title>Table Finder QR</title><style>body{text-align:center;padding:2rem;font-family:sans-serif;}img{max-width:300px;}</style></head><body><h2>Scan to Find Your Table</h2><img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(tablesUrl)}" alt="QR"/><p style="margin-top:1rem;color:#666;">${tablesUrl}</p><script>window.onload=function(){window.print()};<\/script></body></html>`);
+      win.document.close();
+    }
+
+    function loadPreassigned() {
+      const data = window.__PREASSIGNED_TABLES;
+      if (!data || !data.length) { alert('No pre-assigned data loaded.'); return; }
+      data.forEach(a => {
+        seatingData[a.guestId] = a.tableNum;
+      });
+      saveSeatingLocal();
+      // Update all visible inputs
+      document.querySelectorAll('.s-table-input').forEach(inp => {
+        const id = inp.dataset.guestId;
+        if (seatingData[id] !== undefined) {
+          inp.value = seatingData[id];
+          const saved = document.getElementById(`saved-${id}`);
+          if (saved) { saved.textContent = 'saved'; saved.style.color = '#2ecc71'; }
+        }
+      });
+      renderSeatingByTable();
+    }
+
+    function startLiveRefresh() {
+      if (refreshTimer) clearInterval(refreshTimer);
+      refreshTimer = setInterval(() => {
+        if (document.hidden) return;
+        fetchGuests({ showLoading: false });
+      }, LIVE_REFRESH_MS);
+    }
+
+    function setFilter(f, btn) {
+      currentFilter = f;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderTable();
+    }
+
+    // Data sync
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function formatShortDate(value) {
+      if (!value) return '-';
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return String(value);
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    async function copyText(value, successMessage) {
+      const text = String(value || '').trim();
+      if (!text) return;
+
+      try {
+        await navigator.clipboard.writeText(text);
+        alert(successMessage || 'Copied to clipboard.');
+      } catch {
+        const temp = document.createElement('textarea');
+        temp.value = text;
+        temp.setAttribute('readonly', 'readonly');
+        temp.style.position = 'absolute';
+        temp.style.left = '-9999px';
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        temp.remove();
+        alert(successMessage || 'Copied to clipboard.');
+      }
+    }
+
+    function getVaultUrl() {
+      return `${String(WEDDING_URL || '').replace(/\/+$/, '')}/messages`;
+    }
+
+    function copyVaultLink() {
+      copyText(getVaultUrl(), 'Message vault link copied.');
+    }
+
+    function shareWithDj() {
+      const songLink = `${String(WEDDING_URL || '').replace(/\/+$/, '')}/songs.html`;
+      const text = `Hey! Here are our wedding song requests:\n\n${songLink}`;
+      window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+    }
+
+    function downloadMessages() {
+      const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw33IBpUacNLGAcqc4EGp5L2dlxaMkWSbEFvSTdFTDq6p9iO5oZCIWl6aS-BB6EIW-JUA/exec';
+      fetch(APPS_SCRIPT_URL + '?sheet=Messages')
+        .then(res => res.json())
+        .then(data => {
+          const messages = data.data || [];
+          if (!messages.length) {
+            alert('No messages to download.');
+            return;
+          }
+          const content = messages.map((m, i) => `${i + 1}. ${m.name}\n"${m.content}"\n`).join('\n');
+          const blob = new Blob([`Wedding Guest Messages\nAndrew & Rosanna\n\n${content}`], { type: 'text/plain' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'wedding-messages.txt';
+          a.click();
+          URL.revokeObjectURL(url);
+        });
+    }
+
+    async function fetchGuests(opts = { showLoading: true }) {
+      if (opts.showLoading) {
+        document.getElementById('guests-tbody').innerHTML = `<tr><td colspan="7" style="text-align:center;padding:2rem;">Syncing with Convex...</td></tr>`;
+      }
+      try {
+        const guestRes = await fetch(`${CONVEX_HTTP_URL}/api/guests`, {
+          headers: authHeaders()
+        });
+
+        if (guestRes.status === 401) {
+          await logout();
+          throw new Error('Session expired. Please log in again.');
+        }
+        if (!guestRes.ok) throw new Error(await guestRes.text());
+
+        guests = await guestRes.json();
+
+        updateStats();
+        renderTable();
+        updateWaPreview();
+        updateSyncLabel();
+      } catch (err) {
+        document.getElementById('guests-tbody').innerHTML = `<tr><td colspan="7" style="text-align:center;color:red;padding:2rem;">Error loading data from Convex.</td></tr>`;
+      }
+    }
+
+    function updateSyncLabel() {
+      const el = document.getElementById('sync-indicator');
+      const now = new Date();
+      const t = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      el.innerHTML = `<span class="sync-dot"></span>Live Sync Active - Last update ${t}`;
+    }
+
+    function updateStats() {
+      const att = guests.filter(g => g.attendance === 'attending').reduce((sum, g) => sum + (Number(g.max_party) || 1), 0);
+      const dec = guests.filter(g => g.attendance === 'declined').length;
+      const lat = guests.filter(g => g.attendance === 'later').length;
+      const totalSeats = guests.reduce((sum, g) => sum + (Number(g.max_party) || 1), 0);
+      document.getElementById('st-total').textContent = totalSeats;
+      document.getElementById('st-attending').textContent = att;
+      document.getElementById('st-declined').textContent = dec;
+      document.getElementById('st-later').textContent = lat;
+    }
+
+    function renderTable() {
+      let filtered = guests.filter(g => {
+        if (currentFilter === 'all') return true;
+        if (currentFilter === 'single' || currentFilter === 'couple' || currentFilter === 'family') return g.guest_type === currentFilter;
+        if (currentFilter === 'invited') return (!g.attendance || g.attendance === 'invited');
+        return g.attendance === currentFilter;
+      });
+
+      const tbody = document.getElementById('guests-tbody');
+      if (!filtered.length) { tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:2rem;">No guests matching filter.</td></tr>`; return; }
+
+      tbody.innerHTML = filtered.map(g => {
+        const st = g.attendance || 'invited';
+        const pClass = { attending: 'pill-attending', declined: 'pill-declined', later: 'pill-later', invited: 'pill-invited' }[st];
+        const pLabel = { attending: 'Yes', declined: 'No', later: 'Ask Later', invited: 'Invited' }[st];
+        const key = getGuestKey(g);
+        const hasPhone = !!normalizeWaPhone(g.phone);
+
+        let displayName = `<strong>${g.first_name}${g.spouse_name ? ' & ' + g.spouse_name : ''} ${g.last_name}</strong>`;
+
+        return `<tr>
+          <td>${displayName}</td>
+          <td style="text-transform:capitalize">${g.guest_type || 'Single'}</td>
+          <td>${g.max_party || 1} allowed</td>
+          <td><span class="status-pill ${pClass}">${pLabel}</span></td>
+          <td>${g.phone || '-'}</td>
+          <td style="font-size:0.75rem">${g.deadline ? new Date(g.deadline).toLocaleDateString() : '-'}</td>
+          <td><div class="table-actions">
+            <button class="action-btn" onclick="openEditGuest('${key}')" style="border-color:var(--gold);color:var(--gold);">Edit</button>
+            ${hasPhone ? `<button class="action-btn wa" onclick="sendQuickWA('${key}')" title="Send individualized WhatsApp message">WhatsApp</button>` : `<span style="font-size:0.7rem;color:#999;">No phone</span>`}
+            <button class="action-btn danger" onclick="deleteGuest('${key}')">Delete</button>
+          </div></td>
+        </tr>`;
+      }).join('');
+    }
+
+    function renderMediaView() {
+      // Media view now shows simple buttons to external Google Apps Script pages
+      // No local rendering needed - view-media div contains static HTML
+    }
+
+    // Adding from dashboard
+    let editingGuestId = null;
+
+    function openAddGuest() {
+      editingGuestId = null;
+      document.getElementById('add-modal').querySelector('h2').textContent = 'Add Guest / Household';
+      document.getElementById('m-fname').value = '';
+      document.getElementById('m-lname').value = '';
+      document.getElementById('m-type').value = 'single';
+      document.getElementById('m-max').value = '1';
+      document.getElementById('m-phone').value = '';
+      document.getElementById('m-due').value = '2026-06-10';
+      document.getElementById('m-spouse').value = '';
+      syncPartySize();
+      document.getElementById('add-modal').classList.add('open');
+    }
+
+    function openEditGuest(key) {
+      const g = findGuestByKey(key);
+      if (!g) return;
+      editingGuestId = g._id || g.id;
+      document.getElementById('add-modal').querySelector('h2').textContent = 'Edit Guest / Household';
+      document.getElementById('m-fname').value = g.first_name || '';
+      document.getElementById('m-lname').value = g.last_name || '';
+      document.getElementById('m-type').value = g.guest_type || 'single';
+      document.getElementById('m-max').value = g.max_party || 1;
+      document.getElementById('m-phone').value = g.phone || '';
+      document.getElementById('m-due').value = (g.deadline || '2026-06-10').split('T')[0];
+      document.getElementById('m-spouse').value = g.spouse_name || '';
+      document.getElementById('m-easy').checked = g.easy_mode === true;
+      syncPartySize();
+      document.getElementById('add-modal').classList.add('open');
+    }
+
+    function syncPartySize() {
+      const t = document.getElementById('m-type').value;
+      const m = document.getElementById('m-max');
+      const s = document.getElementById('m-spouse-row');
+      if (t === 'single') m.value = 1; else if (t === 'couple') m.value = 2; else if (t === 'family') m.value = 4;
+      s.style.display = (t === 'couple') ? 'grid' : 'none';
+    }
+
+    function submitGuest() {
+      const btn = document.querySelector('.modal .primary');
+      const originalText = btn.textContent;
+      btn.textContent = 'Saving...'; btn.disabled = true;
+
+      const payload = {
+        action: editingGuestId ? 'update_guest' : 'add_guest',
+        guest_id: editingGuestId || undefined,
+        first_name: document.getElementById('m-fname').value.trim(),
+        last_name: document.getElementById('m-lname').value.trim(),
+        guest_type: document.getElementById('m-type').value,
+        max_party: parseInt(document.getElementById('m-max').value, 10),
+        phone: document.getElementById('m-phone').value.trim(),
+        deadline: document.getElementById('m-due').value,
+        spouse_name: document.getElementById('m-spouse').value.trim(),
+        attendance: editingGuestId ? undefined : 'invited',
+        easy_mode: document.getElementById('m-easy').checked ? true : undefined
+      };
+
+      fetch(`${CONVEX_HTTP_URL}/api/guest`, {
+        method: 'POST',
+        headers: authHeaders({ 'Content-Type': 'application/json' }),
+        body: JSON.stringify(payload)
+      }).then(async (res) => {
+        if (res.status === 401) {
+          await logout();
+          throw new Error('Session expired. Please log in again.');
+        }
+        if (!res.ok) throw new Error(await res.text());
+        document.getElementById('add-modal').classList.remove('open');
+        btn.textContent = originalText; btn.disabled = false;
+        fetchGuests();
+      }).catch(e => { alert('Failed: ' + e); btn.textContent = originalText; btn.disabled = false; });
+    }
+
+    // WhatsApp builder
+    function generatePersonalLink(g) {
+      const base = String(WEDDING_URL || '').replace(/\/+$/, '');
+      if (!g || !g.first_name) return `${base}/`;
+
+      const p = new URLSearchParams({
+        id: g._id || g.id || '',
+        name: `${g.first_name} ${g.last_name || ''}`.trim(),
+        spouse: g.spouse_name || '',
+        type: g.guest_type || 'single',
+        max: g.max_party || 1,
+        due: g.deadline || ''
+      });
+      
+      // Add easy=1 if guest has Easy Mode enabled
+      if (g.easy_mode === true) {
+        p.set('easy', '1');
+      }
+      
+      return `${base}/?${p.toString()}`;
+    }
+
+    function getGuestKey(g) {
+      return encodeURIComponent(String(g?._id || g?.id || `${g?.first_name || ''}-${g?.last_name || ''}-${g?.phone || ''}`));
+    }
+
+    function findGuestByKey(key) {
+      return guests.find(g => getGuestKey(g) === key);
+    }
+
+    function normalizeWaPhone(phone) {
+      return String(phone || '').replace(/[^\d]/g, '');
+    }
+
+    function getGuestsForTarget(tgt, requirePhone = false) {
+      const list = guests.filter(g => (
+        tgt === 'all'
+          ? true
+          : tgt === 'invited'
+            ? (!g.attendance || g.attendance === 'invited')
+            : g.attendance === tgt
+      ));
+      return requirePhone ? list.filter(g => normalizeWaPhone(g.phone)) : list;
+    }
+
+    function openGuestWhatsApp(g, customText = null) {
+      if (!g) return false;
+      const phone = normalizeWaPhone(g.phone);
+      if (!phone) return false;
+      const text = customText !== null ? customText : buildPersonalizedText(g);
+      window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
+      return true;
+    }
+
+    function buildPersonalizedText(g) {
+      let msg = buildText(g);
+      if (!g) return msg;
+
+      const firstName = String(g.first_name || '').trim();
+      if (firstName && !msg.toLowerCase().includes(firstName.toLowerCase())) {
+        msg = `Hi ${firstName},\n\n${msg}`;
+      }
+
+      const link = generatePersonalLink(g);
+      if (link && !msg.includes(link)) {
+        msg = `${msg}\n\nRSVP link:\n${link}`;
+      }
+
+      return tidyMessage(msg);
+    }
+
+    function sendQuickWA(key) {
+      const person = findGuestByKey(key);
+      if (!person) {
+        alert('Could not find this guest.');
+        return;
+      }
+      if (!openGuestWhatsApp(person)) {
+        alert('No valid WhatsApp number for this guest.');
+      }
+    }
+
+    async function deleteGuest(key) {
+      const guest = findGuestByKey(key);
+      if (!guest) {
+        alert('Could not find this guest.');
+        return;
+      }
+
+      const name = `${guest.first_name || ''} ${guest.last_name || ''}`.trim();
+      const confirmed = confirm(`Delete ${name || 'this guest'}?\nThis will remove the guest and linked RSVPs.`);
+      if (!confirmed) return;
+
+      try {
+        const guestId = guest._id || guest.id;
+        const res = await fetch(`${CONVEX_HTTP_URL}/api/guest/delete`, {
+          method: 'POST',
+          headers: authHeaders({ 'Content-Type': 'application/json' }),
+          body: JSON.stringify({ guestId })
+        });
+
+        if (res.status === 401) {
+          await logout();
+          throw new Error('Session expired. Please log in again.');
+        }
+        if (!res.ok) throw new Error(await res.text());
+
+        await fetchGuests({ showLoading: false });
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        alert(`Delete failed: ${msg}`);
+      }
+    }
+
+    function tidyMessage(message) {
+      return String(message || '')
+        .replace(/\r\n/g, '\n')
+        .replace(/[ \t]+\n/g, '\n')
+        .replace(/\n{3,}/g, '\n\n')
+        .trim();
+    }
+
+    function formatGuestType(guestType) {
+      const type = String(guestType || 'single').toLowerCase();
+      if (type === 'single') return 'single guest';
+      if (type === 'couple') return 'couple';
+      if (type === 'family') return 'family';
+      return type;
+    }
+
+    function formatDeadline(deadline) {
+      if (!deadline) return 'June 10, 2026';
+      const date = new Date(deadline);
+      if (Number.isNaN(date.getTime())) return String(deadline);
+      return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    }
+
+    function buildText(g) {
+      const tmpl = document.getElementById('wa-text').value;
+      if (!g) return tidyMessage(tmpl);
+
+      let greetName = g.first_name;
+      if (g.spouse_name) {
+        greetName += ` & ${g.spouse_name}`;
+      }
+
+      return tidyMessage(tmpl
+        .replace(/{{name}}/g, greetName)
+        .replace(/{{type}}/g, formatGuestType(g.guest_type))
+        .replace(/{{deadline}}/g, formatDeadline(g.deadline))
+        .replace(/{{link}}/g, generatePersonalLink(g)));
+    }
+
+    function updateWaPreview() {
+      const tgt = document.getElementById('wa-group').value;
+      const list = getGuestsForTarget(tgt, false);
+      const sample = list[0];
+      document.getElementById('wa-preview').value = sample ? buildText(sample) : "No guests match this filter.";
+      populateWaPeople();
+      updateWaMetrics();
+    }
+
+    function populateWaPeople() {
+      const sel = document.getElementById('wa-person');
+      const keepValue = sel.value;
+      const q = waPersonQuery.trim().toLowerCase();
+      const people = guests
+        .filter(g => normalizeWaPhone(g.phone) && g.first_name)
+        .filter(g => {
+          if (!q) return true;
+          const name = `${g.first_name || ''} ${g.last_name || ''}`.trim().toLowerCase();
+          const phone = String(g.phone || '').toLowerCase();
+          return name.includes(q) || phone.includes(q);
+        });
+
+      sel.innerHTML = people.length
+        ? people.map((g) => `<option value="${getGuestKey(g)}">${g.first_name} ${g.last_name || ''} - ${g.phone}</option>`).join('')
+        : '<option value="">No matching guests with WhatsApp number</option>';
+
+      if (people.length && keepValue && people.some(g => getGuestKey(g) === keepValue)) {
+        sel.value = keepValue;
+      }
+
+      showSelectedPersonMeta();
+    }
+
+    function filterWaPeople() {
+      waPersonQuery = document.getElementById('wa-person-search').value || '';
+      populateWaPeople();
+    }
+
+    function showSelectedPersonMeta() {
+      const box = document.getElementById('wa-person-meta');
+      const key = document.getElementById('wa-person').value;
+      if (!key) {
+        box.textContent = 'Select a person to view details.';
+        return;
+      }
+      const person = findGuestByKey(key);
+      if (!person) {
+        box.textContent = 'Could not load selected guest details.';
+        return;
+      }
+      const statusMap = { attending: 'Attending', declined: 'Declined', later: 'Ask Later', invited: 'Invited' };
+      const status = statusMap[person.attendance || 'invited'] || 'Invited';
+      const due = person.deadline ? new Date(person.deadline).toLocaleDateString() : 'Not set';
+      
+      box.textContent = `${person.first_name} ${person.last_name || ''} | ${person.guest_type || 'single'} | ${status} | RSVP deadline: ${due}`;
+      
+      const previewBox = document.getElementById('wa-preview');
+      if(previewBox && previewBox.tagName === 'TEXTAREA') {
+          previewBox.value = buildPersonalizedText(person);
+      }
+    }
+
+    function updateWaMetrics() {
+      const withPhone = guests.filter(g => normalizeWaPhone(g.phone)).length;
+      const invitedWithPhone = getGuestsForTarget('invited', true).length;
+      const laterWithPhone = getGuestsForTarget('later', true).length;
+      const attendingWithPhone = getGuestsForTarget('attending', true).length;
+
+      document.getElementById('wa-kpi-phones').textContent = withPhone;
+      document.getElementById('wa-kpi-invited').textContent = invitedWithPhone;
+      document.getElementById('wa-kpi-later').textContent = laterWithPhone;
+      document.getElementById('wa-kpi-attending').textContent = attendingWithPhone;
+    }
+
+    function sendOneWA() {
+      const sel = document.getElementById('wa-person');
+      if (!sel || !sel.value) { alert('Select a guest first.'); return; }
+      const person = findGuestByKey(sel.value);
+      if (!person) { alert('Could not find selected guest.'); return; }
+      
+      const previewBox = document.getElementById('wa-preview');
+      const customText = previewBox ? previewBox.value : '';
+      
+      if (!openGuestWhatsApp(person, customText)) {
+        alert('No valid WhatsApp number for selected guest.');
+      }
+    }
+
+    function insertVar(v) {
+      const ta = document.getElementById('wa-text');
+      const s = ta.selectionStart, e = ta.selectionEnd;
+      ta.value = ta.value.substring(0, s) + v + ta.value.substring(e);
+      updateWaPreview();
+    }
+
+    function copyWA() {
+      navigator.clipboard.writeText(document.getElementById('wa-preview').value);
+      alert('Copied to clipboard!');
+    }
+
+    function sendMassWA() {
+      const tgt = document.getElementById('wa-group').value;
+      const list = getGuestsForTarget(tgt, true);
+      if (!list.length) { alert('No guests with phones match this filter.'); return; }
+      if (!confirm(`Deploy WhatsApp msg to ${list.length} guest(s)?`)) return;
+
+      list.forEach((g, i) => {
+        setTimeout(() => { openGuestWhatsApp(g); }, i * 800);
+      });
+    }
+
+    window.__PREASSIGNED_TABLES = [{"guestName":"Ivana DePaz","guestId":"j971wzcxajdvrayrgg81wr8ws182pe6s","tableNum":"1"},{"guestName":"Joaquin DePaz","guestId":"j97bn3q7ap3myf1xeag011pds182ppvj","tableNum":"1"},{"guestName":"Diana","guestId":"j979s035s6zgj88fdt403e27xx867ej7","tableNum":"1"},{"guestName":"Vana","guestId":"j97a67wxycmvv0fcsanpn09wfx866msf","tableNum":"1"},{"guestName":"Yasmini Matus","guestId":"j975fr1n1g0m6rf2f7pnm93gbx82p3f8","tableNum":"1"},{"guestName":"Jean Harrison","guestId":"j979zc0cgddthkax8r4svs7dk98804qq","tableNum":"1"},{"guestName":"Sian DePaz","guestId":"j970rzr4hjcr4e5gkb4n03zhvh82p25p","tableNum":"2"},{"guestName":"Mathew Preston","guestId":"j974a42bkvtsgkb3xfprx33tm187mc8r","tableNum":"2"},{"guestName":"Josue","guestId":"j978k6wxfzj068k2t29bv4684h87nw0s","tableNum":"2"},{"guestName":"Maleek","guestId":"j973nssdwp0jk8kc676d39r3d183jd03","tableNum":"2"},{"guestName":"Devin Peyrefitte","guestId":"j9728weej33q8w9z4drq3zt4wh82ps9d","tableNum":"2"},{"guestName":"Yojalma Moleterno","guestId":"j970q38r7drywmfak3w78q4rkn83k0xt","tableNum":"2"},{"guestName":"Carlitos Guest","guestId":"j974eyfw4nd20tsb6y98sdwsnh83nb5y","tableNum":"2"},{"guestName":"Jose DePaz","guestId":"j9779nj6rm2evfk2mshprdmbxx82qsmd","tableNum":"3"},{"guestName":"Mr. Mike Gonzalez","guestId":"j976r18cn1d4spx64nxefwdaq983k46s","tableNum":"3"},{"guestName":"Ingrid Gonzalez","guestId":"j975ts0zvb15sp3hfjat223zt983k5c3","tableNum":"3"},{"guestName":"Aldo DePaz","guestId":"j97aj0dy6h9p02672ba7bxk3qs82qtz5","tableNum":"3"},{"guestName":"Keisha Dwyer","guestId":"j9748he50px1603j46x3yk5yxh83j2zr","tableNum":"3"},{"guestName":"Ms. Marie DePaz","guestId":"j978xes1ygrzmsgyjny5akpb8x82pbq9","tableNum":"3"},{"guestName":"Lily Lane","guestId":"j972v6mnprgccewr4hwpfn5adn82p58b","tableNum":"3"},{"guestName":"Lucille Valladarez","guestId":"j97a2dx1b52gc2vbjg1smjzejh82qv64","tableNum":"4"},{"guestName":"Norberto DePaz","guestId":"j973n8avtrmnksns4fv09rzssh86511r","tableNum":"4"},{"guestName":"David DePaz","guestId":"j97b76d4grx1pdca3k5av8jj5n865m4v","tableNum":"4"},{"guestName":"Vanessa Cuellar","guestId":"j978qmqz95pqmwy47vancj5n2583n973","tableNum":"4"},{"guestName":"Javier DePaz","guestId":"j977htyadsppdp6vvk53t692vx83d126","tableNum":"4"},{"guestName":"Miguel DePaz","guestId":"j975kk313252vwfpjr5ff8m12x83jxqz","tableNum":"4"},{"guestName":"Andre & Adrian DePaz","guestId":"j971qsnrvkm7kzc8ewrkjyca7x83c10j","tableNum":"4"},{"guestName":"Olga Mendoza","guestId":"j97avdn0db3xmfcwsvfh6hw5vn83ddkx","tableNum":"5"},{"guestName":"Xenia","guestId":"j978tqxrywv38d1h81m3k53t9h83m3xb","tableNum":"5"},{"guestName":"Sandino Mendoza","guestId":"j97df8pdsjtygy2w650whv3ns982pgza","tableNum":"5"},{"guestName":"Stephanie Hernandes","guestId":"j974f17byz2whz0c8a4s6wa1md82pm29","tableNum":"6"},{"guestName":"Jahan Guerra","guestId":"j9758ts6ne5tgxas32zhf9bnf182pv7c","tableNum":"6"},{"guestName":"Anthony Joseph","guestId":"j975ybqvr13196w84dwayhpy8s88wdyr","tableNum":"6"},{"guestName":"Ceasar Quiroz","guestId":"j97byy0e2tq8f3pzyejphkwt0988w9pp","tableNum":"6"},{"guestName":"Zane Oliver","guestId":"j97dr8vspqmdzzfzed9v24me1x83n07r","tableNum":"6"},{"guestName":"The Paniagua Family","guestId":"j970wpkgxg5xgkk1p9rpqr9xk183j0rr","tableNum":"6"},{"guestName":"Sonia Harris","guestId":"j97079jaxwafcexhwwndzg7d9182p623","tableNum":"7"},{"guestName":"Floyd Haylock","guestId":"j974ttd8bgyj0w1gsqgsmm0hgd82pfq4","tableNum":"7"},{"guestName":"Carol Joiner","guestId":"j97az3083f8ad4t1wqtq8hfag583j3sy","tableNum":"7"},{"guestName":"Garry Flowers","guestId":"j978pm1tej93gyn9wqzw321sgs83kjvn","tableNum":"7"},{"guestName":"Mirianne Martinez","guestId":"j978xg5z4p9zgkfsgb5fy85t7x83nmf3","tableNum":"7"},{"guestName":"Cindy Lisbey","guestId":"j97a6580w8xtv0c4st6wtevbks83mqer","tableNum":"7"},{"guestName":"Oscar Lisbey","guestId":"j97a1xsa1n669hbazajeq66ddh83mwa0","tableNum":"7"},{"guestName":"Macarena","guestId":"j9707tftdce93875nry1ks807x898vjg","tableNum":"7"},{"guestName":"Brian Silver","guestId":"j97d0hfre9w8dm6hqrdb68nbs582q6g6","tableNum":"8"},{"guestName":"Justin Mendoza","guestId":"j97327yapettbmz065edyvwf7d83kt2y","tableNum":"8"},{"guestName":"Dave Dacak","guestId":"j97718yx8sp7r00n3nt3mz918983jhy8","tableNum":"8"},{"guestName":"Shonda Matinez","guestId":"j978kp4d1g5hj8qs54m9p4xd1s83cpdx","tableNum":"8"},{"guestName":"Marlon Andrews","guestId":"j97av8es3xz2g33svtycf1nmw583jnh3","tableNum":"8"},{"guestName":"Maria Estella Recinos","guestId":"j971fvhtdwejyr4j8s2t8dy2xs86k6xz","tableNum":"9"},{"guestName":"karl Recinos","guestId":"j97ew0avwt97k8e8zp0z46tx4x84gays","tableNum":"9"},{"guestName":"Calos Dito Vega","guestId":"j9725yjs1rsgws5ph6rskec2vn866q0c","tableNum":"9"},{"guestName":"Emma Romero","guestId":"j979nh8rtsc0p3xqtn8nfyb00n82qb49","tableNum":"9"},{"guestName":"Destiny Wagner","guestId":"j97a61krgsehdw74kcnkt4m4zn82qqxb","tableNum":"9"},{"guestName":"Vaneen Juan","guestId":"j97fybrkqn1sr7faba85pn8hkh883q5y","tableNum":"9"},{"guestName":"Krista Cruz","guestId":"j976wnb229brp7v0ysgs2s30g582p85n","tableNum":"9"},{"guestName":"Earlyn Hutchinson","guestId":"j97ag7bbaenynsjc40c2a1j2a182q6pq","tableNum":"9"},{"guestName":"Emil Pinelo","guestId":"j973k5ssahd6pgnghrfdtnhpeh82qy7f","tableNum":"10"},{"guestName":"Grandpa Pinelo","guestId":"j972vvpyhsjeh8vrdd89zr9kqx85s9vr","tableNum":"10"},{"guestName":"Adrian Miller","guestId":"j97ax2tkwbc6yswj76q83v0nb583kpfc","tableNum":"10"},{"guestName":"Maria Elena Heredia","guestId":"j97bebrr3ab51bjs8yrrd3vvds83js5q","tableNum":"10"},{"guestName":"Luby Clemans","guestId":"j97f3x5ajr9q3wbkqzsb4ecyn583jp8q","tableNum":"10"},{"guestName":"Leticia","guestId":"j976szg4e12zpx3q63e7fcv5c182pqr4","tableNum":"11"},{"guestName":"Dijon McNab","guestId":"j97d6pf5rzh2c90wds5paf1rnd87c0rp","tableNum":"11"},{"guestName":"Hector Andrews","guestId":"j97dhwegfx27c2awr4qa68hdzn83mzr7","tableNum":"11"},{"guestName":"Richard Cordova","guestId":"j97fp3rmrxc2b3z8bw3dvv784d83mz3t","tableNum":"11"},{"guestName":"Brandon Guest","guestId":"j97fwqxrt82xph7nm3v5jtrng982pk0k","tableNum":"11"},{"guestName":"Natasha Stuart","guestId":"j9736crqfjwyvmw61m22fpxt2584ekdk","tableNum":"11"},{"guestName":"Britney and Camile Guy","guestId":"j976tmgby99phq60rnb9b34r6182pwgz","tableNum":"12"},{"guestName":"Shenny Boiton","guestId":"j97cknk1vq4yq7gf5fhcej9wk982q33h","tableNum":"12"},{"guestName":"Ryan Smith","guestId":"j97adnsrmwpk28gcz0a1fjxqms82q3jk","tableNum":"12"},{"guestName":"Joseph & Lorain Smith","guestId":"j97am0qb1aafp1vwx9zkj6t2r583kq5h","tableNum":"12"},{"guestName":"Carlos Habet","guestId":"j97an0gzmf59d8d8t26ragdzb983mfb7","tableNum":"12"},{"guestName":"David Morales","guestId":"j97dcpwezhjwjmm46ce3g9zqmn82ps7k","tableNum":"12"},{"guestName":"Angela kuylen","guestId":"j974nr19nx1bs683ssa9dqf33n82q36k","tableNum":"13"},{"guestName":"karina Farias","guestId":"j97909fkmqndz49npe299ejzzx84wf8h","tableNum":"13"},{"guestName":"Keidi Tejada","guestId":"j9728tmvr6h36zxw3rvghd6ad182q66t","tableNum":"13"},{"guestName":"Renee Pine","guestId":"j97231k9xztgn2evp6zb03df4n83nk2m","tableNum":"13"},{"guestName":"kylon Eiley","guestId":"j971wgg77zgmrfs5sxt2b8zr1d83nbz4","tableNum":"13"},{"guestName":"Michel Chebat","guestId":"j971hzqhfv3hmhm1jscphv0gd98836z9","tableNum":"1"},{"guestName":"Geoffrey Waight","guestId":"j97d491aeadetmjtxvf1dxps7s882scw","tableNum":"1"},{"guestName":"Lawrence Thompson","guestId":"j974jr4e9fkmj8ahh4r05eq069882q6c","tableNum":"1"},{"guestName":"Miron Ortega","guestId":"j97797jnbehfy506wmckga9d4s883r7z","tableNum":"1"},{"guestName":"Fabian Perez","guestId":"j975yapbatywz1ca8tqyewj2eh84xhrc","tableNum":"1"},{"guestName":"Wayne","guestId":"j970kft7yvv5rc19d81ae59dsn866s9f","tableNum":"1"},{"guestName":"Oscar Trujeque","guestId":"j976awqwyr4q0s4zrmwv3rpgvd83ntv3","tableNum":"8"},{"guestName":"Marcel Graniel","guestId":"j9759ekyrtnn66cxtegzg64pfs83m24h","tableNum":"8"},{"guestName":"karim Espat","guestId":"j97evedwdw3hwncj343j0fp63h8980d5","tableNum":"8"},{"guestName":"Elvis Usher","guestId":"j97drejyv188z5expjzje923cd899h8g","tableNum":"8"},{"guestName":"Fiona Rudon","guestId":"j97aekbrzh6vmhk3rj9hz07c65867fhq","tableNum":"8"},{"guestName":"Ayden DePaz","guestId":"j97d1mtc4tn0nvrv7p5fcbwcp583js8d","tableNum":"Teens"},{"guestName":"Lori","guestId":"j97c5fgdkzjmyjc3h82zkjx2nx82paxk","tableNum":"14"},{"guestName":"Karine Cisneros","guestId":"j9712tc9rsa8thj4w9zk4zswpx82q534","tableNum":"14"},{"guestName":"Norine Haylock","guestId":"j9759jj25nszn5rk0p642nj7kn82p2re","tableNum":"14"},{"guestName":"Mrs Veronica","guestId":"j97bd87z30cbzhm44gzq4qhccs83kf17","tableNum":"14"},{"guestName":"Estella Saucedo","guestId":"j977nqwbxhr32mdvqw6ykx1adh84gd1j","tableNum":"14"},{"guestName":"Dianne Haylock","guestId":"j978gjybqe0y85jsw8dp7d7ss583mvc1","tableNum":"14"},{"guestName":"Miss Gilda","guestId":"j977xzvazk3gfwp4zq7ehzppcn85sqt7","tableNum":"14"},{"guestName":"Mrs Almira August","guestId":"j976sfsk9jc8kmjmkghr902ked87c82w","tableNum":"14"}];
+  </script>
+</body>
+
+</html>

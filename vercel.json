@@ -1,12 +1,4 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "name": "say.yes.bz.charles-leticia",
-  "cleanUrls": true,
-  "rewrites": [
-    { "source": "/", "destination": "/Pages/_invitation.html" },
-    { "source": "/admin", "destination": "/Pages/admin.html" },
-    { "source": "/rsvp", "destination": "/Pages/rsvp.html" },
-    { "source": "/story", "destination": "/Pages/story.html" },
-    { "source": "/honeymoon", "destination": "/Pages/honeymoon.html" }
-  ]
+  "cleanUrls": true
 }

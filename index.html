@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Charles &amp; Leticia — The Invitation</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;family=Great+Vibes&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "gold": { "DEFAULT": "#D4AF37", "light": "#F5D76E", "dark": "#A8862B" },
+                    "ink": "#0a0a0a",
+                    "on-error": "#ffffff",
+                    "primary": "#D4AF37",
+                    "inverse-on-surface": "#0a0a0a",
+                    "on-tertiary": "#0a0a0a",
+                    "on-error-container": "#ffb4ab",
+                    "outline": "#5c5c5c",
+                    "on-secondary": "#0a0a0a",
+                    "surface-container-low": "#0f0f0f",
+                    "on-surface-variant": "#b9b9b9",
+                    "primary-fixed-dim": "#4a3b14",
+                    "background": "#0a0a0a",
+                    "on-primary-fixed": "#f5e3a3",
+                    "on-primary-container": "#f5e3a3",
+                    "secondary": "#C9A84C",
+                    "tertiary": "#E8CE7A",
+                    "inverse-surface": "#f5f5f5",
+                    "inverse-primary": "#D4AF37",
+                    "surface-dim": "#0c0c0c",
+                    "on-tertiary-fixed": "#f5e3a3",
+                    "on-secondary-fixed": "#f0d98c",
+                    "surface-container-high": "#1a1a1a",
+                    "secondary-container": "#3b2f10",
+                    "primary-fixed": "#2a220c",
+                    "surface-tint": "#D4AF37",
+                    "tertiary-fixed": "#2a220c",
+                    "surface": "#121212",
+                    "outline-variant": "#2e2e2e",
+                    "primary-container": "#3b2f10",
+                    "on-tertiary-container": "#f5e3a3",
+                    "error-container": "#3b0a0a",
+                    "surface-variant": "#1c1c1c",
+                    "on-surface": "#f5f5f5",
+                    "tertiary-fixed-dim": "#4a3b14",
+                    "on-background": "#f5f5f5",
+                    "tertiary-container": "#2a220c",
+                    "error": "#ba1a1a",
+                    "surface-bright": "#2a2a2a",
+                    "surface-container-lowest": "#050505",
+                    "secondary-fixed": "#2a220c",
+                    "on-tertiary-fixed-variant": "#e8ce7a",
+                    "on-primary-fixed-variant": "#f5e3a3",
+                    "surface-container-highest": "#222222",
+                    "on-secondary-container": "#f0d98c",
+                    "on-primary": "#0a0a0a",
+                    "on-secondary-fixed-variant": "#e8ce7a",
+                    "surface-container": "#151515",
+                    "secondary-fixed-dim": "#4a3b14"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-padding": "2rem",
+                    "unit": "8px",
+                    "section-gap": "4rem",
+                    "gutter": "1.5rem",
+                    "element-gap": "1rem"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Noto Serif"],
+                    "script-accent": ["Great Vibes", "cursive"],
+                    "headline-xl": ["Noto Serif"],
+                    "headline-md": ["Noto Serif"],
+                    "body-md": ["Be Vietnam Pro"],
+                    "label-sm": ["Be Vietnam Pro"],
+                    "body-lg": ["Be Vietnam Pro"],
+                    "serif": ["Noto Serif", "Georgia", "serif"],
+                    "sans": ["Be Vietnam Pro", "system-ui", "sans-serif"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "script-accent": ["32px", {"lineHeight": "1", "fontWeight": "400"}],
+                    "headline-xl": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(18, 18, 18, 0.55);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.16);
+        }
+        .satin-gradient {
+            background:
+                radial-gradient(1100px 500px at 80% -10%, rgba(212, 175, 55, 0.10), transparent 60%),
+                radial-gradient(900px 600px at -10% 110%, rgba(212, 175, 55, 0.06), transparent 55%),
+                linear-gradient(160deg, #050505 0%, #100e09 45%, #060606 100%);
+        }
+        .gold-shimmer {
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.16), transparent);
+            background-size: 220% 100%;
+            animation: shimmer 4s linear infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: 220% 0; }
+            100% { background-position: -120% 0; }
+        }
+        .text-gold-gradient {
+            background: linear-gradient(120deg, #F5D76E 0%, #D4AF37 45%, #8A6B1F 80%, #F5D76E 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+      background: #0a0a0a;
+    }
+  </style>
+<style>
+.vows-countdown .vows-cd-num { color: #D4AF37; }
+.vows-countdown .vows-cd-label { color: #D4AF37; opacity: 0.6; }
+.vows-countdown .vows-cd-digits { color: #D4AF37; }
+.vows-countdown .vows-cd-celebrate { color: #D4AF37; }
+.copy-row.copied .copy-icon { background: rgba(212,175,55,0.2); border-color: #D4AF37; }
+.copy-row.copied .copy-icon .material-symbols-outlined { color: #F5D76E; }
+.fan-layout {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: clamp(340px, 44vw, 560px);
+  perspective: 1200px;
+}
+.fan-card {
+  position: absolute;
+  width: clamp(112px, 13vw, 232px);
+  aspect-ratio: 4 / 5;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(212, 175, 55, 0.18);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+  background: #1a1a1a;
+  will-change: transform;
+}
+.fan-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.float-slow { animation: floating 9s ease-in-out infinite; }
+.float-slower { animation: floating 14s ease-in-out infinite; }
+</style>
+<style>
+/* ---- Intro experience (lays on top of the invitation) ---- */
+html.no-scroll, html.no-scroll body { overflow: hidden; }
+
+.sparkle-bg { background-image: radial-gradient(circle at center, #D4AF37 1px, transparent 1px); background-size: 28px 28px; opacity: .06; }
+
+@keyframes introFadeIn { from { opacity: 0; } to { opacity: 1; } }
+.intro-fade { animation: introFadeIn .9s ease both; }
+
+@keyframes hintPulse {
+  0%, 100% { opacity: .5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+.hint-pulse { animation: hintPulse 1.8s ease-in-out infinite; }
+
+@keyframes floaty {
+  0%, 100% { transform: translate(0,0) rotate(0deg); }
+  50% { transform: translate(0,-8px) rotate(6deg); }
+}
+.orbit-circle { animation: floaty 4.5s ease-in-out infinite; }
+
+@keyframes scatter {
+  0% { transform: translate(0,0) rotate(0deg) scale(1); opacity: 1; }
+  100% { transform: translate(var(--tx, 0px), var(--ty, 0px)) rotate(var(--rot, 360deg)) scale(.15); opacity: 0; }
+}
+.scatter .orbit-circle { animation: scatter .95s cubic-bezier(.5, 0, .2, 1) forwards; }
+
+@keyframes centerReveal {
+  0% { opacity: 0; transform: scale(.92); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.center-reveal { animation: centerReveal 1s ease both; }
+
+@keyframes introScroll {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-100%) scale(.92); opacity: 0; }
+}
+.intro-scroll-away { animation: introScroll .95s cubic-bezier(.4, 0, .2, 1) forwards; }
+
+.petal {
+  position: absolute;
+  top: -40px;
+  pointer-events: auto;
+  cursor: grab;
+  touch-action: none;
+  opacity: 0;
+  will-change: transform;
+  --petal-opacity: 1;
+}
+.petal.grabbed { cursor: grabbing; }
+.petal.flung { pointer-events: none; }
+.petal.petal-in { opacity: var(--petal-opacity); transition: opacity .9s ease; }
+.petal.petal-out { opacity: 0 !important; transition: opacity .25s ease; }
+</style>
+<style>
+/* ---- Save-the-Date calendar card (meeting-card style) ---- */
+.nye-cal .day-strip { display: flex; gap: 6px; }
+.nye-cal .day-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 0 8px;
+  border-radius: 14px;
+  cursor: default;
+  transition: background .25s ease, transform .25s ease, box-shadow .25s ease;
+}
+.nye-cal .day-item .day-number { font-size: 20px; font-weight: 600; color: #f5f5f5; line-height: 1; }
+.nye-cal .day-item .day-name { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: #b9b9b9; }
+.nye-cal .day-item.day-active {
+  background: linear-gradient(160deg, #F5D76E 0%, #D4AF37 55%, #A8862B 100%);
+  box-shadow: 0 10px 26px rgba(212, 175, 55, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transform: translateY(-2px);
+}
+.nye-cal .day-item.day-active .day-number,
+.nye-cal .day-item.day-active .day-name { color: #0a0a0a; }
+.nye-cal .indicator-container { display: flex; justify-content: center; gap: 9px; margin-top: 14px; }
+.nye-cal .indicator-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(212, 175, 55, 0.28); transition: background .25s ease, box-shadow .25s ease; }
+.nye-cal .indicator-dot.indicator-active { background: #D4AF37; box-shadow: 0 0 9px rgba(212, 175, 55, 0.9); }
+.rsvp-img {
+  filter: drop-shadow(0 0 16px rgba(212, 175, 55, 0.55)) drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
+  animation: rsvp-glow 2.6s ease-in-out infinite;
+}
+@keyframes rsvp-glow {
+  0%, 100% { filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.45)) drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5)); }
+  50% { filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.95)) drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5)); }
+}
+</style>
+<style>
+/* ---- Animated gradient RSVP button (uiverse dexter-st style, gold theme) ---- */
+.btn-wrapper {
+  position: relative;
+  width: 268px;
+  height: 80px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #070707;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+  isolation: isolate;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.btn-wrapper:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 24px 60px rgba(212, 175, 55, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.05); }
+.btn-wrapper:active { transform: scale(.97); }
+.btn-wrapper .gradient-layer {
+  position: absolute;
+  inset: -150%;
+  background: conic-gradient(from 0deg,
+    transparent 0deg 50deg,
+    rgba(212, 175, 55, .85) 95deg,
+    rgba(245, 215, 110, .95) 115deg,
+    transparent 160deg 210deg,
+    rgba(168, 134, 43, .55) 265deg,
+    transparent 320deg 360deg);
+  animation: gbtn-rotate linear infinite;
+  pointer-events: none;
+}
+@keyframes gbtn-rotate { to { transform: rotate(360deg); } }
+.btn-wrapper .light {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(245, 215, 110, .28), transparent 45%);
+  opacity: 0;
+  transition: opacity .3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+.btn-wrapper:hover .light { opacity: 1; }
+.btn-wrapper .text-overlay {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Be Vietnam Pro', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+.btn-wrapper .text-overlay .to-gold { color: #F5D76E; }
+</style>
+<style>
+/* ---- Glass radio nav (uiverse chase2k25 style, gold theme) ---- */
+.glass-radio-group {
+  --bg: rgba(255, 255, 255, 0.06);
+  --text: #e5e5e5;
+  position: relative;
+  display: flex;
+  background: var(--bg);
+  border-radius: 1rem;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow:
+    inset 1px 1px 4px rgba(255, 255, 255, 0.14),
+    inset -1px -1px 6px rgba(0, 0, 0, 0.35),
+    0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  width: fit-content;
+  max-width: calc(100vw - 20px);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+}
+.glass-radio-group a {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  padding: 0.6rem 0.55rem;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text);
+  position: relative;
+  z-index: 2;
+  transition: color .3s ease-in-out;
+  text-decoration: none;
+  white-space: nowrap;
+}
+@media (min-width: 640px) {
+  .glass-radio-group a { padding: 0.8rem 1.2rem; font-size: 14px; min-width: 84px; letter-spacing: .1em; }
+}
+.glass-radio-group a:hover { color: #fff; }
+.glass-radio-group a.active { color: #0a0a0a; }
+.glass-radio-group .glass-glider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 20%;
+  border-radius: 1rem;
+  z-index: 1;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.45), #D4AF37);
+  box-shadow: 0 0 18px rgba(212, 175, 55, 0.5), inset 0 0 10px rgba(255, 235, 150, 0.4);
+  transition:
+    transform .5s cubic-bezier(.37, 1.95, .66, .56),
+    background .4s ease-in-out,
+    box-shadow .4s ease-in-out;
+}
+section[id] { scroll-margin-top: 5rem; }
+</style>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-gold/30 selection:text-white">
+<!-- ===================== INTRO EXPERIENCE ===================== -->
+<div id="introScreen" class="fixed inset-0 z-[10000] flex items-center justify-center satin-gradient cursor-pointer select-none overflow-hidden">
+<div class="sparkle-bg absolute inset-0 pointer-events-none"></div>
+
+<!-- Falling petals — behind all elements, subtle -->
+<div id="petals" class="absolute inset-0 -z-10 pointer-events-none"></div>
+
+<!-- Ornament text -->
+<div class="absolute top-10 left-0 right-0 text-center pointer-events-none">
+<span class="font-script-accent text-script-accent text-gold-gradient italic">Charles &amp; Leticia</span>
+</div>
+
+<!-- Orbit elements -->
+<img class="orbit-circle absolute select-none pointer-events-none w-[clamp(120px,20vw,280px)]" style="top:16%; left:4%; --tx:-340px; --ty:-120px; --rot:160deg; animation-delay:0s;" src="../Element%20(1).png" alt=""/>
+<img class="orbit-circle absolute select-none pointer-events-none w-[clamp(120px,22vw,320px)]" style="top:13%; right:3%; --tx:380px; --ty:-140px; --rot:-200deg; animation-delay:.5s;" src="../Element%20(2).png" alt=""/>
+<img class="orbit-circle absolute select-none pointer-events-none w-[clamp(110px,17vw,240px)]" style="top:42%; left:-5%; --tx:-360px; --ty:40px; --rot:220deg; animation-delay:1s;" src="../Element%20(3).png" alt=""/>
+<img class="orbit-circle absolute select-none pointer-events-none w-[clamp(120px,20vw,300px)]" style="bottom:13%; left:6%; --tx:-360px; --ty:140px; --rot:180deg; animation-delay:2s;" src="../Element%20(5).png" alt=""/>
+<img class="orbit-circle absolute select-none pointer-events-none w-[clamp(120px,20vw,280px)]" style="bottom:11%; right:5%; --tx:400px; --ty:130px; --rot:-180deg; animation-delay:2.5s;" src="../Element%20(6).png" alt=""/>
+
+<!-- Center block -->
+<div class="relative z-10 flex flex-col items-center center-reveal">
+<div class="relative" style="width:min(117vw,750px);height:min(87vh,750px);">
+<img id="firstImg" src="../intro-first.png" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-300"/>
+<img id="gifImg" src="" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-300 opacity-0"/>
+<img id="lastImg" src="../intro-last.png" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-300 opacity-0"/>
+</div>
+<div id="hintPill" class="mt-6 hint-pulse inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-gold/40" style="background:rgba(18,18,18,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);">
+<span class="material-symbols-outlined text-gold text-lg" data-icon="touch_app">touch_app</span>
+<span id="hintText" class="font-label-sm text-gold-light uppercase tracking-[0.25em]">Tap to Begin</span>
+</div>
+<div id="loaderCard" class="hidden mt-6 flex flex-col items-center gap-3 px-6 py-4 rounded-2xl border border-gold/40 glass-panel shadow-[0_10px_30px_rgba(0,0,0,0.5)] min-w-[260px]">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-gold text-xl animate-spin" data-icon="auto_awesome">auto_awesome</span>
+<span id="loadText" class="font-label-sm text-gold-light uppercase tracking-[0.2em]">Loading your invitation…</span>
+</div>
+<div class="w-56 h-1.5 bg-white/10 rounded-full overflow-hidden relative border border-gold/20">
+<div id="loadProgress" class="h-full bg-gradient-to-r from-gold-light to-gold rounded-full w-0 transition-all duration-300"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- =================== END INTRO EXPERIENCE =================== -->
+
+<!-- Background Gold Elements -->
+<div class="fixed inset-0 -z-20 pointer-events-none overflow-hidden" aria-hidden="true">
+<div class="absolute -top-32 -right-32 w-[45vw] h-[45vw] min-w-72 min-h-72 opacity-10 float-slow">
+<img class="w-full h-full object-contain" src="../Element%20(1).png" alt=""/>
+</div>
+<div class="absolute top-1/3 -left-40 w-[40vw] h-[40vw] min-w-64 min-h-64 opacity-10 float-slower">
+<img class="w-full h-full object-contain" src="../Element%20(2).png" alt=""/>
+</div>
+<div class="absolute -bottom-24 left-1/4 w-[35vw] h-[35vw] min-w-56 min-h-56 opacity-10 float-slow">
+<img class="w-full h-full object-contain" src="../Element%20(3).png" alt=""/>
+</div>
+<div class="absolute top-2/3 -right-24 w-[30vw] h-[30vw] min-w-48 min-h-48 opacity-10 float-slower">
+<img class="w-full h-full object-contain" src="../Element%20(6).png" alt=""/>
+</div>
+</div>
+<main class="relative min-h-screen overflow-hidden">
+<!-- Background Silk Texture & Floral Elements -->
+<div class="absolute inset-0 satin-gradient -z-10"></div>
+<div class="absolute -top-24 -left-24 w-96 h-96 opacity-10 pointer-events-none rotate-12">
+<img class="w-full h-full object-contain" alt="Decorative gold ornament" src="../Element%20(1).png"/>
+</div>
+<div class="absolute -bottom-24 -right-24 w-[500px] h-[500px] opacity-10 pointer-events-none -rotate-12">
+<img class="w-full h-full object-contain" alt="Decorative gold ornament" src="../Element%20(5).png"/>
+</div>
+<!-- Hero Section -->
+<section class="relative max-w-[1200px] mx-auto px-5 sm:px-container-padding pt-12 pb-section-gap">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
+<!-- Left Narrative Block -->
+<div class="lg:col-span-5 z-10 space-y-element-gap">
+<div class="inline-flex items-center px-4 py-1.5 rounded-full glass-panel border border-gold/30 shadow-sm">
+<span class="material-symbols-outlined text-[14px] mr-2 text-gold" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="font-label-sm text-gold-light uppercase tracking-[0.2em]">New Year's Eve &bull; Save the Date</span>
+</div>
+<div class="space-y-4">
+<h2 class="font-script-accent text-script-accent italic text-gold leading-tight">Join us for the wedding of</h2>
+<div class="space-y-0">
+<h3 class="font-script-accent text-[64px] sm:text-[80px] lg:text-[100px] text-white leading-none">Charles</h3>
+<div class="flex items-center gap-4 py-2">
+<div class="h-[1px] flex-grow bg-gold/30"></div>
+<span class="font-script-accent text-gold text-[48px] sm:text-[56px] lg:text-[64px] leading-none">&amp;</span>
+<div class="h-[1px] flex-grow bg-gold/30"></div>
+</div>
+<h3 class="font-script-accent text-[64px] sm:text-[80px] lg:text-[100px] text-white leading-none">Leticia</h3>
+</div>
+</div>
+<p class="font-body-lg text-on-surface-variant max-w-md">
+                        On New Year's Eve, as Belize City sparkles against the Caribbean night, we invite you to ring in 2027 with us &mdash; the start of forever, in black, white &amp; gold.
+                    </p>
+<!-- Save-the-Date Calendar Card -->
+<div class="pt-8">
+<div class="nye-cal inline-block glass-panel p-6 rounded-2xl shadow-[0_20px_50px_rgba(212,175,55,0.12)] border border-gold/25 w-full max-w-md relative overflow-hidden group">
+<div class="absolute inset-0 gold-shimmer pointer-events-none"></div>
+<div class="flex justify-between items-center mb-3 relative z-10">
+<div class="font-script-accent text-[20px] sm:text-[24px] leading-snug pt-1 text-gold-gradient italic">Save the Date</div>
+<div class="flex items-center gap-1.5 font-label-sm text-on-surface-variant uppercase tracking-[0.12em]">
+<span>December 2026</span>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="text-gold"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>
+</div>
+</div>
+<div class="flex items-center gap-2 font-body-md text-gold-light mb-4 relative z-10">
+<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" class="text-gold"><path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/></svg>
+<span>New Year's Eve Wedding &bull; Thu, 31</span>
+</div>
+<div class="day-strip relative z-10" id="nye-strip"></div>
+<div class="indicator-container relative z-10" id="nye-indicators"></div>
+<div class="mt-4 pt-4 border-t border-gold/20 flex items-center gap-2 font-label-sm text-on-surface-variant relative z-10">
+<span class="material-symbols-outlined text-gold text-sm" data-icon="location_on">location_on</span>
+<span class="tracking-[0.1em] font-semibold text-gold-light">Grand Resort &amp; Residences &bull; Belize City &bull; 6:00 PM</span>
+</div>
+</div>
+</div>
+<!-- Countdown -->
+<div class="pt-6" id="countdown-block">
+<div class="font-label-sm text-gold uppercase tracking-[0.25em] mb-3">Counting down to forever</div>
+<div id="countdown" class="flex items-center justify-start gap-3 sm:gap-4"></div>
+</div>
+</div>
+<!-- Right Visual Block: Hero Image with Shimmer & Floating Elements -->
+<div class="lg:col-span-7 relative">
+<div class="relative w-full max-w-[340px] mx-auto sm:max-w-none aspect-[3/4] sm:aspect-square rounded-[40px] overflow-hidden border border-gold/25 shadow-[0_40px_100px_rgba(0,0,0,0.7)] group">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Charles and Leticia" src="../main.jpeg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+</div>
+<!-- Floating Sparkle Particles (Simulated) -->
+<div class="absolute -top-10 -right-10 w-24 h-24 bg-gold/20 blur-3xl rounded-full floating"></div>
+<div class="absolute top-1/2 -left-12 w-16 h-16 bg-gold/10 blur-2xl rounded-full floating" style="animation-delay: 1s;"></div>
+<div class="absolute -bottom-8 right-1/4 w-20 h-20 bg-gold/15 blur-2xl rounded-full floating" style="animation-delay: 2s;"></div>
+</div>
+</div>
+</section>
+<!-- Details Section: Bento Grid -->
+<section id="details" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding py-section-gap">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-gold mb-4 italic">The Celebration</h2>
+<div class="w-24 h-[1px] bg-gold mx-auto"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Bento Card 1: Our Story -->
+<div id="story" class="md:col-span-2 glass-panel rounded-[32px] p-7 sm:p-10 flex flex-col justify-between relative overflow-hidden group shadow-[0_10px_30px_rgba(212,175,55,0.05)] hover:border-gold/40 transition-colors">
+<div class="relative z-10">
+<span class="font-label-sm text-gold uppercase tracking-widest block mb-4">A love story</span>
+<h3 class="font-headline-md text-white mb-4 italic">Our Journey Together</h3>
+<p class="font-body-md text-on-surface-variant max-w-lg mb-6">
+                            From chance meetings to a love that lights up every room, our journey has been written in laughter, late-night talks and big dreams. This New Year's Eve, we write our next chapter &mdash; together, with you by our side.
+                        </p>
+<a class="inline-flex items-center text-gold font-label-sm uppercase hover:gap-3 transition-all" href="story.html">
+                            Read the full story <span class="material-symbols-outlined ml-2" data-icon="chevron_right">chevron_right</span>
+</a>
+</div>
+<div class="mt-8 mx-auto md:mt-0 md:mx-0 md:absolute md:bottom-6 md:right-6 w-32 h-32 sm:w-40 sm:h-40 md:w-44 md:h-44 rounded-full overflow-hidden border-2 border-gold/40 shadow-[0_0_45px_rgba(212,175,55,0.25)] pointer-events-none group-hover:scale-105 transition-transform duration-1000">
+<img class="w-full h-full object-cover object-top" alt="A memory from their journey" src="../galery%20(1).jpeg"/>
+</div>
+</div>
+<!-- Bento Card 2: Ceremony Details -->
+<div class="glass-panel rounded-[32px] p-8 shadow-[0_10px_30px_rgba(212,175,55,0.05)] bg-gradient-to-tr from-[#1a1a1a]/80 to-gold/5 hover:border-gold/40 transition-colors">
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 512 512" class="text-gold mb-4 inline-block"><path d="M64 208c0 7.8 4.4 18.7 17.1 30.3C126.5 214.1 188.9 200 256 200s129.5 14.1 174.9 38.3C443.6 226.7 448 215.8 448 208c0-12.3-10.8-32-47.9-50.6C364.9 139.8 314 128 256 128s-108.9 11.8-144.1 29.4C74.8 176 64 195.7 64 208zm192 40c-47 0-89.3 7.6-122.9 19.7C166.3 280.2 208.8 288 256 288s89.7-7.8 122.9-20.3C345.3 255.6 303 248 256 248zM0 208c0-49.6 39.4-85.8 83.3-107.8C129.1 77.3 190.3 64 256 64s126.9 13.3 172.7 36.2c43.9 22 83.3 58.2 83.3 107.8l0 96c0 49.6-39.4 85.8-83.3 107.8C382.9 434.7 321.7 448 256 448s-126.9-13.3-172.7-36.2C39.4 389.8 0 353.6 0 304l0-96z"/></svg>
+<h3 class="font-headline-md text-white mb-4 italic">The Ceremony</h3>
+<p class="font-body-md text-on-surface-variant mb-4">
+                        Grand Resort &amp; Residences<br/>
+                        Belize City, Belize
+                    </p>
+<div class="flex items-center gap-2 text-gold font-label-sm">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+<span>Starts at 6:00 PM</span>
+</div>
+</div>
+<!-- Bento Card 4: Reception -->
+<div class="glass-panel rounded-[32px] p-8 shadow-[0_10px_30px_rgba(212,175,55,0.05)] bg-gradient-to-bl from-[#1a1a1a]/80 to-gold/5 hover:border-gold/40 transition-colors">
+<span class="material-symbols-outlined text-gold mb-4" data-icon="local_bar">local_bar</span>
+<h3 class="font-headline-md text-white mb-4 italic">The Reception</h3>
+<p class="font-body-md text-on-surface-variant mb-4">
+                        New Year's Eve Celebration<br/>
+                        Cocktails, Dinner &amp; Dancing until midnight
+                    </p>
+<div class="flex items-center gap-2 text-gold font-label-sm">
+<span class="material-symbols-outlined text-sm" data-icon="nights_stay">nights_stay</span>
+<span>Black, White &amp; Gold Attire</span>
+</div>
+</div>
+<!-- Bento Card 4: Destination -->
+<a href="https://www.google.com/maps/place/Grand+Resort+%26+Residences/@17.5348351,-88.2412046,17z/data=!3m1!4b1!4m9!3m8!1s0x8f5c596476" target="_blank" rel="noopener" aria-label="Get directions to Grand Resort &amp; Residences" class="block md:col-span-2 glass-panel rounded-[32px] overflow-hidden shadow-[0_10px_30px_rgba(212,175,55,0.05)] relative group border-gold/20 hover:border-gold/50 transition-colors">
+<div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors duration-500 z-10"></div>
+<img class="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700" alt="Grand Resort &amp; Residences, Belize City" src="https://res.cloudinary.com/dl5gbzrgh/image/upload/c_limit,w_3840/f_auto/q_75/grand_resort/gallery/bpemf7dj2xurneumcwdu"/>
+<div class="absolute bottom-6 left-6 z-20">
+<div class="glass-panel px-4 py-3 rounded-2xl border border-gold/40 backdrop-blur-md">
+<span class="block font-serif text-[15px] sm:text-base font-semibold text-white mb-1">Grand Resort &amp; Residences</span>
+<div class="flex items-center gap-1.5 text-gold">
+<span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm">4.4</span>
+</div>
+<div class="flex items-center gap-2 text-gold-light font-label-sm mt-1.5">
+<span class="material-symbols-outlined text-sm" data-icon="directions">directions</span>
+<span>Get Directions</span>
+</div>
+</div>
+</div>
+</a>
+</div>
+</section>
+<!-- Dress Code Section -->
+<section id="dresscode" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding py-section-gap">
+<div class="glass-panel rounded-[32px] p-8 sm:p-10 md:p-14 relative overflow-hidden shadow-[0_10px_30px_rgba(212,175,55,0.05)] bg-gradient-to-tl from-[#1a1a1a]/80 to-gold/5 border-gold/20">
+<div class="sparkle-bg absolute inset-0 pointer-events-none"></div>
+<div class="absolute inset-0 gold-shimmer pointer-events-none"></div>
+<div class="relative z-10 flex flex-col md:flex-row items-center gap-10 md:gap-14">
+<div class="shrink-0">
+<div class="w-48 sm:w-56 md:w-64 overflow-hidden rounded-2xl border border-gold/30 shadow-[0_20px_60px_rgba(0,0,0,0.6)]">
+<img src="../dress%20code.png" alt="Open the dress code" class="w-full h-auto object-cover transition-transform duration-700 hover:scale-105 cursor-zoom-in" onclick="openDressCode()"/>
+</div>
+</div>
+<div class="flex-1 text-center md:text-left">
+<span class="font-label-sm text-gold uppercase tracking-[0.25em] block mb-3">Dress Code</span>
+<h2 class="font-script-accent text-[40px] sm:text-[48px] text-gold-gradient italic mb-4">Black, White &amp; Gold</h2>
+<p class="font-body-lg text-on-surface-variant max-w-md mx-auto md:mx-0 mb-8">Celebrate the night in elegant black, crisp white and shimmering gold. Tap the card to view the full guide full screen, or download it to keep close.</p>
+<div class="flex flex-wrap justify-center md:justify-start gap-4">
+<button onclick="openDressCode()" class="inline-flex items-center gap-2 bg-gradient-to-r from-gold-light to-gold-dark text-ink font-label-sm uppercase px-8 py-4 rounded-full border border-gold/40 shadow-[0_10px_30px_rgba(212,175,55,0.25)] hover:shadow-[0_10px_40px_rgba(212,175,55,0.45)] transition-all active:scale-95">
+<span class="material-symbols-outlined text-lg" data-icon="fullscreen">fullscreen</span>
+View Full
+</button>
+<a href="../dress%20code.png" download="Dress-Code.png" class="inline-flex items-center gap-2 border border-gold/30 text-gold font-label-sm uppercase px-8 py-4 rounded-full hover:bg-gold/10 transition-colors no-underline">
+<span class="material-symbols-outlined text-lg" data-icon="download">download</span>
+Download
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Gallery Section -->
+<section id="gallery" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding py-section-gap">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-gold mb-4 italic">Our Moments</h2>
+<div class="w-24 h-[1px] bg-gold mx-auto"></div>
+<p class="font-body-md text-on-surface-variant max-w-md mx-auto mt-6">A glimpse of the laughter, love and light that brought us here.</p>
+</div>
+<div class="fan-layout">
+<div class="fan-card"><img src="../galery%20(1).jpeg" alt="Charles and Leticia moment"/></div>
+<div class="fan-card"><img src="../galery%20(2).jpeg" alt="Charles and Leticia moment"/></div>
+<div class="fan-card"><img src="../galery%20(4).jpeg" alt="Charles and Leticia moment"/></div>
+<div class="fan-card"><img src="../galery%20(5).jpeg" alt="Charles and Leticia moment"/></div>
+<div class="fan-card"><img src="../galery%20(3).jpeg" alt="Charles and Leticia moment"/></div>
+</div>
+<div class="mt-10 flex flex-col items-center gap-2 text-center">
+<p class="font-script-accent text-script-accent text-gold-gradient italic">See you at midnight</p>
+<span class="font-label-sm text-on-surface-variant uppercase tracking-[0.25em]">December 31, 2026</span>
+<span class="font-label-sm text-gold uppercase tracking-[0.2em]">Black &bull; White &bull; Gold</span>
+</div>
+</section>
+<!-- RSVP Section -->
+<section id="rsvp" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding py-section-gap">
+<div class="text-center mb-14">
+<span class="font-script-accent text-script-accent text-gold-gradient italic mb-3 block">Kindly Respond</span>
+<h2 class="font-headline-lg text-gold mb-4 italic">RSVP</h2>
+<div class="w-24 h-[1px] bg-gold mx-auto"></div>
+<p class="font-body-lg text-on-surface-variant max-w-xl mx-auto mt-6">We would love for you to join us under the stars as we ring in 2027 together. Kindly let us know by December 15th, 2026.</p>
+</div>
+<div class="flex justify-center">
+<a href="rsvp.html" class="group inline-block" aria-label="Open the RSVP form">
+<img src="../RSVP%20BUTTON.png" alt="RSVP" draggable="false" class="rsvp-img w-full max-w-[300px] sm:max-w-[380px] h-auto select-none pointer-events-none transition-transform duration-300 group-hover:scale-105 group-active:scale-95"/>
+</a>
+</div>
+</section>
+<!-- Gift Section -->
+<section id="gift" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding py-section-gap">
+<div class="glass-panel rounded-[32px] p-10 sm:p-14 text-center relative overflow-hidden shadow-[0_10px_30px_rgba(212,175,55,0.05)] bg-gradient-to-br from-[#1a1a1a]/80 to-gold/5 border-gold/20">
+<div class="absolute inset-0 gold-shimmer pointer-events-none"></div>
+<div class="sparkle-bg absolute inset-0 pointer-events-none"></div>
+<div class="relative z-10">
+<div class="w-20 h-20 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center mx-auto mb-8">
+<span class="material-symbols-outlined text-gold text-4xl" data-icon="card_travel" style="font-variation-settings:'FILL' 1;">card_travel</span>
+</div>
+<h2 class="font-script-accent text-[42px] text-gold-gradient italic mb-4">Honeymoon Fund</h2>
+<p class="font-body-lg text-on-surface-variant max-w-xl mx-auto mb-8">Your presence is our greatest gift. If you wish to honor us with a token toward our honeymoon, the details are a tap away.</p>
+<a href="honeymoon.html" class="inline-flex items-center gap-2 bg-gradient-to-r from-gold-light to-gold-dark text-ink font-label-sm uppercase px-8 py-4 rounded-full border border-gold/40 shadow-[0_10px_30px_rgba(212,175,55,0.25)] hover:shadow-[0_10px_40px_rgba(212,175,55,0.45)] transition-all active:scale-95">
+<span class="material-symbols-outlined text-lg" data-icon="content_copy">content_copy</span>
+Bank Details
+</a>
+<p class="font-label-sm text-on-surface-variant italic mt-6">Thank you for celebrating with us &mdash; your kindness means the world.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Glass NavBar -->
+<nav class="glass-radio-group fixed bottom-5 left-1/2 -translate-x-1/2 z-50" aria-label="Site navigation">
+<a href="#story" class="active">Story</a>
+<a href="#details">Ceremony</a>
+<a href="#gallery">Gallery</a>
+<a href="#gift">Gift</a>
+<a href="#rsvp">RSVP</a>
+<div class="glass-glider"></div>
+</nav>
+<!-- Countdown -->
+<script>
+(function () {
+  var wedding = new Date('2026-12-31T18:00:00-06:00');
+  var block = document.getElementById('countdown');
+  var units = [
+    { key: 'd', label: 'Days' },
+    { key: 'h', label: 'Hours' },
+    { key: 'm', label: 'Minutes' },
+    { key: 's', label: 'Seconds' }
+  ];
+  var cells = {};
+  units.forEach(function (u) {
+    var el = document.createElement('div');
+    el.className = 'flex flex-col items-center glass-panel rounded-xl px-2 py-2.5 sm:px-4 sm:py-3 border-gold/20 min-w-[56px] sm:min-w-[72px]';
+    var num = document.createElement('span');
+    num.className = 'font-headline-lg text-gold-gradient text-[24px] sm:text-[34px]';
+    num.id = 'cd-' + u.key;
+    var lab = document.createElement('span');
+    lab.className = 'font-label-sm text-on-surface-variant uppercase mt-1';
+    lab.textContent = u.label;
+    el.appendChild(num);
+    el.appendChild(lab);
+    cells[u.key] = num;
+    block.appendChild(el);
+  });
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+  function tick() {
+    var diff = wedding.getTime() - Date.now();
+    if (diff <= 0) {
+      block.innerHTML = '<div class="glass-panel rounded-2xl px-8 py-6 border-gold/30">' +
+        '<div class="font-label-sm text-gold uppercase tracking-[0.25em] mb-2">The big night has arrived</div>' +
+        '<div class="font-headline-lg text-gold-gradient italic">Happy New Year, Charles &amp; Leticia!</div>' +
+        '</div>';
+      return;
+    }
+    cells.d.textContent = pad(Math.floor(diff / 86400000));
+    cells.h.textContent = pad(Math.floor(diff / 3600000) % 24);
+    cells.m.textContent = pad(Math.floor(diff / 60000) % 60);
+    cells.s.textContent = pad(Math.floor(diff / 1000) % 60);
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
+</script>
+
+<!-- Intro experience: tap to play the animation, tap to enter. Runs once per session. -->
+<script>
+(function () {
+  var intro = document.getElementById('introScreen');
+  var firstImg = document.getElementById('firstImg');
+  var gifImg = document.getElementById('gifImg');
+  var lastImg = document.getElementById('lastImg');
+  var hintPill = document.getElementById('hintPill');
+  var hint = document.getElementById('hintText');
+  var loaderCard = document.getElementById('loaderCard');
+  var loadText = document.getElementById('loadText');
+  var loadProgress = document.getElementById('loadProgress');
+  var petalsWrap = document.getElementById('petals');
+
+  var GIF_SRC = '../intro_1.gif';
+  var GIF_DURATION = 5080; // ms
+  var state = 'idle';      // idle -> playing -> hold -> loading -> exit
+
+  var preloader = new Image();
+  preloader.src = GIF_SRC;
+
+  function unlockScroll() {
+    document.documentElement.classList.remove('no-scroll');
+    document.body.classList.remove('no-scroll');
+  }
+
+  function hold() {
+    if (state !== 'playing') return;
+    state = 'hold';
+    if (lastImg) lastImg.classList.remove('opacity-0');
+    if (gifImg) gifImg.classList.add('opacity-0');
+    if (hint) hint.textContent = 'Tap to Enter';
+  }
+
+  function play() {
+    if (state !== 'idle') return;
+    state = 'playing';
+    if (firstImg) firstImg.classList.add('opacity-0');
+    gifImg.src = GIF_SRC;
+    gifImg.classList.remove('opacity-0');
+    if (hint) hint.textContent = 'Enjoy the moment\u2026';
+    setTimeout(hold, GIF_DURATION);
+  }
+
+  function startLoading() {
+    if (state !== 'hold') return;
+    state = 'loading';
+
+    if (hintPill) hintPill.classList.add('hidden');
+    if (loaderCard) loaderCard.classList.remove('hidden');
+
+    var assetsToPreload = [
+      '../main.jpeg',
+      '../galery (1).jpeg',
+      '../galery (2).jpeg',
+      '../galery (3).jpeg',
+      '../galery (4).jpeg',
+      '../galery (5).jpeg',
+      '../dress code.png',
+      '../RSVP BUTTON.png',
+      '../Element (1).png',
+      '../Element (2).png',
+      '../Element (3).png',
+      '../Element (4).png',
+      '../Element (5).png',
+      '../Element (6).png'
+    ];
+
+    var total = assetsToPreload.length;
+    var loaded = 0;
+    var minDisplayTime = 1200;
+    var startTime = Date.now();
+
+    function updateProgress() {
+      var pct = Math.min(100, Math.round((loaded / total) * 100));
+      if (loadProgress) loadProgress.style.width = pct + '%';
+      if (loadText) loadText.textContent = 'Loading your invitation… ' + pct + '%';
+    }
+
+    function finish() {
+      var elapsed = Date.now() - startTime;
+      var remaining = Math.max(0, minDisplayTime - elapsed);
+      setTimeout(function () {
+        exit();
+      }, remaining);
+    }
+
+    if (total === 0) {
+      finish();
+      return;
+    }
+
+    assetsToPreload.forEach(function (src) {
+      var img = new Image();
+      img.onload = img.onerror = function () {
+        loaded++;
+        updateProgress();
+        if (loaded >= total) {
+          finish();
+        }
+      };
+      img.src = src;
+    });
+  }
+
+  function exit() {
+    if (state !== 'loading' && state !== 'hold') return;
+    state = 'exit';
+    intro.classList.add('scatter');
+    intro.classList.add('intro-scroll-away');
+    setTimeout(function () {
+      try { sessionStorage.setItem('cl_intro_done', '1'); } catch (e) {}
+      if (intro.parentNode) intro.parentNode.removeChild(intro);
+      unlockScroll();
+    }, 1100);
+  }
+
+  if (!intro) return;
+  try {
+    if (sessionStorage.getItem('cl_intro_done')) {
+      if (intro.parentNode) intro.parentNode.removeChild(intro);
+      return;
+    }
+  } catch (e) {}
+
+  document.documentElement.classList.add('no-scroll');
+  document.body.classList.add('no-scroll');
+
+  intro.addEventListener('click', function () {
+    if (state === 'idle') play();
+    else if (state === 'hold') startLoading();
+  });
+
+  // ---- Falling interactive petals ----
+  if (petalsWrap) {
+    var PETAL_SRC = '../Element%20(4).png';
+    var petals = [];
+    var W = window.innerWidth, H = window.innerHeight;
+
+    function spawnPetal() {
+      var img = document.createElement('img');
+      img.className = 'petal';
+      img.src = PETAL_SRC;
+      img.alt = '';
+      var size = 12 + Math.random() * 18;
+      img.style.width = size + 'px';
+      img.style.zIndex = 1 + Math.floor(Math.random() * 40);
+      petalsWrap.appendChild(img);
+      var p = {
+        el: img, x: Math.random() * W, y: -40 - Math.random() * 120,
+        size: size, speed: 30 + Math.random() * 45,
+        drift: 15 + Math.random() * 30,
+        spin: (Math.random() - 0.5) * 1.5,
+        rot: Math.random() * 360,
+        phase: Math.random() * Math.PI * 2,
+        swaySpeed: 0.4 + Math.random() * 0.8,
+        dragging: false, flung: false, dead: false,
+        vx: 0, vy: 0, lastX: 0, lastY: 0, lastT: 0
+      };
+      petals.push(p);
+      requestAnimationFrame(function () { img.classList.add('petal-in'); });
+      bindPetal(p);
+    }
+
+    function bindPetal(p) {
+      var el = p.el;
+      el.addEventListener('pointerdown', function (e) {
+        if (p.flung || p.dead) return;
+        e.preventDefault();
+        el.setPointerCapture(e.pointerId);
+        p.dragging = true;
+        p.dragOffX = e.clientX - p.x;
+        p.dragOffY = e.clientY - p.y;
+        p.lastX = e.clientX; p.lastY = e.clientY; p.lastT = performance.now();
+        el.classList.add('grabbed');
+      });
+      el.addEventListener('pointermove', function (e) {
+        if (!p.dragging) return;
+        p.x = e.clientX - p.dragOffX;
+        p.y = e.clientY - p.dragOffY;
+        var now = performance.now();
+        var dt = Math.max(1, now - p.lastT);
+        p.vx = (e.clientX - p.lastX) / dt * 1000;
+        p.vy = (e.clientY - p.lastY) / dt * 1000;
+        p.lastX = e.clientX; p.lastY = e.clientY; p.lastT = now;
+      });
+      el.addEventListener('pointerup', function () {
+        if (!p.dragging) return;
+        p.dragging = false;
+        el.classList.remove('grabbed');
+        if (Math.hypot(p.vx, p.vy) > 250) {
+          p.flung = true;
+          el.classList.add('flung');
+        } else { p.vx = 0; p.vy = 0; }
+      });
+      el.addEventListener('pointercancel', function () {
+        p.dragging = false;
+        el.classList.remove('grabbed');
+        p.vx = 0; p.vy = 0;
+      });
+    }
+
+    function removePetal(p) {
+      if (p.dead) return;
+      p.dead = true;
+      p.el.classList.add('petal-out');
+      setTimeout(function () {
+        if (p.el.parentNode) p.el.parentNode.removeChild(p.el);
+        spawnPetal();
+      }, 250);
+    }
+
+    var lastTime = performance.now();
+    function petalTick(now) {
+      var dt = Math.min(0.05, (now - lastTime) / 1000);
+      lastTime = now;
+      for (var i = 0; i < petals.length; i++) {
+        var p = petals[i];
+        if (p.dead) continue;
+        if (!p.dragging) {
+          if (p.flung) {
+            p.x += p.vx * dt;
+            p.y += p.vy * dt;
+            p.vy += 900 * dt;
+            p.rot += p.spin * 6 * dt;
+            if (p.x < -80 || p.x > W + 80 || p.y > H + 120 || p.y < -400) { removePetal(p); continue; }
+          } else {
+            p.phase += p.swaySpeed * dt;
+            p.y += p.speed * dt;
+            p.x += Math.sin(p.phase) * p.drift * dt;
+            p.rot += p.spin * dt;
+            if (p.y > H + 60) {
+              p.x = Math.random() * W;
+              p.y = -40 - Math.random() * 100;
+              p.speed = 40 + Math.random() * 70;
+            }
+          }
+        }
+        p.el.style.transform = 'translate(' + p.x + 'px,' + p.y + 'px) rotate(' + p.rot + 'deg)';
+      }
+      requestAnimationFrame(petalTick);
+    }
+    for (var i = 0; i < 12; i++) spawnPetal();
+    requestAnimationFrame(petalTick);
+  }
+})();
+</script>
+
+<!-- Guest params passthrough: invitation.html?name=Elvis&id=abc123 carries to rsvp.html -->
+<script>
+(function () {
+  var params = new URLSearchParams(window.location.search || '');
+  if (params.toString()) {
+    var query = '?' + params.toString();
+    document.querySelectorAll('a[href="rsvp.html"]').forEach(function (link) {
+      link.href = 'rsvp.html' + query;
+    });
+  }
+})();
+</script>
+<script>
+function copyText(btn, text) {
+  var done = function () {
+    var icon = btn.querySelector('.copy-icon');
+    btn.classList.add('copied');
+    if (icon) icon.querySelector('.material-symbols-outlined').textContent = 'check';
+    var msg = document.getElementById('copy-msg');
+    if (msg) msg.textContent = 'Copied!';
+    setTimeout(function () {
+      btn.classList.remove('copied');
+      if (icon) icon.querySelector('.material-symbols-outlined').textContent = 'content_copy';
+      if (msg) msg.textContent = '';
+    }, 1800);
+  };
+  var cb = navigator.clipboard;
+  if (cb && cb.writeText) {
+    cb.writeText(text).then(done, function () { fallbackCopy(text); done(); });
+  } else {
+    fallbackCopy(text);
+    done();
+  }
+}
+function fallbackCopy(text) {
+  var ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); } catch (e) {}
+  document.body.removeChild(ta);
+}
+</script>
+<!-- Gallery fan carousel (GSAP) -->
+<script>
+(function () {
+  if (typeof gsap === 'undefined') return;
+  var MAX_VISIBLE = 7;
+  var FAN_POSITIONS = [
+    { rot: -21, scale: 0.7756, x: -30, y: 7.3, zIndex: 1 },
+    { rot: -14, scale: 0.8498, x: -22, y: 4.0, zIndex: 2 },
+    { rot: -7,  scale: 0.9346, x: -11, y: 1.3, zIndex: 3 },
+    { rot: 0,   scale: 1.0,    x: 0,   y: 0.0, zIndex: 10 },
+    { rot: 7,   scale: 0.9346, x: 11,  y: 1.3, zIndex: 3 },
+    { rot: 14,  scale: 0.8498, x: 22,  y: 4.0, zIndex: 2 },
+    { rot: 21,  scale: 0.7756, x: 30,  y: 7.3, zIndex: 1 },
+  ];
+  function respMult(w) {
+    if (w < 480) return 0.28;
+    if (w < 640) return 0.38;
+    if (w < 768) return 0.5;
+    if (w < 1024) return 0.75;
+    return 1.0;
+  }
+  function heightMult(w) {
+    var ideal;
+    if (w < 480) ideal = 22 * 16;
+    else if (w < 640) ideal = 26 * 16;
+    else if (w < 768) ideal = 28 * 16;
+    else if (w < 1024) ideal = 34 * 16;
+    else ideal = 38 * 16;
+    var available = window.innerHeight * 0.7;
+    return available >= ideal ? 1 : available / ideal;
+  }
+  function slotConfig(total, slot) {
+    if (total >= MAX_VISIBLE) return FAN_POSITIONS[slot];
+    var center = total >> 1;
+    var distance = total > 1 ? (slot - center) / center : 0;
+    var absD = Math.abs(distance);
+    return {
+      rot: distance * 21,
+      scale: 1 - 0.2244 * absD * absD,
+      x: distance * 30,
+      y: absD * absD * 7.3,
+      zIndex: 10 - Math.abs(slot - center),
+    };
+  }
+
+  var container = document.querySelector('.fan-layout');
+  if (!container) return;
+  var cards = Array.from(container.querySelectorAll('.fan-card'));
+  var total = cards.length;
+  if (!total) return;
+  var centerSlot = total >> 1;
+  var activeSlot = null;
+  var leaveTimer = null;
+
+  function cfg(slot) { return slotConfig(total, slot); }
+
+  function baseLayout(hoveredSlot) {
+    var mult = respMult(window.innerWidth);
+    var hM = heightMult(window.innerWidth);
+    cards.forEach(function (card, i) {
+      var base = cfg(i);
+      var tx = base.x * mult;
+      var ty = base.y * hM;
+      var tr = base.rot;
+      var ts = base.scale;
+      var delay = hoveredSlot === null ? Math.abs(i - centerSlot) * 0.02 : Math.abs(i - hoveredSlot) * 0.02;
+      if (hoveredSlot !== null) {
+        if (i === hoveredSlot) {
+          ty -= 2.5 * hM;
+          ts *= 1.08;
+        } else {
+          var dist = Math.abs(i - hoveredSlot);
+          var norm = centerSlot > 0 ? (i - centerSlot) / centerSlot : 0;
+          var push = 8 * (1 - Math.abs(norm)) * (1 + 0.2 * Math.max(0, 3 - dist));
+          if (i < hoveredSlot) { tx -= push * mult; tr -= 3 / (dist + 1); }
+          else { tx += push * mult; tr += 3 / (dist + 1); }
+          if (i === total - 1 && hoveredSlot < centerSlot) ty -= 1 * hM;
+          if (i === 0 && hoveredSlot > centerSlot) ty -= 1 * hM;
+        }
+      }
+      gsap.to(card, {
+        x: tx + 'rem', y: ty + 'rem', rotation: tr, scale: ts,
+        duration: 0.5, delay: delay, ease: 'elastic.out(1,0.75)', overwrite: 'auto',
+      });
+      gsap.set(card, { zIndex: base.zIndex });
+    });
+  }
+
+  var m0 = respMult(window.innerWidth);
+  var h0 = heightMult(window.innerWidth);
+  cards.forEach(function (card, i) {
+    var base = cfg(i);
+    gsap.set(card, { x: 0, y: (12 * h0) + 'rem', rotation: 0, scale: 0.5, opacity: 0 });
+    gsap.to(card, {
+      x: base.x * m0 + 'rem', y: base.y * h0 + 'rem', rotation: base.rot,
+      scale: base.scale, opacity: 1, zIndex: base.zIndex,
+      duration: 1.2, ease: 'elastic.out(1.05,0.78)', delay: 0.2 + i * 0.06,
+    });
+  });
+
+  cards.forEach(function (card, i) {
+    card.addEventListener('mouseenter', function () {
+      if (leaveTimer) { clearTimeout(leaveTimer); leaveTimer = null; }
+      if (activeSlot !== i) { activeSlot = i; baseLayout(i); }
+    });
+  });
+  container.addEventListener('mouseleave', function () {
+    if (leaveTimer) clearTimeout(leaveTimer);
+    leaveTimer = setTimeout(function () { activeSlot = null; baseLayout(null); }, 50);
+  });
+  window.addEventListener('resize', function () { baseLayout(activeSlot); });
+})();
+</script>
+<!-- Save-the-Date calendar: week strip ending on Thu Dec 31, 2026 -->
+<script>
+(function () {
+  var strip = document.getElementById('nye-strip');
+  var dots = document.getElementById('nye-indicators');
+  if (!strip) return;
+
+  var target = new Date(2026, 11, 31); // Thu, Dec 31 2026
+  var monday = new Date(target);
+  monday.setDate(target.getDate() - ((target.getDay() + 6) % 7));
+  var week = [];
+  for (var i = 0; i < 7; i++) {
+    var d = new Date(monday);
+    d.setDate(monday.getDate() + i);
+    week.push(d);
+  }
+
+  var sameDay = function (a, b) {
+    return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+  };
+
+  strip.innerHTML = '';
+  week.forEach(function (d, idx) {
+    if (idx === 6) return; // strip shows Mon - Sat (6 days)
+    var el = document.createElement('div');
+    var active = sameDay(d, target) ? ' day-active' : '';
+    el.className = 'day-item' + active;
+    var num = document.createElement('div');
+    num.className = 'day-number';
+    num.textContent = d.getDate();
+    var name = document.createElement('div');
+    name.className = 'day-name';
+    name.textContent = d.toLocaleDateString('en-US', { weekday: 'short' });
+    el.appendChild(num);
+    el.appendChild(name);
+    strip.appendChild(el);
+  });
+
+  dots.innerHTML = '';
+  week.forEach(function (d, idx) {
+    var dot = document.createElement('div');
+    var active = sameDay(d, target) ? ' indicator-active' : '';
+    dot.className = 'indicator-dot' + active;
+    dots.appendChild(dot);
+  });
+})();
+</script>
+<!-- Glass nav: sliding gold glider + scroll spy -->
+<script>
+(function () {
+  var nav = document.querySelector('.glass-radio-group');
+  if (!nav) return;
+  var links = Array.from(nav.querySelectorAll('a'));
+  var glider = nav.querySelector('.glass-glider');
+  var n = links.length;
+  if (!n || !glider) return;
+  glider.style.width = (100 / n) + '%';
+
+  function setActive(link) {
+    if (link.classList.contains('active')) return;
+    links.forEach(function (l) { l.classList.remove('active'); });
+    link.classList.add('active');
+    glider.style.transform = 'translateX(' + (links.indexOf(link) * 100) + '%)';
+  }
+
+  links.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      var id = link.getAttribute('href').slice(1);
+      var el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setActive(link);
+    });
+  });
+
+  var map = {};
+  links.forEach(function (l) { map[l.getAttribute('href').slice(1)] = l; });
+  var secs = Object.keys(map).map(function (id) { return document.getElementById(id); }).filter(Boolean);
+  if ('IntersectionObserver' in window && secs.length) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting && map[en.target.id]) setActive(map[en.target.id]);
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    secs.forEach(function (s) { io.observe(s); });
+  }
+})();
+</script>
+<!-- Dress code fullscreen viewer -->
+<div id="dressOverlay" class="hidden fixed inset-0 z-[10001] bg-black/90 backdrop-blur-md flex items-center justify-center cursor-pointer" onclick="if(event.target===this)closeDressCode()">
+<img src="../dress%20code.png" alt="Dress code guide" class="max-w-[92vw] max-h-[88vh] w-auto h-auto object-contain select-none" style="box-shadow:0 0 80px rgba(212,175,55,.28)"/>
+<div class="absolute top-4 right-4 flex gap-3">
+<a href="../dress%20code.png" download="Dress-Code.png" onclick="event.stopPropagation()" class="w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors no-underline" aria-label="Download dress code">
+<span class="material-symbols-outlined" data-icon="download">download</span>
+</a>
+<button onclick="event.stopPropagation();closeDressCode()" class="w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors" aria-label="Close">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+</div>
+<!-- Gradient button: light follows the pointer -->
+<script>
+(function () {
+  document.querySelectorAll('.btn-wrapper').forEach(function (w) {
+    w.addEventListener('pointermove', function (e) {
+      var r = w.getBoundingClientRect();
+      w.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+      w.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+    });
+  });
+})();
+</script>
+<!-- Dress code viewer controls -->
+<script>
+(function () {
+  var overlay = document.getElementById('dressOverlay');
+  if (!overlay) return;
+  window.openDressCode = function () {
+    overlay.classList.remove('hidden');
+    document.documentElement.classList.add('no-scroll');
+    document.body.classList.add('no-scroll');
+  };
+  window.closeDressCode = function () {
+    overlay.classList.add('hidden');
+    document.documentElement.classList.remove('no-scroll');
+    document.body.classList.remove('no-scroll');
+  };
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeDressCode();
+  });
+})();
+</script>
+</body></html>

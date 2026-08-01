@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RSVP — Charles &amp; Leticia</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Be+Vietnam+Pro:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+tailwind.config={darkMode:"class",theme:{extend:{colors:{"gold":{"DEFAULT":"#D4AF37","light":"#F5D76E","dark":"#A8862B"},"ink":"#0a0a0a","on-error":"#ffffff","primary":"#D4AF37","inverse-on-surface":"#0a0a0a","on-tertiary":"#0a0a0a","on-error-container":"#ffb4ab","outline":"#5c5c5c","on-secondary":"#0a0a0a","surface-container-low":"#0f0f0f","on-surface-variant":"#b9b9b9","primary-fixed-dim":"#4a3b14","background":"#0a0a0a","on-primary-fixed":"#f5e3a3","on-primary-container":"#f5e3a3","secondary":"#C9A84C","tertiary":"#E8CE7A","inverse-surface":"#f5f5f5","inverse-primary":"#D4AF37","surface-dim":"#0c0c0c","on-tertiary-fixed":"#f5e3a3","on-secondary-fixed":"#f0d98c","surface-container-high":"#1a1a1a","secondary-container":"#3b2f10","primary-fixed":"#2a220c","surface-tint":"#D4AF37","tertiary-fixed":"#2a220c","surface":"#121212","outline-variant":"#2e2e2e","primary-container":"#3b2f10","on-tertiary-container":"#f5e3a3","error-container":"#3b0a0a","surface-variant":"#1c1c1c","on-surface":"#f5f5f5","tertiary-fixed-dim":"#4a3b14","on-background":"#f5f5f5","tertiary-container":"#2a220c","error":"#ba1a1a","surface-bright":"#2a2a2a","surface-container-lowest":"#050505","secondary-fixed":"#2a220c","on-tertiary-fixed-variant":"#e8ce7a","on-primary-fixed-variant":"#f5e3a3","surface-container-highest":"#222222","on-secondary-container":"#f0d98c","on-primary":"#0a0a0a","on-secondary-fixed-variant":"#e8ce7a","surface-container":"#151515","secondary-fixed-dim":"#4a3b14"},borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},spacing:{"container-padding":"2rem","unit":"8px","section-gap":"4rem","gutter":"1.5rem","element-gap":"1rem"},fontFamily:{"headline-lg":["Noto Serif"],"script-accent":["Great Vibes","cursive"],"headline-xl":["Noto Serif"],"headline-md":["Noto Serif"],"body-md":["Be Vietnam Pro"],"label-sm":["Be Vietnam Pro"],"body-lg":["Be Vietnam Pro"],"serif":["Noto Serif","Georgia","serif"],"sans":["Be Vietnam Pro","system-ui","sans-serif"]},fontSize:{"headline-lg":["32px",{"lineHeight":"1.2","fontWeight":"600"}],"script-accent":["32px",{"lineHeight":"1","fontWeight":"400"}],"headline-xl":["48px",{"lineHeight":"1.1","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-md":["24px",{"lineHeight":"1.3","fontWeight":"500"}],"body-md":["16px",{"lineHeight":"1.6","fontWeight":"400"}],"label-sm":["12px",{"lineHeight":"1","letterSpacing":"0.1em","fontWeight":"600"}],"body-lg":["18px",{"lineHeight":"1.6","fontWeight":"400"}]}}}}
+</script>
+<style>
+.glass-panel{background:rgba(18,18,18,.55);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(212,175,55,.16)}
+.satin-gradient{background:radial-gradient(1100px 500px at 80% -10%,rgba(212,175,55,.10),transparent 60%),radial-gradient(900px 600px at -10% 110%,rgba(212,175,55,.06),transparent 55%),linear-gradient(160deg,#050505 0%,#100e09 45%,#060606 100%)}
+.gold-shimmer{background:linear-gradient(90deg,transparent,rgba(212,175,55,.16),transparent);background-size:220% 100%;animation:shimmer 4s linear infinite}
+@keyframes shimmer{0%{background-position:220% 0}100%{background-position:-120% 0}}
+.text-gold-gradient{background:linear-gradient(120deg,#F5D76E 0%,#D4AF37 45%,#8A6B1F 80%,#F5D76E 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}
+body{min-height:100dvh}
+.sparkle-bg{background-image:radial-gradient(circle at center,#D4AF37 1px,transparent 1px);background-size:24px 24px;opacity:.05}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+input[type=number]{-moz-appearance:textfield}
+/* Heart/Rose attendance toggle (adapted from Uiverse.io by milegelu) */
+.att-toggle{--UnChacked-color:hsl(0,0%,10%);--chacked-color:#D4AF37;--font-color:#ffffff;--icon-size:1.5em;--anim-time:.25s;--anim-scale:.1;--base-radius:.8em;display:flex;align-items:center;position:relative;cursor:pointer;font-size:20px;user-select:none;fill:var(--font-color);color:var(--font-color)}
+.att-toggle input{display:none}
+.att-toggle .checkmark{background:var(--UnChacked-color);border-radius:var(--base-radius);display:flex;align-items:center;padding:.5em 1.1em;border:1px solid rgba(212,175,55,.35);box-shadow:0 4px 18px rgba(0,0,0,.35)}
+.att-toggle .icon{width:var(--icon-size);height:auto;filter:drop-shadow(0 2px var(--base-radius) rgba(0,0,0,.25));transition:all var(--anim-time)}
+.att-toggle .name{margin:0 .35em;font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:11px;letter-spacing:.15em;text-transform:uppercase;transition:all var(--anim-time)}
+.att-toggle .Yes{width:0}
+.att-toggle .name.Yes{display:none}
+.att-toggle:hover .checkmark,.att-toggle:hover .icon,.att-toggle:hover .name{transform:scale(calc(1 + var(--anim-scale)))}
+.att-toggle:active .checkmark,.att-toggle:active .icon,.att-toggle:active .name{transform:scale(calc(1 - var(--anim-scale)/2));border-radius:calc(var(--base-radius)*2)}
+.att-toggle input:checked + .checkmark{--UnChacked-color:var(--chacked-color);fill:#0a0a0a;color:#0a0a0a}
+.att-toggle input:checked ~ .checkmark .No{width:0}
+.att-toggle input:checked ~ .checkmark .name.No{display:none}
+.att-toggle input:checked ~ .checkmark .Yes{width:var(--icon-size)}
+.att-toggle input:checked ~ .checkmark .name.Yes{width:auto;display:unset}
+@keyframes toast-in{from{opacity:0;transform:translate(-50%,-10px)}to{opacity:1;transform:translate(-50%,0)}}
+.error-alert{animation:toast-in .25s ease}
+.att-status{display:inline-flex;align-items:center;gap:.5rem;padding:.45rem 1.1rem;border-radius:9999px;font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;border:1px solid;transition:all .25s ease}
+.att-status.on{background:rgba(212,175,55,.12);border-color:rgba(212,175,55,.55);color:#F5D76E}
+.att-status.off{background:rgba(186,26,26,.10);border-color:rgba(186,26,26,.5);color:#ff8a80}
+</style>
+</head>
+<body class="bg-background font-body-md text-on-background min-h-screen relative overflow-x-hidden">
+<div class="fixed inset-0 satin-gradient pointer-events-none"></div>
+<!-- Header -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-white/[0.08] backdrop-blur-2xl backdrop-saturate-150 border-b border-gold/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.6)]">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-gold">auto_awesome</span>
+<a id="backLink" href="_invitation.html" class="inline-flex items-center gap-1 font-label-sm uppercase tracking-[0.15em] text-on-surface-variant hover:text-gold transition-colors no-underline ml-2">
+<span class="material-symbols-outlined text-lg">arrow_back</span> Invitation
+</a>
+</div>
+<div class="font-serif italic text-xl text-gold">Charles &amp; Leticia</div>
+</header>
+
+<main class="pt-28 pb-32 px-[2rem] flex justify-center items-center min-h-screen relative">
+<div class="max-w-[600px] w-full">
+<section class="glass-panel rounded-[2rem] p-8 md:p-14 shadow-[0_20px_60px_rgba(0,0,0,0.6)] overflow-hidden relative border-gold/20">
+<div class="sparkle-bg absolute inset-0 pointer-events-none"></div>
+<div class="absolute inset-0 gold-shimmer opacity-40 pointer-events-none"></div>
+
+<!-- Heading -->
+<div class="text-center mb-10 relative z-10">
+<span class="font-script-accent text-script-accent italic text-gold mb-2 block">Kindly Respond</span>
+<h1 class="font-headline-xl text-white leading-tight">RSVP</h1>
+<p id="greeting" class="font-body-lg text-on-surface-variant italic mt-3 hidden">Dear <span class="text-gold-light font-serif">guest</span>,</p>
+<div class="w-16 h-[1px] bg-gold mx-auto mt-6 opacity-50"></div>
+<p id="totalLine" class="font-label-sm text-gold uppercase tracking-[0.2em] mt-6"></p>
+<p id="coupleNote" class="font-label-sm text-gold-light uppercase tracking-[0.2em] mt-3 hidden">RSVPing for the two of you</p>
+</div>
+
+<!-- FORM -->
+<form id="rsvpForm" class="space-y-8 relative z-10" onsubmit="handleSubmit(event)">
+<!-- SINGLE MODE -->
+<div id="singleFields" class="space-y-8">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<div class="relative">
+<label class="block font-headline-md text-white/70 mb-2 italic" for="name">First Name</label>
+<input class="w-full bg-transparent border-t-0 border-x-0 border-b border-gold/30 focus:border-gold focus:ring-0 text-headline-md font-script-accent italic py-3 transition-colors placeholder:opacity-20 text-white" id="name" name="name" placeholder="First name" type="text" autocomplete="given-name"/>
+</div>
+<div class="relative" id="lastNameField">
+<label class="block font-headline-md text-white/70 mb-2 italic" for="lastName">Last Name</label>
+<input class="w-full bg-transparent border-t-0 border-x-0 border-b border-gold/30 focus:border-gold focus:ring-0 text-headline-md font-script-accent italic py-3 transition-colors placeholder:opacity-20 text-white" id="lastName" name="lastName" placeholder="Last name" type="text" autocomplete="family-name"/>
+</div>
+</div>
+<div class="space-y-5">
+<p class="font-label-sm text-on-surface-variant tracking-[0.2em] uppercase text-center">Will you be attending?</p>
+<input class="sr-only" id="att-yes" name="attendance" type="radio" value="yes"/>
+<input class="sr-only" id="att-no" name="attendance" type="radio" value="no"/>
+<div class="flex justify-center pt-1">
+<label class="att-toggle" id="attToggle" aria-label="Toggle whether you are attending">
+<input id="attToggler" type="checkbox"/>
+<div class="checkmark">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon No"><path d="M12 5a3 3 0 1 1 3 3m-3-3a3 3 0 1 0-3 3m3-3v1M9 8a3 3 0 1 0 3 3M9 8h1m5 0a3 3 0 1 1-3 3m3-3h-1m-2 3v-1"/><circle cx="12" cy="8" r="2"/><path d="M12 10v12"/><path d="M12 22c4.2 0 7-1.667 7-5-4.2 0-7 1.667-7 5Z"/><path d="M12 22c-4.2 0-7-1.667-7-5 4.2 0 7 1.667 7 5Z"/></svg>
+<p class="No name">Decline</p>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="icon Yes"><path d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/></svg>
+<p class="Yes name">Accept</p>
+</div>
+</label>
+</div>
+<!-- Status indicator -->
+<div class="flex justify-center pt-2">
+<span id="statusPill" class="att-status hidden"><span class="material-symbols-outlined text-base"></span><span class="att-status-text"></span></span>
+</div>
+</div>
+<!-- Guest count (shown when attending) -->
+<div id="guestField" class="hidden space-y-5">
+<div>
+<p class="font-label-sm text-on-surface-variant tracking-[0.2em] uppercase mb-3">Number of guests attending <span class="text-gold-light normal-case tracking-normal">(including you)</span></p>
+<div class="flex items-center justify-center gap-6">
+<button type="button" onclick="stepGuests('guestCount',-1)" class="w-12 h-12 rounded-full border border-gold/30 text-gold hover:bg-gold/10 transition-colors text-2xl leading-none">−</button>
+<input id="guestCount" type="number" value="1" min="1" max="8" class="w-20 text-center bg-transparent border-b border-gold/30 focus:border-gold focus:ring-0 font-headline-xl text-gold-gradient" aria-label="Number of guests attending"/>
+<button type="button" onclick="stepGuests('guestCount',1)" class="w-12 h-12 rounded-full border border-gold/30 text-gold hover:bg-gold/10 transition-colors text-2xl leading-none">+</button>
+</div>
+</div>
+<div>
+<label class="block font-headline-md text-white/70 mb-2 italic" for="plusNames">Names of Additional Guests</label>
+<input class="w-full bg-transparent border-t-0 border-x-0 border-b border-gold/30 focus:border-gold focus:ring-0 text-body-lg py-3 transition-colors placeholder:opacity-30 text-white" id="plusNames" type="text" placeholder="e.g. Maria Lopez, Carlos Ruiz"/>
+</div>
+</div>
+</div>
+
+<!-- COUPLE MODE -->
+<div id="coupleFields" class="hidden space-y-10">
+<!-- Guest 1 -->
+<div class="space-y-5">
+<div class="flex items-center gap-3">
+<div class="flex-1 h-[1px] bg-gold/30"></div>
+<span class="font-label-sm text-gold uppercase tracking-[0.2em]">Guest 1</span>
+<div class="flex-1 h-[1px] bg-gold/30"></div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<div class="relative">
+<label class="block font-headline-md text-white/70 mb-2 italic" for="nameA">First Name</label>
+<input class="w-full bg-transparent border-t-0 border-x-0 border-b border-gold/30 focus:border-gold focus:ring-0 text-headline-md font-script-accent italic py-3 transition-colors placeholder:opacity-20 text-white" id="nameA" placeholder="First name" type="text" autocomplete="given-name"/>
+</div>
+<div class="relative">
+<label class="block font-headline-md text-white/70 mb-2 italic" for="lastNameA">Last Name</label>
+<input class="w-full bg-transparent border-t-0 border-x-0 border-b border-gold/30 focus:border-gold focus:ring-0 text-headline-md font-script-accent italic py-3 transition-colors placeholder:opacity-20 text-white" id="lastNameA" placeholder="Last name" type="text" autocomplete="family-name"/>
+</div>
+</div>
+<div class="space-y-4">
+<p class="font-label-sm text-on-surface-variant tracking-[0.2em] uppercase text-center">Is this guest attending?</p>
+<input class="sr-only" id="att-yes-a" name="attendanceA" type="radio" value="yes"/>
+<input class="sr-only" id="att-no-a" name="attendanceA" type="radio" value="no"/>
+<div class="flex justify-center pt-1">
+<label class="att-toggle" id="attToggleA" aria-label="Toggle whether this guest is attending">
+<input id="attTogglerA" type="checkbox"/>
+<div class="checkmark">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon No"><path d="M12 5a3 3 0 1 1 3 3m-3-3a3 3 0 1 0-3 3m3-3v1M9 8a3 3 0 1 0 3 3M9 8h1m5 0a3 3 0 1 1-3 3m3-3h-1m-2 3v-1"/><circle cx="12" cy="8" r="2"/><path d="M12 10v12"/><path d="M12 22c4.2 0 7-1.667 7-5-4.2 0-7 1.667-7 5Z"/><path d="M12 22c-4.2 0-7-1.667-7-5 4.2 0 7 1.667 7 5Z"/></svg>
+<p class="No name">Decline</p>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="icon Yes"><path d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/></svg>
+<p class="Yes name">Accept</p>
+</div>
+</label>
+</div>
+<div class="flex justify-center pt-2">
+<span id="statusPillA" class="att-status hidden"><span class="material-symbols-outlined text-base"></span><span class="att-status-text"></span></span>
+</div>
+</div>
+<div id="guestFieldA" class="hidden">
+<div>
+<p class="font-label-sm text-on-surface-variant tracking-[0.2em] uppercase mb-3 text-center">Guests attending <span class="text-gold-light normal-case tracking-normal">(including this person)</span></p>
+<div class="flex items-center justify-center gap-6">
+<button type="button" onclick="stepGuests('guestCountA',-1)" class="w-12 h-12 rounded-full border border-gold/30 text-gold hover:bg-gold/10 transition-colors text-2xl leading-none">−</button>
+<input id="guestCountA" type="number" value="1" min="1" max="8" class="w-20 text-center bg-transparent border-b border-gold/30 focus:border-gold focus:ring-0 font-headline-xl text-gold-gradient" aria-label="Guests attending for guest one"/>
+<button type="button" onclick="stepGuests('guestCountA',1)" class="w-12 h-12 rounded-full border border-gold/30 text-gold hover:bg-gold/10 transition-colors text-2xl leading-none">+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Guest 2 -->
+<div class="space-y-5">
+<div class="flex items-center gap-3">
+<div class="flex-1 h-[1px] bg-gold/30"></div>
+<span class="font-label-sm text-gold uppercase tracking-[0.2em]">Guest 2</span>
+<div class="flex-1 h-[1px] bg-gold/30"></div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<div class="relative">
+<label class="block font-headline-md text-white/70 mb-2 italic" for="nameB">First Name</label>
+<input class="w-full bg-transparent border-t-0 border-x-0 border-b border-gold/30 focus:border-gold focus:ring-0 text-headline-md font-script-accent italic py-3 transition-colors placeholder:opacity-20 text-white" id="nameB" placeholder="First name" type="text" autocomplete="given-name"/>
+</div>
+<div class="relative">
+<label class="block font-headline-md text-white/70 mb-2 italic" for="lastNameB">Last Name</label>
+<input class="w-full bg-transparent border-t-0 border-x-0 border-b border-gold/30 focus:border-gold focus:ring-0 text-headline-md font-script-accent italic py-3 transition-colors placeholder:opacity-20 text-white" id="lastNameB" placeholder="Last name" type="text" autocomplete="family-name"/>
+</div>
+</div>
+<div class="space-y-4">
+<p class="font-label-sm text-on-surface-variant tracking-[0.2em] uppercase text-center">Is this guest attending?</p>
+<input class="sr-only" id="att-yes-b" name="attendanceB" type="radio" value="yes"/>
+<input class="sr-only" id="att-no-b" name="attendanceB" type="radio" value="no"/>
+<div class="flex justify-center pt-1">
+<label class="att-toggle" id="attToggleB" aria-label="Toggle whether this guest is attending">
+<input id="attTogglerB" type="checkbox"/>
+<div class="checkmark">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon No"><path d="M12 5a3 3 0 1 1 3 3m-3-3a3 3 0 1 0-3 3m3-3v1M9 8a3 3 0 1 0 3 3M9 8h1m5 0a3 3 0 1 1-3 3m3-3h-1m-2 3v-1"/><circle cx="12" cy="8" r="2"/><path d="M12 10v12"/><path d="M12 22c4.2 0 7-1.667 7-5-4.2 0-7 1.667-7 5Z"/><path d="M12 22c-4.2 0-7-1.667-7-5 4.2 0 7 1.667 7 5Z"/></svg>
+<p class="No name">Decline</p>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="icon Yes"><path d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/></svg>
+<p class="Yes name">Accept</p>
+</div>
+</label>
+</div>
+<div class="flex justify-center pt-2">
+<span id="statusPillB" class="att-status hidden"><span class="material-symbols-outlined text-base"></span><span class="att-status-text"></span></span>
+</div>
+</div>
+<div id="guestFieldB" class="hidden">
+<div>
+<p class="font-label-sm text-on-surface-variant tracking-[0.2em] uppercase mb-3 text-center">Guests attending <span class="text-gold-light normal-case tracking-normal">(including this person)</span></p>
+<div class="flex items-center justify-center gap-6">
+<button type="button" onclick="stepGuests('guestCountB',-1)" class="w-12 h-12 rounded-full border border-gold/30 text-gold hover:bg-gold/10 transition-colors text-2xl leading-none">−</button>
+<input id="guestCountB" type="number" value="1" min="1" max="8" class="w-20 text-center bg-transparent border-b border-gold/30 focus:border-gold focus:ring-0 font-headline-xl text-gold-gradient" aria-label="Guests attending for guest two"/>
+<button type="button" onclick="stepGuests('guestCountB',1)" class="w-12 h-12 rounded-full border border-gold/30 text-gold hover:bg-gold/10 transition-colors text-2xl leading-none">+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- SHARED FIELDS -->
+<div id="optionalFields" class="space-y-8">
+<div class="relative">
+<label class="block font-headline-md text-white/70 mb-2 italic" for="phone">Phone Number</label>
+<input class="w-full bg-transparent border-t-0 border-x-0 border-b border-gold/30 focus:border-gold focus:ring-0 text-body-lg py-3 transition-colors placeholder:opacity-30 text-white" id="phone" name="phone" placeholder="e.g. 501 600-1234" type="tel" autocomplete="tel"/>
+</div>
+<div class="relative">
+<label class="block font-headline-md text-white/70 mb-2 italic" for="song">Song Request</label>
+<input class="w-full bg-transparent border-t-0 border-x-0 border-b border-gold/30 focus:border-gold focus:ring-0 text-body-lg py-3 transition-colors placeholder:opacity-30 text-white" id="song" type="text" placeholder="e.g. your favorite dance song, first dance, anything"/>
+</div>
+<div class="relative">
+<label class="block font-headline-md text-white/70 mb-2 italic" for="message">Message for the Couple</label>
+<textarea class="w-full bg-transparent border-t-0 border-x-0 border-b border-gold/30 focus:border-gold focus:ring-0 text-body-lg py-3 transition-colors placeholder:opacity-30 resize-none text-white" id="message" placeholder="Share a special note..." rows="2"></textarea>
+</div>
+</div>
+
+<div class="pt-8 text-center">
+<button type="submit" class="group relative px-12 py-5 rounded-full bg-gradient-to-r from-gold-light to-gold-dark text-ink font-label-sm tracking-widest uppercase border border-gold/40 shadow-[0_10px_30px_rgba(212,175,55,0.25)] hover:shadow-[0_10px_40px_rgba(212,175,55,0.45)] transition-all active:scale-95 duration-300 overflow-hidden">
+<span class="relative z-10">Send RSVP</span>
+<div class="absolute inset-0 bg-white/30 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
+</button>
+<p class="mt-6 font-label-sm text-on-surface-variant italic">Please reply by December 15th, 2026</p>
+</div>
+</form>
+
+<!-- SUCCESS -->
+<div id="success" class="hidden text-center relative z-10 space-y-6">
+<div class="w-20 h-20 mx-auto rounded-full bg-gold/10 border border-gold/40 flex items-center justify-center">
+<span class="material-symbols-outlined text-gold text-4xl" style="font-variation-settings:'FILL' 1" data-icon="check_circle">check_circle</span>
+</div>
+<h2 class="font-headline-xl text-white leading-tight">Thank You,<br/><span id="sucName" class="font-script-accent text-script-accent text-gold-gradient italic">Guest</span></h2>
+<p id="sucSummary" class="font-body-lg text-on-surface-variant"></p>
+<div id="sucResponses" class="inline-block glass-panel rounded-full px-6 py-2 border-gold/30 font-label-sm text-gold uppercase tracking-[0.15em]"></div>
+<p id="sucTotal" class="font-label-sm text-on-surface-variant uppercase tracking-[0.15em]"></p>
+<div class="flex flex-col sm:flex-row justify-center gap-4 pt-4">
+<button onclick="resetForAnother()" class="px-8 py-4 rounded-full bg-gradient-to-r from-gold-light to-gold-dark text-ink font-label-sm tracking-widest uppercase border border-gold/40 shadow-[0_10px_30px_rgba(212,175,55,0.25)] hover:shadow-[0_10px_40px_rgba(212,175,55,0.45)] transition-all active:scale-95">RSVP for another guest</button>
+<a id="doneLink" href="_invitation.html" class="px-8 py-4 rounded-full border border-gold/30 text-gold font-label-sm tracking-widest uppercase hover:bg-gold/10 transition-colors no-underline">Back to invitation</a>
+</div>
+</div>
+
+</section>
+<p class="text-center font-serif text-xs uppercase tracking-[0.2em] opacity-50 mt-10">Charles &amp; Leticia &bull; December 31, 2026 &bull; Belize City</p>
+</div>
+</main>
+
+<!-- Mobile bottom nav -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-4 bg-white/[0.08] backdrop-blur-2xl backdrop-saturate-150 border-t border-gold/20 shadow-[0_-10px_40px_rgba(0,0,0,0.6)]">
+<a id="navHome" href="_invitation.html" class="btn-feedback flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:text-gold transition-colors no-underline">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span class="font-serif text-[10px] uppercase tracking-widest text-on-surface-variant">Home</span>
+</a>
+<a href="#" class="flex flex-col items-center justify-center text-gold scale-110 transition-transform no-underline">
+<span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">mail</span>
+<span class="font-serif text-[10px] uppercase tracking-widest text-gold">RSVP</span>
+</a>
+</nav>
+
+<!-- Error toast (adapted from Uiverse.io by seyed-mohsen-mousavi) -->
+<div id="errToast" class="hidden fixed top-4 left-1/2 -translate-x-1/2 z-[100] w-[calc(100vw-2rem)] max-w-sm">
+<div class="error-alert flex items-center justify-between w-full h-14 rounded-lg bg-[#232531]/95 backdrop-blur px-3 border border-[#d65563]/30 shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
+<div class="flex items-center gap-3 min-w-0">
+<div class="text-[#d65563] bg-white/5 p-2 rounded-lg shrink-0">
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"/></svg>
+</div>
+<div class="min-w-0">
+<p class="text-white font-semibold text-sm leading-tight" id="errTitle">Please try again</p>
+<p class="text-gray-400 text-xs leading-tight truncate" id="errMsg">Please complete the required fields.</p>
+</div>
+</div>
+<button type="button" onclick="hideError()" class="text-gray-500 hover:bg-white/10 p-1.5 rounded-md transition-colors shrink-0" aria-label="Dismiss error">
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>
+</button>
+</div>
+</div>
+
+<script>
+(function () {
+  var CONVEX_HTTP_URL = 'https://canny-hummingbird-920.convex.site';
+  var params = new URLSearchParams(window.location.search || '');
+  var guestName = (params.get('name') || '').trim();
+  var guestId = params.get('id') || ('guest_' + Date.now());
+  var spouseName = (params.get('spouse') || '').trim();
+  var guestType = (params.get('type') || '').toLowerCase();
+  var isEasy = params.get('easy') === '1';
+  var isCouple = !isEasy && (guestType === 'couple' || !!spouseName);
+
+  var STORAGE_KEY = 'cl_rsvps';
+
+  function loadAll() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch (e) { return {}; } }
+  function saveAll(d) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); } catch (e) {} }
+
+  function responsesFor(id) { var d = loadAll(); return d[id] || []; }
+
+  function totalAttending() {
+    var d = loadAll(); var n = 0;
+    Object.keys(d).forEach(function (k) {
+      d[k].forEach(function (r) { if (r.attendance === 'yes') n += r.guests; });
+    });
+    return n;
+  }
+
+  function splitName(full) {
+    var parts = (full || '').trim().split(/\s+/);
+    if (!parts.length || !parts[0]) return { first: '', last: '' };
+    return { first: parts[0], last: parts.slice(1).join(' ') };
+  }
+
+  // ---- Mode setup ----
+  var singleFields = document.getElementById('singleFields');
+  var coupleFields = document.getElementById('coupleFields');
+  var coupleNote = document.getElementById('coupleNote');
+  var lastNameField = document.getElementById('lastNameField');
+  var optionalFields = document.getElementById('optionalFields');
+
+  if (isEasy) {
+    if (lastNameField) lastNameField.classList.add('hidden');
+    if (optionalFields) optionalFields.classList.add('hidden');
+    document.getElementById('guestField').classList.add('hidden');
+  }
+
+  if (isCouple) {
+    singleFields.classList.add('hidden');
+    coupleFields.classList.remove('hidden');
+    if (coupleNote) coupleNote.classList.remove('hidden');
+    var pA = splitName(guestName);
+    var pB = splitName(spouseName);
+    if (pA.first) document.getElementById('nameA').value = pA.first;
+    if (pA.last) document.getElementById('lastNameA').value = pA.last;
+    if (pB.first) document.getElementById('nameB').value = pB.first;
+    if (pB.last) document.getElementById('lastNameB').value = pB.last;
+  }
+
+  // Pre-fill name from link
+  var nameInput = document.getElementById('name');
+  if (guestName) {
+    if (!isCouple) {
+      var p = splitName(guestName);
+      nameInput.value = p.first;
+      var ln = document.getElementById('lastName');
+      if (ln && !ln.value) ln.value = p.last;
+    }
+    var greeting = document.getElementById('greeting');
+    greeting.classList.remove('hidden');
+    greeting.querySelector('span').textContent = guestName;
+  }
+
+  // Carry params onto invitation links
+  function withParams(path) {
+    if (!params.toString()) return path;
+    return path + '?' + params.toString();
+  }
+  document.getElementById('backLink').href = withParams('_invitation.html');
+  document.getElementById('doneLink').href = withParams('_invitation.html');
+  document.getElementById('navHome').href = withParams('_invitation.html');
+
+  function updateTotals() {
+    var n = totalAttending();
+    var line = document.getElementById('totalLine');
+    line.textContent = n > 0 ? 'Guests confirmed so far: ' + n : '';
+    var t = document.getElementById('sucTotal');
+    t.textContent = 'Confirmed attending so far: ' + totalAttending();
+  }
+
+  // ---- Status pill helpers ----
+  function setPill(pill, value) {
+    var el = pill;
+    if (!el) return;
+    var icon = el.querySelector('.material-symbols-outlined');
+    var text = el.querySelector('.att-status-text');
+    el.classList.remove('on', 'off', 'hidden');
+    if (value === 'yes') {
+      el.classList.add('on');
+      if (icon) icon.textContent = 'check_circle';
+      if (text) text.textContent = 'Attending';
+    } else if (value === 'no') {
+      el.classList.add('off');
+      if (icon) icon.textContent = 'cancel';
+      if (text) text.textContent = 'Declining';
+    } else {
+      el.classList.add('hidden');
+    }
+  }
+
+  function makeToggle(ids) {
+    var attYes = document.getElementById(ids.yes);
+    var attNo = document.getElementById(ids.no);
+    var toggler = document.getElementById(ids.toggler);
+    var guestField = document.getElementById(ids.guestField);
+    var pill = document.getElementById(ids.pill);
+
+    function current() {
+      if (attYes.checked) return 'yes';
+      if (attNo.checked) return 'no';
+      return '';
+    }
+    function syncGuestField() {
+      if (guestField) guestField.classList.toggle('hidden', !attYes.checked);
+      setPill(pill, current());
+    }
+    attYes.addEventListener('change', syncGuestField);
+    attNo.addEventListener('change', syncGuestField);
+    toggler.addEventListener('change', function () {
+      attYes.checked = toggler.checked;
+      attNo.checked = !toggler.checked;
+      syncGuestField();
+    });
+    return { attYes: attYes, attNo: attNo, toggler: toggler, guestField: guestField, current: current };
+  }
+
+  var singleToggle = makeToggle({ yes: 'att-yes', no: 'att-no', toggler: 'attToggler', guestField: 'guestField', pill: 'statusPill' });
+  var coupleA = makeToggle({ yes: 'att-yes-a', no: 'att-no-a', toggler: 'attTogglerA', guestField: 'guestFieldA', pill: 'statusPillA' });
+  var coupleB = makeToggle({ yes: 'att-yes-b', no: 'att-no-b', toggler: 'attTogglerB', guestField: 'guestFieldB', pill: 'statusPillB' });
+
+  function stepGuests(id, d) {
+    var el = document.getElementById(id);
+    var v = parseInt(el.value, 10) || 1;
+    v = Math.min(8, Math.max(1, v + d));
+    el.value = v;
+  }
+
+  var errTimer = null;
+  window.hideError = function () {
+    var t = document.getElementById('errToast');
+    t.classList.add('hidden');
+    if (errTimer) { clearTimeout(errTimer); errTimer = null; }
+  };
+  function showError(title, msg) {
+    document.getElementById('errTitle').textContent = title;
+    document.getElementById('errMsg').textContent = msg;
+    var t = document.getElementById('errToast');
+    t.classList.remove('hidden');
+    if (errTimer) clearTimeout(errTimer);
+    errTimer = setTimeout(window.hideError, 5000);
+  }
+
+  function val(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
+
+  function postRsvp(payload, cb) {
+    fetch(CONVEX_HTTP_URL + '/api/rsvp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function (res) {
+      if (!res.ok) throw new Error('rsvp failed');
+      cb(null);
+    }).catch(function (err) { cb(err); });
+  }
+
+  window.handleSubmit = function (e) {
+    e.preventDefault();
+
+    var phone = val('phone');
+    var song = val('song');
+    var message = val('message');
+    var records = [];
+    var guests = 0;
+
+    if (isCouple) {
+      var nameA = val('nameA');
+      var lastNameA = val('lastNameA');
+      var nameB = val('nameB');
+      var lastNameB = val('lastNameB');
+      var attA = coupleA.current();
+      var attB = coupleB.current();
+
+      var missing = [];
+      if (!nameA) missing.push('guest 1 first name');
+      if (!nameB) missing.push('guest 2 first name');
+      if (missing.length) { showError('Missing information', 'Please add ' + missing.join(', ') + '.'); return; }
+      if (!attA || !attB) { showError('Choose an option', 'Please select accepting or declining for both guests.'); return; }
+
+      var countA = attA === 'yes' ? (parseInt(document.getElementById('guestCountA').value, 10) || 1) : 0;
+      var countB = attB === 'yes' ? (parseInt(document.getElementById('guestCountB').value, 10) || 1) : 0;
+      guests = countA + countB;
+
+      records.push({
+        id: guestId + ':A', name: nameA, lastName: lastNameA, phone: phone,
+        attendance: attA, guests: countA, song: song, message: message, at: new Date().toISOString()
+      });
+      records.push({
+        id: guestId + ':B', name: nameB, lastName: lastNameB, phone: phone,
+        attendance: attB, guests: countB, song: song, message: message, at: new Date().toISOString()
+      });
+
+      var attendingNames = [];
+      if (attA === 'yes') attendingNames.push((nameA + ' ' + lastNameA).trim());
+      if (attB === 'yes') attendingNames.push((nameB + ' ' + lastNameB).trim());
+
+      postRsvp({
+        guestId: guestId,
+        attendance: attA === 'yes' || attB === 'yes' ? 'yes' : 'no',
+        guests: guests,
+        phone: phone,
+        plusNames: attendingNames.join(', '),
+        song: song,
+        message: message
+      }, function (err) { if (err) showError('Could not reach server', 'Your RSVP was saved on this device. Please retry later.'); });
+
+      var d = loadAll();
+      if (!d[guestId]) d[guestId] = [];
+      d[guestId].push.apply(d[guestId], records);
+      saveAll(d);
+      showSuccess({ couple: true, nameA: nameA, nameB: nameB, attendance: (attA === 'yes' || attB === 'yes') ? 'yes' : 'no', guests: guests }, records.length);
+    } else {
+      var name = nameInput.value.trim();
+      var lastName = isEasy ? '' : val('lastName');
+      var attendance = singleToggle.current();
+
+      if (!name) { showError('Missing information', 'Please add your first name.'); return; }
+      if (!attendance) { showError('Choose an option', 'Please select accepting or declining.'); return; }
+      var yes = attendance === 'yes';
+      var count = yes ? (parseInt(document.getElementById('guestCount').value, 10) || 1) : 0;
+      if (isEasy) count = yes ? 1 : 0;
+      if (yes && (count < 1 || count > 8)) { showError('Guest count', 'Please choose a guest count between 1 and 8.'); return; }
+      guests = count;
+
+      var plusNames = val('plusNames');
+      var record = {
+        id: guestId, name: name, lastName: lastName, phone: phone,
+        attendance: attendance, guests: guests, plusNames: plusNames,
+        song: song, message: message, at: new Date().toISOString()
+      };
+      records.push(record);
+
+      postRsvp({
+        guestId: guestId,
+        attendance: attendance,
+        guests: guests,
+        phone: phone,
+        plusNames: plusNames,
+        song: song,
+        message: message
+      }, function (err) { if (err) showError('Could not reach server', 'Your RSVP was saved on this device. Please retry later.'); });
+
+      var d = loadAll();
+      if (!d[guestId]) d[guestId] = [];
+      d[guestId].push(record);
+      saveAll(d);
+      showSuccess({ couple: false, name: name, attendance: attendance, guests: guests }, d[guestId].length);
+    }
+  };
+
+  function showSuccess(info, count) {
+    document.getElementById('rsvpForm').classList.add('hidden');
+    document.getElementById('success').classList.remove('hidden');
+    document.getElementById('sucName').textContent = info.couple ? (info.nameA + ' & ' + info.nameB) : info.name;
+    var summary = document.getElementById('sucSummary');
+    if (info.attendance === 'yes') {
+      summary.textContent = info.couple
+        ? 'You confirmed ' + info.guests + ' seat' + (info.guests > 1 ? 's' : '') + ' for the two of you. We can\u2019t wait to celebrate with you!'
+        : (info.guests > 1 ? 'You confirmed ' + info.guests + ' seats. We can\u2019t wait to celebrate with you!' : 'You confirmed 1 seat. We can\u2019t wait to celebrate with you!');
+    } else {
+      summary.textContent = 'We will miss you. Thank you for letting us know.';
+    }
+    document.getElementById('sucResponses').textContent = count > 1
+      ? 'Both RSVPs received from this link'
+      : 'Your RSVP has been received';
+    updateTotals();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  window.resetForAnother = function () {
+    document.getElementById('rsvpForm').classList.remove('hidden');
+    document.getElementById('success').classList.add('hidden');
+    ['name', 'lastName', 'nameA', 'lastNameA', 'nameB', 'lastNameB', 'phone', 'plusNames', 'song', 'message'].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.value = '';
+    });
+    ['guestCount', 'guestCountA', 'guestCountB'].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.value = '1';
+    });
+    [singleToggle, coupleA, coupleB].forEach(function (tg) {
+      tg.toggler.checked = false;
+      tg.attYes.checked = false;
+      tg.attNo.checked = false;
+      tg.guestField.classList.add('hidden');
+      setPill(document.getElementById(tg === singleToggle ? 'statusPill' : (tg === coupleA ? 'statusPillA' : 'statusPillB')), '');
+    });
+    window.hideError();
+    document.getElementById('greeting').classList.add('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  window.stepGuests = stepGuests;
+  updateTotals();
+})();
+</script>
+</body>
+</html>
