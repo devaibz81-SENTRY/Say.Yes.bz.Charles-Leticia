@@ -13,3 +13,11 @@ export const seed = mutation(async (ctx) => {
   }
   return { seeded: true, count };
 });
+
+export const clearAllGuests = mutation(async (ctx) => {
+  const all = await ctx.db.query("guests").collect();
+  for (const g of all) {
+    await ctx.db.delete(g._id);
+  }
+  return { cleared: all.length };
+});
