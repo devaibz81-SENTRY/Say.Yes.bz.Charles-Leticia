@@ -1,0 +1,82 @@
+import { httpAction } from "./_generated/server";
+import { internal } from "./_generated/api";
+import { getToken } from "./auth";
+
+function json(body: unknown, status = 200): Response {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
+async function hasSession(ctx: any, request: Request): Promise<boolean> {
+  const token = getToken(request);
+  if (!token) return false;
+  const session = await ctx.runQuery(internal.db.getSessionByToken, { token });
+  return !!session;
+}
+
+export const listGuests = httpAction(async (ctx, request) => {
+  if (request.method !== "GET") return json({ error: "Method not allowed" }, 405);
+  if (!(await hasSession(ctx, request))) return json({ error: "Unauthorized" }, 401);
+  const guests = await ctx.runQuery(internal.db.listGuests);
+  return json(guests);
+});
+
+export const upsertGuest = httpAction(async (ctx, request) => {
+  if (request.method !== "POST") return json({ error: "Method not allowed" }, 405);
+  if (!(await hasSession(ctx, request))) return json({ error: "Unauthorized" }, 401);
+
+  const body = await request.json().catch(() => ({}));
+  const action = body.action;
+
+  const fields = {
+    first_name: body.first_name,
+    last_name: body.last_name,
+    spouse_name: body.spouse_name,
+    guest_type: body.guest_type,
+    max_party: body.max_party,
+    phone: body.phone,
+    deadline: body.deadline,
+    attendance: body.attendance,
+  };
+
+  if (action === "add_guest") {
+    const id = await ctx.runMutation(internal.db.insertGuest, {
+      ...fields,
+      attendance: fields.attendance ?? "invited",
+      guest_type: fields.guest_type ?? "single",
+      max_party: fields.max_party ?? 1,
+      easy_mode: body.easy_mode === true ? true : undefined,
+    });
+    return json({ id });
+  }
+
+  if (action === "update_guest") {
+    const guestId = body.guest_id;
+    if (!guestId) return json({ error: "Missing guest_id" }, 400);
+    const existing = await ctx.runQuery(internal.db.getGuest, { guestId });
+    if (!existing) return json({ error: "Guest not found" }, 404);
+
+    await ctx.runMutation(internal.db.patchGuest, {
+      guestId,
+      ...fields,
+      easy_mode: body.easy_mode !== undefined ? body.easy_mode === true : undefined,
+    });
+    return json({ ok: true });
+  }
+
+  return json({ error: `Unknown action: ${action}` }, 400);
+});
+
+export const deleteGuest = httpAction(async (ctx, request) => {
+  if (request.method !== "POST") return json({ error: "Method not allowed" }, 405);
+  if (!(await hasSession(ctx, request))) return json({ error: "Unauthorized" }, 401);
+
+  const body = await request.json().catch(() => ({}));
+  const guestId = body.guestId || body.guest_id;
+  if (!guestId) return json({ error: "Missing guestId" }, 400);
+
+  await ctx.runMutation(internal.db.deleteGuest, { guestId });
+  return json({ ok: true });
+});

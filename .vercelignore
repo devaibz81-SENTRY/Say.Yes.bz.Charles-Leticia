@@ -1,0 +1,14 @@
+Auto-Save/
+iNTRO/
+frames.psd
+intro.mov
+intro.aep
+intro.gif
+intro-once.gif
+intro-last.png
+Pages/_our-story.html
+node_modules/
+.vercel/
+*.psd
+*.mov
+*.aep

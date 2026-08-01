@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Convex local tooling
+convex-backend/.convex/
+
+# Vercel local project link
+.vercel/
+
+# Heavy source media (After Effects / video source, not part of the site)
+Auto-Save/
+iNTRO/
+frames.psd
+intro.mov
+intro.aep
+intro.gif
+intro-once.gif
+intro-last.png
+
+# Old template leftovers not used by the live site
+Pages/_our-story.html
+
+# OS junk
+Thumbs.db
+.DS_Store
+desktop.ini

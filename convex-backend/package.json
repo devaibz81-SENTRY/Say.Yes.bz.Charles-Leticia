@@ -1,0 +1,16 @@
+{
+  "name": "cl-wedding-convex",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "deploy": "convex deploy",
+    "dev": "convex dev",
+    "seed": "convex run seed"
+  },
+  "dependencies": {
+    "convex": "^1.43.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0"
+  }
+}
