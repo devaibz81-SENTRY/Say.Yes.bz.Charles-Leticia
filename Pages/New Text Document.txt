@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>New Year Fireworks</title>
+<style>
+  :root{
+    --midnight:#05070f;
+    --midnight-2:#0a0f1f;
+    --gold:#e8c27a;
+    --gold-bright:#fff3d0;
+    --champagne:#f4e3c1;
+    --ember:#ff9d6c;
+    --ice:#bfe3ff;
+  }
+
+  *{box-sizing:border-box;}
+
+  html,body{
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    background:radial-gradient(ellipse at 50% 120%, var(--midnight-2) 0%, var(--midnight) 60%, #020308 100%);
+    overflow:hidden;
+    font-family:'Georgia', 'Times New Roman', serif;
+  }
+
+  .stage{
+    position:relative;
+    width:100%;
+    height:100vh;
+    min-height:600px;
+  }
+
+  /* subtle starfield */
+  .stars{
+    position:absolute;
+    inset:0;
+    background-image:
+      radial-gradient(1.5px 1.5px at 10% 20%, rgba(255,255,255,.5), transparent),
+      radial-gradient(1px 1px at 30% 65%, rgba(255,255,255,.35), transparent),
+      radial-gradient(1.5px 1.5px at 55% 15%, rgba(255,255,255,.4), transparent),
+      radial-gradient(1px 1px at 75% 45%, rgba(255,255,255,.3), transparent),
+      radial-gradient(1.5px 1.5px at 85% 75%, rgba(255,255,255,.45), transparent),
+      radial-gradient(1px 1px at 20% 85%, rgba(255,255,255,.3), transparent),
+      radial-gradient(1.5px 1.5px at 60% 90%, rgba(255,255,255,.35), transparent);
+    opacity:.7;
+    animation:twinkle 4s ease-in-out infinite alternate;
+  }
+  @keyframes twinkle{
+    from{opacity:.45;}
+    to{opacity:.85;}
+  }
+
+  /* soft city silhouette for depth */
+  .skyline{
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:14vh;
+    background:linear-gradient(to top, #010205 0%, #01020500 100%);
+    z-index:5;
+  }
+  .skyline svg{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:100%;
+    fill:#000103;
+    opacity:.9;
+  }
+
+  .title-wrap{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+    z-index:10;
+    pointer-events:none;
+  }
+
+  .year{
+    font-size:clamp(3rem, 11vw, 8rem);
+    letter-spacing:.08em;
+    font-weight:400;
+    background:linear-gradient(180deg, var(--gold-bright) 0%, var(--gold) 55%, #a97f38 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    text-shadow:0 0 40px rgba(232,194,122,.25);
+    opacity:0;
+    animation:reveal 1.6s ease-out 0.4s forwards, shimmer 6s ease-in-out 2.2s infinite;
+    filter:drop-shadow(0 0 18px rgba(232,194,122,.35));
+  }
+
+  .flourish{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:.9em;
+    margin-top:.9em;
+    opacity:0;
+    animation:reveal 1.6s ease-out 1.4s forwards;
+  }
+  .flourish .line{
+    width:4.5em;
+    height:1px;
+    background:linear-gradient(to right, transparent, var(--gold), transparent);
+  }
+  .flourish .diamond{
+    width:6px;
+    height:6px;
+    background:var(--gold);
+    transform:rotate(45deg);
+    box-shadow:0 0 8px 1px rgba(232,194,122,.6);
+  }
+
+  .glow-wash{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    z-index:4;
+    mix-blend-mode:screen;
+    opacity:0;
+    transition:opacity .5s ease-out, background .5s ease-out;
+  }
+
+  .tagline{
+    margin-top:.4em;
+    font-size:clamp(.75rem, 1.6vw, 1.1rem);
+    letter-spacing:.55em;
+    text-transform:uppercase;
+    color:var(--champagne);
+    opacity:0;
+    animation:reveal 1.6s ease-out 1.1s forwards;
+  }
+
+  @keyframes reveal{
+    from{opacity:0; transform:translateY(14px); letter-spacing:.02em;}
+    to{opacity:1; transform:translateY(0); }
+  }
+  .tagline{letter-spacing:.55em;}
+  @keyframes shimmer{
+    0%,100%{filter:drop-shadow(0 0 18px rgba(232,194,122,.35));}
+    50%{filter:drop-shadow(0 0 30px rgba(255,243,208,.55));}
+  }
+
+  .fw-canvas{
+    position:absolute;
+    inset:0;
+    z-index:3;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .stars, .year{
+      animation:none !important;
+      opacity:1;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="stage" id="stage">
+  <div class="stars"></div>
+
+  <div class="title-wrap">
+    <div class="year">2027</div>
+    <div class="flourish"><span class="line"></span><span class="diamond"></span><span class="line"></span></div>
+    <div class="tagline">Happy New Year</div>
+  </div>
+
+  <div class="glow-wash" id="glowWash"></div>
+
+  <canvas class="fw-canvas" id="fwCanvas"></canvas>
+
+  <div class="skyline">
+    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path d="M0,120 L0,80 L30,80 L30,55 L60,55 L60,90 L100,90 L100,40 L130,40 L130,70 L170,70 L170,20 L200,20 L200,60 L240,60 L240,95 L280,95 L280,50 L310,50 L310,75 L350,75 L350,30 L390,30 L390,65 L430,65 L430,10 L460,10 L460,55 L500,55 L500,85 L540,85 L540,45 L580,45 L580,70 L620,70 L620,25 L660,25 L660,60 L700,60 L700,90 L740,90 L740,35 L780,35 L780,68 L820,68 L820,15 L850,15 L850,58 L890,58 L890,82 L930,82 L930,42 L970,42 L970,72 L1010,72 L1010,20 L1050,20 L1050,55 L1090,55 L1090,88 L1130,88 L1130,48 L1170,48 L1170,120 Z"/>
+    </svg>
+  </div>
+</div>
+
+<script>
+  const stage = document.getElementById('stage');
+  const glowWash = document.getElementById('glowWash');
+  const canvas = document.getElementById('fwCanvas');
+  const ctx = canvas.getContext('2d');
+
+  // refined palette: warm gold, champagne, soft ember, icy blue-white
+  const palette = ['#e8c27a', '#fff3d0', '#ff9d6c', '#bfe3ff', '#f4e3c1', '#ffd9a0'];
+
+  function rand(min, max){ return Math.random() * (max - min) + min; }
+  function choice(arr){ return arr[Math.floor(Math.random() * arr.length)]; }
+
+  let W, H, DPR;
+  function resize(){
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.clientWidth;
+    H = canvas.clientHeight;
+    canvas.width = W * DPR;
+    canvas.height = H * DPR;
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  // --- physics constants ---
+  const GRAVITY = 55;          // px/s^2, pulls everything downward
+  const DRAG = 0.985;          // per-frame velocity retention (air resistance)
+  const WIND = () => Math.sin(Date.now() / 4000) * 4; // gentle drifting breeze
+
+  const rockets = [];
+  const particles = [];
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function pulseGlow(color){
+    glowWash.style.background = `radial-gradient(ellipse at 50% 70%, color-mix(in srgb, ${color} 22%, transparent) 0%, transparent 60%)`;
+    glowWash.style.opacity = '1';
+    setTimeout(() => { glowWash.style.opacity = '0'; }, 420);
+  }
+
+  // a rocket climbing under thrust, decelerating under gravity, until apex -> burst
+  class Rocket{
+    constructor(){
+      this.x = rand(W * 0.12, W * 0.88);
+      this.y = H;
+      this.targetY = rand(H * 0.16, H * 0.42);
+      const dist = this.y - this.targetY;
+      // launch velocity tuned so gravity brings it to ~0 velocity near targetY
+      this.vy = -Math.sqrt(2 * GRAVITY * dist) * rand(1.0, 1.08);
+      this.vx = rand(-6, 6);
+      this.color = choice(palette);
+      this.type = choice(['peony', 'peony', 'willow', 'ring', 'peony', 'swirl']);
+      this.trail = [];
+      this.dead = false;
+    }
+    step(dt){
+      this.trail.push({x:this.x, y:this.y});
+      if(this.trail.length > 14) this.trail.shift();
+
+      this.vy += GRAVITY * dt * 0.9;
+      this.x += this.vx * dt;
+      this.y += this.vy * dt;
+
+      if(this.vy >= -6 || this.y <= this.targetY){
+        this.explode();
+        this.dead = true;
+      }
+    }
+    draw(){
+      ctx.lineCap = 'round';
+      for(let i = 0; i < this.trail.length; i++){
+        const p = this.trail[i];
+        const a = i / this.trail.length;
+        ctx.beginPath();
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = a * 0.8;
+        ctx.arc(p.x, p.y, 1.6 * a + 0.4, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    }
+    explode(){
+      pulseGlow(this.color);
+      spawnFlash(this.x, this.y, this.color);
+      spawnBurst(this.x, this.y, this.color, this.type);
+    }
+  }
+
+  function spawnFlash(x, y, color){
+    particles.push({
+      x, y, vx:0, vy:0, life:0.18, maxLife:0.18,
+      size:26, color, flash:true
+    });
+  }
+
+  // a single spark: real velocity + gravity + drag, can spawn crackle children on death
+  class Spark{
+    constructor(x, y, angle, speed, color, opts = {}){
+      this.x = x; this.y = y;
+      this.vx = Math.cos(angle) * speed;
+      this.vy = Math.sin(angle) * speed;
+      this.color = color;
+      this.gravityMult = opts.gravityMult ?? 1;
+      this.dragMult = opts.dragMult ?? 1;
+      this.size = opts.size ?? rand(1.6, 2.6);
+      this.life = 0;
+      this.maxLife = opts.maxLife ?? rand(1.2, 1.8);
+      this.crackle = opts.crackle ?? false;
+      this.crackled = false;
+      this.willow = opts.willow ?? false;
+      this.spiral = opts.spiral ?? 0;        // rad/s tangential rotation, curls the path into a swirl
+      this.hue = opts.hue ?? null;           // when set, color cycles through the rainbow instead of being fixed
+      this.hueSpeed = opts.hueSpeed ?? 70;   // degrees/sec of hue drift
+      this.dead = false;
+    }
+    step(dt){
+      this.life += dt;
+      if(this.life >= this.maxLife){ this.dead = true; return; }
+
+      // spiral: rotate the velocity vector itself so the path curls into an arm rather than a straight line
+      if(this.spiral){
+        const c = Math.cos(this.spiral * dt), s = Math.sin(this.spiral * dt);
+        const nvx = this.vx * c - this.vy * s;
+        const nvy = this.vx * s + this.vy * c;
+        this.vx = nvx; this.vy = nvy;
+      }
+
+      const drag = Math.pow(DRAG, this.dragMult) ;
+      this.vx = this.vx * drag + WIND() * dt;
+      this.vy = this.vy * drag + GRAVITY * this.gravityMult * dt;
+      this.x += this.vx * dt;
+      this.y += this.vy * dt;
+
+      // crackle: near end of life, a spark can pop into a few tiny short-lived children
+      if(this.crackle && !this.crackled && this.life > this.maxLife * 0.55 && Math.random() < 0.045){
+        this.crackled = true;
+        const n = Math.floor(rand(3, 6));
+        for(let i = 0; i < n; i++){
+          const a = rand(0, Math.PI * 2);
+          const s = rand(20, 55);
+          particles.push(new Spark(this.x, this.y, a, s, '#fff3d0', {
+            gravityMult: 1.3, dragMult: 1.4, size: rand(1, 1.6), maxLife: rand(0.25, 0.45)
+          }));
+        }
+      }
+    }
+    currentColor(){
+      if(this.hue === null) return this.color;
+      const h = (this.hue + this.life * this.hueSpeed) % 360;
+      return `hsl(${h}, 88%, 66%)`;
+    }
+    draw(){
+      const t = this.life / this.maxLife;
+      const alpha = t < 0.08 ? t / 0.08 : 1 - Math.pow((t - 0.08) / 0.92, 1.4);
+      if(alpha <= 0) return;
+      ctx.globalAlpha = Math.max(0, alpha);
+      ctx.beginPath();
+      ctx.fillStyle = this.currentColor();
+      const sz = this.size * (1 - t * 0.4);
+      ctx.arc(this.x, this.y, Math.max(0.3, sz), 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  function spawnBurst(x, y, color, type){
+    const secondColor = Math.random() > 0.55 ? choice(palette) : color;
+    let count, speedMin, speedMax, gravityMult, dragMult, maxLife, crackleChance;
+
+    if(type === 'willow'){
+      count = Math.floor(rand(24, 34));
+      speedMin = 50; speedMax = 85;
+      gravityMult = 1.5; dragMult = 0.7;
+      maxLife = rand(2.2, 2.8);
+      crackleChance = 0;
+    } else if(type === 'ring'){
+      count = Math.floor(rand(26, 32));
+      speedMin = 95; speedMax = 110;
+      gravityMult = 0.9; dragMult = 1.1;
+      maxLife = rand(1.3, 1.6);
+      crackleChance = 0.2;
+    } else if(type === 'swirl'){
+      count = Math.floor(rand(50, 64));
+      speedMin = 55; speedMax = 90;
+      gravityMult = 0.55; dragMult = 0.85;
+      maxLife = rand(1.8, 2.3);
+      crackleChance = 0;
+    } else {
+      count = Math.floor(rand(30, 42));
+      speedMin = 55; speedMax = 125;
+      gravityMult = 1; dragMult = 1;
+      maxLife = rand(1.3, 1.8);
+      crackleChance = 0.22;
+    }
+
+    if(type === 'swirl'){
+      // two interleaved spiral arms, one curling clockwise, one counter-clockwise,
+      // each sweeping through the rainbow so the arms read as color against color
+      const baseHue = rand(0, 360);
+      for(let i = 0; i < count; i++){
+        const angle = (Math.PI * 2 * i) / count;
+        const speed = rand(speedMin, speedMax);
+        const dir = i % 2 === 0 ? 1 : -1;
+        const hue = (baseHue + (360 * i) / count) % 360;
+        particles.push(new Spark(x, y, angle, speed, null, {
+          gravityMult, dragMult,
+          maxLife: maxLife * rand(0.9, 1.05),
+          spiral: dir * rand(2.6, 3.6),
+          hue, hueSpeed: rand(50, 90),
+          size: rand(1.6, 2.4)
+        }));
+      }
+      return;
+    }
+
+    for(let i = 0; i < count; i++){
+      const angle = type === 'ring'
+        ? (Math.PI * 2 * i) / count + rand(-0.02, 0.02)
+        : rand(0, Math.PI * 2);
+      const speed = rand(speedMin, speedMax);
+      const c = i % 3 === 0 ? secondColor : color;
+      particles.push(new Spark(x, y, angle, speed, c, {
+        gravityMult, dragMult, maxLife: maxLife * rand(0.85, 1.05),
+        crackle: Math.random() < crackleChance,
+        willow: type === 'willow',
+        size: type === 'willow' ? rand(1.2, 1.8) : rand(1.6, 2.6)
+      }));
+    }
+  }
+
+  function launchFirework(){
+    rockets.push(new Rocket());
+  }
+
+  function scheduleNext(){
+    launchFirework();
+    if(Math.random() > 0.85) setTimeout(launchFirework, rand(200, 400));
+    setTimeout(scheduleNext, rand(1400, 2600));
+  }
+
+  // --- main loop ---
+  let lastT = performance.now();
+  function tick(now){
+    const dt = Math.min((now - lastT) / 1000, 0.05);
+    lastT = now;
+
+    // motion-blur trail fade: paint a translucent rect instead of hard clear
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = 'rgba(4, 6, 13, 0.22)';
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.globalCompositeOperation = 'lighter';
+
+    for(let i = rockets.length - 1; i >= 0; i--){
+      const r = rockets[i];
+      r.step(dt);
+      r.draw();
+      if(r.dead) rockets.splice(i, 1);
+    }
+
+    for(let i = particles.length - 1; i >= 0; i--){
+      const p = particles[i];
+      if(p.flash){
+        p.life += dt;
+        const t = p.life / p.maxLife;
+        if(t >= 1){ particles.splice(i, 1); continue; }
+        ctx.globalAlpha = 1 - t;
+        const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * (0.3 + t));
+        grad.addColorStop(0, '#fff');
+        grad.addColorStop(0.4, p.color);
+        grad.addColorStop(1, 'transparent');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size * (0.3 + t), 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+        continue;
+      }
+      p.step(dt);
+      p.draw();
+      if(p.dead) particles.splice(i, 1);
+    }
+
+    ctx.globalCompositeOperation = 'source-over';
+    requestAnimationFrame(tick);
+  }
+
+  if(reduceMotion){
+    ctx.fillStyle = 'rgba(4,6,13,1)';
+    ctx.fillRect(0,0,W,H);
+  } else {
+    requestAnimationFrame(tick);
+    launchFirework();
+    setTimeout(launchFirework, 900);
+    setTimeout(scheduleNext, 2000);
+  }
+</script>
+
+</body>
+</html>

@@ -20,4 +20,15 @@ export default defineSchema({
     token: v.string(),
     createdAt: v.number(),
   }).index("by_token", ["token"]),
+  photo_hearts: defineTable({
+    key: v.string(),
+    count: v.number(),
+  }).index("by_key", ["key"]),
+  songs: defineTable({
+    title: v.string(),
+    artist: v.optional(v.string()),
+    requested_by: v.optional(v.string()),
+    votes: v.number(),
+    createdAt: v.number(),
+  }),
 });

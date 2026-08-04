@@ -187,3 +187,87 @@ async function findGuestByName(ctx: any, name?: string, lastName?: string) {
     }) || null
   );
 }
+
+// ---------- photo hearts & song requests ----------
+
+export const getPhotoHearts = internalQuery({
+  args: { key: v.string() },
+  handler: async (ctx, { key }) => {
+    const record = await ctx.db
+      .query("photo_hearts")
+      .withIndex("by_key", (q) => q.eq("key", key))
+      .first();
+    return record ? record.count : 0;
+  },
+});
+
+export const addPhotoHeart = internalMutation({
+  args: { key: v.string() },
+  handler: async (ctx, { key }) => {
+    const existing = await ctx.db
+      .query("photo_hearts")
+      .withIndex("by_key", (q) => q.eq("key", key))
+      .first();
+    if (existing) {
+      await ctx.db.patch(existing._id, { count: existing.count + 1 });
+      return existing.count + 1;
+    } else {
+      await ctx.db.insert("photo_hearts", { key, count: 1 });
+      return 1;
+    }
+  },
+});
+
+export const listSongs = internalQuery({
+  args: {},
+  handler: async (ctx) => {
+    const songs = await ctx.db.query("songs").collect();
+    return songs.sort((a, b) => b.votes - a.votes || b.createdAt - a.createdAt);
+  },
+});
+
+export const createSong = internalMutation({
+  args: {
+    title: v.string(),
+    artist: v.optional(v.string()),
+    requested_by: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    const newId = await ctx.db.insert("songs", {
+      title: args.title,
+      artist: args.artist || "Unknown Artist",
+      requested_by: args.requested_by || "Guest",
+      votes: 1,
+      createdAt: Date.now(),
+    });
+    return newId;
+  },
+});
+
+export const voteSong = internalMutation({
+  args: { songId: v.id("songs") },
+  handler: async (ctx, { songId }) => {
+    const song = await ctx.db.get(songId);
+    if (!song) throw new Error("Song not found");
+    const updatedVotes = song.votes + 1;
+    await ctx.db.patch(songId, { votes: updatedVotes });
+    return updatedVotes;
+  },
+});
+
+export const listMessages = internalQuery({
+  args: {},
+  handler: async (ctx) => {
+    const guests = await ctx.db.query("guests").collect();
+    return guests
+      .filter((g) => g.message && g.message.trim() !== "")
+      .map((g) => ({
+        id: g._id,
+        name: `${g.first_name || ""} ${g.last_name || ""}`.trim() || "Anonymous Guest",
+        message: g.message,
+        attendance: g.attendance || "invited",
+        song: g.song || null,
+      }));
+  },
+});
+

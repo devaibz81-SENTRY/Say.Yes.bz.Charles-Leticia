@@ -291,8 +291,11 @@ input[type=number]{-moz-appearance:textfield}
 <div id="sucResponses" class="success-pop inline-block glass-panel rounded-full px-6 py-2 border-gold/30 font-label-sm text-gold uppercase tracking-[0.15em]"></div>
 <p id="sucTotal" class="success-pop font-label-sm text-on-surface-variant uppercase tracking-[0.15em]"></p>
 <div class="success-pop flex flex-col sm:flex-row justify-center gap-4 pt-4">
-<button onclick="resetForAnother()" class="px-8 py-4 rounded-full bg-gradient-to-r from-gold-light to-gold-dark text-ink font-label-sm tracking-widest uppercase border border-gold/40 shadow-[0_10px_30px_rgba(212,175,55,0.25)] hover:shadow-[0_10px_40px_rgba(212,175,55,0.45)] transition-all active:scale-95">RSVP for another guest</button>
-<a id="doneLink" href="index.html" class="px-8 py-4 rounded-full border border-gold/30 text-gold font-label-sm tracking-widest uppercase hover:bg-gold/10 transition-colors no-underline">Back to invitation</a>
+<a id="songRequestBtn" href="music.html" class="px-8 py-4 rounded-full bg-gradient-to-r from-gold-light to-gold-dark text-ink font-label-sm tracking-widest uppercase border border-gold/40 shadow-[0_10px_30px_rgba(212,175,55,0.25)] hover:shadow-[0_10px_40px_rgba(212,175,55,0.45)] transition-all active:scale-95 no-underline flex items-center justify-center gap-2">
+  <span class="material-symbols-outlined text-xl">music_note</span> Make Song Request &amp; Vote
+</a>
+<button onclick="resetForAnother()" class="px-6 py-4 rounded-full border border-gold/30 text-gold font-label-sm tracking-widest uppercase hover:bg-gold/10 transition-colors">RSVP for another guest</button>
+<a id="doneLink" href="index.html" class="px-6 py-4 rounded-full border border-white/20 text-white/70 font-label-sm tracking-widest uppercase hover:bg-white/10 transition-colors no-underline">Back to invitation</a>
 </div>
 </div>
 
