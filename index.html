@@ -441,7 +441,9 @@ section[id] { scroll-margin-top: 5rem; }
 <div class="relative z-10 flex flex-col items-center center-reveal">
 <div class="relative" style="width:min(117vw,750px);height:min(87vh,750px);">
 <img id="firstImg" src="../intro-first.png" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-500"/>
-<img id="gifImg" src="" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-700 opacity-0"/>
+<video id="introVid" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none opacity-0 transition-opacity duration-500" poster="../intro-first.png" muted playsinline preload="auto" aria-hidden="true">
+<source src="../intro-once.mp4" type="video/mp4"/>
+</video>
 <img id="lastImg" src="../intro-last.png" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-500 opacity-0"/>
 </div>
 <div id="hintPill" class="hidden mt-6 hint-pulse inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-gold/40" style="background:rgba(18,18,18,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);">
@@ -801,7 +803,7 @@ Bank Details
 (function () {
   var intro = document.getElementById('introScreen');
   var firstImg = document.getElementById('firstImg');
-  var gifImg = document.getElementById('gifImg');
+  var vid = document.getElementById('introVid');
   var lastImg = document.getElementById('lastImg');
   var hintPill = document.getElementById('hintPill');
   var hint = document.getElementById('hintText');
@@ -811,20 +813,16 @@ Bank Details
   var revealFlash = document.getElementById('revealFlash');
   var petalsWrap = document.getElementById('petals');
 
-  var GIF_SRC = '../intro-once.gif'; // single-loop animation, matches intro-first/last frames
-  var GIF_DURATION = 5070;           // full animation length in ms
-  var REVEAL_HEAD = 900;             // start the reveal this early so the end never shows
-
   var state = 'loading';             // loading -> ready -> playing -> revealing -> exit
+  var videoFailTimer = null;
 
   function unlockScroll() {
     document.documentElement.classList.remove('no-scroll');
     document.body.classList.remove('no-scroll');
   }
 
-  // ---- Loading first: the loader exists so the GIF (and the page) is ready before the tap ----
+  // ---- Loading first: the loader exists so the page assets are ready before the tap ----
   var assetsToPreload = [
-    GIF_SRC,
     '../main.jpeg',
     '../galery (1).jpeg',
     '../galery (2).jpeg',
@@ -878,19 +876,34 @@ Bank Details
   function play() {
     if (state !== 'ready') return;
     state = 'playing';
-    if (firstImg) firstImg.style.display = 'none';
-    gifImg.src = GIF_SRC;
-    gifImg.classList.remove('opacity-0');
     if (hint) hint.textContent = 'Enjoy the moment\u2026';
-    setTimeout(beginReveal, Math.max(0, GIF_DURATION - REVEAL_HEAD));
+    if (!vid) { beginReveal(); return; }
+    try { vid.currentTime = 0; } catch (e) {}
+    vid.classList.remove('opacity-0');
+    vid.addEventListener('playing', function onPlaying() {
+      vid.removeEventListener('playing', onPlaying);
+      if (firstImg) firstImg.style.display = 'none';
+    });
+    vid.addEventListener('ended', onVideoEnded);
+    vid.addEventListener('error', onVideoEnded);
+    videoFailTimer = setTimeout(onVideoEnded, 12000);
+    var p = vid.play();
+    if (p && p.catch) p.catch(function () { onVideoEnded(); });
   }
 
-  // Reveal begins a beat BEFORE the animation ends: the last frame is held and
-  // we crossfade into it, so the "end" of the GIF is never actually seen.
+  // Video finished (or failed/stalled) - never trap the guest. The still frames
+  // crossfade so the reveal always resolves cleanly, even on slow mobile.
+  function onVideoEnded() {
+    if (state !== 'playing') return;
+    if (videoFailTimer) clearTimeout(videoFailTimer);
+    beginReveal();
+  }
+
+  // Reveal: crossfade into the held final frame, then scatter the intro away.
   function beginReveal() {
     if (state !== 'playing') return;
     state = 'revealing';
-    if (gifImg) gifImg.style.display = 'none';
+    if (vid) vid.style.display = 'none';
     if (lastImg) {
       lastImg.classList.remove('opacity-0');
       lastImg.style.display = 'block';
