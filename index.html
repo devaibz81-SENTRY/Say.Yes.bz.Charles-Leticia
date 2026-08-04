@@ -442,9 +442,7 @@ section[id] { scroll-margin-top: 5rem; }
 <div class="relative z-10 flex flex-col items-center center-reveal">
 <div class="relative" style="width:min(117vw,750px);height:min(87vh,750px);">
 <img id="firstImg" src="../intro-first.png" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-500"/>
-<video id="introVid" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none opacity-0 transition-opacity duration-500" poster="../intro-first.png" muted playsinline preload="auto" aria-hidden="true">
-<source src="../intro-once.mp4" type="video/mp4"/>
-</video>
+<img id="gifImg" src="" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-700 opacity-0"/>
 <img id="lastImg" src="../intro-last.png" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-500 opacity-0"/>
 </div>
 <div id="hintPill" class="hidden mt-6 hint-pulse inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-gold/40" style="background:rgba(18,18,18,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);">
@@ -493,7 +491,7 @@ section[id] { scroll-margin-top: 5rem; }
 <section class="relative max-w-[1200px] mx-auto px-5 sm:px-container-padding pt-12 pb-section-gap">
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
 <!-- Headline Block (full width) -->
-<div class="space-y-4 mb-12" id="heroHead">
+<div class="space-y-4 mb-12" id="heroHead" style="overflow:hidden">
 <div class="hd-fade inline-flex items-center px-3 py-1 rounded-full glass-panel border border-gold/30 shadow-sm">
 <span class="material-symbols-outlined text-[12px] mr-1.5 text-gold" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
 <span class="font-label-sm text-[10px] sm:text-[11px] text-gold-light uppercase tracking-[0.14em]">New Year's Eve &bull; Belize City</span>
@@ -796,6 +794,10 @@ Bank Details
   window.addEventListener('load', function () {
     if (!document.querySelector('#heroHead .hd-fade.hd-anim')) animateHero();
   });
+  // Safety net: never leave the hero invisible (e.g. if the intro path is skipped).
+  setTimeout(function () {
+    if (!document.querySelector('#heroHead .hd-fade.hd-anim')) animateHero();
+  }, 2500);
 })();
 </script>
 
@@ -804,7 +806,7 @@ Bank Details
 (function () {
   var intro = document.getElementById('introScreen');
   var firstImg = document.getElementById('firstImg');
-  var vid = document.getElementById('introVid');
+  var gifImg = document.getElementById('gifImg');
   var lastImg = document.getElementById('lastImg');
   var hintPill = document.getElementById('hintPill');
   var hint = document.getElementById('hintText');
@@ -814,16 +816,21 @@ Bank Details
   var revealFlash = document.getElementById('revealFlash');
   var petalsWrap = document.getElementById('petals');
 
+  var GIF_SRC = '../intro_1.gif';   // full-quality 1080x1261 envelope animation (25fps, 127 frames)
+  var GIF_DURATION = 5080;           // full animation length in ms
+  var REVEAL_HEAD = 900;             // start the reveal this early so the end never shows
+
   var state = 'loading';             // loading -> ready -> playing -> revealing -> exit
-  var videoFailTimer = null;
+  var gifFailTimer = null;
 
   function unlockScroll() {
     document.documentElement.classList.remove('no-scroll');
     document.body.classList.remove('no-scroll');
   }
 
-  // ---- Loading first: the loader exists so the page assets are ready before the tap ----
+  // ---- Loading first: the loader exists so the GIF (and the page) is ready before the tap ----
   var assetsToPreload = [
+    GIF_SRC,
     '../main.jpeg',
     '../galery (1).jpeg',
     '../galery (2).jpeg',
@@ -878,33 +885,38 @@ Bank Details
     if (state !== 'ready') return;
     state = 'playing';
     if (hint) hint.textContent = 'Enjoy the moment\u2026';
-    if (!vid) { beginReveal(); return; }
-    try { vid.currentTime = 0; } catch (e) {}
-    vid.classList.remove('opacity-0');
-    vid.addEventListener('playing', function onPlaying() {
-      vid.removeEventListener('playing', onPlaying);
-      if (firstImg) firstImg.style.display = 'none';
-    });
-    vid.addEventListener('ended', onVideoEnded);
-    vid.addEventListener('error', onVideoEnded);
-    videoFailTimer = setTimeout(onVideoEnded, 12000);
-    var p = vid.play();
-    if (p && p.catch) p.catch(function () { onVideoEnded(); });
+    gifImg.addEventListener('load', onGifLoaded, { once: true });
+    gifImg.addEventListener('error', onGifFailed, { once: true });
+    gifImg.src = GIF_SRC;
+    gifImg.classList.remove('opacity-0');
+    // Safety net: if the GIF can't start within 12s, reveal anyway - never trap the guest.
+    gifFailTimer = setTimeout(onGifFailed, 12000);
   }
 
-  // Video finished (or failed/stalled) - never trap the guest. The still frames
-  // crossfade so the reveal always resolves cleanly, even on slow mobile.
-  function onVideoEnded() {
+  // Keep the still envelope visible until the GIF's first frame has actually painted,
+  // so there is never a black gap between the poster and the animation.
+  function onGifLoaded() {
+    if (gifFailTimer) clearTimeout(gifFailTimer);
     if (state !== 'playing') return;
-    if (videoFailTimer) clearTimeout(videoFailTimer);
+    requestAnimationFrame(function () {
+      if (state !== 'playing') return;
+      if (firstImg) firstImg.style.display = 'none';
+      setTimeout(beginReveal, Math.max(0, GIF_DURATION - REVEAL_HEAD));
+    });
+  }
+
+  function onGifFailed() {
+    if (gifFailTimer) clearTimeout(gifFailTimer);
+    if (state !== 'playing') return;
     beginReveal();
   }
 
-  // Reveal: crossfade into the held final frame, then scatter the intro away.
+  // Reveal begins a beat BEFORE the animation ends: the last frame is held and
+  // we crossfade into it, so the "end" of the animation is never actually seen.
   function beginReveal() {
     if (state !== 'playing') return;
     state = 'revealing';
-    if (vid) vid.style.display = 'none';
+    if (gifImg) gifImg.style.display = 'none';
     if (lastImg) {
       lastImg.classList.remove('opacity-0');
       lastImg.style.display = 'block';
