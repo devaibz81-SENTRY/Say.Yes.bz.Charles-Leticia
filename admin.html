@@ -11,32 +11,63 @@
     rel="stylesheet" />
   <style>
     :root {
-      --black: #0d0d0d;
-      --ivory: #f5f0e8;
-      --champagne: #d4b896;
+      --bg: #080810;
       --gold: #c9a84c;
-      --sidebar: #111;
+      --gold-light: #f0d080;
+      --gold-dim: #8a6b1f;
+      --surface: rgba(255,255,255,0.035);
+      --border: rgba(201,168,76,0.15);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.42);
       --attending: #2ecc71;
       --declined: #e74c3c;
       --later: #f39c12;
       --msg: #3498db;
     }
 
-    *,
-    *::before,
-    *::after {
+    *, *::before, *::after {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--gold-dim);
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--gold);
+    }
+
     body {
       display: flex;
       min-height: 100vh;
-      background: #f0ede8;
+      background: var(--bg);
+      color: var(--text);
       font-family: 'Montserrat', sans-serif;
       font-weight: 500;
       font-size: 16px;
+    }
+
+    @keyframes ringPulse {
+      0% { transform: scale(0.8); opacity: 0.5; }
+      100% { transform: scale(1.5); opacity: 0; }
+    }
+    @keyframes syncPulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(46, 204, 113, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
+    }
+    @keyframes shimmer {
+      100% { transform: translateX(100%); }
     }
 
     /* Login */
@@ -44,135 +75,187 @@
       position: fixed;
       inset: 0;
       z-index: 999;
-      background: var(--black);
+      background: var(--bg);
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
     }
+    #login-overlay.hidden { display: none; }
 
-    #login-overlay.hidden {
-      display: none;
+    .login-ring {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border: 2px solid var(--gold-dim);
+      border-radius: 50%;
+      animation: ringPulse 3s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+    .login-ring:nth-child(2) {
+      animation-delay: 1.5s;
     }
 
     .login-box {
+      position: relative;
+      z-index: 10;
       text-align: center;
-      padding: 3rem;
-      border: 1px solid rgba(201, 168, 76, 0.3);
-      min-width: 320px;
+      padding: 3.5rem;
+      background: rgba(255,255,255,0.02);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      min-width: 360px;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
     }
 
     .login-box h2 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.8rem;
-      color: var(--ivory);
+      font-size: 2.4rem;
+      font-style: italic;
+      color: var(--text);
       margin-bottom: 0.5rem;
     }
 
-    .login-box p {
+    .login-sub {
+      display: block;
       font-size: 0.65rem;
-      color: rgba(255, 255, 255, 0.4);
+      color: var(--muted);
       letter-spacing: 0.2em;
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
+      text-transform: uppercase;
     }
 
     .login-input {
       width: 100%;
-      padding: 0.8rem 1rem;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(201, 168, 76, 0.3);
-      color: var(--ivory);
+      padding: 1rem;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border);
+      color: var(--text);
       font-family: 'Montserrat', sans-serif;
       outline: none;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
       text-align: center;
       letter-spacing: 0.2em;
+      border-radius: 4px;
+      transition: border-color 0.3s;
     }
-
-    .login-input:focus {
-      border-color: var(--gold);
-    }
+    .login-input:focus { border-color: var(--gold); }
+    .login-input::placeholder { color: var(--muted); }
 
     .login-btn {
+      position: relative;
+      overflow: hidden;
       width: 100%;
-      padding: 0.9rem;
-      background: var(--gold);
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dim));
       border: none;
-      color: var(--black);
+      color: #000;
       cursor: pointer;
-      font-size: 0.65rem;
+      font-weight: 800;
+      font-size: 0.7rem;
       letter-spacing: 0.3em;
       text-transform: uppercase;
-      transition: background 0.3s;
+      border-radius: 4px;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-
+    .login-btn::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%; width: 50%; height: 100%;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+      transform: skewX(-20deg);
+    }
     .login-btn:hover {
-      background: #a8863a;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(201,168,76,0.2);
+    }
+    .login-btn:hover::after {
+      animation: shimmer 1s infinite;
     }
 
     /* Sidebar */
     #sidebar {
-      width: 240px;
-      background: var(--sidebar);
+      width: 260px;
+      background: rgba(255,255,255,0.025);
+      border-right: 1px solid var(--gold);
       display: flex;
       flex-direction: column;
-      padding: 2rem 0;
+      padding: 2.5rem 0;
       min-height: 100vh;
       flex-shrink: 0;
     }
 
     .sidebar-brand {
       text-align: center;
-      padding: 0 1.5rem 2rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 0 1.5rem 2.5rem;
+      border-bottom: 1px solid var(--border);
     }
-
-    .sidebar-brand .brand-name {
+    .brand-monogram {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 1rem;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--gold);
+      font-size: 1.2rem;
+      font-style: italic;
+    }
+    .brand-name {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.2rem;
-      color: var(--champagne);
+      color: var(--text);
       font-style: italic;
+      margin-bottom: 0.3rem;
+    }
+    .brand-tag {
+      font-size: 0.55rem;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
     }
 
     .nav-label {
       font-size: 0.55rem;
+      font-weight: 800;
       letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.25);
+      color: var(--gold-dim);
       padding: 0 1.5rem;
-      margin: 1.5rem 0 0.5rem;
+      margin: 2rem 0 0.8rem;
     }
 
     .nav-item {
       display: flex;
       align-items: center;
-      gap: 0.8rem;
-      padding: 0.7rem 1.5rem;
+      gap: 1rem;
+      padding: 0.8rem 1.5rem;
       cursor: pointer;
-      color: rgba(255, 255, 255, 0.5);
-      border-left: 2px solid transparent;
+      color: var(--muted);
+      font-weight: 600;
       font-size: 0.78rem;
-      transition: 0.2s;
+      border-left: 3px solid transparent;
+      transition: all 0.2s;
+      text-decoration: none;
     }
-
-    .nav-item:hover,
-    .nav-item.active,
-    a.nav-item:hover {
+    .nav-item svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+    }
+    .nav-item:hover, .nav-item.active {
       color: var(--gold);
-      background: rgba(201, 168, 76, 0.06);
+      background: rgba(201,168,76,0.05);
       border-left-color: var(--gold);
     }
-    
-    a.nav-item {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      padding: 0.7rem 1.5rem;
-      cursor: pointer;
-      color: rgba(255, 255, 255, 0.5);
-      border-left: 2px solid transparent;
-      font-size: 0.78rem;
-      transition: 0.2s;
-      text-decoration: none;
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 2rem 1.5rem 0;
     }
 
     /* Main Area */
@@ -184,29 +267,39 @@
     }
 
     .top-bar {
-      background: white;
-      padding: 1.2rem 2rem;
+      background: rgba(255,255,255,0.02);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 1.5rem 2.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid #e5e0d8;
+      border-bottom: 1px solid var(--border);
+    }
+
+    #view-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.3rem;
     }
 
     .sync-indicator {
       font-size: 0.62rem;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: #777;
-      margin-top: 0.4rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
     }
-
     .sync-dot {
       display: inline-block;
       width: 8px;
       height: 8px;
       border-radius: 50%;
       background: #2ecc71;
-      margin-right: 0.45rem;
+      margin-right: 0.5rem;
+      animation: syncPulse 2s infinite;
     }
 
     .top-bar-actions {
@@ -215,454 +308,359 @@
     }
 
     .btn-sm {
-      padding: 0.5rem 1.2rem;
-      border: 1px solid var(--gold);
-      background: transparent;
-      color: var(--black);
+      padding: 0.6rem 1.4rem;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
       cursor: pointer;
-      font-size: 0.6rem;
+      font-size: 0.65rem;
+      font-weight: 600;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      transition: 0.2s;
+      border-radius: 4px;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
     }
-
     .btn-sm:hover {
-      background: var(--gold);
-      color: white;
+      border-color: var(--gold);
+      color: var(--gold-light);
     }
-
     .btn-sm.primary {
-      background: var(--gold);
-      color: white;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+      color: #000;
+      border: none;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-sm.primary::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%; width: 50%; height: 100%;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+      transform: skewX(-20deg);
+    }
+    .btn-sm.primary:hover {
+      color: #000;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 15px rgba(201,168,76,0.2);
+    }
+    .btn-sm.primary:hover::after {
+      animation: shimmer 1s infinite;
     }
 
     #content {
       flex: 1;
       overflow-y: auto;
-      padding: 2rem;
+      padding: 2.5rem;
     }
 
-    /* Stats Grid */
+    /* Stats */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
-      margin-bottom: 2rem;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
     }
-
     .stat-card {
-      background: white;
-      padding: 1.5rem;
-      border-bottom: 3px solid transparent;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 1.8rem;
+      border-radius: 8px;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s;
     }
-
-    .stat-card.green {
-      border-color: var(--attending);
+    .stat-card:hover {
+      transform: translateY(-2px);
     }
-
-    .stat-card.red {
-      border-color: var(--declined);
-    }
-
-    .stat-card.yellow {
-      border-color: var(--later);
-    }
-
-    .stat-card.blue {
-      border-color: var(--msg);
-    }
+    .stat-card.green { border-bottom-color: var(--attending); }
+    .stat-card.green:hover { box-shadow: 0 10px 20px rgba(46,204,113,0.1); }
+    .stat-card.red { border-bottom-color: var(--declined); }
+    .stat-card.red:hover { box-shadow: 0 10px 20px rgba(231,76,60,0.1); }
+    .stat-card.yellow { border-bottom-color: var(--later); }
+    .stat-card.yellow:hover { box-shadow: 0 10px 20px rgba(243,156,18,0.1); }
+    .stat-card.blue { border-bottom-color: var(--msg); }
+    .stat-card.blue:hover { box-shadow: 0 10px 20px rgba(52,152,219,0.1); }
 
     .stat-label {
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
+      font-size: 0.55rem;
+      font-weight: 800;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: #999;
-      margin-bottom: 0.5rem;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
     }
-
     .stat-num {
-      font-size: 2.5rem;
+      font-size: 2.8rem;
       font-family: 'Cormorant Garamond', serif;
-      color: var(--black);
+      background: linear-gradient(180deg, #fff, var(--champagne, #d4b896));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       line-height: 1;
     }
 
     /* Filters */
     .filter-bar {
-      background: white;
-      padding: 1rem 1.5rem;
       display: flex;
-      gap: 1rem;
+      gap: 0.8rem;
       align-items: center;
       flex-wrap: wrap;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
-
     .filter-btn {
-      padding: 0.4rem 1rem;
-      border: 1px solid #ddd;
-      background: transparent;
+      padding: 0.5rem 1.2rem;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
       font-size: 0.65rem;
+      font-weight: 600;
       cursor: pointer;
-      border-radius: 2px;
+      border-radius: 9999px;
+      transition: all 0.2s;
     }
-
     .filter-btn.active {
-      background: var(--black);
-      color: white;
-      border-color: var(--black);
+      background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+      color: #000;
+      border-color: transparent;
     }
-
     .filter-btn:hover:not(.active) {
       border-color: var(--gold);
-      color: var(--gold);
+      color: var(--gold-light);
     }
 
     /* Tables */
+    .table-shell {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow-x: auto;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
-      background: white;
     }
-
     th {
-      padding: 0.8rem 1rem;
+      padding: 1.2rem 1.5rem;
       text-align: left;
-      font-size: 0.58rem;
-      letter-spacing: 0.2em;
+      font-size: 0.55rem;
+      font-weight: 800;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: #aaa;
-      background: #fafaf9;
+      color: var(--gold);
+      background: rgba(255,255,255,0.02);
+      border-bottom: 1px solid var(--border);
     }
-
     td {
-      padding: 0.9rem 1rem;
-      border-bottom: 1px solid #f8f5f0;
-      font-size: 0.8rem;
-      color: #333;
+      padding: 1.2rem 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.85rem;
+      color: var(--text);
+      transition: background 0.2s;
+    }
+    tr:hover td {
+      background: rgba(201,168,76,0.04);
     }
 
     .status-pill {
       display: inline-block;
-      padding: 0.25rem 0.8rem;
-      border-radius: 2px;
+      padding: 0.35rem 1rem;
+      border-radius: 9999px;
       font-size: 0.6rem;
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.15em;
+      border: 1px solid transparent;
     }
-
     .pill-attending {
-      background: rgba(46, 204, 113, 0.1);
+      background: rgba(46,204,113,0.1);
+      border-color: rgba(46,204,113,0.3);
       color: var(--attending);
+      box-shadow: 0 0 10px rgba(46,204,113,0.1);
     }
-
     .pill-declined {
-      background: rgba(231, 76, 60, 0.1);
+      background: rgba(231,76,60,0.1);
+      border-color: rgba(231,76,60,0.3);
       color: var(--declined);
+      box-shadow: 0 0 10px rgba(231,76,60,0.1);
     }
-
     .pill-later {
-      background: rgba(243, 156, 18, 0.1);
+      background: rgba(243,156,18,0.1);
+      border-color: rgba(243,156,18,0.3);
       color: var(--later);
+      box-shadow: 0 0 10px rgba(243,156,18,0.1);
     }
-
     .pill-invited {
-      background: rgba(149, 165, 166, 0.1);
+      background: rgba(149,165,166,0.1);
+      border-color: rgba(149,165,166,0.3);
       color: #95a5a6;
     }
 
-    .btn-link {
-      text-decoration: none;
-      display: inline-flex;
+    .table-actions {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .action-btn {
+      padding: 0.4rem 0.8rem;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      cursor: pointer;
+      font-size: 0.65rem;
+      color: var(--text);
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+    .action-btn.wa {
+      border-color: rgba(37,211,102,0.5);
+      color: #25D366;
+    }
+    .action-btn.wa:hover {
+      background: #25D366;
+      color: #000;
+    }
+    .action-btn.danger {
+      border-color: rgba(231,76,60,0.5);
+      color: #e74c3c;
+    }
+    .action-btn.danger:hover {
+      background: #e74c3c;
+      color: #fff;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(5px);
+      display: none;
       align-items: center;
       justify-content: center;
+      z-index: 50;
     }
-
-    .table-shell {
-      overflow-x: auto;
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: #0d0d1a;
+      border: 1px solid var(--gold);
+      padding: 2.5rem;
+      width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      border-radius: 8px;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8);
     }
-
-    .vault-hero {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .vault-copy {
-      background: linear-gradient(140deg, #171410 0%, #241c13 58%, #3b2f1a 100%);
-      color: var(--ivory);
-      padding: 2rem;
-      border: 1px solid rgba(201, 168, 76, 0.2);
-      box-shadow: 0 16px 34px rgba(13, 13, 13, 0.15);
-    }
-
-    .vault-copy h2 {
+    .modal h2 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 2rem;
-      font-weight: 400;
-      margin-bottom: 0.75rem;
+      font-size: 1.8rem;
+      color: var(--gold-light);
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
     }
-
-    .vault-kicker {
-      display: inline-block;
-      margin-bottom: 0.85rem;
-      font-size: 0.58rem;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      color: rgba(245, 240, 232, 0.62);
-    }
-
-    .vault-copy p {
-      font-size: 0.92rem;
-      line-height: 1.7;
-      max-width: 32rem;
-      color: rgba(245, 240, 232, 0.85);
-    }
-
-    .vault-actions {
-      display: flex;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-      margin-top: 1.5rem;
-    }
-
-    .vault-preview {
-      position: relative;
-      min-height: 270px;
-      padding: 1.6rem;
-      background:
-        radial-gradient(circle at top left, rgba(212, 184, 150, 0.22), transparent 42%),
-        linear-gradient(180deg, #fffaf2 0%, #f6efe6 100%);
-      border: 1px solid #eadfce;
-      overflow: hidden;
-    }
-
-    .vault-stack {
-      position: relative;
-      height: 100%;
-      min-height: 236px;
-    }
-
-    .vault-card-mini {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      width: min(100%, 280px);
-      min-height: 180px;
-      padding: 1.25rem;
-      background: rgba(255, 255, 255, 0.92);
-      border: 1px solid rgba(201, 168, 76, 0.18);
-      box-shadow: 0 16px 30px rgba(13, 13, 13, 0.08);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transform-origin: center bottom;
-    }
-
-    .vault-card-mini:nth-child(1) {
-      transform: translate(0, 0) rotate(-2deg);
-      z-index: 3;
-    }
-
-    .vault-card-mini:nth-child(2) {
-      transform: translate(-14px, 12px) rotate(2deg);
-      z-index: 2;
-    }
-
-    .vault-card-mini:nth-child(3) {
-      transform: translate(-28px, 24px) rotate(-4deg);
-      z-index: 1;
-    }
-
-    .vault-card-mini blockquote {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.15rem;
-      line-height: 1.45;
-      color: #2f2418;
-      margin: 0;
-    }
-
-    .vault-card-mini footer {
-      margin-top: 1rem;
-      font-size: 0.65rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: #826837;
-    }
-
-    .media-layout {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 1rem;
-      align-items: start;
-    }
-
-    .media-panel {
-      background: white;
-      border: 1px solid #e8e2d8;
-      box-shadow: 0 10px 28px rgba(13, 13, 13, 0.04);
-      overflow: hidden;
-    }
-
-    .media-panel-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 1rem;
-      padding: 1.4rem 1.5rem 1rem;
-      border-bottom: 1px solid #efe8dd;
-      background: linear-gradient(180deg, #fffdfb 0%, #fcf8f2 100%);
-    }
-
-    .media-panel-head h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.45rem;
-      font-weight: 400;
-      color: var(--black);
-    }
-
-    .media-kicker {
-      display: block;
-      margin-bottom: 0.35rem;
-      font-size: 0.58rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: #8b7444;
-    }
-
-    .media-count {
-      font-size: 0.7rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: #6f6557;
-      text-align: right;
-    }
-
-    .media-note-cell {
-      max-width: 360px;
-      line-height: 1.55;
-      white-space: normal;
-    }
-
-    .media-empty {
-      text-align: center;
-      padding: 2rem;
-      color: #8b8276;
-      font-size: 0.84rem;
-    }
-
-    .song-tools {
-      padding: 1rem 1.5rem 1.2rem;
-      border-bottom: 1px solid #efe8dd;
-      background: #fffdfa;
-      display: grid;
-      gap: 0.75rem;
-    }
-
-    .song-tools-row {
-      display: flex;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    .song-tools-row input {
-      flex: 1 1 220px;
-      min-width: 220px;
-      padding: 0.66rem 0.78rem;
-      border: 1px solid #ddd3c2;
-      background: white;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.78rem;
-      outline: none;
-    }
-
-    .song-tools-row input:focus {
-      border-color: var(--gold);
-    }
-
-    .song-help {
-      font-size: 0.73rem;
-      color: #70685c;
-      line-height: 1.55;
-    }
-
-    /* WhatsApp Inbox Build */
-    .wa-builder {
-      background: white;
-      padding: 2rem;
-      border: 1px solid #e8e2d8;
-      box-shadow: 0 8px 22px rgba(13, 13, 13, 0.04);
-    }
-
-    .wa-builder h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.55rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .wa-muted {
-      font-size: 0.84rem;
-      color: #5f5f5f;
-      margin-bottom: 1.4rem;
-      line-height: 1.55;
-    }
-
-    .wa-layout {
+    .modal-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-bottom: 1rem;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
     }
-
-    .wa-panel {
-      border: 1px solid #ece6dc;
-      background: #fcfbf9;
-      padding: 1rem;
-    }
-
-    .wa-panel h3 {
-      font-size: 0.73rem;
-      letter-spacing: 0.14em;
+    .modal-group label {
+      font-size: 0.6rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: #826837;
-      margin-bottom: 0.9rem;
+      color: var(--gold-dim);
+      display: block;
+      margin-bottom: 0.6rem;
+    }
+    .modal-group input, .modal-group select {
+      width: 100%;
+      padding: 0.8rem;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      outline: none;
+      border-radius: 4px;
+      transition: border-color 0.2s;
+    }
+    .modal-group input:focus, .modal-group select:focus {
+      border-color: var(--gold);
+    }
+    .modal-group select option {
+      background: #0d0d1a;
+      color: var(--text);
     }
 
-    .wa-panel small {
-      color: #717171;
-      font-size: 0.75rem;
+    /* WhatsApp View */
+    .wa-builder {
+      background: var(--surface);
+      padding: 2.5rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
     }
-
+    .wa-builder h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      color: var(--gold-light);
+      margin-bottom: 0.5rem;
+    }
+    .wa-muted {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
     .wa-kpis {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 0.75rem;
-      margin-bottom: 1.2rem;
+      gap: 1rem;
+      margin-bottom: 2rem;
     }
-
     .wa-kpi {
-      border: 1px solid #ece6dc;
-      background: #fcfbf9;
-      padding: 0.75rem 0.85rem;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      border-radius: 6px;
+      text-align: center;
     }
-
     .wa-kpi strong {
       display: block;
-      font-size: 1.3rem;
+      font-size: 1.8rem;
       font-family: 'Cormorant Garamond', serif;
-      color: #1f1f1f;
-      line-height: 1.1;
+      color: var(--text);
     }
-
     .wa-kpi span {
-      font-size: 0.62rem;
+      font-size: 0.55rem;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #737373;
+      letter-spacing: 0.15em;
+      color: var(--gold-dim);
     }
-
+    .wa-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .wa-panel {
+      background: rgba(0,0,0,0.2);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      border-radius: 6px;
+    }
+    .wa-panel h3 {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .wa-panel small {
+      color: var(--muted);
+      font-size: 0.75rem;
+      display: block;
+      margin-top: 0.5rem;
+    }
     .wa-row {
       display: flex;
       gap: 0.7rem;
@@ -670,377 +668,169 @@
       flex-wrap: wrap;
       margin-bottom: 1rem;
     }
-
-    .wa-row select,
-    .wa-row input {
-      padding: 0.64rem;
-      border: 1px solid #ddd;
-      outline: none;
+    .wa-row select, .wa-row input {
+      padding: 0.8rem;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
       min-width: 260px;
-      background: white;
+      border-radius: 4px;
     }
-
-    .wa-row select:focus,
-    .wa-row input:focus {
+    .wa-row select:focus, .wa-row input:focus { border-color: var(--gold); }
+    .wa-row select option { background: #080810; }
+    
+    .wa-vars {
+      display: flex;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .wa-var {
+      padding: 0.4rem 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      font-size: 0.7rem;
+      color: var(--text);
+      cursor: pointer;
+      border-radius: 9999px;
+      transition: all 0.2s;
+    }
+    .wa-var:hover {
+      background: var(--gold);
+      color: #000;
       border-color: var(--gold);
     }
-
     .wa-template {
       width: 100%;
       min-height: 150px;
       padding: 1rem;
-      border: 1px solid #ddd;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border);
+      color: var(--text);
       font-family: 'Montserrat', sans-serif;
       font-size: 0.85rem;
       line-height: 1.6;
       resize: vertical;
-      margin-bottom: 1rem;
-    }
-
-    .wa-vars {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .wa-var {
-      padding: 0.3rem 0.7rem;
-      background: #f5f5f5;
-      font-size: 0.65rem;
-      cursor: pointer;
-      border: 1px solid #e0e0e0;
-    }
-
-    .wa-var:hover {
-      background: var(--gold);
-      color: white;
-    }
-
-    .wa-preview {
-      background: #f0ede8;
-      padding: 1rem;
-      border-left: 3px solid #25D366;
-      font-size: 0.82rem;
-      white-space: pre-wrap;
-      margin-bottom: 1rem;
-    }
-
-    .wa-actions {
-      display: flex;
-      gap: 0.65rem;
-      flex-wrap: wrap;
-    }
-
-    .wa-person-info {
-      font-size: 0.76rem;
-      color: #505050;
-      background: #fff;
-      border: 1px solid #ece6dc;
-      padding: 0.7rem 0.75rem;
-      min-height: 44px;
-    }
-
-    .action-btn {
-      padding: 0.38rem 0.65rem;
-      border: 1px solid #ddd;
-      background: transparent;
-      cursor: pointer;
-      font-size: 0.65rem;
-    }
-
-    .action-btn.wa {
-      border-color: #25D366;
-      color: #25D366;
-      font-weight: 600;
-      min-width: 96px;
-    }
-
-    .action-btn.wa:hover {
-      background: #25D366;
-      color: white;
-    }
-
-    .action-btn.danger {
-      border-color: #e74c3c;
-      color: #e74c3c;
-      font-weight: 600;
-    }
-
-    .action-btn.danger:hover {
-      background: #e74c3c;
-      color: #fff;
-    }
-
-    .table-actions {
-      display: flex;
-      gap: 0.4rem;
-      align-items: center;
-    }
-
-    /* Modal */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.6);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 50;
-    }
-
-    .modal-overlay.open {
-      display: flex;
-    }
-
-    .modal {
-      background: white;
-      padding: 2.5rem;
-      width: 600px;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-
-    .modal h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem;
       margin-bottom: 1.5rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid #eee;
+      border-radius: 4px;
     }
-
-    .modal-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-bottom: 1rem;
+    .wa-template:focus { outline: none; border-color: var(--gold); }
+    .wa-preview {
+      background: rgba(0,0,0,0.5);
+      border-left: 3px solid #2ecc71;
     }
-
-    .modal-group label {
-      font-size: 0.6rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: #aaa;
-      display: block;
-      margin-bottom: 0.4rem;
-    }
-
-    .modal-group input,
-    .modal-group select {
-      width: 100%;
-      padding: 0.6rem;
-      border: 1px solid #ddd;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.85rem;
-      outline: none;
-    }
-
-    .modal-group input:focus,
-    .modal-group select:focus {
-      border-color: var(--gold);
-    }
-
-    @media (max-width: 960px) {
-      .wa-kpis {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .vault-hero,
-      .media-layout,
-      .wa-layout {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 620px) {
-      #content {
-        padding: 1rem;
-      }
-
-      .wa-kpis {
-        grid-template-columns: 1fr;
-      }
-
-      .vault-copy,
-      .vault-preview {
-        padding: 1.2rem;
-      }
-
-      .vault-actions {
-        flex-direction: column;
-      }
-
-      .wa-row select,
-      .wa-row input {
-        min-width: 100%;
-        width: 100%;
-      }
-    }
-  
-    
-    /* --- COLOR & TRIM OVERRIDES V2 --- */
-    .hero-flourish, .hero-divider, 
-    .story-signature, .story-img-accent {
-        display: none !important;
-    }
-    
-    /* Restore Ampersand */
-    .hero-ampersand {
-        display: inline-block !important;
-        color: #000000 !important;
-    }
-    
-    /* Soft shadows on headings */
-    h1, h2, h3, .section-title, .hero-names, .gift-title {
-        text-shadow: 0 4px 15px rgba(0,0,0,0.08) !important;
-    }
-    
-    /* Black Nav Header & Buttons */
-    nav {
-        background: #000000 !important;
-        border-bottom: none !important;
-    }
-    nav a {
-        background: #000000 !important;
-        color: #ffffff !important;
-        border: 1px solid rgba(255,255,255,0.3) !important;
-    }
-    nav a:hover {
-        background: rgba(255,255,255,0.15) !important;
-        border-color: #ffffff !important;
-    }
-    
-    /* White Footer Text with Dark Background */
-    footer {
-        background: #000000 !important;
-        color: #ffffff !important;
-    }
-    footer .footer-names, footer p {
-        color: #ffffff !important;
-    }
-    /* Larger Date in Footer */
-    footer p:nth-of-type(1) {
-        font-size: clamp(2rem, 5vw, 3.2rem) !important;
-        margin-top: 1rem;
-    }
-    
-    /* Easy Mode Toggle for RSVP Testing */
-    .easy-toggle {
-        text-align: center;
-        padding: 0.8rem;
-        margin-bottom: 1rem;
-    }
-    .easy-toggle label {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.6rem;
-        cursor: pointer;
-        font-size: 0.7rem;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: rgba(255,255,240,0.6);
-        transition: color 0.2s;
-    }
-    .easy-toggle label:hover { color: var(--gold); }
-    .easy-toggle input[type="checkbox"] {
-        width: 18px;
-        height: 18px;
-        accent-color: var(--gold);
-        cursor: pointer;
+    .wa-person-info {
+      font-size: 0.8rem;
+      color: var(--text);
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      border-radius: 4px;
+      min-height: 44px;
+      margin-top: 0.5rem;
     }
 
     /* Seating */
     .seating-row {
       display: flex;
       align-items: center;
-      gap: 0.8rem;
-      padding: 0.7rem 1rem;
-      background: #fff;
-      border-radius: 8px;
-      margin-bottom: 0.4rem;
-      border-left: 4px solid var(--gold);
-      cursor: pointer;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-bottom: 0.5rem;
+      border-left: 3px solid var(--gold);
       transition: background 0.2s;
     }
-    .seating-row:hover { background: #f5f0e8; }
-    .seating-row .s-name { flex: 1; font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; }
-    .seating-row .s-party { font-size: 0.75rem; color: #888; min-width: 40px; text-align: center; }
-    .seating-row .s-table-input { width: 70px; padding: 0.4rem; border: 1px solid #ccc; border-radius: 4px; text-align: center; font-size: 0.9rem; }
+    .seating-row:hover { background: rgba(255,255,255,0.05); }
+    .seating-row .s-name { flex: 1; font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; color: var(--gold-light); }
+    .seating-row .s-party { font-size: 0.75rem; color: var(--muted); min-width: 50px; text-align: center; }
+    .seating-row .s-table-input { width: 80px; padding: 0.5rem; background: rgba(0,0,0,0.5); border: 1px solid var(--border); color: var(--text); border-radius: 4px; text-align: center; font-size: 0.9rem; }
     .seating-row .s-table-input:focus { border-color: var(--gold); outline: none; }
-    .seating-row .s-saved { font-size: 0.7rem; color: #2ecc71; min-width: 35px; }
-    .seating-table-group { margin-bottom: 1.5rem; }
-    .seating-table-group h4 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; padding: 0.5rem 1rem; background: var(--gold); color: #000; border-radius: 6px; display: inline-block; }
-    .seating-table-group .table-guests { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
-    .seating-table-group .table-guest { background: #f5f0e8; padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.85rem; border-left: 3px solid var(--gold); }
-
+    .seating-row .s-saved { font-size: 0.7rem; color: #2ecc71; min-width: 40px; }
+    .seating-table-group { margin-bottom: 2rem; background: var(--surface); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border); }
+    .seating-table-group h4 { font-size: 1.1rem; font-family: 'Cormorant Garamond', serif; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); color: var(--gold-light); }
+    .seating-table-group .table-guests { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+    .seating-table-group .table-guest { background: rgba(0,0,0,0.4); padding: 0.5rem 1rem; border-radius: 4px; font-size: 0.85rem; border-left: 2px solid var(--gold); color: var(--text); }
   </style>
 </head>
 
 <body>
   <!-- Login -->
   <div id="login-overlay">
+    <div class="login-ring"></div>
+    <div class="login-ring"></div>
     <div class="login-box">
       <h2>Wedding Admin</h2>
-      <p>Charles &amp; Leticia - 2026</p>
-      <input type="password" id="admin-pass" class="login-input" placeholder="Enter Password"
-        onkeydown="if(event.key==='Enter') doLogin()" />
+      <span class="login-sub">Charles & Leticia · 2026</span>
+      <input type="password" id="admin-pass" class="login-input" placeholder="Enter password" onkeydown="if(event.key==='Enter') doLogin()" />
       <button class="login-btn" onclick="doLogin()">Enter</button>
-      <p id="login-err" style="color:#e74c3c;display:none;margin-top:1rem;">Incorrect password.</p>
+      <p id="login-err" style="color:#e74c3c;display:none;margin-top:1rem;font-size:0.78rem;">Incorrect password.</p>
     </div>
   </div>
 
   <!-- Sidebar -->
   <div id="sidebar">
     <div class="sidebar-brand">
-      <div class="brand-name">Charles &amp; Leticia</div>
+      <div class="brand-monogram">C&L</div>
+      <div class="brand-name">Charles & Leticia</div>
+      <div class="brand-tag">Admin Portal · 2026</div>
     </div>
     <div class="nav-label">Management</div>
-    <div class="nav-item active" onclick="showView('guests', event)">Guests Data</div>
-    <div class="nav-item" onclick="showView('media', event)">Songs &amp; Messages</div>
-    <div class="nav-item" onclick="showView('whatsapp', event)">WhatsApp Inbox</div>
-    <div class="nav-item" onclick="showView('seating', event); loadSeating()">Seating</div>
+    <div class="nav-item active" onclick="showView('guests', event)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Guests
+    </div>
+    <div class="nav-item" onclick="showView('media', event)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+      Songs & Messages
+    </div>
+    <div class="nav-item" onclick="showView('whatsapp', event)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      WhatsApp
+    </div>
+    <div class="nav-item" onclick="showView('seating', event); loadSeating()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Seating
+    </div>
     <div class="nav-label">Public Pages</div>
-    <a href="index.html" class="nav-item" target="_blank">ðŸŽ‰ Invitation</a>
-    <a href="rsvp.html" class="nav-item" target="_blank">ðŸ“‹ RSVP</a>
-    <a href="rsvp.html?advanced=1" class="nav-item" target="_blank" style="font-size:0.7rem;opacity:0.7;">ðŸ“‹ RSVP (Full Form)</a>
+    <a href="index.html" class="nav-item" target="_blank">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      Invitation
+    </a>
+    <a href="rsvp.html" class="nav-item" target="_blank">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      RSVP
+    </a>
+    <div class="sidebar-footer">
+      <button class="btn-sm" onclick="logout()" style="width:100%;justify-content:center;">Sign Out</button>
+    </div>
   </div>
 
   <!-- Main -->
   <div id="main">
     <div class="top-bar">
       <div>
-        <h1 id="view-title" style="font-size:1.1rem;font-weight:400;">Guest Management</h1>
+        <h1 id="view-title">Guest Management</h1>
         <div id="sync-indicator" class="sync-indicator"><span class="sync-dot"></span>Live Sync Active</div>
       </div>
       <div class="top-bar-actions">
         <button class="btn-sm" onclick="fetchGuests()">Refresh</button>
-        <button id="add-guest-btn" class="btn-sm primary" onclick="openAddGuest()">+ Add Guest / Family</button>
-        <button class="btn-sm" onclick="logout()">Logout</button>
+        <button id="add-guest-btn" class="btn-sm primary" onclick="openAddGuest()">+ Add Guest</button>
       </div>
     </div>
 
     <div id="content">
-      <!-- GUEST LIST VIEW -->
+      <!-- GUEST VIEW -->
       <div id="view-guests">
         <div class="stats-grid">
-          <div class="stat-card green">
-            <div class="stat-label">Attending</div>
-            <div class="stat-num" id="st-attending">0</div>
-          </div>
-          <div class="stat-card red">
-            <div class="stat-label">Declined</div>
-            <div class="stat-num" id="st-declined">0</div>
-          </div>
-          <div class="stat-card yellow">
-            <div class="stat-label">Ask Later (Waitlist)</div>
-            <div class="stat-num" id="st-later">0</div>
-          </div>
-          <div class="stat-card blue">
-            <div class="stat-label">Total Invited Seats</div>
-            <div class="stat-num" id="st-total">0</div>
-          </div>
+          <div class="stat-card green"><div class="stat-label">Attending</div><div class="stat-num" id="st-attending">0</div></div>
+          <div class="stat-card red"><div class="stat-label">Declined</div><div class="stat-num" id="st-declined">0</div></div>
+          <div class="stat-card yellow"><div class="stat-label">Ask Later</div><div class="stat-num" id="st-later">0</div></div>
+          <div class="stat-card blue"><div class="stat-label">Total Invited Seats</div><div class="stat-num" id="st-total">0</div></div>
         </div>
-
         <div class="filter-bar">
           <button class="filter-btn active" onclick="setFilter('all', this)">All</button>
           <button class="filter-btn" onclick="setFilter('attending', this)">Attending</button>
@@ -1050,10 +840,9 @@
           <button class="filter-btn" onclick="setFilter('couple', this)">Couples</button>
           <button class="filter-btn" onclick="setFilter('family', this)">Families</button>
         </div>
-
-        <table>
-          <thead>
-            <tr>
+        <div class="table-shell">
+          <table>
+            <thead><tr>
               <th>Guest / Family Lead</th>
               <th>Type</th>
               <th>Max Size</th>
@@ -1061,40 +850,34 @@
               <th>Contact</th>
               <th>Deadline</th>
               <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="guests-tbody">
-            <tr>
-              <td colspan="7" style="text-align:center;padding:3rem;">Loading data from Convex...</td>
-            </tr>
-          </tbody>
-        </table>
-      <!-- SONGS & MESSAGES VIEW -->
+            </tr></thead>
+            <tbody id="guests-tbody">
+              <tr><td colspan="7" style="text-align:center;padding:3rem;color:var(--muted);">Loading data from Convex...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- MEDIA VIEW -->
       <div id="view-media" style="display:none;">
-        <div style="max-width: 1000px; margin: 0 auto; padding: 1.5rem 0;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 2rem;">
+        <div style="max-width:1000px;margin:0 auto;padding:1.5rem 0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;">
             <div>
-              <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--black); margin-bottom: 0.3rem;">Songs &amp; Guest Messages</h2>
-              <p style="color: #666; font-size: 0.85rem;">All guest messages and song requests received via RSVP &amp; Music pages.</p>
+              <h2 style="font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--text);margin-bottom:0.3rem;">Songs & Guest Messages</h2>
+              <p style="color:var(--muted);font-size:0.83rem;">All guest messages and song requests received via RSVP & Music pages.</p>
             </div>
-            <a href="music.html" target="_blank" style="display:inline-flex; align-items:center; gap:.5rem; padding: 0.6rem 1.2rem; background: var(--gold); color:#0a0a0a; border-radius:6px; font-size:0.75rem; font-weight:700; text-transform:uppercase; text-decoration:none;">
-              🎵 Open Public Music Page
-            </a>
+            <a href="music.html" target="_blank" style="display:inline-flex;align-items:center;gap:.5rem;padding:0.55rem 1.1rem;background:linear-gradient(135deg,var(--gold),var(--gold-dim));color:#000;border-radius:2px;font-size:0.62rem;font-weight:800;text-transform:uppercase;letter-spacing:0.15em;text-decoration:none;">🎵 Music Page</a>
           </div>
-
-          <!-- Section: Messages Inbox -->
-          <div style="background: white; border: 1px solid #e5e0d8; border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
-            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; margin-bottom: 1rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem;">📬 Guest Messages Inbox</h3>
-            <div id="admin-messages-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem;">
-              <div style="color: #888; font-size: 0.85rem; padding: 1rem; text-align: center;">Loading guest messages...</div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.5rem;margin-bottom:1.5rem;">
+            <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--text);margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);">📬 Guest Messages Inbox</h3>
+            <div id="admin-messages-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem;">
+              <div style="color:var(--muted);font-size:0.83rem;padding:1rem;text-align:center;">Loading...</div>
             </div>
           </div>
-
-          <!-- Section: Song Requests -->
-          <div style="background: white; border: 1px solid #e5e0d8; border-radius: 8px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
-            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; margin-bottom: 1rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem;">🎶 Requested Songs Leaderboard</h3>
-            <div id="admin-songs-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;">
-              <div style="color: #888; font-size: 0.85rem; padding: 1rem; text-align: center;">Loading requested songs...</div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.5rem;">
+            <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--text);margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);">🎶 Requested Songs</h3>
+            <div id="admin-songs-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;">
+              <div style="color:var(--muted);font-size:0.83rem;padding:1rem;text-align:center;">Loading...</div>
             </div>
           </div>
         </div>
@@ -1104,16 +887,13 @@
       <div id="view-whatsapp" style="display:none;">
         <div class="wa-builder">
           <h2>WhatsApp Campaign Console</h2>
-          <p class="wa-muted">Send to groups or one guest at a time from a cleaner flow. Individual sends still use
-            RSVP-aware messages automatically.</p>
-
+          <p class="wa-muted">Send to groups or one guest at a time from a cleaner flow. Individual sends still use RSVP-aware messages automatically.</p>
           <div class="wa-kpis">
             <div class="wa-kpi"><strong id="wa-kpi-phones">0</strong><span>With WhatsApp</span></div>
             <div class="wa-kpi"><strong id="wa-kpi-invited">0</strong><span>Not Responded</span></div>
             <div class="wa-kpi"><strong id="wa-kpi-later">0</strong><span>Ask Later</span></div>
             <div class="wa-kpi"><strong id="wa-kpi-attending">0</strong><span>Attending</span></div>
           </div>
-
           <div class="wa-layout">
             <div class="wa-panel">
               <h3>Group Send</h3>
@@ -1128,12 +908,10 @@
               </div>
               <small>Opens a WhatsApp tab per matching guest with a saved phone number.</small>
             </div>
-
             <div class="wa-panel">
               <h3>Send to Individual</h3>
               <div class="wa-row" style="margin-bottom:0.6rem;">
-                <input id="wa-person-search" type="text" placeholder="Search by name or phone..."
-                  oninput="filterWaPeople()" />
+                <input id="wa-person-search" type="text" placeholder="Search by name or phone..." oninput="filterWaPeople()" />
               </div>
               <div class="wa-row" style="margin-bottom:0.6rem;">
                 <select id="wa-person" onchange="showSelectedPersonMeta()"></select>
@@ -1142,15 +920,12 @@
               <div id="wa-person-meta" class="wa-person-info">Select a person to view details.</div>
             </div>
           </div>
-
           <div class="wa-vars">
             <span class="wa-var" onclick="insertVar('{{name}}')">{{name}}</span>
             <span class="wa-var" onclick="insertVar('{{type}}')">{{type}}</span>
             <span class="wa-var" onclick="insertVar('{{deadline}}')">{{deadline}}</span>
             <span class="wa-var" onclick="insertVar('{{link}}')">{{link}}</span>
           </div>
-
-          <!-- Default Template Box -->
           <textarea id="wa-text" class="wa-template" oninput="updateWaPreview()">Hi {{name}},
 
 You are cordially invited to celebrate the wedding of Charles and Leticia.
@@ -1162,45 +937,38 @@ Open your invitation and respond here:
 
 With love,
 Charles and Leticia</textarea>
-
-          <div style="font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#888;">Live Preview (First
-            match)</div>
-          <textarea class="wa-preview wa-template" id="wa-preview" style="min-height:220px;">Loading preview...</textarea>
-
-          <div class="wa-actions" style="margin-top:1.3rem;">
+          <div style="font-size:0.57rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem;">Live Preview (First match)</div>
+          <textarea class="wa-preview wa-template" id="wa-preview" style="min-height:200px;">Loading preview...</textarea>
+          <div class="wa-actions" style="margin-top:1.2rem;">
             <button class="btn-sm" onclick="copyWA()">Copy Message</button>
           </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <!-- SEATING VIEW -->
-  <div id="view-seating" style="display:none;">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
-      <h2 style="font-size:1.2rem;font-weight:400;">Table Assignments</h2>
-      <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-        <button class="btn-sm" onclick="loadSeating()">Refresh</button>
-        <button class="btn-sm primary" onclick="saveSeating()">Save All</button>
-        <button class="btn-sm" onclick="loadPreassigned()" style="border-color:#2ecc71;color:#2ecc71;">Load Pre-assigned Tables</button>
+      <!-- SEATING VIEW -->
+      <div id="view-seating" style="display:none;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+          <h2 style="font-size:1.2rem;font-weight:700;color:var(--text);">Table Assignments</h2>
+          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+            <button class="btn-sm" onclick="loadSeating()">Refresh</button>
+            <button class="btn-sm primary" onclick="saveSeating()">Save All</button>
+            <button class="btn-sm" onclick="loadPreassigned()" style="border-color:var(--attending);color:var(--attending);">Load Pre-assigned</button>
+          </div>
+        </div>
+        <div style="margin-bottom:1rem;font-size:0.78rem;color:var(--muted);">Assign table numbers to guests. Click a guest row to assign a table.</div>
+        <div id="seating-list"><div class="loading" style="color:var(--muted);">Loading guests...</div></div>
+        <div id="seating-table-view" style="margin-top:2rem;">
+          <h3 style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:1rem;">By Table</h3>
+          <div id="seating-by-table"></div>
+        </div>
+        <div style="margin-top:3rem;padding:2rem;background:var(--surface);border-radius:8px;border:2px dashed var(--border);text-align:center;">
+          <h3 style="font-size:1.1rem;margin-bottom:0.5rem;font-weight:400;color:var(--text);">Table Finder QR Code</h3>
+          <p style="font-size:0.78rem;color:var(--muted);margin-bottom:1rem;">Scan to search your table assignment</p>
+          <div id="qr-code-container" style="display:inline-block;background:#fff;padding:1rem;border-radius:8px;"></div>
+          <div id="qr-url" style="margin-top:0.8rem;font-size:0.72rem;color:var(--muted);word-break:break-all;"></div>
+          <button class="btn-sm" style="margin-top:1rem;" onclick="printQr()">Print QR</button>
+        </div>
       </div>
-    </div>
-    <div style="margin-bottom:1rem;font-size:0.8rem;color:#666;">Assign table numbers to guests. Click a guest row to assign a table.</div>
-    <div id="seating-list">
-      <div class="loading">Loading guests...</div>
-    </div>
-    <div id="seating-table-view" style="margin-top:2rem;">
-      <h3 style="font-size:1rem;margin-bottom:1rem;">By Table</h3>
-      <div id="seating-by-table"></div>
-    </div>
-
-    <!-- QR Code Portal -->
-    <div style="margin-top:3rem;padding:2rem;background:#fff;border-radius:12px;border:2px dashed var(--gold);text-align:center;">
-      <h3 style="font-size:1.1rem;margin-bottom:0.5rem;font-weight:400;">Table Finder QR Code</h3>
-      <p style="font-size:0.8rem;color:#888;margin-bottom:1rem;">Scan to search your table assignment</p>
-      <div id="qr-code-container" style="display:inline-block;background:#fff;padding:1rem;border-radius:8px;"></div>
-      <div id="qr-url" style="margin-top:0.8rem;font-size:0.75rem;color:#999;word-break:break-all;"></div>
-      <button class="btn-sm" style="margin-top:1rem;" onclick="printQr()">Print QR</button>
     </div>
   </div>
 
@@ -1209,59 +977,36 @@ Charles and Leticia</textarea>
     <div class="modal">
       <h2>Add Guest / Household</h2>
       <div class="modal-row">
-        <div class="modal-group">
-          <label>First Name (Lead Guest)</label>
-          <input type="text" id="m-fname" placeholder="John" />
-        </div>
-        <div class="modal-group">
-          <label>Last Name</label>
-          <input type="text" id="m-lname" placeholder="Doe" />
-        </div>
+        <div class="modal-group"><label>First Name (Lead Guest)</label><input type="text" id="m-fname" placeholder="John" /></div>
+        <div class="modal-group"><label>Last Name</label><input type="text" id="m-lname" placeholder="Doe" /></div>
       </div>
       <div class="modal-row">
-        <div class="modal-group">
-          <label>Guest Type</label>
-          <select id="m-type" onchange="syncPartySize()">
-            <option value="single">Single</option>
-            <option value="couple">Couple</option>
-            <option value="family">Family (up to 4)</option>
-          </select>
-        </div>
-        <div class="modal-group">
-          <label>Max Party Size</label>
-          <input type="number" id="m-max" value="1" min="1" max="10" />
-        </div>
+        <div class="modal-group"><label>Guest Type</label><select id="m-type" onchange="syncPartySize()"><option value="single">Single</option><option value="couple">Couple</option><option value="family">Family (up to 4)</option></select></div>
+        <div class="modal-group"><label>Max Party Size</label><input type="number" id="m-max" value="1" min="1" max="10" /></div>
       </div>
       <div id="m-spouse-row" class="modal-row" style="display:none;">
-        <div class="modal-group" style="grid-column: 1 / -1;">
-          <label>Spouse / Partner First Name (Optional)</label>
-          <input type="text" id="m-spouse" placeholder="Jane" />
-        </div>
+        <div class="modal-group" style="grid-column:1/-1;"><label>Spouse / Partner First Name (Optional)</label><input type="text" id="m-spouse" placeholder="Jane" /></div>
       </div>
       <div class="modal-row">
-        <div class="modal-group">
-          <label>WhatsApp Number</label>
-          <input type="tel" id="m-phone" placeholder="+501..." />
-        </div>
-        <div class="modal-group">
-          <label>RSVP Deadline</label>
-          <input type="date" id="m-due" value="2026-06-10" />
-        </div>
+        <div class="modal-group"><label>WhatsApp Number</label><input type="tel" id="m-phone" placeholder="+501..." /></div>
+        <div class="modal-group"><label>RSVP Deadline</label><input type="date" id="m-due" value="2026-06-10" /></div>
       </div>
       <div class="modal-row">
-        <div class="modal-group" style="grid-column: 1 / -1;">
-          <label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer;">
-            <input type="checkbox" id="m-easy" style="width:18px;height:18px;" />
-            Easy Mode RSVP (Simplified form - only first name & attendance)
+        <div class="modal-group" style="grid-column:1/-1;">
+          <label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer;text-transform:none;letter-spacing:0;font-size:0.82rem;">
+            <input type="checkbox" id="m-easy" style="width:16px;height:16px;accent-color:var(--gold);" />
+            Easy Mode RSVP (Simplified form)
           </label>
         </div>
       </div>
-      <div style="display:flex;justify-content:flex-end;gap:1rem;margin-top:2rem;">
+      <div style="display:flex;justify-content:flex-end;gap:0.75rem;margin-top:2rem;">
         <button class="btn-sm" onclick="document.getElementById('add-modal').classList.remove('open')">Cancel</button>
         <button class="btn-sm primary" onclick="submitGuest()">Save Guest</button>
       </div>
     </div>
   </div>
+
+  <script>function countUp(id,target){var el=document.getElementById(id);var start=0;var dur=600;var startTime=null;function step(ts){if(!startTime)startTime=ts;var p=Math.min((ts-startTime)/dur,1);el.textContent=Math.floor(p*target);if(p<1)requestAnimationFrame(step);}requestAnimationFrame(step);}</script>
 
   <script>
     const CONVEX_HTTP_URL = 'https://canny-hummingbird-920.convex.site';
@@ -2068,4 +1813,3 @@ Charles and Leticia</textarea>
 </body>
 
 </html>
-
