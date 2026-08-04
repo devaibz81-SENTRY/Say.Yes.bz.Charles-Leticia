@@ -45,7 +45,7 @@ export default function App() {
       }
     } catch {
       setError('Failed to connect to authentication server');
-    } font-sans finally {
+    } finally {
       setLoading(false);
     }
   };
