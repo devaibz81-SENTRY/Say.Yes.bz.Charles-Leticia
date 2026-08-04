@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Charles &amp; Leticia — Songs &amp; Messages</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;family=Great+Vibes&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "gold": { "DEFAULT": "#D4AF37", "light": "#F5D76E", "dark": "#A8862B" },
+                    "ink": "#0a0a0a",
+                    "on-error": "#ffffff",
+                    "primary": "#D4AF37",
+                    "inverse-on-surface": "#0a0a0a",
+                    "on-tertiary": "#0a0a0a",
+                    "on-error-container": "#ffb4ab",
+                    "outline": "#5c5c5c",
+                    "on-secondary": "#0a0a0a",
+                    "surface-container-low": "#0f0f0f",
+                    "on-surface-variant": "#b9b9b9",
+                    "primary-fixed-dim": "#4a3b14",
+                    "background": "#0a0a0a",
+                    "on-primary-fixed": "#f5e3a3",
+                    "on-primary-container": "#f5e3a3",
+                    "secondary": "#C9A84C",
+                    "tertiary": "#E8CE7A",
+                    "inverse-surface": "#f5f5f5",
+                    "inverse-primary": "#D4AF37",
+                    "surface-dim": "#0c0c0c",
+                    "on-tertiary-fixed": "#f5e3a3",
+                    "on-secondary-fixed": "#f0d98c",
+                    "surface-container-high": "#1a1a1a",
+                    "secondary-container": "#3b2f10",
+                    "primary-fixed": "#2a220c",
+                    "surface-tint": "#D4AF37",
+                    "tertiary-fixed": "#2a220c",
+                    "surface": "#121212",
+                    "outline-variant": "#2e2e2e",
+                    "primary-container": "#3b2f10",
+                    "on-tertiary-container": "#f5e3a3",
+                    "error-container": "#3b0a0a",
+                    "surface-variant": "#1c1c1c",
+                    "on-surface": "#f5f5f5",
+                    "tertiary-fixed-dim": "#4a3b14",
+                    "on-background": "#f5f5f5",
+                    "tertiary-container": "#2a220c",
+                    "error": "#ba1a1a",
+                    "surface-bright": "#2a2a2a",
+                    "surface-container-lowest": "#050505",
+                    "secondary-fixed": "#2a220c",
+                    "on-tertiary-fixed-variant": "#e8ce7a",
+                    "on-primary-fixed-variant": "#f5e3a3",
+                    "surface-container-highest": "#222222",
+                    "on-secondary-container": "#f0d98c",
+                    "on-primary": "#0a0a0a",
+                    "on-secondary-fixed-variant": "#e8ce7a",
+                    "surface-container": "#151515",
+                    "secondary-fixed-dim": "#4a3b14"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-padding": "2rem",
+                    "unit": "8px",
+                    "section-gap": "4rem",
+                    "gutter": "1.5rem",
+                    "element-gap": "1rem"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Noto Serif"],
+                    "script-accent": ["Great Vibes", "cursive"],
+                    "headline-xl": ["Noto Serif"],
+                    "headline-md": ["Noto Serif"],
+                    "body-md": ["Be Vietnam Pro"],
+                    "label-sm": ["Be Vietnam Pro"],
+                    "body-lg": ["Be Vietnam Pro"],
+                    "serif": ["Noto Serif", "Georgia", "serif"],
+                    "sans": ["Be Vietnam Pro", "system-ui", "sans-serif"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "script-accent": ["32px", {"lineHeight": "1.35", "fontWeight": "400"}],
+                    "headline-xl": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(18, 18, 18, 0.55);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.16);
+        }
+        .satin-gradient {
+            background:
+                radial-gradient(1100px 500px at 80% -10%, rgba(212, 175, 55, 0.10), transparent 60%),
+                radial-gradient(900px 600px at -10% 110%, rgba(212, 175, 55, 0.06), transparent 55%),
+                linear-gradient(160deg, #050505 0%, #100e09 45%, #060606 100%);
+        }
+        .gold-shimmer {
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.16), transparent);
+            background-size: 220% 100%;
+            animation: shimmer 4s linear infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: 220% 0; }
+            100% { background-position: -120% 0; }
+        }
+        .text-gold-gradient {
+            background: linear-gradient(120deg, #F5D76E 0%, #D4AF37 45%, #8A6B1F 80%, #F5D76E 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .floating { animation: floating 6s ease-in-out infinite; }
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .float-slow { animation: floating 9s ease-in-out infinite; }
+        .float-slower { animation: floating 14s ease-in-out infinite; }
+        .fade-up { animation: fadeUp .7s cubic-bezier(.22,1,.36,1) both; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+        .nav-ic { display: inline-flex; font-size: 22px; line-height: 1; }
+        @media (max-width: 639px) { .nav-ic { font-size: 20px; } }
+        .song-row { transition: background .3s ease; }
+        .song-row:hover { background: rgba(212, 175, 55, 0.06); }
+    </style>
+<style>
+    body { min-height: 100dvh; background: #0a0a0a; }
+</style>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-gold/30 selection:text-white">
+<!-- Background Gold Elements -->
+<div class="fixed inset-0 -z-20 pointer-events-none overflow-hidden" aria-hidden="true">
+<div class="absolute -top-32 -right-32 w-[45vw] h-[45vw] min-w-72 min-h-72 opacity-10 float-slow"><img class="w-full h-full object-contain" src="../Element%20(1).png" alt=""/></div>
+<div class="absolute top-1/3 -left-40 w-[40vw] h-[40vw] min-w-64 min-h-64 opacity-10 float-slower"><img class="w-full h-full object-contain" src="../Element%20(2).png" alt=""/></div>
+<div class="absolute -bottom-24 left-1/4 w-[35vw] h-[35vw] min-w-56 min-h-56 opacity-10 float-slow"><img class="w-full h-full object-contain" src="../Element%20(3).png" alt=""/></div>
+<div class="absolute top-2/3 -right-24 w-[30vw] h-[30vw] min-w-48 min-h-48 opacity-10 float-slower"><img class="w-full h-full object-contain" src="../Element%20(6).png" alt=""/></div>
+</div>
+
+<!-- Top bar -->
+<div class="fixed top-0 left-0 right-0 z-40">
+<div class="max-w-[1200px] mx-auto px-5 sm:px-container-padding pt-6 flex items-center justify-between">
+<a href="index.html" class="w-11 h-11 rounded-full glass-panel border border-gold/25 flex items-center justify-center text-gold hover:scale-105 transition-transform no-underline" aria-label="Back to invitation"><span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span></a>
+<span class="font-label-sm text-on-surface-variant uppercase tracking-[0.2em] hidden sm:block">Charles &amp; Leticia &bull; 2026</span>
+</div>
+</div>
+
+<main class="max-w-[1100px] mx-auto px-5 sm:px-container-padding py-section-gap relative">
+<!-- Header -->
+<div class="text-center mb-16 fade-up">
+<div class="font-script-accent text-script-accent text-gold-gradient italic mb-3">To the soundtrack of us</div>
+<h1 class="font-headline-xl text-gold mb-4 italic">Songs &amp; Messages</h1>
+<div class="w-24 h-[1px] bg-gold mx-auto"></div>
+<p class="font-body-lg text-on-surface-variant max-w-xl mx-auto mt-6">Every song you request and every note you leave becomes part of our celebration. Here's everything our guests have shared.</p>
+</div>
+
+<!-- Two cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- SONG REQUESTS CARD -->
+<div class="glass-panel rounded-[32px] p-8 sm:p-10 relative overflow-hidden shadow-[0_10px_30px_rgba(212,175,55,0.05)] border-gold/20 fade-up" style="animation-delay:.15s">
+<div class="absolute inset-0 gold-shimmer pointer-events-none"></div>
+<div class="relative z-10">
+<div class="w-16 h-16 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-gold text-3xl" data-icon="music_note" style="font-variation-settings:'FILL' 1;">music_note</span>
+</div>
+<h2 class="font-headline-md text-white mb-2 italic">Song Requests</h2>
+<p class="font-body-md text-on-surface-variant mb-6">Guests can request songs when they RSVP. Keep the floor dancing all night long.</p>
+
+<div id="song-unlocked" class="hidden mb-6">
+<div class="flex items-center justify-between mb-4">
+<span class="font-label-sm text-gold uppercase tracking-[0.2em]">The Playlist</span>
+<span id="song-count" class="inline-flex items-center gap-1 rounded-full border border-gold/30 bg-gold/10 text-gold-light font-label-sm px-3 py-1"></span>
+</div>
+<div id="song-list" class="max-h-[420px] overflow-y-auto pr-1 space-y-1"></div>
+</div>
+
+<div id="song-lock" class="mb-6">
+<p class="font-body-md text-on-surface-variant mb-4">Enter your passcode to reveal the requests.</p>
+<div class="flex gap-3">
+<input id="song-pass" type="password" placeholder="Passcode" autocomplete="current-password" class="flex-1 min-w-0 bg-transparent border-b border-gold/30 focus:border-gold focus:ring-0 text-body-lg py-2 placeholder:opacity-30 text-white outline-none" onkeydown="if(event.key==='Enter')unlockSongs()"/>
+<button onclick="unlockSongs()" class="shrink-0 inline-flex items-center gap-2 border border-gold/30 text-gold font-label-sm uppercase px-5 py-2.5 rounded-full hover:bg-gold/10 transition-colors">
+<span class="material-symbols-outlined text-base" data-icon="lock_open">lock_open</span>
+Unlock
+</button>
+</div>
+<p id="song-lock-err" class="hidden font-label-sm text-red-400 mt-3">That passcode didn't work. Try again.</p>
+</div>
+
+<div class="flex flex-wrap gap-3">
+<button onclick="shareWithDj(event)" class="inline-flex items-center gap-2 bg-gradient-to-r from-gold-light to-gold-dark text-ink font-label-sm uppercase px-6 py-3.5 rounded-full border border-gold/40 shadow-[0_10px_30px_rgba(212,175,55,0.25)] hover:shadow-[0_10px_40px_rgba(212,175,55,0.45)] transition-all active:scale-95">
+<span class="material-symbols-outlined text-lg" data-icon="queue_music">queue_music</span>
+Share with DJ
+</button>
+</div>
+</div>
+</div>
+
+<!-- MESSAGES CARD -->
+<div class="glass-panel rounded-[32px] p-8 sm:p-10 relative overflow-hidden shadow-[0_10px_30px_rgba(212,175,55,0.05)] border-gold/20 fade-up" style="animation-delay:.3s">
+<div class="absolute inset-0 gold-shimmer pointer-events-none"></div>
+<div class="relative z-10 flex flex-col h-full">
+<div class="w-16 h-16 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-gold text-3xl" data-icon="mail" style="font-variation-settings:'FILL' 1;">mail</span>
+</div>
+<h2 class="font-headline-md text-white mb-2 italic">Messages</h2>
+<p class="font-body-md text-on-surface-variant mb-6">Download guest messages from the guestbook. Cherish every word from the people you love.</p>
+
+<div class="mt-auto">
+<button onclick="downloadMessages()" class="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-gold-light to-gold-dark text-ink font-label-sm uppercase px-6 py-4 rounded-full border border-gold/40 shadow-[0_10px_30px_rgba(212,175,55,0.25)] hover:shadow-[0_10px_40px_rgba(212,175,55,0.45)] transition-all active:scale-95">
+<span class="material-symbols-outlined text-lg" data-icon="download">download</span>
+Download Messages
+</button>
+<p class="text-center font-label-sm text-on-surface-variant mt-4">Saved as a keepsake text file</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+<!-- Bottom nav -->
+<nav class="bottom-nav fixed bottom-5 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1 px-2 py-2 rounded-full bg-white/[0.08] backdrop-blur-2xl border border-gold/20 shadow-[0_8px_32px_rgba(0,0,0,0.6)]" aria-label="Site navigation">
+<a href="index.html#story" class="px-3 sm:px-4 py-2 rounded-full text-on-surface-variant hover:text-gold transition-colors no-underline" aria-label="Story"><span class="nav-ic material-symbols-outlined">auto_stories</span></a>
+<a href="index.html#reception" class="px-3 sm:px-4 py-2 rounded-full text-on-surface-variant hover:text-gold transition-colors no-underline" aria-label="Reception"><span class="nav-ic material-symbols-outlined">local_bar</span></a>
+<a href="index.html#gallery" class="px-3 sm:px-4 py-2 rounded-full text-on-surface-variant hover:text-gold transition-colors no-underline" aria-label="Gallery"><span class="nav-ic material-symbols-outlined">photo_library</span></a>
+<a href="index.html#rsvp" class="px-3 sm:px-4 py-2 rounded-full text-on-surface-variant hover:text-gold transition-colors no-underline" aria-label="RSVP"><span class="nav-ic material-symbols-outlined" style="font-variation-settings:'FILL' 1">favorite</span></a>
+<a href="index.html#gift" class="px-3 sm:px-4 py-2 rounded-full text-on-surface-variant hover:text-gold transition-colors no-underline" aria-label="Gift"><span class="nav-ic material-symbols-outlined">card_giftcard</span></a>
+</nav>
+
+<script>
+(function () {
+  const CONVEX_HTTP_URL = 'https://canny-hummingbird-920.convex.site';
+  const WEDDING_URL = 'https://sayyesbzcharles-leticia.vercel.app';
+  const SESSION_KEY = 'cl_admin_token';
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw33IBpUacNLGAcqc4EGp5L2dlxaMkWSbEFvSTdFTDq6p9iO5oZCIWl6aS-BB6EIW-JUA/exec';
+  let adminToken = localStorage.getItem(SESSION_KEY) || '';
+
+  const lock = document.getElementById('song-lock');
+  const unlocked = document.getElementById('song-unlocked');
+  const listEl = document.getElementById('song-list');
+  const countEl = document.getElementById('song-count');
+
+  function authHeaders() {
+    return adminToken ? { Authorization: 'Bearer ' + adminToken } : {};
+  }
+
+  function showLock() {
+    lock.classList.remove('hidden');
+    unlocked.classList.add('hidden');
+  }
+  function showUnlocked() {
+    lock.classList.add('hidden');
+    unlocked.classList.remove('hidden');
+  }
+
+  function guestName(g) {
+    const parts = [];
+    if (g.first_name) parts.push(g.first_name);
+    if (g.last_name) parts.push(g.last_name);
+    let name = parts.join(' ') || 'Guest';
+    if (g.spouse_name) name += ' & ' + g.spouse_name;
+    return name;
+  }
+
+  function renderSongs(guests) {
+    const songs = guests
+      .filter(function (g) { return g.song && String(g.song).trim(); })
+      .sort(function (a, b) { return guestName(a).localeCompare(guestName(b)); });
+    countEl.textContent = (songs.length === 1 ? '1 request' : songs.length + ' requests');
+    if (!songs.length) {
+      listEl.innerHTML = '<div class="text-center py-10"><span class="material-symbols-outlined text-gold/50 text-4xl block mb-3" data-icon="music_off">music_off</span><p class="font-body-md text-on-surface-variant">No song requests yet &mdash; the first one is on its way.</p></div>';
+      return;
+    }
+    listEl.innerHTML = songs.map(function (g) {
+      return '<div class="song-row flex items-start gap-3 rounded-xl px-3 py-3">' +
+        '<span class="material-symbols-outlined text-gold mt-0.5 text-lg" data-icon="music_note">music_note</span>' +
+        '<div class="min-w-0">' +
+        '<p class="font-body-md text-white truncate">' + escapeHtml(String(g.song).trim()) + '</p>' +
+        '<p class="font-label-sm text-on-surface-variant mt-1">' + escapeHtml(guestName(g)) + '</p>' +
+        '</div></div>';
+    }).join('');
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  async function loadSongs() {
+    try {
+      const res = await fetch(CONVEX_HTTP_URL + '/api/guests', { headers: authHeaders() });
+      if (res.status === 401) { showLock(); return; }
+      if (!res.ok) { showLock(); return; }
+      const guests = await res.json();
+      showUnlocked();
+      renderSongs(Array.isArray(guests) ? guests : []);
+    } catch (e) {
+      showLock();
+    }
+  }
+
+  window.unlockSongs = async function () {
+    const pass = document.getElementById('song-pass').value;
+    const err = document.getElementById('song-lock-err');
+    err.classList.add('hidden');
+    if (!pass) return;
+    try {
+      const res = await fetch(CONVEX_HTTP_URL + '/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: pass })
+      });
+      if (!res.ok) { err.classList.remove('hidden'); return; }
+      const data = await res.json();
+      adminToken = data.token;
+      localStorage.setItem(SESSION_KEY, adminToken);
+      await loadSongs();
+    } catch (e) {
+      err.classList.remove('hidden');
+    }
+  };
+
+  window.downloadMessages = function () {
+    fetch(APPS_SCRIPT_URL + '?sheet=Messages')
+      .then(function (r) { if (!r.ok) throw new Error('Failed'); return r.json(); })
+      .then(function (data) {
+        const messages = (data && data.data) || [];
+        if (!messages.length) { alert('No messages to download yet.'); return; }
+        const content = messages.map(function (m, i) { return (i + 1) + '. ' + (m.name || 'Guest') + '\n"' + (m.content || '') + '"\n'; }).join('\n');
+        const blob = new Blob(['Wedding Guest Messages\nCharles & Leticia\n\n' + content], { type: 'text/plain' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'wedding-messages.txt';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
+      })
+      .catch(function () { alert('Could not reach the guestbook right now. Please try again in a moment.'); });
+  };
+
+  window.shareWithDj = function (e) {
+    if (e) e.preventDefault();
+    const text = 'Hey! Here are our wedding song requests:\n\n' + WEDDING_URL + '/music.html';
+    window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank', 'noopener');
+  };
+
+  // Try to auto-load songs with an existing session.
+  (function init() {
+    if (!adminToken) { showLock(); return; }
+    fetch(CONVEX_HTTP_URL + '/api/auth/me', { headers: authHeaders() })
+      .then(function (r) { return r.ok ? loadSongs() : Promise.resolve(showLock()); })
+      .catch(function () { showLock(); });
+  })();
+})();
+</script>
+</body>
+</html>
