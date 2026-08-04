@@ -406,6 +406,7 @@ html.no-scroll, html.no-scroll body { overflow: hidden; }
     box-shadow .4s ease-in-out;
 }
 section[id] { scroll-margin-top: 5rem; }
+#story, #reception { scroll-margin-top: 5rem; }
 /* Hero entrance (staggered fade-up) */
 .hd-fade { opacity: 0; transform: translateY(30px); }
 .hd-fade.hd-anim { opacity: 1; transform: none; transition: opacity .9s ease, transform .9s cubic-bezier(.22,1,.36,1); }
@@ -571,7 +572,7 @@ section[id] { scroll-margin-top: 5rem; }
 </div>
 </div>
 <!-- Bento Card 4: Reception -->
-<div class="glass-panel rounded-[32px] p-8 shadow-[0_10px_30px_rgba(212,175,55,0.05)] bg-gradient-to-bl from-[#1a1a1a]/80 to-gold/5 hover:border-gold/40 transition-colors">
+<div id="reception" class="glass-panel rounded-[32px] p-8 shadow-[0_10px_30px_rgba(212,175,55,0.05)] bg-gradient-to-bl from-[#1a1a1a]/80 to-gold/5 hover:border-gold/40 transition-colors">
 <span class="material-symbols-outlined text-gold mb-4" data-icon="local_bar">local_bar</span>
 <h3 class="font-headline-md text-white mb-4 italic">The Reception</h3>
 <p class="font-body-md text-on-surface-variant mb-4">
@@ -704,7 +705,7 @@ Bank Details
 <!-- Glass NavBar -->
 <nav class="glass-radio-group fixed bottom-5 left-1/2 -translate-x-1/2 z-50" aria-label="Site navigation">
 <a href="#story" class="active" aria-label="Story"><span class="nav-ic material-symbols-outlined">auto_stories</span></a>
-<a href="#details" aria-label="Reception"><span class="nav-ic material-symbols-outlined">local_bar</span></a>
+<a href="#reception" aria-label="Reception"><span class="nav-ic material-symbols-outlined">local_bar</span></a>
 <a href="#gallery" aria-label="Gallery"><span class="nav-ic material-symbols-outlined">photo_library</span></a>
 <a href="#rsvp" aria-label="RSVP"><span class="nav-ic material-symbols-outlined" style="font-variation-settings:'FILL' 1">favorite</span></a>
 <a href="#gift" aria-label="Gift"><span class="nav-ic material-symbols-outlined">card_giftcard</span></a>
