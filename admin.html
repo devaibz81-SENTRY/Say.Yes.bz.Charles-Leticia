@@ -1003,11 +1003,6 @@
     <a href="index.html" class="nav-item" target="_blank">🎉 Invitation</a>
     <a href="rsvp.html" class="nav-item" target="_blank">📋 RSVP</a>
     <a href="rsvp.html?advanced=1" class="nav-item" target="_blank" style="font-size:0.7rem;opacity:0.7;">📋 RSVP (Full Form)</a>
-    <a href="checkin.html" class="nav-item" target="_blank">✓ Check-In</a>
-    <a href="tables.html" class="nav-item" target="_blank">🍽 Table Finder</a>
-    <a href="songs.html" class="nav-item" target="_blank">🎵 Song Requests</a>
-    <a href="playlist.html" class="nav-item" target="_blank">📻 Playlist</a>
-    <a href="messages.html" class="nav-item" target="_blank">💬 Messages</a>
   </div>
 
   <!-- Main -->
@@ -1086,28 +1081,15 @@
             <!-- SONGS BUTTON -->
             <div style="background: white; border: 1px solid #e8e2d8; border-radius: 12px; padding: 2rem; min-width: 280px; text-align: center;">
               <div style="font-size: 3rem; margin-bottom: 1rem;">🎵</div>
-              <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--gold);">Song List</h3>
-              <p style="font-size: 0.85rem; color: #888; margin-bottom: 1.5rem;">View all song requests from guests</p>
-              <a href="songs.html" target="_blank" 
-                 style="display: inline-block; padding: 0.8rem 2rem; background: var(--gold); color: white; text-decoration: none; border-radius: 6px; font-size: 0.8rem; letter-spacing: 0.1em;">
-                OPEN SONG LIST
-              </a>
-              <br><br>
-              <button onclick="shareWithDj()" style="padding: 0.8rem 2rem; background: #25D366; color: white; border: none; border-radius: 6px; font-size: 0.8rem; cursor: pointer; letter-spacing: 0.1em;">
-                📱 Share with DJ
-              </button>
+              <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--gold);">Song Requests</h3>
+              <p style="font-size: 0.85rem; color: #888; margin-bottom: 1.5rem;">Guests can request songs when they RSVP</p>
             </div>
             
             <!-- MESSAGES BUTTON -->
             <div style="background: white; border: 1px solid #e8e2d8; border-radius: 12px; padding: 2rem; min-width: 280px; text-align: center;">
               <div style="font-size: 3rem; margin-bottom: 1rem;">💌</div>
               <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--gold);">Messages</h3>
-              <p style="font-size: 0.85rem; color: #888; margin-bottom: 1.5rem;">Read guest messages one by one</p>
-              <a href="messages.html" target="_blank" 
-                 style="display: inline-block; padding: 0.8rem 2rem; background: var(--gold); color: white; text-decoration: none; border-radius: 6px; font-size: 0.8rem; letter-spacing: 0.1em;">
-                READ MESSAGES
-              </a>
-              <br><br>
+              <p style="font-size: 0.85rem; color: #888; margin-bottom: 1.5rem;">Download guest messages from the guestbook</p>
               <button onclick="downloadMessages()" style="padding: 0.8rem 2rem; background: #3498db; color: white; border: none; border-radius: 6px; font-size: 0.8rem; cursor: pointer; letter-spacing: 0.1em;">
                 📥 Download Messages
               </button>
@@ -1713,7 +1695,7 @@ Charles and Leticia</textarea>
       document.getElementById('m-type').value = 'single';
       document.getElementById('m-max').value = '1';
       document.getElementById('m-phone').value = '';
-      document.getElementById('m-due').value = '2026-06-10';
+      document.getElementById('m-due').value = '2026-11-01';
       document.getElementById('m-spouse').value = '';
       syncPartySize();
       document.getElementById('add-modal').classList.add('open');
