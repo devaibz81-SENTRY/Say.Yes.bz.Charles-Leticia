@@ -121,6 +121,8 @@ export const submitRsvp = internalMutation({
   args: {
     guestId: v.string(),
     attendance: v.string(),
+    name: v.optional(v.string()),
+    lastName: v.optional(v.string()),
     phone: v.optional(v.string()),
     plus_names: v.optional(v.string()),
     song: v.optional(v.string()),
@@ -133,16 +135,55 @@ export const submitRsvp = internalMutation({
     } catch {
       existing = null;
     }
+    if (!existing) {
+      const cleanId = args.guestId.split(":")[0];
+      try {
+        existing = await ctx.db.get(cleanId as Id<"guests">);
+      } catch {
+        existing = null;
+      }
+    }
+    if (!existing) {
+      existing = await findGuestByName(ctx, args.name, args.lastName);
+    }
     if (!existing) throw new Error("Guest not found");
 
-    const patch: Record<string, unknown> = {
-      attendance: args.attendance === "yes" ? "attending" : "declined",
-    };
+    const attendance =
+      args.attendance === "yes"
+        ? "attending"
+        : args.attendance === "maybe"
+          ? "later"
+          : "declined";
+
+    const patch: Record<string, unknown> = { attendance };
     if (args.phone !== undefined && args.phone !== null) patch.phone = args.phone;
     if (args.plus_names !== undefined && args.plus_names !== null) patch.plus_names = args.plus_names;
     if (args.song !== undefined && args.song !== null) patch.song = args.song;
     if (args.message !== undefined && args.message !== null) patch.message = args.message;
     await ctx.db.patch(existing._id, patch);
-    return { ok: true, attendance: patch.attendance };
+    return { ok: true, attendance, guestId: existing._id };
   },
 });
+
+async function findGuestByName(ctx: any, name?: string, lastName?: string) {
+  const first = (name || "").trim();
+  const last = (lastName || "").trim();
+  if (!first && !last) return null;
+
+  const fullKey = `${first} ${last}`.replace(/\s+/g, " ").trim().toLowerCase();
+  const firstKey = first.toLowerCase();
+
+  const all = await ctx.db.query("guests").collect();
+  return (
+    all.find((g: any) => {
+      const gFirst = (g.first_name || "").trim();
+      const gLast = (g.last_name || "").trim();
+      const gFull = `${gFirst} ${gLast}`.replace(/\s+/g, " ").trim().toLowerCase();
+      if (fullKey && gFull === fullKey) return true;
+      if (firstKey && gFirst.toLowerCase() === firstKey && (!last || gLast.toLowerCase() === last.toLowerCase())) {
+        return true;
+      }
+      return false;
+    }) || null
+  );
+}

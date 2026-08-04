@@ -174,10 +174,12 @@
 .glass-radio-group a {
   flex: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 2px;
   min-width: 0;
-  padding: 0.6rem 0.55rem;
+  padding: 0.55rem 0.5rem;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: .08em;
@@ -188,6 +190,13 @@
   transition: color .3s ease-in-out;
   text-decoration: none;
   white-space: nowrap;
+}
+.glass-radio-group .nav-ic { display: none; }
+@media (max-width: 639px) {
+  .glass-radio-group { border-radius: 1.1rem; }
+  .glass-radio-group a { padding: 0.45rem 0.4rem; font-size: 8.5px; letter-spacing: .05em; }
+  .glass-radio-group .nav-ic { display: inline-flex; font-size: 19px; line-height: 1; }
+  .glass-radio-group .glass-glider { border-radius: 1.1rem; }
 }
 @media (min-width: 640px) {
   .glass-radio-group a { padding: 0.8rem 1.2rem; font-size: 14px; min-width: 84px; letter-spacing: .1em; }
@@ -228,14 +237,14 @@
 <header class="bg-white/[0.08] backdrop-blur-2xl backdrop-saturate-150 docked full-width top-0 sticky border-b border-gold/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.6)] z-[100]">
 <div class="flex justify-between items-center w-full px-6 h-16 max-w-[1200px] mx-auto">
 <div class="flex items-center gap-2">
-<a href="_invitation.html" class="material-symbols-outlined text-gold hover:scale-110 transition-transform" data-icon="arrow_back">arrow_back</a>
+<a href="index.html" class="material-symbols-outlined text-gold hover:scale-110 transition-transform" data-icon="arrow_back">arrow_back</a>
 </div>
 <h1 class="font-script-accent text-[26px] leading-none text-gold">Charles &amp; Leticia</h1>
 <div class="flex items-center gap-6 hidden md:flex">
 <nav class="flex gap-8">
-<a class="text-on-surface-variant font-serif text-label-sm uppercase hover:text-gold transition-colors" href="_invitation.html#story">Our Story</a>
-<a class="text-on-surface-variant font-serif text-label-sm uppercase hover:text-gold transition-colors" href="_invitation.html#details">Ceremony</a>
-<a class="text-on-surface-variant font-serif text-label-sm uppercase hover:text-gold transition-colors" href="_invitation.html#gallery">Gallery</a>
+<a class="text-on-surface-variant font-serif text-label-sm uppercase hover:text-gold transition-colors" href="index.html#story">Our Story</a>
+<a class="text-on-surface-variant font-serif text-label-sm uppercase hover:text-gold transition-colors" href="index.html#details">Ceremony</a>
+<a class="text-on-surface-variant font-serif text-label-sm uppercase hover:text-gold transition-colors" href="index.html#gallery">Gallery</a>
 <a class="text-on-surface-variant font-serif text-label-sm uppercase hover:text-gold transition-colors" href="rsvp.html">RSVP</a>
 </nav>
 </div>
@@ -297,7 +306,7 @@ Your presence is our greatest gift. If you wish to honor us with a token toward 
 <p class="font-body-md text-on-surface-variant text-center mt-6">Thank you for celebrating with us. Your kindness means the world &mdash; and your presence means even more.</p>
 </div>
 <div class="text-center mt-12">
-<a href="_invitation.html" class="inline-flex items-center gap-2 text-gold font-label-sm uppercase tracking-[0.2em] hover:gap-3 transition-all">
+<a href="index.html" class="inline-flex items-center gap-2 text-gold font-label-sm uppercase tracking-[0.2em] hover:gap-3 transition-all">
 <span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
 Back to the invitation
 </a>
@@ -306,10 +315,10 @@ Back to the invitation
 </main>
 <!-- Glass NavBar -->
 <nav class="glass-radio-group fixed bottom-5 left-1/2 -translate-x-1/2 z-50" aria-label="Site navigation">
-<a href="_invitation.html#story">Story</a>
-<a href="_invitation.html#details">Ceremony</a>
-<a href="_invitation.html#gallery" class="active">Honeymoon</a>
-<a href="rsvp.html">RSVP</a>
+<a href="index.html#story"><span class="nav-ic material-symbols-outlined">auto_stories</span><span class="nav-lbl">Story</span></a>
+<a href="index.html#details"><span class="nav-ic material-symbols-outlined">celebration</span><span class="nav-lbl">Ceremony</span></a>
+<a href="index.html#gallery" class="active"><span class="nav-ic material-symbols-outlined">image</span><span class="nav-lbl">Honeymoon</span></a>
+<a href="rsvp.html"><span class="nav-ic material-symbols-outlined">mail</span><span class="nav-lbl">RSVP</span></a>
 <div class="glass-glider"></div>
 </nav>
 <script>

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin - A&R Wedding Management</title>
+  <title>Admin - Charles &amp; Leticia Wedding</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Montserrat:wght@300;400;500&display=swap"
@@ -981,7 +981,7 @@
   <div id="login-overlay">
     <div class="login-box">
       <h2>Wedding Admin</h2>
-      <p>Andrew &amp; Rosanna - 2026</p>
+      <p>Charles &amp; Leticia - 2026</p>
       <input type="password" id="admin-pass" class="login-input" placeholder="Enter Password"
         onkeydown="if(event.key==='Enter') doLogin()" />
       <button class="login-btn" onclick="doLogin()">Enter</button>
@@ -992,7 +992,7 @@
   <!-- Sidebar -->
   <div id="sidebar">
     <div class="sidebar-brand">
-      <div class="brand-name">Andrew &amp; Rosanna</div>
+      <div class="brand-name">Charles &amp; Leticia</div>
     </div>
     <div class="nav-label">Management</div>
     <div class="nav-item active" onclick="showView('guests', event)">Guests Data</div>
@@ -1168,7 +1168,7 @@
           <!-- Default Template Box -->
           <textarea id="wa-text" class="wa-template" oninput="updateWaPreview()">Hi {{name}},
 
-You are cordially invited to celebrate the wedding of Andrew and Rosanna.
+You are cordially invited to celebrate the wedding of Charles and Leticia.
 
 We have reserved your RSVP as a {{type}} invitation. Kindly reply by {{deadline}}.
 
@@ -1176,7 +1176,7 @@ Open your invitation and respond here:
 {{link}}
 
 With love,
-Andrew and Rosanna</textarea>
+Charles and Leticia</textarea>
 
           <div style="font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#888;">Live Preview (First
             match)</div>
@@ -1280,7 +1280,7 @@ Andrew and Rosanna</textarea>
 
   <script>
     const CONVEX_HTTP_URL = 'https://canny-hummingbird-920.convex.site';
-    const WEDDING_URL = '';
+    const WEDDING_URL = 'https://sayyesbzcharles-leticia.vercel.app';
     const SESSION_KEY = 'ra_admin_token';
     const LIVE_REFRESH_MS = 12000;
     const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw33IBpUacNLGAcqc4EGp5L2dlxaMkWSbEFvSTdFTDq6p9iO5oZCIWl6aS-BB6EIW-JUA/exec';
@@ -1607,7 +1607,7 @@ Andrew and Rosanna</textarea>
             return;
           }
           const content = messages.map((m, i) => `${i + 1}. ${m.name}\n"${m.content}"\n`).join('\n');
-          const blob = new Blob([`Wedding Guest Messages\nAndrew & Rosanna\n\n${content}`], { type: 'text/plain' });
+          const blob = new Blob([`Wedding Guest Messages\nCharles & Leticia\n\n${content}`], { type: 'text/plain' });
           const url = URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = url;
@@ -1729,7 +1729,7 @@ Andrew and Rosanna</textarea>
       document.getElementById('m-type').value = g.guest_type || 'single';
       document.getElementById('m-max').value = g.max_party || 1;
       document.getElementById('m-phone').value = g.phone || '';
-      document.getElementById('m-due').value = (g.deadline || '2026-06-10').split('T')[0];
+      document.getElementById('m-due').value = (g.deadline || '2026-11-01').split('T')[0];
       document.getElementById('m-spouse').value = g.spouse_name || '';
       document.getElementById('m-easy').checked = g.easy_mode === true;
       syncPartySize();
@@ -1910,7 +1910,7 @@ Andrew and Rosanna</textarea>
     }
 
     function formatDeadline(deadline) {
-      if (!deadline) return 'June 10, 2026';
+      if (!deadline) return 'November 1, 2026';
       const date = new Date(deadline);
       if (Number.isNaN(date.getTime())) return String(deadline);
       return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });

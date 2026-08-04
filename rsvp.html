@@ -21,26 +21,36 @@ body{min-height:100dvh}
 .sparkle-bg{background-image:radial-gradient(circle at center,#D4AF37 1px,transparent 1px);background-size:24px 24px;opacity:.05}
 input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 input[type=number]{-moz-appearance:textfield}
-/* Heart/Rose attendance toggle (adapted from Uiverse.io by milegelu) */
-.att-toggle{--UnChacked-color:hsl(0,0%,10%);--chacked-color:#D4AF37;--font-color:#ffffff;--icon-size:1.5em;--anim-time:.25s;--anim-scale:.1;--base-radius:.8em;display:flex;align-items:center;position:relative;cursor:pointer;font-size:20px;user-select:none;fill:var(--font-color);color:var(--font-color)}
-.att-toggle input{display:none}
-.att-toggle .checkmark{background:var(--UnChacked-color);border-radius:var(--base-radius);display:flex;align-items:center;padding:.5em 1.1em;border:1px solid rgba(212,175,55,.35);box-shadow:0 4px 18px rgba(0,0,0,.35)}
-.att-toggle .icon{width:var(--icon-size);height:auto;filter:drop-shadow(0 2px var(--base-radius) rgba(0,0,0,.25));transition:all var(--anim-time)}
-.att-toggle .name{margin:0 .35em;font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:11px;letter-spacing:.15em;text-transform:uppercase;transition:all var(--anim-time)}
-.att-toggle .Yes{width:0}
-.att-toggle .name.Yes{display:none}
-.att-toggle:hover .checkmark,.att-toggle:hover .icon,.att-toggle:hover .name{transform:scale(calc(1 + var(--anim-scale)))}
-.att-toggle:active .checkmark,.att-toggle:active .icon,.att-toggle:active .name{transform:scale(calc(1 - var(--anim-scale)/2));border-radius:calc(var(--base-radius)*2)}
-.att-toggle input:checked + .checkmark{--UnChacked-color:var(--chacked-color);fill:#0a0a0a;color:#0a0a0a}
-.att-toggle input:checked ~ .checkmark .No{width:0}
-.att-toggle input:checked ~ .checkmark .name.No{display:none}
-.att-toggle input:checked ~ .checkmark .Yes{width:var(--icon-size)}
-.att-toggle input:checked ~ .checkmark .name.Yes{width:auto;display:unset}
 @keyframes toast-in{from{opacity:0;transform:translate(-50%,-10px)}to{opacity:1;transform:translate(-50%,0)}}
 .error-alert{animation:toast-in .25s ease}
 .att-status{display:inline-flex;align-items:center;gap:.5rem;padding:.45rem 1.1rem;border-radius:9999px;font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;border:1px solid;transition:all .25s ease}
 .att-status.on{background:rgba(212,175,55,.12);border-color:rgba(212,175,55,.55);color:#F5D76E}
 .att-status.off{background:rgba(186,26,26,.10);border-color:rgba(186,26,26,.5);color:#ff8a80}
+.att-status.mid{background:rgba(245,215,110,.10);border-color:rgba(245,215,110,.5);color:#E8CE7A}
+/* Yes / No / Ask Later choice cards */
+.att-choices{display:flex;justify-content:center;gap:.75rem;flex-wrap:wrap}
+.att-choice{position:relative;display:flex;flex-direction:column;align-items:center;gap:.35rem;min-width:118px;padding:1.05rem 1.2rem .9rem;border-radius:1.4rem;border:1px solid rgba(212,175,55,.26);background:rgba(18,18,18,.5);cursor:pointer;user-select:none;transition:transform .3s cubic-bezier(.34,1.56,.64,1),border-color .3s ease,background .3s ease,box-shadow .3s ease;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:attRise .55s cubic-bezier(.34,1.56,.64,1) both}
+.att-choice:nth-child(1){animation-delay:.06s}
+.att-choice:nth-child(2){animation-delay:.14s}
+.att-choice:nth-child(3){animation-delay:.22s}
+@keyframes attRise{from{opacity:0;transform:translateY(16px) scale(.94)}to{opacity:1;transform:none}}
+.att-choice:hover{transform:translateY(-3px);border-color:rgba(212,175,55,.6);background:rgba(212,175,55,.07)}
+.att-choice:active{transform:scale(.95)}
+.att-choice .att-ic{font-size:28px;color:rgba(245,245,245,.6);line-height:1;transition:transform .35s cubic-bezier(.34,1.56,.64,1),color .3s ease}
+.att-choice .att-lbl{font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(245,245,245,.78);transition:color .3s ease}
+.att-choice .att-sub{font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:9px;font-style:italic;letter-spacing:.05em;color:rgba(245,245,245,.42);transition:color .3s ease}
+.att-choice.selected{border-color:#D4AF37;background:linear-gradient(180deg,rgba(212,175,55,.22),rgba(212,175,55,.07));box-shadow:0 12px 32px rgba(212,175,55,.2),inset 0 0 0 1px rgba(212,175,55,.45);transform:translateY(-3px) scale(1.02)}
+.att-choice.selected .att-ic{color:#F5D76E;transform:scale(1.18)}
+.att-choice.selected .att-lbl{color:#F5D76E}
+.att-choice.selected .att-sub{color:rgba(245,215,110,.65)}
+.att-choice.selected::after{content:"";position:absolute;inset:-1px;border-radius:1.4rem;border:2px solid rgba(245,215,110,.75);animation:attRing .7s ease-out forwards;pointer-events:none}
+@keyframes attRing{0%{transform:scale(.9);opacity:1}100%{transform:scale(1.14);opacity:0}}
+@keyframes successPop{0%{opacity:0;transform:scale(.6)}60%{transform:scale(1.06)}100%{opacity:1;transform:scale(1)}}
+#success .success-pop{animation:successPop .6s cubic-bezier(.34,1.56,.64,1) both}
+#success .success-pop:nth-child(2){animation-delay:.08s}
+#success .success-pop:nth-child(3){animation-delay:.16s}
+#success .success-pop:nth-child(4){animation-delay:.24s}
+#success .success-pop:nth-child(5){animation-delay:.32s}
 </style>
 </head>
 <body class="bg-background font-body-md text-on-background min-h-screen relative overflow-x-hidden">
@@ -49,8 +59,8 @@ input[type=number]{-moz-appearance:textfield}
 <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-white/[0.08] backdrop-blur-2xl backdrop-saturate-150 border-b border-gold/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.6)]">
 <div class="flex items-center gap-2">
 <span class="material-symbols-outlined text-gold">auto_awesome</span>
-<a id="backLink" href="_invitation.html" class="inline-flex items-center gap-1 font-label-sm uppercase tracking-[0.15em] text-on-surface-variant hover:text-gold transition-colors no-underline ml-2">
-<span class="material-symbols-outlined text-lg">arrow_back</span> Invitation
+<a id="backLink" href="index.html" class="inline-flex items-center gap-1 font-label-sm uppercase tracking-[0.15em] text-on-surface-variant hover:text-gold transition-colors no-underline ml-2">
+<span class="material-symbols-outlined text-lg">arrow_back</span> Back to Invitation
 </a>
 </div>
 <div class="font-serif italic text-xl text-gold">Charles &amp; Leticia</div>
@@ -70,6 +80,10 @@ input[type=number]{-moz-appearance:textfield}
 <div class="w-16 h-[1px] bg-gold mx-auto mt-6 opacity-50"></div>
 <p id="totalLine" class="font-label-sm text-gold uppercase tracking-[0.2em] mt-6"></p>
 <p id="coupleNote" class="font-label-sm text-gold-light uppercase tracking-[0.2em] mt-3 hidden">RSVPing for the two of you</p>
+<div id="priorStatus" class="hidden mt-5 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/40 bg-gold/10 font-label-sm text-gold uppercase tracking-[0.15em]">
+<span class="material-symbols-outlined text-base" style="font-variation-settings:'FILL' 1">verified</span>
+<span id="priorStatusText"></span>
+</div>
 </div>
 
 <!-- FORM -->
@@ -88,21 +102,28 @@ input[type=number]{-moz-appearance:textfield}
 </div>
 <div class="space-y-5">
 <p class="font-label-sm text-on-surface-variant tracking-[0.2em] uppercase text-center">Will you be attending?</p>
+<div class="att-choices pt-1" id="attChoices" role="radiogroup" aria-label="Attendance">
+<label class="att-choice" data-val="yes">
 <input class="sr-only" id="att-yes" name="attendance" type="radio" value="yes"/>
+<span class="att-ic material-symbols-outlined">check_circle</span>
+<span class="att-lbl">Yes</span>
+<span class="att-sub">I&rsquo;ll be there</span>
+</label>
+<label class="att-choice" data-val="no">
 <input class="sr-only" id="att-no" name="attendance" type="radio" value="no"/>
-<div class="flex justify-center pt-1">
-<label class="att-toggle" id="attToggle" aria-label="Toggle whether you are attending">
-<input id="attToggler" type="checkbox"/>
-<div class="checkmark">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon No"><path d="M12 5a3 3 0 1 1 3 3m-3-3a3 3 0 1 0-3 3m3-3v1M9 8a3 3 0 1 0 3 3M9 8h1m5 0a3 3 0 1 1-3 3m3-3h-1m-2 3v-1"/><circle cx="12" cy="8" r="2"/><path d="M12 10v12"/><path d="M12 22c4.2 0 7-1.667 7-5-4.2 0-7 1.667-7 5Z"/><path d="M12 22c-4.2 0-7-1.667-7-5 4.2 0 7 1.667 7 5Z"/></svg>
-<p class="No name">Decline</p>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="icon Yes"><path d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/></svg>
-<p class="Yes name">Accept</p>
-</div>
+<span class="att-ic material-symbols-outlined">cancel</span>
+<span class="att-lbl">No</span>
+<span class="att-sub">Can&rsquo;t make it</span>
+</label>
+<label class="att-choice" data-val="maybe">
+<input class="sr-only" id="att-maybe" name="attendance" type="radio" value="maybe"/>
+<span class="att-ic material-symbols-outlined">schedule</span>
+<span class="att-lbl">Ask Later</span>
+<span class="att-sub">I&rsquo;ll confirm soon</span>
 </label>
 </div>
 <!-- Status indicator -->
-<div class="flex justify-center pt-2">
+<div class="flex justify-center pt-3">
 <span id="statusPill" class="att-status hidden"><span class="material-symbols-outlined text-base"></span><span class="att-status-text"></span></span>
 </div>
 </div>
@@ -144,17 +165,24 @@ input[type=number]{-moz-appearance:textfield}
 </div>
 <div class="space-y-4">
 <p class="font-label-sm text-on-surface-variant tracking-[0.2em] uppercase text-center">Is this guest attending?</p>
+<div class="att-choices pt-1" id="attChoicesA" role="radiogroup" aria-label="Attendance for guest one">
+<label class="att-choice" data-val="yes">
 <input class="sr-only" id="att-yes-a" name="attendanceA" type="radio" value="yes"/>
+<span class="att-ic material-symbols-outlined">check_circle</span>
+<span class="att-lbl">Yes</span>
+<span class="att-sub">I&rsquo;ll be there</span>
+</label>
+<label class="att-choice" data-val="no">
 <input class="sr-only" id="att-no-a" name="attendanceA" type="radio" value="no"/>
-<div class="flex justify-center pt-1">
-<label class="att-toggle" id="attToggleA" aria-label="Toggle whether this guest is attending">
-<input id="attTogglerA" type="checkbox"/>
-<div class="checkmark">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon No"><path d="M12 5a3 3 0 1 1 3 3m-3-3a3 3 0 1 0-3 3m3-3v1M9 8a3 3 0 1 0 3 3M9 8h1m5 0a3 3 0 1 1-3 3m3-3h-1m-2 3v-1"/><circle cx="12" cy="8" r="2"/><path d="M12 10v12"/><path d="M12 22c4.2 0 7-1.667 7-5-4.2 0-7 1.667-7 5Z"/><path d="M12 22c-4.2 0-7-1.667-7-5 4.2 0 7 1.667 7 5Z"/></svg>
-<p class="No name">Decline</p>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="icon Yes"><path d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/></svg>
-<p class="Yes name">Accept</p>
-</div>
+<span class="att-ic material-symbols-outlined">cancel</span>
+<span class="att-lbl">No</span>
+<span class="att-sub">Can&rsquo;t make it</span>
+</label>
+<label class="att-choice" data-val="maybe">
+<input class="sr-only" id="att-maybe-a" name="attendanceA" type="radio" value="maybe"/>
+<span class="att-ic material-symbols-outlined">schedule</span>
+<span class="att-lbl">Ask Later</span>
+<span class="att-sub">I&rsquo;ll confirm soon</span>
 </label>
 </div>
 <div class="flex justify-center pt-2">
@@ -191,17 +219,24 @@ input[type=number]{-moz-appearance:textfield}
 </div>
 <div class="space-y-4">
 <p class="font-label-sm text-on-surface-variant tracking-[0.2em] uppercase text-center">Is this guest attending?</p>
+<div class="att-choices pt-1" id="attChoicesB" role="radiogroup" aria-label="Attendance for guest two">
+<label class="att-choice" data-val="yes">
 <input class="sr-only" id="att-yes-b" name="attendanceB" type="radio" value="yes"/>
+<span class="att-ic material-symbols-outlined">check_circle</span>
+<span class="att-lbl">Yes</span>
+<span class="att-sub">I&rsquo;ll be there</span>
+</label>
+<label class="att-choice" data-val="no">
 <input class="sr-only" id="att-no-b" name="attendanceB" type="radio" value="no"/>
-<div class="flex justify-center pt-1">
-<label class="att-toggle" id="attToggleB" aria-label="Toggle whether this guest is attending">
-<input id="attTogglerB" type="checkbox"/>
-<div class="checkmark">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon No"><path d="M12 5a3 3 0 1 1 3 3m-3-3a3 3 0 1 0-3 3m3-3v1M9 8a3 3 0 1 0 3 3M9 8h1m5 0a3 3 0 1 1-3 3m3-3h-1m-2 3v-1"/><circle cx="12" cy="8" r="2"/><path d="M12 10v12"/><path d="M12 22c4.2 0 7-1.667 7-5-4.2 0-7 1.667-7 5Z"/><path d="M12 22c-4.2 0-7-1.667-7-5 4.2 0 7 1.667 7 5Z"/></svg>
-<p class="No name">Decline</p>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="icon Yes"><path d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/></svg>
-<p class="Yes name">Accept</p>
-</div>
+<span class="att-ic material-symbols-outlined">cancel</span>
+<span class="att-lbl">No</span>
+<span class="att-sub">Can&rsquo;t make it</span>
+</label>
+<label class="att-choice" data-val="maybe">
+<input class="sr-only" id="att-maybe-b" name="attendanceB" type="radio" value="maybe"/>
+<span class="att-ic material-symbols-outlined">schedule</span>
+<span class="att-lbl">Ask Later</span>
+<span class="att-sub">I&rsquo;ll confirm soon</span>
 </label>
 </div>
 <div class="flex justify-center pt-2">
@@ -242,22 +277,22 @@ input[type=number]{-moz-appearance:textfield}
 <span class="relative z-10">Send RSVP</span>
 <div class="absolute inset-0 bg-white/30 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
 </button>
-<p class="mt-6 font-label-sm text-on-surface-variant italic">Please reply by December 15th, 2026</p>
+<p class="mt-6 font-label-sm text-on-surface-variant italic">Please reply by November 1st, 2026</p>
 </div>
 </form>
 
 <!-- SUCCESS -->
 <div id="success" class="hidden text-center relative z-10 space-y-6">
-<div class="w-20 h-20 mx-auto rounded-full bg-gold/10 border border-gold/40 flex items-center justify-center">
+<div class="success-pop w-20 h-20 mx-auto rounded-full bg-gold/10 border border-gold/40 flex items-center justify-center">
 <span class="material-symbols-outlined text-gold text-4xl" style="font-variation-settings:'FILL' 1" data-icon="check_circle">check_circle</span>
 </div>
-<h2 class="font-headline-xl text-white leading-tight">Thank You,<br/><span id="sucName" class="font-script-accent text-script-accent text-gold-gradient italic">Guest</span></h2>
-<p id="sucSummary" class="font-body-lg text-on-surface-variant"></p>
-<div id="sucResponses" class="inline-block glass-panel rounded-full px-6 py-2 border-gold/30 font-label-sm text-gold uppercase tracking-[0.15em]"></div>
-<p id="sucTotal" class="font-label-sm text-on-surface-variant uppercase tracking-[0.15em]"></p>
-<div class="flex flex-col sm:flex-row justify-center gap-4 pt-4">
+<h2 class="success-pop font-headline-xl text-white leading-tight">Thank You,<br/><span id="sucName" class="font-script-accent text-script-accent text-gold-gradient italic">Guest</span></h2>
+<p id="sucSummary" class="success-pop font-body-lg text-on-surface-variant"></p>
+<div id="sucResponses" class="success-pop inline-block glass-panel rounded-full px-6 py-2 border-gold/30 font-label-sm text-gold uppercase tracking-[0.15em]"></div>
+<p id="sucTotal" class="success-pop font-label-sm text-on-surface-variant uppercase tracking-[0.15em]"></p>
+<div class="success-pop flex flex-col sm:flex-row justify-center gap-4 pt-4">
 <button onclick="resetForAnother()" class="px-8 py-4 rounded-full bg-gradient-to-r from-gold-light to-gold-dark text-ink font-label-sm tracking-widest uppercase border border-gold/40 shadow-[0_10px_30px_rgba(212,175,55,0.25)] hover:shadow-[0_10px_40px_rgba(212,175,55,0.45)] transition-all active:scale-95">RSVP for another guest</button>
-<a id="doneLink" href="_invitation.html" class="px-8 py-4 rounded-full border border-gold/30 text-gold font-label-sm tracking-widest uppercase hover:bg-gold/10 transition-colors no-underline">Back to invitation</a>
+<a id="doneLink" href="index.html" class="px-8 py-4 rounded-full border border-gold/30 text-gold font-label-sm tracking-widest uppercase hover:bg-gold/10 transition-colors no-underline">Back to invitation</a>
 </div>
 </div>
 
@@ -268,7 +303,7 @@ input[type=number]{-moz-appearance:textfield}
 
 <!-- Mobile bottom nav -->
 <nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-4 bg-white/[0.08] backdrop-blur-2xl backdrop-saturate-150 border-t border-gold/20 shadow-[0_-10px_40px_rgba(0,0,0,0.6)]">
-<a id="navHome" href="_invitation.html" class="btn-feedback flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:text-gold transition-colors no-underline">
+<a id="navHome" href="index.html" class="btn-feedback flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:text-gold transition-colors no-underline">
 <span class="material-symbols-outlined">auto_awesome</span>
 <span class="font-serif text-[10px] uppercase tracking-widest text-on-surface-variant">Home</span>
 </a>
@@ -372,9 +407,9 @@ input[type=number]{-moz-appearance:textfield}
     if (!params.toString()) return path;
     return path + '?' + params.toString();
   }
-  document.getElementById('backLink').href = withParams('_invitation.html');
-  document.getElementById('doneLink').href = withParams('_invitation.html');
-  document.getElementById('navHome').href = withParams('_invitation.html');
+  document.getElementById('backLink').href = withParams('index.html');
+  document.getElementById('doneLink').href = withParams('index.html');
+  document.getElementById('navHome').href = withParams('index.html');
 
   function updateTotals() {
     var n = totalAttending();
@@ -390,7 +425,7 @@ input[type=number]{-moz-appearance:textfield}
     if (!el) return;
     var icon = el.querySelector('.material-symbols-outlined');
     var text = el.querySelector('.att-status-text');
-    el.classList.remove('on', 'off', 'hidden');
+    el.classList.remove('on', 'off', 'mid', 'hidden');
     if (value === 'yes') {
       el.classList.add('on');
       if (icon) icon.textContent = 'check_circle';
@@ -399,40 +434,42 @@ input[type=number]{-moz-appearance:textfield}
       el.classList.add('off');
       if (icon) icon.textContent = 'cancel';
       if (text) text.textContent = 'Declining';
+    } else if (value === 'maybe') {
+      el.classList.add('mid');
+      if (icon) icon.textContent = 'schedule';
+      if (text) text.textContent = 'Ask Later';
     } else {
       el.classList.add('hidden');
     }
   }
 
-  function makeToggle(ids) {
-    var attYes = document.getElementById(ids.yes);
-    var attNo = document.getElementById(ids.no);
-    var toggler = document.getElementById(ids.toggler);
+  function makeChoices(ids) {
+    var radios = [ids.yes, ids.no, ids.maybe].map(function (id) {
+      return document.getElementById(id);
+    });
     var guestField = document.getElementById(ids.guestField);
     var pill = document.getElementById(ids.pill);
+    var cards = Array.prototype.slice.call(document.querySelectorAll('#' + ids.group + ' .att-choice'));
 
     function current() {
-      if (attYes.checked) return 'yes';
-      if (attNo.checked) return 'no';
+      for (var i = 0; i < radios.length; i++) if (radios[i].checked) return radios[i].value;
       return '';
     }
-    function syncGuestField() {
-      if (guestField) guestField.classList.toggle('hidden', !attYes.checked);
-      setPill(pill, current());
+    function sync() {
+      var v = current();
+      if (guestField) guestField.classList.toggle('hidden', v !== 'yes');
+      setPill(pill, v);
+      for (var i = 0; i < cards.length; i++) {
+        cards[i].classList.toggle('selected', cards[i].getAttribute('data-val') === v);
+      }
     }
-    attYes.addEventListener('change', syncGuestField);
-    attNo.addEventListener('change', syncGuestField);
-    toggler.addEventListener('change', function () {
-      attYes.checked = toggler.checked;
-      attNo.checked = !toggler.checked;
-      syncGuestField();
-    });
-    return { attYes: attYes, attNo: attNo, toggler: toggler, guestField: guestField, current: current };
+    for (var i = 0; i < radios.length; i++) radios[i].addEventListener('change', sync);
+    return { radios: radios, guestField: guestField, current: current, sync: sync };
   }
 
-  var singleToggle = makeToggle({ yes: 'att-yes', no: 'att-no', toggler: 'attToggler', guestField: 'guestField', pill: 'statusPill' });
-  var coupleA = makeToggle({ yes: 'att-yes-a', no: 'att-no-a', toggler: 'attTogglerA', guestField: 'guestFieldA', pill: 'statusPillA' });
-  var coupleB = makeToggle({ yes: 'att-yes-b', no: 'att-no-b', toggler: 'attTogglerB', guestField: 'guestFieldB', pill: 'statusPillB' });
+  var singleToggle = makeChoices({ group: 'attChoices', yes: 'att-yes', no: 'att-no', maybe: 'att-maybe', guestField: 'guestField', pill: 'statusPill' });
+  var coupleA = makeChoices({ group: 'attChoicesA', yes: 'att-yes-a', no: 'att-no-a', maybe: 'att-maybe-a', guestField: 'guestFieldA', pill: 'statusPillA' });
+  var coupleB = makeChoices({ group: 'attChoicesB', yes: 'att-yes-b', no: 'att-no-b', maybe: 'att-maybe-b', guestField: 'guestFieldB', pill: 'statusPillB' });
 
   function stepGuests(id, d) {
     var el = document.getElementById(id);
@@ -464,9 +501,28 @@ input[type=number]{-moz-appearance:textfield}
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     }).then(function (res) {
-      if (!res.ok) throw new Error('rsvp failed');
-      cb(null);
+      return res.json().catch(function () { return {}; }).then(function (data) {
+        if (!res.ok) {
+          var e = new Error(data.error || 'rsvp failed');
+          e.status = res.status;
+          throw e;
+        }
+        cb(null, data);
+      });
     }).catch(function (err) { cb(err); });
+  }
+
+  function rsvpErrorMsg(err) {
+    if (err && err.status === 404) {
+      return ['Guest not found', 'Open this page from your personal invitation link so your response reaches us.'];
+    }
+    return ['Could not reach server', 'Your RSVP is saved on this device and will sync when you retry.'];
+  }
+
+  function overallAttendance(a, b) {
+    if (a === 'yes' || b === 'yes') return 'yes';
+    if (a === 'maybe' || b === 'maybe') return 'maybe';
+    return 'no';
   }
 
   window.handleSubmit = function (e) {
@@ -490,7 +546,7 @@ input[type=number]{-moz-appearance:textfield}
       if (!nameA) missing.push('guest 1 first name');
       if (!nameB) missing.push('guest 2 first name');
       if (missing.length) { showError('Missing information', 'Please add ' + missing.join(', ') + '.'); return; }
-      if (!attA || !attB) { showError('Choose an option', 'Please select accepting or declining for both guests.'); return; }
+      if (!attA || !attB) { showError('Choose an option', 'Please select an option for both guests.'); return; }
 
       var countA = attA === 'yes' ? (parseInt(document.getElementById('guestCountA').value, 10) || 1) : 0;
       var countB = attB === 'yes' ? (parseInt(document.getElementById('guestCountB').value, 10) || 1) : 0;
@@ -509,28 +565,31 @@ input[type=number]{-moz-appearance:textfield}
       if (attA === 'yes') attendingNames.push((nameA + ' ' + lastNameA).trim());
       if (attB === 'yes') attendingNames.push((nameB + ' ' + lastNameB).trim());
 
+      var overall = overallAttendance(attA, attB);
       postRsvp({
         guestId: guestId,
-        attendance: attA === 'yes' || attB === 'yes' ? 'yes' : 'no',
+        name: (nameA + ' ' + lastNameA).trim(),
+        lastName: lastNameA,
+        attendance: overall,
         guests: guests,
         phone: phone,
         plusNames: attendingNames.join(', '),
         song: song,
         message: message
-      }, function (err) { if (err) showError('Could not reach server', 'Your RSVP was saved on this device. Please retry later.'); });
+      }, function (err) { if (err) { var m = rsvpErrorMsg(err); showError(m[0], m[1]); } });
 
       var d = loadAll();
       if (!d[guestId]) d[guestId] = [];
       d[guestId].push.apply(d[guestId], records);
       saveAll(d);
-      showSuccess({ couple: true, nameA: nameA, nameB: nameB, attendance: (attA === 'yes' || attB === 'yes') ? 'yes' : 'no', guests: guests }, records.length);
+      showSuccess({ couple: true, nameA: nameA, nameB: nameB, attendance: overall, guests: guests }, records.length);
     } else {
       var name = nameInput.value.trim();
       var lastName = isEasy ? '' : val('lastName');
       var attendance = singleToggle.current();
 
       if (!name) { showError('Missing information', 'Please add your first name.'); return; }
-      if (!attendance) { showError('Choose an option', 'Please select accepting or declining.'); return; }
+      if (!attendance) { showError('Choose an option', 'Please select an option below.'); return; }
       var yes = attendance === 'yes';
       var count = yes ? (parseInt(document.getElementById('guestCount').value, 10) || 1) : 0;
       if (isEasy) count = yes ? 1 : 0;
@@ -547,13 +606,15 @@ input[type=number]{-moz-appearance:textfield}
 
       postRsvp({
         guestId: guestId,
+        name: (name + (lastName ? ' ' + lastName : '')).trim(),
+        lastName: lastName,
         attendance: attendance,
         guests: guests,
         phone: phone,
         plusNames: plusNames,
         song: song,
         message: message
-      }, function (err) { if (err) showError('Could not reach server', 'Your RSVP was saved on this device. Please retry later.'); });
+      }, function (err) { if (err) { var m = rsvpErrorMsg(err); showError(m[0], m[1]); } });
 
       var d = loadAll();
       if (!d[guestId]) d[guestId] = [];
@@ -572,6 +633,8 @@ input[type=number]{-moz-appearance:textfield}
       summary.textContent = info.couple
         ? 'You confirmed ' + info.guests + ' seat' + (info.guests > 1 ? 's' : '') + ' for the two of you. We can\u2019t wait to celebrate with you!'
         : (info.guests > 1 ? 'You confirmed ' + info.guests + ' seats. We can\u2019t wait to celebrate with you!' : 'You confirmed 1 seat. We can\u2019t wait to celebrate with you!');
+    } else if (info.attendance === 'maybe') {
+      summary.textContent = 'Thanks for letting us know. We\u2019ll keep you posted and check back soon!';
     } else {
       summary.textContent = 'We will miss you. Thank you for letting us know.';
     }
@@ -580,6 +643,26 @@ input[type=number]{-moz-appearance:textfield}
       : 'Your RSVP has been received';
     updateTotals();
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function fetchPriorStatus() {
+    if (!guestId || guestId.indexOf('guest_') === 0) return;
+    fetch(CONVEX_HTTP_URL + '/api/rsvp/status?guestId=' + encodeURIComponent(guestId))
+      .then(function (res) { return res.json().catch(function () { return {}; }); })
+      .then(function (data) {
+        var s = data.status;
+        if (s !== 'attending' && s !== 'declined' && s !== 'later') return;
+        var map = {
+          attending: 'You\u2019ve already responded \u2014 Yes',
+          declined: 'You\u2019ve already responded \u2014 No',
+          later: 'You\u2019ve already responded \u2014 Ask Later'
+        };
+        var el = document.getElementById('priorStatus');
+        var txt = document.getElementById('priorStatusText');
+        if (txt) txt.textContent = map[s] || '';
+        if (el) el.classList.remove('hidden');
+      })
+      .catch(function () {});
   }
 
   window.resetForAnother = function () {
@@ -594,11 +677,9 @@ input[type=number]{-moz-appearance:textfield}
       if (el) el.value = '1';
     });
     [singleToggle, coupleA, coupleB].forEach(function (tg) {
-      tg.toggler.checked = false;
-      tg.attYes.checked = false;
-      tg.attNo.checked = false;
-      tg.guestField.classList.add('hidden');
-      setPill(document.getElementById(tg === singleToggle ? 'statusPill' : (tg === coupleA ? 'statusPillA' : 'statusPillB')), '');
+      tg.radios.forEach(function (r) { r.checked = false; });
+      if (tg.guestField) tg.guestField.classList.add('hidden');
+      tg.sync();
     });
     window.hideError();
     document.getElementById('greeting').classList.add('hidden');
@@ -607,6 +688,7 @@ input[type=number]{-moz-appearance:textfield}
 
   window.stepGuests = stepGuests;
   updateTotals();
+  fetchPriorStatus();
 })();
 </script>
 </body>

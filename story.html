@@ -143,6 +143,15 @@
         opacity: 1;
         transform: translateY(0);
     }
+    .bottom-nav a { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .bottom-nav .nav-ic { display: none; }
+    @media (max-width: 639px) {
+        .bottom-nav a { font-size: 8.5px; letter-spacing: .05em; padding: .4rem .45rem; }
+        .bottom-nav .nav-ic { display: inline-flex; font-size: 18px; line-height: 1; }
+    }
+    @media (min-width: 640px) {
+        .bottom-nav a { flex-direction: row; }
+    }
     body {
         min-height: max(884px, 100dvh);
         background: #0a0a0a;
@@ -153,7 +162,7 @@
 <div class="fixed inset-0 satin-gradient pointer-events-none -z-10"></div>
 
 <header class="sticky top-0 z-50 flex justify-between items-center w-full px-5 sm:px-8 h-16 bg-white/[0.06] backdrop-blur-2xl backdrop-saturate-150 border-b border-gold/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.6)]">
-<a href="_invitation.html" class="inline-flex items-center gap-2 font-label-sm uppercase tracking-[0.15em] text-on-surface-variant hover:text-gold transition-colors no-underline">
+<a href="index.html" class="inline-flex items-center gap-2 font-label-sm uppercase tracking-[0.15em] text-on-surface-variant hover:text-gold transition-colors no-underline">
 <span class="material-symbols-outlined text-lg">arrow_back</span> Invitation
 </a>
 <h1 class="font-script-accent text-[22px] sm:text-[26px] leading-none text-gold">Charles &amp; Leticia</h1>
@@ -284,7 +293,7 @@
 <span class="material-symbols-outlined text-lg" data-icon="celebration">celebration</span>
 RSVP to the Wedding
 </a>
-<a href="_invitation.html" class="inline-flex items-center gap-2 border border-gold/30 text-gold font-label-sm uppercase px-8 py-4 rounded-full hover:bg-gold/10 transition-colors no-underline">
+<a href="index.html" class="inline-flex items-center gap-2 border border-gold/30 text-gold font-label-sm uppercase px-8 py-4 rounded-full hover:bg-gold/10 transition-colors no-underline">
 <span class="material-symbols-outlined text-lg" data-icon="arrow_back">arrow_back</span>
 Back to Invitation
 </a>
@@ -293,12 +302,12 @@ Back to Invitation
 </main>
 
 <!-- Bottom glass nav -->
-<nav class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1 px-2 py-2 rounded-full bg-white/[0.08] backdrop-blur-2xl border border-gold/20 shadow-[0_8px_32px_rgba(0,0,0,0.6)]" aria-label="Site navigation">
-<a href="_invitation.html#story" class="px-3 sm:px-4 py-2 rounded-full text-[11px] uppercase tracking-wider font-semibold text-gold bg-gold/10 no-underline">Story</a>
-<a href="_invitation.html#details" class="px-3 sm:px-4 py-2 rounded-full text-[11px] uppercase tracking-wider text-on-surface-variant hover:text-gold transition-colors no-underline">Ceremony</a>
-<a href="_invitation.html#gallery" class="px-3 sm:px-4 py-2 rounded-full text-[11px] uppercase tracking-wider text-on-surface-variant hover:text-gold transition-colors no-underline">Gallery</a>
-<a href="_invitation.html#gift" class="px-3 sm:px-4 py-2 rounded-full text-[11px] uppercase tracking-wider text-on-surface-variant hover:text-gold transition-colors no-underline">Gift</a>
-<a href="_invitation.html#rsvp" class="px-3 sm:px-4 py-2 rounded-full text-[11px] uppercase tracking-wider text-on-surface-variant hover:text-gold transition-colors no-underline">RSVP</a>
+<nav class="bottom-nav fixed bottom-5 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1 px-2 py-2 rounded-full bg-white/[0.08] backdrop-blur-2xl border border-gold/20 shadow-[0_8px_32px_rgba(0,0,0,0.6)]" aria-label="Site navigation">
+<a href="index.html#story" class="px-3 sm:px-4 py-2 rounded-full text-[11px] uppercase tracking-wider font-semibold text-gold bg-gold/10 no-underline"><span class="nav-ic material-symbols-outlined">auto_stories</span>Story</a>
+<a href="index.html#details" class="px-3 sm:px-4 py-2 rounded-full text-[11px] uppercase tracking-wider text-on-surface-variant hover:text-gold transition-colors no-underline"><span class="nav-ic material-symbols-outlined">celebration</span>Ceremony</a>
+<a href="index.html#gallery" class="px-3 sm:px-4 py-2 rounded-full text-[11px] uppercase tracking-wider text-on-surface-variant hover:text-gold transition-colors no-underline"><span class="nav-ic material-symbols-outlined">photo_library</span>Gallery</a>
+<a href="index.html#gift" class="px-3 sm:px-4 py-2 rounded-full text-[11px] uppercase tracking-wider text-on-surface-variant hover:text-gold transition-colors no-underline"><span class="nav-ic material-symbols-outlined">card_giftcard</span>Gift</a>
+<a href="index.html#rsvp" class="px-3 sm:px-4 py-2 rounded-full text-[11px] uppercase tracking-wider text-on-surface-variant hover:text-gold transition-colors no-underline"><span class="nav-ic material-symbols-outlined">mail</span>RSVP</a>
 </nav>
 
 <script>
