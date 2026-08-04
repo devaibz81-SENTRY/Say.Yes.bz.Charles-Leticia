@@ -191,15 +191,16 @@
   text-decoration: none;
   white-space: nowrap;
 }
-.glass-radio-group .nav-ic { display: none; }
+.glass-radio-group .nav-ic { display: inline-flex; font-size: 22px; line-height: 1; }
 @media (max-width: 639px) {
   .glass-radio-group { border-radius: 1.1rem; }
-  .glass-radio-group a { padding: 0.45rem 0.4rem; font-size: 8.5px; letter-spacing: .05em; }
-  .glass-radio-group .nav-ic { display: inline-flex; font-size: 19px; line-height: 1; }
+  .glass-radio-group a { padding: 0.5rem 0.7rem; }
+  .glass-radio-group .nav-ic { font-size: 20px; }
   .glass-radio-group .glass-glider { border-radius: 1.1rem; }
 }
 @media (min-width: 640px) {
-  .glass-radio-group a { padding: 0.8rem 1.2rem; font-size: 14px; min-width: 84px; letter-spacing: .1em; }
+  .glass-radio-group a { padding: 0.75rem 1.05rem; }
+  .glass-radio-group .nav-ic { font-size: 24px; }
 }
 .glass-radio-group a:hover { color: #fff; }
 .glass-radio-group a.active { color: #0a0a0a; }
@@ -315,10 +316,10 @@ Back to the invitation
 </main>
 <!-- Glass NavBar -->
 <nav class="glass-radio-group fixed bottom-5 left-1/2 -translate-x-1/2 z-50" aria-label="Site navigation">
-<a href="index.html#story"><span class="nav-ic material-symbols-outlined">auto_stories</span><span class="nav-lbl">Story</span></a>
-<a href="index.html#details"><span class="nav-ic material-symbols-outlined">celebration</span><span class="nav-lbl">Ceremony</span></a>
-<a href="index.html#gallery" class="active"><span class="nav-ic material-symbols-outlined">image</span><span class="nav-lbl">Honeymoon</span></a>
-<a href="rsvp.html"><span class="nav-ic material-symbols-outlined">mail</span><span class="nav-lbl">RSVP</span></a>
+<a href="index.html#story" aria-label="Story"><span class="nav-ic material-symbols-outlined">auto_stories</span></a>
+<a href="index.html#details" aria-label="Reception"><span class="nav-ic material-symbols-outlined">local_bar</span></a>
+<a href="index.html#gallery" class="active" aria-label="Honeymoon"><span class="nav-ic material-symbols-outlined">image</span></a>
+<a href="rsvp.html" aria-label="RSVP"><span class="nav-ic material-symbols-outlined" style="font-variation-settings:'FILL' 1">favorite</span></a>
 <div class="glass-glider"></div>
 </nav>
 <script>

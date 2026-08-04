@@ -377,15 +377,16 @@ html.no-scroll, html.no-scroll body { overflow: hidden; }
   text-decoration: none;
   white-space: nowrap;
 }
-.glass-radio-group .nav-ic { display: none; }
+.glass-radio-group .nav-ic { display: inline-flex; font-size: 22px; line-height: 1; }
 @media (max-width: 639px) {
   .glass-radio-group { border-radius: 1.1rem; }
-  .glass-radio-group a { padding: 0.45rem 0.4rem; font-size: 8.5px; letter-spacing: .05em; }
-  .glass-radio-group .nav-ic { display: inline-flex; font-size: 19px; line-height: 1; }
+  .glass-radio-group a { padding: 0.5rem 0.7rem; }
+  .glass-radio-group .nav-ic { font-size: 20px; }
   .glass-radio-group .glass-glider { border-radius: 1.1rem; }
 }
 @media (min-width: 640px) {
-  .glass-radio-group a { padding: 0.8rem 1.2rem; font-size: 14px; min-width: 84px; letter-spacing: .1em; }
+  .glass-radio-group a { padding: 0.75rem 1.05rem; }
+  .glass-radio-group .nav-ic { font-size: 24px; }
 }
 .glass-radio-group a:hover { color: #fff; }
 .glass-radio-group a.active { color: #0a0a0a; }
@@ -479,21 +480,20 @@ section[id] { scroll-margin-top: 5rem; }
 <!-- Hero Section -->
 <section class="relative max-w-[1200px] mx-auto px-5 sm:px-container-padding pt-12 pb-section-gap">
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
-<!-- Left Narrative Block -->
-<div class="lg:col-span-5 z-10 space-y-element-gap" id="heroLeft">
+<!-- Headline Block (full width) -->
+<div class="space-y-4 mb-12" id="heroHead">
 <div class="inline-flex items-center px-3 py-1 rounded-full glass-panel border border-gold/30 shadow-sm">
 <span class="material-symbols-outlined text-[12px] mr-1.5 text-gold" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
 <span class="font-label-sm text-[10px] sm:text-[11px] text-gold-light uppercase tracking-[0.14em]">New Year's Eve &bull; Belize City</span>
 </div>
-<div class="space-y-4">
 <h2 class="font-script-accent text-script-accent italic text-gold leading-tight">Join us for the wedding of</h2>
-<div class="space-y-0">
-<h3 id="heroNames" class="font-script-accent text-white leading-none whitespace-nowrap text-[clamp(34px,12vw,60px)] lg:text-[clamp(38px,5.5vw,68px)]">Charles <span class="text-gold">&amp;</span> Leticia</h3>
-</div>
-</div>
-<p class="font-body-lg text-on-surface-variant max-w-md">
+<h3 id="heroNames" class="font-script-accent text-white leading-none whitespace-nowrap text-[clamp(36px,13vw,72px)] lg:text-[clamp(40px,6vw,76px)]">Charles <span class="text-gold">&amp;</span> Leticia</h3>
+<p class="font-body-lg text-on-surface-variant max-w-xl">
                         As Belize City sparkles against the Caribbean night, we invite you to ring in 2027 with us &mdash; the start of forever, in black, white &amp; gold.
                     </p>
+</div>
+<!-- Left Narrative Block -->
+<div class="lg:col-span-5 z-10 space-y-element-gap">
 <!-- Save-the-Date Calendar Card -->
 <div class="pt-8">
 <div class="nye-cal inline-block glass-panel p-6 rounded-2xl shadow-[0_20px_50px_rgba(212,175,55,0.12)] border border-gold/25 w-full max-w-md relative overflow-hidden group" id="saveDateCard">
@@ -607,23 +607,43 @@ section[id] { scroll-margin-top: 5rem; }
 </section>
 <!-- Dress Code Section -->
 <section id="dresscode" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding py-section-gap">
-<div class="glass-panel rounded-[32px] p-8 sm:p-10 md:p-14 relative overflow-hidden shadow-[0_10px_30px_rgba(212,175,55,0.05)] bg-gradient-to-tl from-[#1a1a1a]/80 to-gold/5 border-gold/20">
+<div class="glass-panel rounded-[32px] relative overflow-hidden shadow-[0_10px_30px_rgba(212,175,55,0.05)] bg-gradient-to-tl from-[#1a1a1a]/80 to-gold/5 border-gold/20">
 <div class="sparkle-bg absolute inset-0 pointer-events-none"></div>
 <div class="absolute inset-0 gold-shimmer pointer-events-none"></div>
-<div class="relative z-10 flex flex-col md:flex-row items-center gap-10 md:gap-14">
-<div class="shrink-0">
-<div class="w-48 sm:w-56 md:w-64 overflow-hidden rounded-2xl border border-gold/30 shadow-[0_20px_60px_rgba(0,0,0,0.6)]">
-<img src="../dress-code.jpeg" alt="Open the dress code" class="w-full h-auto object-cover transition-transform duration-700 hover:scale-105 cursor-zoom-in" onclick="openDressCode()"/>
+<div class="relative z-10 grid md:grid-cols-2">
+<!-- Product photo half (full, no crop) -->
+<div class="relative bg-black/40 md:border-r border-gold/15 overflow-hidden cursor-zoom-in" onclick="openDressCode()">
+<div class="absolute inset-0 flex items-center justify-center p-6 sm:p-10">
+<img src="../dress-code.jpeg" alt="Open the dress code guide" class="w-full h-full object-contain drop-shadow-[0_25px_50px_rgba(0,0,0,0.75)] transition-transform duration-700 hover:scale-[1.03]"/>
+</div>
+<div class="absolute top-4 left-4 z-10">
+<span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-[0.18em] uppercase bg-gold/90 text-ink shadow-lg">Dress Code Guide</span>
+</div>
+<div class="absolute bottom-4 right-4 z-10 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md text-gold text-[11px] tracking-[0.14em] uppercase">
+<span class="material-symbols-outlined text-sm" data-icon="fullscreen">fullscreen</span> View Full
 </div>
 </div>
-<div class="flex-1 text-center md:text-left">
+<!-- Details half -->
+<div class="flex flex-col justify-center gap-5 p-8 sm:p-12 text-center md:text-left">
+<div>
 <span class="font-label-sm text-gold uppercase tracking-[0.25em] block mb-3">Dress Code</span>
-<h2 class="font-script-accent text-[40px] sm:text-[48px] text-gold-gradient italic mb-4">Black, White &amp; Gold</h2>
-<p class="font-body-lg text-on-surface-variant max-w-md mx-auto md:mx-0 mb-8">Celebrate the night in elegant black, crisp white and shimmering gold. Tap the card to view the full guide full screen, or download it to keep close.</p>
+<h2 class="font-script-accent text-[40px] sm:text-[48px] text-gold-gradient italic leading-none">Black, White &amp; Gold</h2>
+</div>
+<p class="font-body-lg text-on-surface-variant max-w-md mx-auto md:mx-0">
+Celebrate the night in elegant black, crisp white and shimmering gold. Tap the guide to view it full screen, or download a copy to keep close.
+</p>
+<!-- Color swatches -->
+<div class="flex items-center justify-center md:justify-start gap-3">
+<span class="font-label-sm text-on-surface-variant uppercase tracking-[0.15em] mr-1">Attire</span>
+<span class="w-9 h-9 rounded-full border border-gold/30 shadow-[inset_0_0_0_3px_rgba(0,0,0,.45)]" style="background:#0a0a0a" title="Black"></span>
+<span class="w-9 h-9 rounded-full border border-gold/30 shadow-[inset_0_0_0_2px_rgba(0,0,0,.15)]" style="background:#f5f5f0" title="White"></span>
+<span class="w-9 h-9 rounded-full border border-gold/40 shadow-[0_0_14px_rgba(212,175,55,.5)]" style="background:linear-gradient(135deg,#f7e08b,#d4af37)" title="Gold"></span>
+</div>
+<!-- CTAs -->
 <div class="flex flex-wrap justify-center md:justify-start gap-4">
 <button onclick="openDressCode()" class="inline-flex items-center gap-2 bg-gradient-to-r from-gold-light to-gold-dark text-ink font-label-sm uppercase px-8 py-4 rounded-full border border-gold/40 shadow-[0_10px_30px_rgba(212,175,55,0.25)] hover:shadow-[0_10px_40px_rgba(212,175,55,0.45)] transition-all active:scale-95">
 <span class="material-symbols-outlined text-lg" data-icon="fullscreen">fullscreen</span>
-View Full
+View Full Guide
 </button>
 <a href="../dress-code.jpeg" download="Dress-Code.jpeg" class="inline-flex items-center gap-2 border border-gold/30 text-gold font-label-sm uppercase px-8 py-4 rounded-full hover:bg-gold/10 transition-colors no-underline">
 <span class="material-symbols-outlined text-lg" data-icon="download">download</span>
@@ -690,11 +710,11 @@ Bank Details
 </main>
 <!-- Glass NavBar -->
 <nav class="glass-radio-group fixed bottom-5 left-1/2 -translate-x-1/2 z-50" aria-label="Site navigation">
-<a href="#story" class="active"><span class="nav-ic material-symbols-outlined">auto_stories</span><span class="nav-lbl">Story</span></a>
-<a href="#details"><span class="nav-ic material-symbols-outlined">celebration</span><span class="nav-lbl">Ceremony</span></a>
-<a href="#gallery"><span class="nav-ic material-symbols-outlined">photo_library</span><span class="nav-lbl">Gallery</span></a>
-<a href="#rsvp"><span class="nav-ic material-symbols-outlined">mail</span><span class="nav-lbl">RSVP</span></a>
-<a href="#gift"><span class="nav-ic material-symbols-outlined">card_giftcard</span><span class="nav-lbl">Gift</span></a>
+<a href="#story" class="active" aria-label="Story"><span class="nav-ic material-symbols-outlined">auto_stories</span></a>
+<a href="#details" aria-label="Reception"><span class="nav-ic material-symbols-outlined">local_bar</span></a>
+<a href="#gallery" aria-label="Gallery"><span class="nav-ic material-symbols-outlined">photo_library</span></a>
+<a href="#rsvp" aria-label="RSVP"><span class="nav-ic material-symbols-outlined" style="font-variation-settings:'FILL' 1">favorite</span></a>
+<a href="#gift" aria-label="Gift"><span class="nav-ic material-symbols-outlined">card_giftcard</span></a>
 <div class="glass-glider"></div>
 </nav>
 <!-- Countdown -->
@@ -825,7 +845,7 @@ Bank Details
   function play() {
     if (state !== 'ready') return;
     state = 'playing';
-    if (firstImg) firstImg.classList.add('opacity-0');
+    if (firstImg) firstImg.style.display = 'none';
     gifImg.src = GIF_SRC;
     gifImg.classList.remove('opacity-0');
     if (hint) hint.textContent = 'Enjoy the moment\u2026';
@@ -837,8 +857,11 @@ Bank Details
   function beginReveal() {
     if (state !== 'playing') return;
     state = 'revealing';
-    if (lastImg) lastImg.classList.remove('opacity-0');
-    if (gifImg) gifImg.classList.add('opacity-0');
+    if (gifImg) gifImg.style.display = 'none';
+    if (lastImg) {
+      lastImg.classList.remove('opacity-0');
+      lastImg.style.display = 'block';
+    }
     if (revealFlash) {
       revealFlash.classList.remove('hidden');
       revealFlash.classList.add('reveal-flash');
@@ -1252,19 +1275,19 @@ function fallbackCopy(text) {
   }
 })();
 </script>
-<!-- Fit hero names to the full hero column width (bigger than the Save-the-Date card) -->
+<!-- Fit hero names to the full hero width -->
 <script>
 (function () {
   var h3 = document.getElementById('heroNames');
-  var col = document.getElementById('heroLeft');
-  if (!h3 || !col) return;
+  var head = document.getElementById('heroHead');
+  if (!h3 || !head) return;
   function fit() {
-    var target = col.offsetWidth - 6;
+    var target = head.offsetWidth - 8;
     if (target < 140) return;
     h3.style.fontSize = '20px';
     var w = h3.scrollWidth;
     if (!w) return;
-    var size = Math.max(34, Math.min(120, 20 * target / w));
+    var size = Math.max(36, Math.min(110, 20 * target / w));
     h3.style.fontSize = size + 'px';
   }
   h3.style.lineHeight = '1';

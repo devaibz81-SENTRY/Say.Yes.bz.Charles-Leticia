@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -1000,9 +1000,9 @@
     <div class="nav-item" onclick="showView('whatsapp', event)">WhatsApp Inbox</div>
     <div class="nav-item" onclick="showView('seating', event); loadSeating()">Seating</div>
     <div class="nav-label">Public Pages</div>
-    <a href="index.html" class="nav-item" target="_blank">🎉 Invitation</a>
-    <a href="rsvp.html" class="nav-item" target="_blank">📋 RSVP</a>
-    <a href="rsvp.html?advanced=1" class="nav-item" target="_blank" style="font-size:0.7rem;opacity:0.7;">📋 RSVP (Full Form)</a>
+    <a href="index.html" class="nav-item" target="_blank">ðŸŽ‰ Invitation</a>
+    <a href="rsvp.html" class="nav-item" target="_blank">ðŸ“‹ RSVP</a>
+    <a href="rsvp.html?advanced=1" class="nav-item" target="_blank" style="font-size:0.7rem;opacity:0.7;">ðŸ“‹ RSVP (Full Form)</a>
   </div>
 
   <!-- Main -->
@@ -1080,18 +1080,18 @@
           <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
             <!-- SONGS BUTTON -->
             <div style="background: white; border: 1px solid #e8e2d8; border-radius: 12px; padding: 2rem; min-width: 280px; text-align: center;">
-              <div style="font-size: 3rem; margin-bottom: 1rem;">🎵</div>
+              <div style="font-size: 3rem; margin-bottom: 1rem;">ðŸŽµ</div>
               <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--gold);">Song Requests</h3>
               <p style="font-size: 0.85rem; color: #888; margin-bottom: 1.5rem;">Guests can request songs when they RSVP</p>
             </div>
             
             <!-- MESSAGES BUTTON -->
             <div style="background: white; border: 1px solid #e8e2d8; border-radius: 12px; padding: 2rem; min-width: 280px; text-align: center;">
-              <div style="font-size: 3rem; margin-bottom: 1rem;">💌</div>
+              <div style="font-size: 3rem; margin-bottom: 1rem;">ðŸ’Œ</div>
               <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--gold);">Messages</h3>
               <p style="font-size: 0.85rem; color: #888; margin-bottom: 1.5rem;">Download guest messages from the guestbook</p>
               <button onclick="downloadMessages()" style="padding: 0.8rem 2rem; background: #3498db; color: white; border: none; border-radius: 6px; font-size: 0.8rem; cursor: pointer; letter-spacing: 0.1em;">
-                📥 Download Messages
+                ðŸ“¥ Download Messages
               </button>
             </div>
           </div>
@@ -1263,7 +1263,7 @@ Charles and Leticia</textarea>
   <script>
     const CONVEX_HTTP_URL = 'https://canny-hummingbird-920.convex.site';
     const WEDDING_URL = 'https://sayyesbzcharles-leticia.vercel.app';
-    const SESSION_KEY = 'ra_admin_token';
+    const SESSION_KEY = 'cl_admin_token';
     const LIVE_REFRESH_MS = 12000;
     const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw33IBpUacNLGAcqc4EGp5L2dlxaMkWSbEFvSTdFTDq6p9iO5oZCIWl6aS-BB6EIW-JUA/exec';
     let guests = [];
@@ -1387,7 +1387,7 @@ Charles and Leticia</textarea>
       
       // Merge: localStorage overrides Sheets (for local edits before Save All)
       try {
-        const local = JSON.parse(localStorage.getItem('ra_seating') || '{}');
+        const local = JSON.parse(localStorage.getItem('cl_seating') || '{}');
         Object.keys(local).forEach(k => { seatingMap[k] = local[k]; });
       } catch {}
       
@@ -1410,7 +1410,7 @@ Charles and Leticia</textarea>
     }
 
     function saveSeatingLocal() {
-      try { localStorage.setItem('ra_seating', JSON.stringify(seatingData)); } catch {}
+      try { localStorage.setItem('cl_seating', JSON.stringify(seatingData)); } catch {}
     }
 
     function onTableChange(input) {
@@ -1441,7 +1441,7 @@ Charles and Leticia</textarea>
         el.style.color = '#2ecc71';
       });
       
-      try { localStorage.removeItem('ra_seating'); } catch {}
+      try { localStorage.removeItem('cl_seating'); } catch {}
       
       renderSeatingByTable();
     }
@@ -2030,3 +2030,4 @@ Charles and Leticia</textarea>
 </body>
 
 </html>
+
