@@ -481,14 +481,14 @@ section[id] { scroll-margin-top: 5rem; }
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
 <!-- Left Narrative Block -->
 <div class="lg:col-span-5 z-10 space-y-element-gap">
-<div class="inline-flex items-center px-4 py-1.5 rounded-full glass-panel border border-gold/30 shadow-sm">
-<span class="material-symbols-outlined text-[14px] mr-2 text-gold" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
-<span class="font-label-sm text-gold-light uppercase tracking-[0.2em]">New Year's Eve &bull; Belize City</span>
+<div class="inline-flex items-center px-3 py-1 rounded-full glass-panel border border-gold/30 shadow-sm">
+<span class="material-symbols-outlined text-[12px] mr-1.5 text-gold" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="font-label-sm text-[10px] sm:text-[11px] text-gold-light uppercase tracking-[0.14em]">New Year's Eve &bull; Belize City</span>
 </div>
 <div class="space-y-4">
 <h2 class="font-script-accent text-script-accent italic text-gold leading-tight">Join us for the wedding of</h2>
 <div class="space-y-0">
-<h3 class="font-script-accent text-white leading-none whitespace-nowrap text-[clamp(30px,11vw,52px)] lg:text-[clamp(32px,5vw,58px)]">Charles <span class="text-gold">&amp;</span> Leticia</h3>
+<h3 id="heroNames" class="font-script-accent text-white leading-none whitespace-nowrap text-[clamp(30px,11vw,52px)] lg:text-[clamp(32px,5vw,58px)]">Charles <span class="text-gold">&amp;</span> Leticia</h3>
 </div>
 </div>
 <p class="font-body-lg text-on-surface-variant max-w-md">
@@ -496,7 +496,7 @@ section[id] { scroll-margin-top: 5rem; }
                     </p>
 <!-- Save-the-Date Calendar Card -->
 <div class="pt-8">
-<div class="nye-cal inline-block glass-panel p-6 rounded-2xl shadow-[0_20px_50px_rgba(212,175,55,0.12)] border border-gold/25 w-full max-w-md relative overflow-hidden group">
+<div class="nye-cal inline-block glass-panel p-6 rounded-2xl shadow-[0_20px_50px_rgba(212,175,55,0.12)] border border-gold/25 w-full max-w-md relative overflow-hidden group" id="saveDateCard">
 <div class="absolute inset-0 gold-shimmer pointer-events-none"></div>
 <div class="flex justify-between items-center mb-3 relative z-10">
 <div class="font-script-accent text-[20px] sm:text-[24px] leading-snug pt-1 text-gold-gradient italic">Save the Date</div>
@@ -1250,6 +1250,28 @@ function fallbackCopy(text) {
     }, { rootMargin: '-45% 0px -50% 0px' });
     secs.forEach(function (s) { io.observe(s); });
   }
+})();
+</script>
+<!-- Fit hero names to the Save-the-Date card width -->
+<script>
+(function () {
+  var h3 = document.getElementById('heroNames');
+  var card = document.getElementById('saveDateCard');
+  if (!h3 || !card) return;
+  function fit() {
+    var target = card.offsetWidth - 4;
+    if (target < 120) return;
+    h3.style.fontSize = '20px';
+    var w = h3.scrollWidth;
+    if (!w) return;
+    var size = Math.max(28, Math.min(96, 20 * target / w));
+    h3.style.fontSize = size + 'px';
+    h3.style.lineHeight = '1';
+  }
+  window.addEventListener('resize', fit);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  window.addEventListener('load', fit);
+  fit();
 })();
 </script>
 <!-- Dress code fullscreen viewer -->
