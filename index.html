@@ -225,20 +225,30 @@ html.no-scroll, html.no-scroll body { overflow: hidden; }
 .reveal-flash { animation: revealFlash 1s ease-out forwards; }
 #revealFlash { background: radial-gradient(circle, rgba(245,215,110,.9) 0%, rgba(212,175,55,.4) 42%, transparent 68%); }
 
-.petal {
+.stars {
   position: absolute;
-  top: -40px;
-  pointer-events: auto;
-  cursor: grab;
-  touch-action: none;
-  opacity: 0;
-  will-change: transform;
-  --petal-opacity: 1;
+  inset: 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 10% 20%, rgba(255,255,255,.5), transparent),
+    radial-gradient(1px 1px at 30% 65%, rgba(255,255,255,.35), transparent),
+    radial-gradient(1.5px 1.5px at 55% 15%, rgba(255,255,255,.4), transparent),
+    radial-gradient(1px 1px at 75% 45%, rgba(255,255,255,.3), transparent),
+    radial-gradient(1.5px 1.5px at 85% 75%, rgba(255,255,255,.45), transparent),
+    radial-gradient(1px 1px at 20% 85%, rgba(255,255,255,.3), transparent),
+    radial-gradient(1.5px 1.5px at 60% 90%, rgba(255,255,255,.35), transparent);
+  opacity: .7;
+  animation: twinkle 4s ease-in-out infinite alternate;
+  pointer-events: none;
 }
-.petal.grabbed { cursor: grabbing; }
-.petal.flung { pointer-events: none; }
-.petal.petal-in { opacity: var(--petal-opacity); transition: opacity .9s ease; }
-.petal.petal-out { opacity: 0 !important; transition: opacity .25s ease; }
+@keyframes twinkle { from { opacity: .45; } to { opacity: .85; } }
+.glow-wash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity .5s ease-out, background .5s ease-out;
+}
 </style>
 <style>
 /* ---- Save-the-Date calendar card (meeting-card style) ---- */
@@ -423,8 +433,10 @@ section[id] { scroll-margin-top: 5rem; }
 <div id="introScreen" class="fixed inset-0 z-[10000] flex items-center justify-center satin-gradient cursor-pointer select-none overflow-hidden">
 <div class="sparkle-bg absolute inset-0 pointer-events-none"></div>
 
-<!-- Falling petals — behind all elements, subtle -->
-<div id="petals" class="absolute inset-0 -z-10 pointer-events-none"></div>
+<!-- Fireworks backdrop — behind the GIF, always playing -->
+<div class="stars absolute inset-0" aria-hidden="true"></div>
+<div class="glow-wash absolute inset-0" id="glowWash" aria-hidden="true"></div>
+<canvas id="fwCanvas" class="absolute inset-0" aria-hidden="true"></canvas>
 
 <!-- Ornament text -->
 <div class="absolute top-10 left-0 right-0 text-center pointer-events-none">
@@ -801,6 +813,257 @@ Bank Details
 })();
 </script>
 
+<!-- Fireworks backdrop behind the intro GIF -->
+<script>
+(function () {
+  var glowWash = document.getElementById('glowWash');
+  var canvas = document.getElementById('fwCanvas');
+  if (!canvas || !canvas.getContext) return;
+  var ctx = canvas.getContext('2d');
+
+  var palette = ['#e8c27a', '#fff3d0', '#ff9d6c', '#bfe3ff', '#f4e3c1', '#ffd9a0'];
+
+  function rand(min, max) { return Math.random() * (max - min) + min; }
+  function choice(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  var W, H, DPR;
+  function resize() {
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.clientWidth;
+    H = canvas.clientHeight;
+    canvas.width = W * DPR;
+    canvas.height = H * DPR;
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  var GRAVITY = 55;
+  var DRAG = 0.985;
+  function wind() { return Math.sin(Date.now() / 4000) * 4; }
+
+  var rockets = [];
+  var particles = [];
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function pulseGlow(color) {
+    if (!glowWash) return;
+    glowWash.style.background = 'radial-gradient(ellipse at 50% 70%, ' + color + '26 0%, transparent 60%)';
+    glowWash.style.opacity = '1';
+    setTimeout(function () { glowWash.style.opacity = '0'; }, 420);
+  }
+
+  function Rocket() {
+    this.x = rand(W * 0.12, W * 0.88);
+    this.y = H;
+    this.targetY = rand(H * 0.16, H * 0.42);
+    var dist = this.y - this.targetY;
+    this.vy = -Math.sqrt(2 * GRAVITY * dist) * rand(1.0, 1.08);
+    this.vx = rand(-6, 6);
+    this.color = choice(palette);
+    var types = ['peony', 'peony', 'willow', 'ring', 'peony', 'swirl'];
+    this.type = types[Math.floor(Math.random() * types.length)];
+    this.trail = [];
+    this.dead = false;
+  }
+  Rocket.prototype.step = function (dt) {
+    this.trail.push({ x: this.x, y: this.y });
+    if (this.trail.length > 14) this.trail.shift();
+    this.vy += GRAVITY * dt * 0.9;
+    this.x += this.vx * dt;
+    this.y += this.vy * dt;
+    if (this.vy >= -6 || this.y <= this.targetY) { this.explode(); this.dead = true; }
+  };
+  Rocket.prototype.draw = function () {
+    ctx.lineCap = 'round';
+    for (var i = 0; i < this.trail.length; i++) {
+      var p = this.trail[i];
+      var a = i / this.trail.length;
+      ctx.beginPath();
+      ctx.fillStyle = this.color;
+      ctx.globalAlpha = a * 0.8;
+      ctx.arc(p.x, p.y, 1.6 * a + 0.4, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  };
+  Rocket.prototype.explode = function () {
+    pulseGlow(this.color);
+    spawnFlash(this.x, this.y, this.color);
+    spawnBurst(this.x, this.y, this.color, this.type);
+  };
+
+  function spawnFlash(x, y, color) {
+    particles.push({ x: x, y: y, vx: 0, vy: 0, life: 0, maxLife: 0.18, size: 26, color: color, flash: true });
+  }
+
+  function Spark(x, y, angle, speed, color, opts) {
+    opts = opts || {};
+    this.x = x; this.y = y;
+    this.vx = Math.cos(angle) * speed;
+    this.vy = Math.sin(angle) * speed;
+    this.color = color;
+    this.gravityMult = opts.gravityMult || 1;
+    this.dragMult = opts.dragMult || 1;
+    this.size = opts.size || rand(1.6, 2.6);
+    this.life = 0;
+    this.maxLife = opts.maxLife || rand(1.2, 1.8);
+    this.crackle = !!opts.crackle;
+    this.crackled = false;
+    this.spiral = opts.spiral || 0;
+    this.hue = opts.hue === undefined ? null : opts.hue;
+    this.hueSpeed = opts.hueSpeed || 70;
+    this.dead = false;
+  }
+  Spark.prototype.step = function (dt) {
+    this.life += dt;
+    if (this.life >= this.maxLife) { this.dead = true; return; }
+    if (this.spiral) {
+      var c = Math.cos(this.spiral * dt), s = Math.sin(this.spiral * dt);
+      var nvx = this.vx * c - this.vy * s;
+      var nvy = this.vx * s + this.vy * c;
+      this.vx = nvx; this.vy = nvy;
+    }
+    var drag = Math.pow(DRAG, this.dragMult);
+    this.vx = this.vx * drag + wind() * dt;
+    this.vy = this.vy * drag + GRAVITY * this.gravityMult * dt;
+    this.x += this.vx * dt;
+    this.y += this.vy * dt;
+    if (this.crackle && !this.crackled && this.life > this.maxLife * 0.55 && Math.random() < 0.045) {
+      this.crackled = true;
+      var n = Math.floor(rand(3, 6));
+      for (var i = 0; i < n; i++) {
+        var a = rand(0, Math.PI * 2);
+        var s = rand(20, 55);
+        particles.push(new Spark(this.x, this.y, a, s, '#fff3d0', { gravityMult: 1.3, dragMult: 1.4, size: rand(1, 1.6), maxLife: rand(0.25, 0.45) }));
+      }
+    }
+  };
+  Spark.prototype.currentColor = function () {
+    if (this.hue === null) return this.color;
+    var h = (this.hue + this.life * this.hueSpeed) % 360;
+    return 'hsl(' + h + ', 88%, 66%)';
+  };
+  Spark.prototype.draw = function () {
+    var t = this.life / this.maxLife;
+    var alpha = t < 0.08 ? t / 0.08 : 1 - Math.pow((t - 0.08) / 0.92, 1.4);
+    if (alpha <= 0) return;
+    ctx.globalAlpha = Math.max(0, alpha);
+    ctx.beginPath();
+    ctx.fillStyle = this.currentColor();
+    var sz = this.size * (1 - t * 0.4);
+    ctx.arc(this.x, this.y, Math.max(0.3, sz), 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  };
+
+  function spawnBurst(x, y, color, type) {
+    var secondColor = Math.random() > 0.55 ? choice(palette) : color;
+    var count, speedMin, speedMax, gravityMult, dragMult, maxLife, crackleChance;
+    if (type === 'willow') {
+      count = Math.floor(rand(24, 34)); speedMin = 50; speedMax = 85;
+      gravityMult = 1.5; dragMult = 0.7; maxLife = rand(2.2, 2.8); crackleChance = 0;
+    } else if (type === 'ring') {
+      count = Math.floor(rand(26, 32)); speedMin = 95; speedMax = 110;
+      gravityMult = 0.9; dragMult = 1.1; maxLife = rand(1.3, 1.6); crackleChance = 0.2;
+    } else if (type === 'swirl') {
+      count = Math.floor(rand(50, 64)); speedMin = 55; speedMax = 90;
+      gravityMult = 0.55; dragMult = 0.85; maxLife = rand(1.8, 2.3); crackleChance = 0;
+    } else {
+      count = Math.floor(rand(30, 42)); speedMin = 55; speedMax = 125;
+      gravityMult = 1; dragMult = 1; maxLife = rand(1.3, 1.8); crackleChance = 0.22;
+    }
+    if (type === 'swirl') {
+      var baseHue = rand(0, 360);
+      for (var i = 0; i < count; i++) {
+        var angle = (Math.PI * 2 * i) / count;
+        var speed = rand(speedMin, speedMax);
+        var dir = i % 2 === 0 ? 1 : -1;
+        var hue = (baseHue + (360 * i) / count) % 360;
+        particles.push(new Spark(x, y, angle, speed, null, {
+          gravityMult: gravityMult, dragMult: dragMult,
+          maxLife: maxLife * rand(0.9, 1.05),
+          spiral: dir * rand(2.6, 3.6),
+          hue: hue, hueSpeed: rand(50, 90),
+          size: rand(1.6, 2.4)
+        }));
+      }
+      return;
+    }
+    for (var j = 0; j < count; j++) {
+      var ang = type === 'ring' ? (Math.PI * 2 * j) / count + rand(-0.02, 0.02) : rand(0, Math.PI * 2);
+      var spd = rand(speedMin, speedMax);
+      var c = j % 3 === 0 ? secondColor : color;
+      particles.push(new Spark(x, y, ang, spd, c, {
+        gravityMult: gravityMult, dragMult: dragMult, maxLife: maxLife * rand(0.85, 1.05),
+        crackle: Math.random() < crackleChance,
+        size: type === 'willow' ? rand(1.2, 1.8) : rand(1.6, 2.6)
+      }));
+    }
+  }
+
+  function launchFirework() { rockets.push(new Rocket()); }
+
+  function scheduleNext() {
+    launchFirework();
+    if (Math.random() > 0.85) setTimeout(launchFirework, rand(200, 400));
+    setTimeout(scheduleNext, rand(1400, 2600));
+  }
+
+  var lastT = performance.now();
+  function tick(now) {
+    if (!canvas.isConnected) return;
+    var dt = Math.min((now - lastT) / 1000, 0.05);
+    lastT = now;
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = 'rgba(4, 6, 13, 0.22)';
+    ctx.fillRect(0, 0, W, H);
+    ctx.globalCompositeOperation = 'lighter';
+    var i;
+    for (i = rockets.length - 1; i >= 0; i--) {
+      var r = rockets[i];
+      r.step(dt);
+      r.draw();
+      if (r.dead) rockets.splice(i, 1);
+    }
+    for (i = particles.length - 1; i >= 0; i--) {
+      var p = particles[i];
+      if (p.flash) {
+        p.life += dt;
+        var t = p.life / p.maxLife;
+        if (t >= 1) { particles.splice(i, 1); continue; }
+        ctx.globalAlpha = 1 - t;
+        var grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * (0.3 + t));
+        grad.addColorStop(0, '#fff');
+        grad.addColorStop(0.4, p.color);
+        grad.addColorStop(1, 'transparent');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size * (0.3 + t), 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+        continue;
+      }
+      p.step(dt);
+      p.draw();
+      if (p.dead) particles.splice(i, 1);
+    }
+    ctx.globalCompositeOperation = 'source-over';
+    requestAnimationFrame(tick);
+  }
+
+  if (reduceMotion) {
+    ctx.fillStyle = 'rgba(4,6,13,1)';
+    ctx.fillRect(0, 0, W, H);
+  } else {
+    requestAnimationFrame(tick);
+    launchFirework();
+    setTimeout(launchFirework, 900);
+    setTimeout(scheduleNext, 2000);
+  }
+})();
+</script>
+
 <!-- Intro experience: tap to play the animation, tap to enter. Runs once per session. -->
 <script>
 (function () {
@@ -814,7 +1077,6 @@ Bank Details
   var loadText = document.getElementById('loadText');
   var loadProgress = document.getElementById('loadProgress');
   var revealFlash = document.getElementById('revealFlash');
-  var petalsWrap = document.getElementById('petals');
 
   var GIF_SRC = '../intro_1.gif';   // full-quality 1080x1261 envelope animation (25fps, 127 frames)
   var GIF_DURATION = 5080;           // full animation length in ms
@@ -975,118 +1237,6 @@ Bank Details
     raf = requestAnimationFrame(draw);
   }
 
-  // ---- Falling interactive petals ----
-  if (petalsWrap) {
-    var PETAL_SRC = '../Element%20(4).png';
-    var petals = [];
-    var W = window.innerWidth, H = window.innerHeight;
-
-    function spawnPetal() {
-      var img = document.createElement('img');
-      img.className = 'petal';
-      img.src = PETAL_SRC;
-      img.alt = '';
-      var size = 12 + Math.random() * 18;
-      img.style.width = size + 'px';
-      img.style.zIndex = 1 + Math.floor(Math.random() * 40);
-      petalsWrap.appendChild(img);
-      var p = {
-        el: img, x: Math.random() * W, y: -40 - Math.random() * 120,
-        size: size, speed: 30 + Math.random() * 45,
-        drift: 15 + Math.random() * 30,
-        spin: (Math.random() - 0.5) * 1.5,
-        rot: Math.random() * 360,
-        phase: Math.random() * Math.PI * 2,
-        swaySpeed: 0.4 + Math.random() * 0.8,
-        dragging: false, flung: false, dead: false,
-        vx: 0, vy: 0, lastX: 0, lastY: 0, lastT: 0
-      };
-      petals.push(p);
-      requestAnimationFrame(function () { img.classList.add('petal-in'); });
-      bindPetal(p);
-    }
-
-    function bindPetal(p) {
-      var el = p.el;
-      el.addEventListener('pointerdown', function (e) {
-        if (p.flung || p.dead) return;
-        e.preventDefault();
-        el.setPointerCapture(e.pointerId);
-        p.dragging = true;
-        p.dragOffX = e.clientX - p.x;
-        p.dragOffY = e.clientY - p.y;
-        p.lastX = e.clientX; p.lastY = e.clientY; p.lastT = performance.now();
-        el.classList.add('grabbed');
-      });
-      el.addEventListener('pointermove', function (e) {
-        if (!p.dragging) return;
-        p.x = e.clientX - p.dragOffX;
-        p.y = e.clientY - p.dragOffY;
-        var now = performance.now();
-        var dt = Math.max(1, now - p.lastT);
-        p.vx = (e.clientX - p.lastX) / dt * 1000;
-        p.vy = (e.clientY - p.lastY) / dt * 1000;
-        p.lastX = e.clientX; p.lastY = e.clientY; p.lastT = now;
-      });
-      el.addEventListener('pointerup', function () {
-        if (!p.dragging) return;
-        p.dragging = false;
-        el.classList.remove('grabbed');
-        if (Math.hypot(p.vx, p.vy) > 250) {
-          p.flung = true;
-          el.classList.add('flung');
-        } else { p.vx = 0; p.vy = 0; }
-      });
-      el.addEventListener('pointercancel', function () {
-        p.dragging = false;
-        el.classList.remove('grabbed');
-        p.vx = 0; p.vy = 0;
-      });
-    }
-
-    function removePetal(p) {
-      if (p.dead) return;
-      p.dead = true;
-      p.el.classList.add('petal-out');
-      setTimeout(function () {
-        if (p.el.parentNode) p.el.parentNode.removeChild(p.el);
-        spawnPetal();
-      }, 250);
-    }
-
-    var lastTime = performance.now();
-    function petalTick(now) {
-      var dt = Math.min(0.05, (now - lastTime) / 1000);
-      lastTime = now;
-      for (var i = 0; i < petals.length; i++) {
-        var p = petals[i];
-        if (p.dead) continue;
-        if (!p.dragging) {
-          if (p.flung) {
-            p.x += p.vx * dt;
-            p.y += p.vy * dt;
-            p.vy += 900 * dt;
-            p.rot += p.spin * 6 * dt;
-            if (p.x < -80 || p.x > W + 80 || p.y > H + 120 || p.y < -400) { removePetal(p); continue; }
-          } else {
-            p.phase += p.swaySpeed * dt;
-            p.y += p.speed * dt;
-            p.x += Math.sin(p.phase) * p.drift * dt;
-            p.rot += p.spin * dt;
-            if (p.y > H + 60) {
-              p.x = Math.random() * W;
-              p.y = -40 - Math.random() * 100;
-              p.speed = 40 + Math.random() * 70;
-            }
-          }
-        }
-        p.el.style.transform = 'translate(' + p.x + 'px,' + p.y + 'px) rotate(' + p.rot + 'deg)';
-      }
-      requestAnimationFrame(petalTick);
-    }
-    for (var i = 0; i < 12; i++) spawnPetal();
-    requestAnimationFrame(petalTick);
-  }
 })();
 </script>
 
