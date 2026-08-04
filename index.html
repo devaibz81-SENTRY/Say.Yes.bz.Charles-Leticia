@@ -406,6 +406,15 @@ html.no-scroll, html.no-scroll body { overflow: hidden; }
     box-shadow .4s ease-in-out;
 }
 section[id] { scroll-margin-top: 5rem; }
+/* Hero entrance (staggered fade-up) */
+.hd-fade { opacity: 0; transform: translateY(30px); }
+.hd-fade.hd-anim { opacity: 1; transform: none; transition: opacity .9s ease, transform .9s cubic-bezier(.22,1,.36,1); }
+/* Scroll reveal (fade-up stagger) */
+.rv { opacity: 0; transform: translateY(30px); transition: opacity .8s ease, transform .8s cubic-bezier(.22,1,.36,1); }
+.rv.rv-in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .hd-fade, .rv { opacity: 1; transform: none; transition: none; }
+}
 </style>
 </head>
 <body class="bg-background text-on-background font-body-md selection:bg-gold/30 selection:text-white">
@@ -482,21 +491,21 @@ section[id] { scroll-margin-top: 5rem; }
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
 <!-- Headline Block (full width) -->
 <div class="space-y-4 mb-12" id="heroHead">
-<div class="inline-flex items-center px-3 py-1 rounded-full glass-panel border border-gold/30 shadow-sm">
+<div class="hd-fade inline-flex items-center px-3 py-1 rounded-full glass-panel border border-gold/30 shadow-sm">
 <span class="material-symbols-outlined text-[12px] mr-1.5 text-gold" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
 <span class="font-label-sm text-[10px] sm:text-[11px] text-gold-light uppercase tracking-[0.14em]">New Year's Eve &bull; Belize City</span>
 </div>
-<h2 class="font-script-accent text-script-accent italic text-gold leading-[1.3]">Join us for the wedding of</h2>
-<h3 id="heroNames" class="font-script-accent text-white leading-[1.15] whitespace-nowrap text-[clamp(36px,13vw,72px)] lg:text-[clamp(40px,6vw,76px)]">Charles <span class="text-gold">&amp;</span> Leticia</h3>
-<p class="font-body-lg text-on-surface-variant max-w-xl">
+<h2 class="hd-fade font-script-accent text-script-accent italic text-gold leading-[1.3]">Join us for the wedding of</h2>
+<h3 id="heroNames" class="hd-fade font-script-accent text-white leading-[1.15] whitespace-nowrap text-[clamp(36px,13vw,72px)] lg:text-[clamp(40px,6vw,76px)]">Charles <span class="text-gold">&amp;</span> Leticia</h3>
+<p class="hd-fade font-body-lg text-on-surface-variant max-w-xl">
                         As Belize City sparkles against the Caribbean night, we invite you to ring in 2027 with us &mdash; the start of forever, in black, white &amp; gold.
                     </p>
 </div>
 <!-- Left Narrative Block -->
-<div class="lg:col-span-5 z-10 space-y-element-gap">
+<div class="hero-side lg:col-span-5 z-10 space-y-element-gap">
 <!-- Save-the-Date Calendar Card -->
 <div class="pt-8">
-<div class="nye-cal inline-block glass-panel p-6 rounded-2xl shadow-[0_20px_50px_rgba(212,175,55,0.12)] border border-gold/25 w-full max-w-md relative overflow-hidden group" id="saveDateCard">
+<div class="hd-fade nye-cal inline-block glass-panel p-6 rounded-2xl shadow-[0_20px_50px_rgba(212,175,55,0.12)] border border-gold/25 w-full max-w-md relative overflow-hidden group" id="saveDateCard">
 <div class="absolute inset-0 gold-shimmer pointer-events-none"></div>
 <div class="flex justify-between items-center mb-3 relative z-10">
 <div class="font-script-accent text-[20px] sm:text-[24px] leading-[1.3] pt-1 text-gold-gradient italic">Save the Date</div>
@@ -518,14 +527,14 @@ section[id] { scroll-margin-top: 5rem; }
 </div>
 </div>
 <!-- Countdown -->
-<div class="pt-6" id="countdown-block">
+<div class="hd-fade pt-6" id="countdown-block">
 <div class="font-label-sm text-gold uppercase tracking-[0.25em] mb-3">Counting down to forever</div>
 <div id="countdown" class="flex items-center justify-start gap-3 sm:gap-4"></div>
 </div>
 </div>
 <!-- Right Visual Block: Hero Image with Shimmer & Floating Elements -->
-<div class="lg:col-span-7 relative">
-<div class="relative w-full max-w-[340px] mx-auto sm:max-w-none aspect-[3/4] sm:aspect-square rounded-[40px] overflow-hidden border border-gold/25 shadow-[0_40px_100px_rgba(0,0,0,0.7)] group">
+<div class="hero-side lg:col-span-7 relative">
+<div class="hd-fade relative w-full max-w-[340px] mx-auto sm:max-w-none aspect-[3/4] sm:aspect-square rounded-[40px] overflow-hidden border border-gold/25 shadow-[0_40px_100px_rgba(0,0,0,0.7)] group">
 <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Charles and Leticia" src="../main.jpeg"/>
 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
 </div>
@@ -538,11 +547,11 @@ section[id] { scroll-margin-top: 5rem; }
 </section>
 <!-- Details Section: Bento Grid -->
 <section id="details" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding py-section-gap">
-<div class="text-center mb-16">
+<div class="rv text-center mb-16">
 <h2 class="font-headline-lg text-gold mb-4 italic">The Celebration</h2>
 <div class="w-24 h-[1px] bg-gold mx-auto"></div>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="rv-g grid grid-cols-1 md:grid-cols-3 gap-8">
 <!-- Bento Card 1: Our Story -->
 <div id="story" class="md:col-span-2 glass-panel rounded-[32px] p-7 sm:p-10 flex flex-col justify-between relative overflow-hidden group shadow-[0_10px_30px_rgba(212,175,55,0.05)] hover:border-gold/40 transition-colors">
 <div class="relative z-10">
@@ -607,7 +616,7 @@ section[id] { scroll-margin-top: 5rem; }
 </section>
 <!-- Dress Code Section -->
 <section id="dresscode" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding py-section-gap">
-<div class="glass-panel rounded-[32px] relative overflow-hidden shadow-[0_10px_30px_rgba(212,175,55,0.05)] bg-gradient-to-tl from-[#1a1a1a]/80 to-gold/5 border-gold/20">
+<div class="rv glass-panel rounded-[32px] relative overflow-hidden shadow-[0_10px_30px_rgba(212,175,55,0.05)] bg-gradient-to-tl from-[#1a1a1a]/80 to-gold/5 border-gold/20">
 <div class="sparkle-bg absolute inset-0 pointer-events-none"></div>
 <div class="absolute inset-0 gold-shimmer pointer-events-none"></div>
 <div class="relative z-10 bg-black/40 flex items-center justify-center p-6 sm:p-10 cursor-zoom-in" onclick="openDressCode()">
@@ -638,12 +647,12 @@ Download
 </section>
 <!-- Gallery Section -->
 <section id="gallery" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding py-section-gap">
-<div class="text-center mb-16">
+<div class="rv text-center mb-16">
 <h2 class="font-headline-lg text-gold mb-4 italic">Our Moments</h2>
 <div class="w-24 h-[1px] bg-gold mx-auto"></div>
 <p class="font-body-md text-on-surface-variant max-w-md mx-auto mt-6">A glimpse of the laughter, love and light that brought us here.</p>
 </div>
-<div class="fan-layout">
+<div class="rv fan-layout">
 <div class="fan-card"><img src="../galery%20(1).jpeg" alt="Charles and Leticia moment"/></div>
 <div class="fan-card"><img src="../galery%20(2).jpeg" alt="Charles and Leticia moment"/></div>
 <div class="fan-card"><img src="../galery%20(4).jpeg" alt="Charles and Leticia moment"/></div>
@@ -658,13 +667,13 @@ Download
 </section>
 <!-- RSVP Section -->
 <section id="rsvp" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding py-section-gap">
-<div class="text-center mb-14">
+<div class="rv text-center mb-14">
 <span class="font-script-accent text-script-accent text-gold-gradient italic mb-3 block">Kindly Respond</span>
 <h2 class="font-headline-lg text-gold mb-4 italic">RSVP</h2>
 <div class="w-24 h-[1px] bg-gold mx-auto"></div>
 <p class="font-body-lg text-on-surface-variant max-w-xl mx-auto mt-6">We would love for you to join us under the stars as we ring in 2027 together. Kindly let us know by November 1st, 2026.</p>
 </div>
-<div class="flex justify-center">
+<div class="rv flex justify-center">
 <a href="rsvp.html" class="group inline-block" aria-label="Open the RSVP form">
 <img src="../RSVP%20BUTTON.png" alt="RSVP" draggable="false" class="rsvp-img w-full max-w-[300px] sm:max-w-[380px] h-auto select-none pointer-events-none transition-transform duration-300 group-hover:scale-105 group-active:scale-95"/>
 </a>
@@ -672,7 +681,7 @@ Download
 </section>
 <!-- Gift Section -->
 <section id="gift" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding py-section-gap">
-<div class="glass-panel rounded-[32px] p-10 sm:p-14 text-center relative overflow-hidden shadow-[0_10px_30px_rgba(212,175,55,0.05)] bg-gradient-to-br from-[#1a1a1a]/80 to-gold/5 border-gold/20">
+<div class="rv glass-panel rounded-[32px] p-10 sm:p-14 text-center relative overflow-hidden shadow-[0_10px_30px_rgba(212,175,55,0.05)] bg-gradient-to-br from-[#1a1a1a]/80 to-gold/5 border-gold/20">
 <div class="absolute inset-0 gold-shimmer pointer-events-none"></div>
 <div class="sparkle-bg absolute inset-0 pointer-events-none"></div>
 <div class="relative z-10">
@@ -742,6 +751,48 @@ Bank Details
   }
   tick();
   setInterval(tick, 1000);
+})();
+</script>
+
+<!-- Hero entrance + scroll reveal animations -->
+<script>
+(function () {
+  function animateHero() {
+    var els = document.querySelectorAll('#heroHead .hd-fade, .hero-side .hd-fade');
+    els.forEach(function (el, i) {
+      el.style.transitionDelay = (i * 130) + 'ms';
+      el.classList.add('hd-anim');
+    });
+  }
+  function setupReveal() {
+    document.querySelectorAll('.rv-g').forEach(function (g) {
+      Array.prototype.forEach.call(g.children, function (c, i) {
+        c.classList.add('rv');
+        c.style.transitionDelay = (i * 110) + 'ms';
+      });
+    });
+    var items = document.querySelectorAll('.rv');
+    if (!items.length) return;
+    if (!('IntersectionObserver' in window)) {
+      items.forEach(function (el) { el.classList.add('rv-in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          en.target.classList.add('rv-in');
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    items.forEach(function (el) { io.observe(el); });
+  }
+  window.__animateHero = animateHero;
+  if (document.readyState !== 'loading') setupReveal();
+  else document.addEventListener('DOMContentLoaded', setupReveal);
+  window.addEventListener('load', function () {
+    if (!document.querySelector('#heroHead .hd-fade.hd-anim')) animateHero();
+  });
 })();
 </script>
 
@@ -860,6 +911,7 @@ Bank Details
       try { sessionStorage.setItem('cl_intro_done', '1'); } catch (e) {}
       if (intro.parentNode) intro.parentNode.removeChild(intro);
       unlockScroll();
+      if (window.__animateHero) window.__animateHero();
     }, 1100);
   }
 
@@ -867,6 +919,7 @@ Bank Details
   try {
     if (sessionStorage.getItem('cl_intro_done')) {
       if (intro.parentNode) intro.parentNode.removeChild(intro);
+      if (window.__animateHero) window.__animateHero();
       return;
     }
   } catch (e) {}
@@ -1269,7 +1322,7 @@ function fallbackCopy(text) {
     h3.style.fontSize = '20px';
     var w = h3.scrollWidth;
     if (!w) return;
-    var size = Math.max(36, Math.min(110, 20 * target / w));
+    var size = Math.max(36, Math.min(200, 20 * target / w));
     h3.style.fontSize = size + 'px';
   }
   h3.style.lineHeight = '1.15';
