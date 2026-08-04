@@ -51,6 +51,62 @@ input[type=number]{-moz-appearance:textfield}
 #success .success-pop:nth-child(3){animation-delay:.16s}
 #success .success-pop:nth-child(4){animation-delay:.24s}
 #success .success-pop:nth-child(5){animation-delay:.32s}
+/* === CHAD BOLD UPGRADE === */
+/* Bigger RSVP title */
+h1 { font-size: clamp(3.5rem, 8vw, 6rem) !important; font-weight: 900 !important; letter-spacing: -0.03em !important; }
+
+/* Bigger script accent */
+.font-script-accent.italic { font-size: clamp(2.5rem, 5vw, 4rem) !important; }
+
+/* Bolder form labels */
+label { font-weight: 700 !important; }
+
+/* Bigger, bolder attendance section label */
+.att-choices ~ p, p:has(+ .att-choices) { font-size: 0.85rem !important; font-weight: 700 !important; letter-spacing: 0.18em !important; }
+
+/* Bigger attendance cards */
+.att-choice { min-width: 130px !important; padding: 1.3rem 1.4rem 1.1rem !important; }
+.att-choice .att-ic { font-size: 36px !important; }
+.att-choice .att-lbl { font-size: 13px !important; font-weight: 700 !important; letter-spacing: 0.18em !important; }
+.att-choice .att-sub { font-size: 10px !important; }
+
+/* Stronger submit button */
+button[type=submit] { padding: 1.4rem 3.5rem !important; font-size: 0.75rem !important; font-weight: 800 !important; letter-spacing: 0.3em !important; box-shadow: 0 16px 48px rgba(212,175,55,0.35) !important; }
+button[type=submit]:hover { box-shadow: 0 20px 60px rgba(212,175,55,0.55) !important; transform: translateY(-2px); }
+
+/* Thicker gold divider */
+.w-16.h-\[1px\] { height: 2px !important; width: 5rem !important; opacity: 0.8 !important; }
+
+/* Bolder header title */
+.font-serif.italic.text-xl { font-size: 1.4rem !important; font-weight: 700 !important; }
+
+/* Guest counter stepper buttons bigger */
+.w-12.h-12 { width: 3.2rem !important; height: 3.2rem !important; font-size: 1.6rem !important; }
+
+/* Bigger deadline notice */
+.mt-6.font-label-sm.text-on-surface-variant.italic { font-size: 0.78rem !important; font-weight: 600 !important; letter-spacing: 0.15em !important; color: rgba(212,175,55,0.7) !important; }
+
+/* Section dividers get diamond */
+.flex.items-center.gap-3 .font-label-sm.text-gold { font-size: 0.75rem !important; font-weight: 800 !important; }
+
+/* Bolder "Please reply" text */
+.pt-8.text-center p { opacity: 0.85 !important; }
+
+/* Success heading bigger */
+#success h2 { font-size: clamp(2.5rem, 6vw, 4rem) !important; }
+#success .w-20.h-20 { width: 6rem !important; height: 6rem !important; }
+#success .text-4xl { font-size: 2.5rem !important; }
+
+/* Input text bigger */
+.text-headline-md { font-size: 1.2rem !important; }
+
+/* "Will you be attending" prompt stronger */
+.font-label-sm.text-on-surface-variant.tracking-\[0\.2em\].uppercase.text-center {
+  font-size: 0.8rem !important;
+  font-weight: 800 !important;
+  color: rgba(245,245,245,0.85) !important;
+  letter-spacing: 0.22em !important;
+}
 </style>
 </head>
 <body class="bg-background font-body-md text-on-background min-h-screen relative overflow-x-hidden">
@@ -74,8 +130,8 @@ input[type=number]{-moz-appearance:textfield}
 
 <!-- Heading -->
 <div class="text-center mb-10 relative z-10">
-<span class="font-script-accent text-script-accent italic text-gold mb-2 block">Kindly Respond</span>
-<h1 class="font-headline-xl text-white leading-tight">RSVP</h1>
+<span class="font-script-accent text-script-accent italic text-gold mb-2 block" style="font-size:3.5rem;">Kindly Respond</span>
+<h1 class="font-headline-xl text-white leading-tight" style="font-size:clamp(4rem,9vw,7rem);font-weight:900;letter-spacing:-0.04em;">RSVP</h1>
 <p id="greeting" class="font-body-lg text-on-surface-variant italic mt-3 hidden">Dear <span class="text-gold-light font-serif">guest</span>,</p>
 <div class="w-16 h-[1px] bg-gold mx-auto mt-6 opacity-50"></div>
 <p id="totalLine" class="font-label-sm text-gold uppercase tracking-[0.2em] mt-6"></p>
@@ -277,7 +333,7 @@ input[type=number]{-moz-appearance:textfield}
 <span class="relative z-10">Send RSVP</span>
 <div class="absolute inset-0 bg-white/30 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
 </button>
-<p class="mt-6 font-label-sm text-on-surface-variant italic">Please reply by November 1st, 2026</p>
+<p class="mt-6 font-label-sm text-on-surface-variant italic"><strong>Please reply by</strong> November 1st, 2026</p>
 </div>
 </form>
 
