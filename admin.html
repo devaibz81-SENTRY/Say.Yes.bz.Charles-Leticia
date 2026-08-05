@@ -651,6 +651,15 @@
       background: #0d0d1a;
       color: var(--text);
     }
+    .modal-footer {
+      position: sticky;
+      bottom: 0;
+      margin-top: 2rem;
+      padding-top: 1rem;
+      background: #0d0d1a;
+      border-top: 1px solid var(--border);
+      z-index: 1;
+    }
 
     /* WhatsApp View */
     .wa-builder {
@@ -1150,7 +1159,7 @@ Charles and Leticia</textarea>
           </label>
         </div>
       </div>
-      <div style="display:flex;justify-content:flex-end;gap:0.75rem;margin-top:2rem;">
+      <div class="modal-footer" style="display:flex;justify-content:flex-end;gap:0.75rem;">
         <button class="btn-sm" onclick="document.getElementById('add-modal').classList.remove('open')">Cancel</button>
         <button class="btn-sm primary" onclick="submitGuest()">Save Guest</button>
       </div>
