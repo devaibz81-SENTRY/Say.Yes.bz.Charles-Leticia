@@ -754,6 +754,84 @@
     .seating-table-group h4 { font-size: 1.1rem; font-family: 'Cormorant Garamond', serif; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); color: var(--gold-light); }
     .seating-table-group .table-guests { display: flex; flex-wrap: wrap; gap: 0.8rem; }
     .seating-table-group .table-guest { background: rgba(0,0,0,0.4); padding: 0.5rem 1rem; border-radius: 4px; font-size: 0.85rem; border-left: 2px solid var(--gold); color: var(--text); }
+
+    /* === Mobile bottom nav === */
+    #mobile-nav {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 60;
+      background: rgba(10,10,20,0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid var(--gold);
+      box-shadow: 0 -8px 32px rgba(0,0,0,0.6);
+      padding: 0.45rem 0.25rem calc(0.45rem + env(safe-area-inset-bottom));
+    }
+    .mobile-nav-list {
+      display: flex;
+      justify-content: space-around;
+      align-items: stretch;
+      margin: 0;
+      padding: 0;
+    }
+    .mobile-nav-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.4rem 0.2rem;
+      border: none;
+      background: none;
+      color: var(--muted);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .mobile-nav-item svg { width: 22px; height: 22px; stroke: currentColor; }
+    .mobile-nav-item:hover { color: var(--gold); background: rgba(201,168,76,0.08); }
+    .mobile-nav-item.active { color: var(--gold); background: rgba(201,168,76,0.12); }
+
+    /* === Responsive: tablets & phones === */
+    @media (max-width: 900px) {
+      #sidebar { display: none; }
+      #main { width: 100%; }
+      #content { padding: 1.25rem 1rem 6.5rem; }
+      .top-bar { flex-wrap: wrap; gap: 0.75rem; padding: 1rem; }
+      .top-bar-actions { width: 100%; justify-content: flex-end; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin-bottom: 1.5rem; }
+      .stat-card { padding: 1.25rem; }
+      .stat-num { font-size: 2.1rem; }
+      .filter-bar { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 0.4rem; }
+      .filter-btn { flex-shrink: 0; }
+      th { padding: 0.9rem 0.9rem; }
+      td { padding: 0.9rem 0.9rem; }
+      .modal { width: 100%; margin: 0 1rem; padding: 1.5rem; }
+      .modal-row { grid-template-columns: 1fr; gap: 1rem; }
+      .wa-builder { padding: 1.5rem 1.25rem; }
+      .wa-layout { grid-template-columns: 1fr; }
+      .wa-kpis { grid-template-columns: repeat(2, 1fr); }
+      #view-media > div > div:first-child { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .seating-row { padding: 0.9rem 1rem; gap: 0.6rem; flex-wrap: wrap; }
+      .seating-row .s-name { font-size: 1.05rem; }
+      .seating-row .s-table-input { width: 64px; }
+      #mobile-nav { display: block; }
+    }
+    @media (max-width: 480px) {
+      .login-box { min-width: 0; width: min(90vw, 360px); padding: 2.5rem 1.5rem; }
+      .stat-num { font-size: 1.8rem; }
+      .stat-label { font-size: 0.48rem; }
+      .btn-sm { padding: 0.55rem 1rem; }
+    }
   </style>
 </head>
 
@@ -768,10 +846,6 @@
       <input type="password" id="admin-pass" class="login-input" placeholder="Enter password" onkeydown="if(event.key==='Enter') doLogin()" />
       <button class="login-btn" onclick="doLogin()">Enter</button>
       <p id="login-err" style="color:#e74c3c;display:none;margin-top:1rem;font-size:0.78rem;">Incorrect password.</p>
-      <p style="margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--border);font-size:0.72rem;line-height:1.7;color:var(--text);opacity:0.75;">
-        Dashboard: sayyesbzcharles-leticia.vercel.app/admin<br/>
-        Password: Charles-Leticia@27
-      </p>
     </div>
   </div>
 
@@ -1064,6 +1138,8 @@ Charles and Leticia</textarea>
     }
 
     window.onload = async () => {
+      const activeNav = document.querySelector('#mobile-nav .mobile-nav-item[data-view="guests"]');
+      if (activeNav) activeNav.classList.add('active');
       if (adminToken && await hasValidSession()) {
         document.getElementById('login-overlay').classList.add('hidden');
         await fetchGuests();
@@ -1093,7 +1169,7 @@ Charles and Leticia</textarea>
 
     function showView(view, evt) {
       currentView = view;
-      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-item, .mobile-nav-item').forEach(el => el.classList.remove('active'));
       if (evt && evt.currentTarget) evt.currentTarget.classList.add('active');
 
       document.getElementById('view-guests').style.display = view === 'guests' ? 'block' : 'none';
@@ -1834,6 +1910,32 @@ Charles and Leticia</textarea>
 
     window.__PREASSIGNED_TABLES = [{"guestName":"Ivana DePaz","guestId":"j971wzcxajdvrayrgg81wr8ws182pe6s","tableNum":"1"},{"guestName":"Joaquin DePaz","guestId":"j97bn3q7ap3myf1xeag011pds182ppvj","tableNum":"1"},{"guestName":"Diana","guestId":"j979s035s6zgj88fdt403e27xx867ej7","tableNum":"1"},{"guestName":"Vana","guestId":"j97a67wxycmvv0fcsanpn09wfx866msf","tableNum":"1"},{"guestName":"Yasmini Matus","guestId":"j975fr1n1g0m6rf2f7pnm93gbx82p3f8","tableNum":"1"},{"guestName":"Jean Harrison","guestId":"j979zc0cgddthkax8r4svs7dk98804qq","tableNum":"1"},{"guestName":"Sian DePaz","guestId":"j970rzr4hjcr4e5gkb4n03zhvh82p25p","tableNum":"2"},{"guestName":"Mathew Preston","guestId":"j974a42bkvtsgkb3xfprx33tm187mc8r","tableNum":"2"},{"guestName":"Josue","guestId":"j978k6wxfzj068k2t29bv4684h87nw0s","tableNum":"2"},{"guestName":"Maleek","guestId":"j973nssdwp0jk8kc676d39r3d183jd03","tableNum":"2"},{"guestName":"Devin Peyrefitte","guestId":"j9728weej33q8w9z4drq3zt4wh82ps9d","tableNum":"2"},{"guestName":"Yojalma Moleterno","guestId":"j970q38r7drywmfak3w78q4rkn83k0xt","tableNum":"2"},{"guestName":"Carlitos Guest","guestId":"j974eyfw4nd20tsb6y98sdwsnh83nb5y","tableNum":"2"},{"guestName":"Jose DePaz","guestId":"j9779nj6rm2evfk2mshprdmbxx82qsmd","tableNum":"3"},{"guestName":"Mr. Mike Gonzalez","guestId":"j976r18cn1d4spx64nxefwdaq983k46s","tableNum":"3"},{"guestName":"Ingrid Gonzalez","guestId":"j975ts0zvb15sp3hfjat223zt983k5c3","tableNum":"3"},{"guestName":"Aldo DePaz","guestId":"j97aj0dy6h9p02672ba7bxk3qs82qtz5","tableNum":"3"},{"guestName":"Keisha Dwyer","guestId":"j9748he50px1603j46x3yk5yxh83j2zr","tableNum":"3"},{"guestName":"Ms. Marie DePaz","guestId":"j978xes1ygrzmsgyjny5akpb8x82pbq9","tableNum":"3"},{"guestName":"Lily Lane","guestId":"j972v6mnprgccewr4hwpfn5adn82p58b","tableNum":"3"},{"guestName":"Lucille Valladarez","guestId":"j97a2dx1b52gc2vbjg1smjzejh82qv64","tableNum":"4"},{"guestName":"Norberto DePaz","guestId":"j973n8avtrmnksns4fv09rzssh86511r","tableNum":"4"},{"guestName":"David DePaz","guestId":"j97b76d4grx1pdca3k5av8jj5n865m4v","tableNum":"4"},{"guestName":"Vanessa Cuellar","guestId":"j978qmqz95pqmwy47vancj5n2583n973","tableNum":"4"},{"guestName":"Javier DePaz","guestId":"j977htyadsppdp6vvk53t692vx83d126","tableNum":"4"},{"guestName":"Miguel DePaz","guestId":"j975kk313252vwfpjr5ff8m12x83jxqz","tableNum":"4"},{"guestName":"Andre & Adrian DePaz","guestId":"j971qsnrvkm7kzc8ewrkjyca7x83c10j","tableNum":"4"},{"guestName":"Olga Mendoza","guestId":"j97avdn0db3xmfcwsvfh6hw5vn83ddkx","tableNum":"5"},{"guestName":"Xenia","guestId":"j978tqxrywv38d1h81m3k53t9h83m3xb","tableNum":"5"},{"guestName":"Sandino Mendoza","guestId":"j97df8pdsjtygy2w650whv3ns982pgza","tableNum":"5"},{"guestName":"Stephanie Hernandes","guestId":"j974f17byz2whz0c8a4s6wa1md82pm29","tableNum":"6"},{"guestName":"Jahan Guerra","guestId":"j9758ts6ne5tgxas32zhf9bnf182pv7c","tableNum":"6"},{"guestName":"Anthony Joseph","guestId":"j975ybqvr13196w84dwayhpy8s88wdyr","tableNum":"6"},{"guestName":"Ceasar Quiroz","guestId":"j97byy0e2tq8f3pzyejphkwt0988w9pp","tableNum":"6"},{"guestName":"Zane Oliver","guestId":"j97dr8vspqmdzzfzed9v24me1x83n07r","tableNum":"6"},{"guestName":"The Paniagua Family","guestId":"j970wpkgxg5xgkk1p9rpqr9xk183j0rr","tableNum":"6"},{"guestName":"Sonia Harris","guestId":"j97079jaxwafcexhwwndzg7d9182p623","tableNum":"7"},{"guestName":"Floyd Haylock","guestId":"j974ttd8bgyj0w1gsqgsmm0hgd82pfq4","tableNum":"7"},{"guestName":"Carol Joiner","guestId":"j97az3083f8ad4t1wqtq8hfag583j3sy","tableNum":"7"},{"guestName":"Garry Flowers","guestId":"j978pm1tej93gyn9wqzw321sgs83kjvn","tableNum":"7"},{"guestName":"Mirianne Martinez","guestId":"j978xg5z4p9zgkfsgb5fy85t7x83nmf3","tableNum":"7"},{"guestName":"Cindy Lisbey","guestId":"j97a6580w8xtv0c4st6wtevbks83mqer","tableNum":"7"},{"guestName":"Oscar Lisbey","guestId":"j97a1xsa1n669hbazajeq66ddh83mwa0","tableNum":"7"},{"guestName":"Macarena","guestId":"j9707tftdce93875nry1ks807x898vjg","tableNum":"7"},{"guestName":"Brian Silver","guestId":"j97d0hfre9w8dm6hqrdb68nbs582q6g6","tableNum":"8"},{"guestName":"Justin Mendoza","guestId":"j97327yapettbmz065edyvwf7d83kt2y","tableNum":"8"},{"guestName":"Dave Dacak","guestId":"j97718yx8sp7r00n3nt3mz918983jhy8","tableNum":"8"},{"guestName":"Shonda Matinez","guestId":"j978kp4d1g5hj8qs54m9p4xd1s83cpdx","tableNum":"8"},{"guestName":"Marlon Andrews","guestId":"j97av8es3xz2g33svtycf1nmw583jnh3","tableNum":"8"},{"guestName":"Maria Estella Recinos","guestId":"j971fvhtdwejyr4j8s2t8dy2xs86k6xz","tableNum":"9"},{"guestName":"karl Recinos","guestId":"j97ew0avwt97k8e8zp0z46tx4x84gays","tableNum":"9"},{"guestName":"Calos Dito Vega","guestId":"j9725yjs1rsgws5ph6rskec2vn866q0c","tableNum":"9"},{"guestName":"Emma Romero","guestId":"j979nh8rtsc0p3xqtn8nfyb00n82qb49","tableNum":"9"},{"guestName":"Destiny Wagner","guestId":"j97a61krgsehdw74kcnkt4m4zn82qqxb","tableNum":"9"},{"guestName":"Vaneen Juan","guestId":"j97fybrkqn1sr7faba85pn8hkh883q5y","tableNum":"9"},{"guestName":"Krista Cruz","guestId":"j976wnb229brp7v0ysgs2s30g582p85n","tableNum":"9"},{"guestName":"Earlyn Hutchinson","guestId":"j97ag7bbaenynsjc40c2a1j2a182q6pq","tableNum":"9"},{"guestName":"Emil Pinelo","guestId":"j973k5ssahd6pgnghrfdtnhpeh82qy7f","tableNum":"10"},{"guestName":"Grandpa Pinelo","guestId":"j972vvpyhsjeh8vrdd89zr9kqx85s9vr","tableNum":"10"},{"guestName":"Adrian Miller","guestId":"j97ax2tkwbc6yswj76q83v0nb583kpfc","tableNum":"10"},{"guestName":"Maria Elena Heredia","guestId":"j97bebrr3ab51bjs8yrrd3vvds83js5q","tableNum":"10"},{"guestName":"Luby Clemans","guestId":"j97f3x5ajr9q3wbkqzsb4ecyn583jp8q","tableNum":"10"},{"guestName":"Leticia","guestId":"j976szg4e12zpx3q63e7fcv5c182pqr4","tableNum":"11"},{"guestName":"Dijon McNab","guestId":"j97d6pf5rzh2c90wds5paf1rnd87c0rp","tableNum":"11"},{"guestName":"Hector Andrews","guestId":"j97dhwegfx27c2awr4qa68hdzn83mzr7","tableNum":"11"},{"guestName":"Richard Cordova","guestId":"j97fp3rmrxc2b3z8bw3dvv784d83mz3t","tableNum":"11"},{"guestName":"Brandon Guest","guestId":"j97fwqxrt82xph7nm3v5jtrng982pk0k","tableNum":"11"},{"guestName":"Natasha Stuart","guestId":"j9736crqfjwyvmw61m22fpxt2584ekdk","tableNum":"11"},{"guestName":"Britney and Camile Guy","guestId":"j976tmgby99phq60rnb9b34r6182pwgz","tableNum":"12"},{"guestName":"Shenny Boiton","guestId":"j97cknk1vq4yq7gf5fhcej9wk982q33h","tableNum":"12"},{"guestName":"Ryan Smith","guestId":"j97adnsrmwpk28gcz0a1fjxqms82q3jk","tableNum":"12"},{"guestName":"Joseph & Lorain Smith","guestId":"j97am0qb1aafp1vwx9zkj6t2r583kq5h","tableNum":"12"},{"guestName":"Carlos Habet","guestId":"j97an0gzmf59d8d8t26ragdzb983mfb7","tableNum":"12"},{"guestName":"David Morales","guestId":"j97dcpwezhjwjmm46ce3g9zqmn82ps7k","tableNum":"12"},{"guestName":"Angela kuylen","guestId":"j974nr19nx1bs683ssa9dqf33n82q36k","tableNum":"13"},{"guestName":"karina Farias","guestId":"j97909fkmqndz49npe299ejzzx84wf8h","tableNum":"13"},{"guestName":"Keidi Tejada","guestId":"j9728tmvr6h36zxw3rvghd6ad182q66t","tableNum":"13"},{"guestName":"Renee Pine","guestId":"j97231k9xztgn2evp6zb03df4n83nk2m","tableNum":"13"},{"guestName":"kylon Eiley","guestId":"j971wgg77zgmrfs5sxt2b8zr1d83nbz4","tableNum":"13"},{"guestName":"Michel Chebat","guestId":"j971hzqhfv3hmhm1jscphv0gd98836z9","tableNum":"1"},{"guestName":"Geoffrey Waight","guestId":"j97d491aeadetmjtxvf1dxps7s882scw","tableNum":"1"},{"guestName":"Lawrence Thompson","guestId":"j974jr4e9fkmj8ahh4r05eq069882q6c","tableNum":"1"},{"guestName":"Miron Ortega","guestId":"j97797jnbehfy506wmckga9d4s883r7z","tableNum":"1"},{"guestName":"Fabian Perez","guestId":"j975yapbatywz1ca8tqyewj2eh84xhrc","tableNum":"1"},{"guestName":"Wayne","guestId":"j970kft7yvv5rc19d81ae59dsn866s9f","tableNum":"1"},{"guestName":"Oscar Trujeque","guestId":"j976awqwyr4q0s4zrmwv3rpgvd83ntv3","tableNum":"8"},{"guestName":"Marcel Graniel","guestId":"j9759ekyrtnn66cxtegzg64pfs83m24h","tableNum":"8"},{"guestName":"karim Espat","guestId":"j97evedwdw3hwncj343j0fp63h8980d5","tableNum":"8"},{"guestName":"Elvis Usher","guestId":"j97drejyv188z5expjzje923cd899h8g","tableNum":"8"},{"guestName":"Fiona Rudon","guestId":"j97aekbrzh6vmhk3rj9hz07c65867fhq","tableNum":"8"},{"guestName":"Ayden DePaz","guestId":"j97d1mtc4tn0nvrv7p5fcbwcp583js8d","tableNum":"Teens"},{"guestName":"Lori","guestId":"j97c5fgdkzjmyjc3h82zkjx2nx82paxk","tableNum":"14"},{"guestName":"Karine Cisneros","guestId":"j9712tc9rsa8thj4w9zk4zswpx82q534","tableNum":"14"},{"guestName":"Norine Haylock","guestId":"j9759jj25nszn5rk0p642nj7kn82p2re","tableNum":"14"},{"guestName":"Mrs Veronica","guestId":"j97bd87z30cbzhm44gzq4qhccs83kf17","tableNum":"14"},{"guestName":"Estella Saucedo","guestId":"j977nqwbxhr32mdvqw6ykx1adh84gd1j","tableNum":"14"},{"guestName":"Dianne Haylock","guestId":"j978gjybqe0y85jsw8dp7d7ss583mvc1","tableNum":"14"},{"guestName":"Miss Gilda","guestId":"j977xzvazk3gfwp4zq7ehzppcn85sqt7","tableNum":"14"},{"guestName":"Mrs Almira August","guestId":"j976sfsk9jc8kmjmkghr902ked87c82w","tableNum":"14"}];
   </script>
+
+  <!-- Mobile bottom nav -->
+  <nav id="mobile-nav" aria-label="Mobile navigation">
+    <div class="mobile-nav-list">
+      <button class="mobile-nav-item" onclick="showView('guests', event)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Guests
+      </button>
+      <button class="mobile-nav-item" onclick="showView('media', event)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        Songs
+      </button>
+      <button class="mobile-nav-item" onclick="showView('whatsapp', event)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        WhatsApp
+      </button>
+      <button class="mobile-nav-item" onclick="showView('seating', event); loadSeating()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Seating
+      </button>
+      <button class="mobile-nav-item" onclick="logout()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Exit
+      </button>
+    </div>
+  </nav>
 </body>
 
 </html>
