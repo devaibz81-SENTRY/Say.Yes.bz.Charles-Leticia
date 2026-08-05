@@ -27,85 +27,252 @@ input[type=number]{-moz-appearance:textfield}
 .att-status.on{background:rgba(212,175,55,.12);border-color:rgba(212,175,55,.55);color:#F5D76E}
 .att-status.off{background:rgba(186,26,26,.10);border-color:rgba(186,26,26,.5);color:#ff8a80}
 .att-status.mid{background:rgba(245,215,110,.10);border-color:rgba(245,215,110,.5);color:#E8CE7A}
-/* Yes / No / Ask Later choice cards */
-.att-choices{display:flex;justify-content:center;gap:.75rem;flex-wrap:wrap}
-.att-choice{position:relative;display:flex;flex-direction:column;align-items:center;gap:.35rem;min-width:118px;padding:1.05rem 1.2rem .9rem;border-radius:1.4rem;border:1px solid rgba(212,175,55,.26);background:rgba(18,18,18,.5);cursor:pointer;user-select:none;transition:transform .3s cubic-bezier(.34,1.56,.64,1),border-color .3s ease,background .3s ease,box-shadow .3s ease;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:attRise .55s cubic-bezier(.34,1.56,.64,1) both}
+/* Yes / No / Ask Later segmented row (flat, no cards) */
+.att-choices{display:flex;justify-content:center;gap:.5rem;width:100%}
+.att-choice{position:relative;display:flex;flex-direction:column;align-items:center;gap:.15rem;flex:1;min-width:0;padding:.75rem .5rem .6rem;border-radius:.5rem;cursor:pointer;user-select:none;background:transparent;transition:color .25s ease,background .25s ease;animation:attRise .45s cubic-bezier(.34,1.56,.64,1) both}
 .att-choice:nth-child(1){animation-delay:.06s}
 .att-choice:nth-child(2){animation-delay:.14s}
 .att-choice:nth-child(3){animation-delay:.22s}
-@keyframes attRise{from{opacity:0;transform:translateY(16px) scale(.94)}to{opacity:1;transform:none}}
-.att-choice:hover{transform:translateY(-3px);border-color:rgba(212,175,55,.6);background:rgba(212,175,55,.07)}
-.att-choice:active{transform:scale(.95)}
-.att-choice .att-ic{font-size:28px;color:rgba(245,245,245,.6);line-height:1;transition:transform .35s cubic-bezier(.34,1.56,.64,1),color .3s ease}
-.att-choice .att-lbl{font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(245,245,245,.78);transition:color .3s ease}
-.att-choice .att-sub{font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:9px;font-style:italic;letter-spacing:.05em;color:rgba(245,245,245,.42);transition:color .3s ease}
-.att-choice.selected{border-color:#D4AF37;background:linear-gradient(180deg,rgba(212,175,55,.22),rgba(212,175,55,.07));box-shadow:0 12px 32px rgba(212,175,55,.2),inset 0 0 0 1px rgba(212,175,55,.45);transform:translateY(-3px) scale(1.02)}
-.att-choice.selected .att-ic{color:#F5D76E;transform:scale(1.18)}
+@keyframes attRise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.att-choice:hover{background:rgba(212,175,55,.06)}
+.att-choice:active{background:rgba(212,175,55,.1)}
+.att-choice .att-ic{font-size:24px;color:rgba(245,245,245,.55);line-height:1;transition:color .25s ease}
+.att-choice .att-lbl{font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,245,245,.7);transition:color .25s ease}
+.att-choice .att-sub{font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:9px;font-style:italic;letter-spacing:.03em;color:rgba(245,245,245,.38);transition:color .25s ease}
+.att-choice.selected{color:#F5D76E}
+.att-choice.selected .att-ic{color:#F5D76E}
 .att-choice.selected .att-lbl{color:#F5D76E}
-.att-choice.selected .att-sub{color:rgba(245,215,110,.65)}
-.att-choice.selected::after{content:"";position:absolute;inset:-1px;border-radius:1.4rem;border:2px solid rgba(245,215,110,.75);animation:attRing .7s ease-out forwards;pointer-events:none}
-@keyframes attRing{0%{transform:scale(.9);opacity:1}100%{transform:scale(1.14);opacity:0}}
+.att-choice.selected .att-sub{color:rgba(245,215,110,.6)}
+.att-choice.selected::after{content:"";position:absolute;left:.4rem;right:.4rem;bottom:0;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,#D4AF37,transparent)}
 @keyframes successPop{0%{opacity:0;transform:scale(.6)}60%{transform:scale(1.06)}100%{opacity:1;transform:scale(1)}}
 #success .success-pop{animation:successPop .6s cubic-bezier(.34,1.56,.64,1) both}
 #success .success-pop:nth-child(2){animation-delay:.08s}
 #success .success-pop:nth-child(3){animation-delay:.16s}
 #success .success-pop:nth-child(4){animation-delay:.24s}
 #success .success-pop:nth-child(5){animation-delay:.32s}
-/* === CHAD BOLD UPGRADE === */
-/* Bigger RSVP title */
-h1 { font-size: clamp(3.5rem, 8vw, 6rem) !important; font-weight: 900 !important; letter-spacing: -0.03em !important; }
+/* === CHAD COMPACT === */
+/* RSVP title */
+h1 { font-size: clamp(2rem, 5vw, 3rem) !important; font-weight: 800 !important; letter-spacing: -0.02em !important; }
 
-/* Bigger script accent */
-.font-script-accent.italic { font-size: clamp(2.5rem, 5vw, 4rem) !important; }
+/* Script accent */
+.font-script-accent.italic { font-size: clamp(1.4rem, 3.4vw, 2rem) !important; }
 
 /* Bolder form labels */
-label { font-weight: 700 !important; }
+label { font-weight: 600 !important; }
+label.chad-label { font-size: 0.78rem !important; }
 
-/* Bigger, bolder attendance section label */
-.att-choices ~ p, p:has(+ .att-choices) { font-size: 0.85rem !important; font-weight: 700 !important; letter-spacing: 0.18em !important; }
+/* Attendance section label */
+.att-choices ~ p, p:has(+ .att-choices) { font-size: 0.75rem !important; font-weight: 600 !important; letter-spacing: 0.16em !important; }
 
-/* Bigger attendance cards */
-.att-choice { min-width: 130px !important; padding: 1.3rem 1.4rem 1.1rem !important; }
-.att-choice .att-ic { font-size: 36px !important; }
-.att-choice .att-lbl { font-size: 13px !important; font-weight: 700 !important; letter-spacing: 0.18em !important; }
-.att-choice .att-sub { font-size: 10px !important; }
+/* Attendance row */
+.att-choice { padding: 0.7rem 0.4rem 0.5rem !important; }
+.att-choice .att-ic { font-size: 22px !important; }
+.att-choice .att-lbl { font-size: 11px !important; font-weight: 600 !important; letter-spacing: 0.14em !important; }
+.att-choice .att-sub { font-size: 9px !important; }
 
-/* Stronger submit button */
-button[type=submit] { padding: 1.4rem 3.5rem !important; font-size: 0.75rem !important; font-weight: 800 !important; letter-spacing: 0.3em !important; box-shadow: 0 16px 48px rgba(212,175,55,0.35) !important; }
-button[type=submit]:hover { box-shadow: 0 20px 60px rgba(212,175,55,0.55) !important; transform: translateY(-2px); }
+/* Submit button */
+button[type=submit] { padding: 0.9rem 2.2rem !important; font-size: 0.72rem !important; font-weight: 700 !important; letter-spacing: 0.24em !important; box-shadow: 0 10px 30px rgba(212,175,55,0.28) !important; }
+button[type=submit]:hover { box-shadow: 0 14px 38px rgba(212,175,55,0.42) !important; transform: translateY(-1px); }
 
-/* Thicker gold divider */
-.w-16.h-\[1px\] { height: 2px !important; width: 5rem !important; opacity: 0.8 !important; }
+/* Gold divider */
+.w-16.h-\[1px\] { height: 1.5px !important; width: 3.5rem !important; opacity: 0.7 !important; }
 
-/* Bolder header title */
-.font-serif.italic.text-xl { font-size: 1.4rem !important; font-weight: 700 !important; }
+/* Header title */
+.font-serif.italic.text-xl { font-size: 1.05rem !important; font-weight: 600 !important; }
 
-/* Guest counter stepper buttons bigger */
-.w-12.h-12 { width: 3.2rem !important; height: 3.2rem !important; font-size: 1.6rem !important; }
+/* Guest counter stepper buttons */
+.w-12.h-12 { width: 2.5rem !important; height: 2.5rem !important; font-size: 1.2rem !important; }
 
-/* Bigger deadline notice */
-.mt-6.font-label-sm.text-on-surface-variant.italic { font-size: 0.78rem !important; font-weight: 600 !important; letter-spacing: 0.15em !important; color: rgba(212,175,55,0.7) !important; }
+/* Deadline notice */
+.mt-6.font-label-sm.text-on-surface-variant.italic { font-size: 0.72rem !important; font-weight: 500 !important; letter-spacing: 0.1em !important; color: rgba(212,175,55,0.65) !important; }
 
-/* Section dividers get diamond */
-.flex.items-center.gap-3 .font-label-sm.text-gold { font-size: 0.75rem !important; font-weight: 800 !important; }
+/* Section dividers */
+.flex.items-center.gap-3 .font-label-sm.text-gold { font-size: 0.68rem !important; font-weight: 600 !important; }
 
-/* Bolder "Please reply" text */
-.pt-8.text-center p { opacity: 0.85 !important; }
+/* "Please reply" text */
+.pt-8.text-center p { opacity: 0.75 !important; }
 
-/* Success heading bigger */
-#success h2 { font-size: clamp(2.5rem, 6vw, 4rem) !important; }
-#success .w-20.h-20 { width: 6rem !important; height: 6rem !important; }
-#success .text-4xl { font-size: 2.5rem !important; }
+/* Success heading */
+#success h2 { font-size: clamp(1.8rem, 4.5vw, 2.6rem) !important; }
+#success .w-20.h-20 { width: 4.5rem !important; height: 4.5rem !important; }
+#success .text-4xl { font-size: 2rem !important; }
 
-/* Input text bigger */
-.text-headline-md { font-size: 1.2rem !important; }
+/* Input text */
+.text-headline-md { font-size: 1.05rem !important; }
 
-/* "Will you be attending" prompt stronger */
+/* "Will you be attending" prompt */
 .font-label-sm.text-on-surface-variant.tracking-\[0\.2em\].uppercase.text-center {
-  font-size: 0.8rem !important;
-  font-weight: 800 !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
   color: rgba(245,245,245,0.85) !important;
-  letter-spacing: 0.22em !important;
+  letter-spacing: 0.18em !important;
+}
+
+/* Mobile first: tighter spacing */
+@media (max-width: 640px) {
+  .space-y-8 { margin-top: 1.25rem; }
+  #singleFields.space-y-8, #optionalFields.space-y-8 { margin-top: 1.25rem; }
+  .grid.gap-6 { gap: 0.75rem; }
+  .mb-10 { margin-bottom: 1.5rem; }
+  .mt-6 { margin-top: 1rem; }
+  input.py-3, textarea.py-3 { padding-top: 0.6rem; padding-bottom: 0.6rem; }
+}
+
+/* === UIVERSE-STYLE CHAD FORM (adapted from Uiverse.io by Praashoo7) === */
+.chad-form{
+  display:flex;flex-direction:column;gap:14px;
+  padding:1.4em 1.4em 1.2em;
+  background-color:#171717;border-radius:25px;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+.chad-field{
+  display:flex;align-items:center;gap:.55em;
+  border-radius:25px;padding:.6em 1em;border:none;outline:none;color:#fff;
+  background-color:#171717;box-shadow:inset 2px 5px 10px rgb(5,5,5);
+  transition:.2s ease;
+}
+.chad-field:focus-within{box-shadow:inset 2px 5px 10px rgb(5,5,5),0 0 0 1px rgba(212,175,55,.5)}
+.chad-field-textarea{align-items:flex-start}
+.chad-field-textarea .chad-ic{margin-top:.25em}
+.chad-ic{font-size:1.15rem;color:rgba(212,175,55,.6);flex-shrink:0}
+.chad-input{
+  background:none;border:none;outline:none;width:100%;
+  color:#d3d3d3;font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:.92rem;
+}
+.chad-input::placeholder{color:rgba(211,211,211,.4)}
+.chad-area{resize:none;line-height:1.4}
+.chad-label{display:block;font-family:'Noto Serif',serif;font-style:italic;font-size:.78rem;color:rgba(245,245,245,.7);margin-bottom:.3rem;letter-spacing:.04em}
+.chad-prompt{font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(245,245,245,.85);text-align:center}
+.chad-deadline{font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:.7rem;color:rgba(212,175,55,.7);letter-spacing:.06em}
+.chad-btn{
+  padding:.75em 1.4em;border-radius:10px;border:none;outline:none;cursor:pointer;
+  transition:.3s ease-in-out;background-color:#252525;color:#fff;
+  font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;
+}
+.chad-btn:hover{background-color:#000;color:#fff}
+.chad-btn-gold{background:#D4AF37;color:#0a0a0a}
+.chad-btn-gold:hover{background:#F5D76E;color:#0a0a0a}
+
+/* === NEON CHECKBOX (adapted from Uiverse.io by 3HugaDa3) === */
+.checkbox-wrapper {
+  --checkbox-size: 22px;
+  --checkbox-color: #D4AF37;
+  --checkbox-shadow: rgba(212, 175, 55, 0.35);
+  --checkbox-border: rgba(212, 175, 55, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  padding: 8px;
+}
+.checkbox-wrapper input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+.checkbox-wrapper .checkmark {
+  position: relative;
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  border: 2px solid var(--checkbox-border);
+  border-radius: 8px;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 12px var(--checkbox-shadow);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.checkbox-wrapper .checkmark::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, var(--checkbox-color), #F5D76E);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transform: scale(0) rotate(-45deg);
+}
+.checkbox-wrapper input:checked ~ .checkmark::before {
+  opacity: 1;
+  transform: scale(1) rotate(0);
+}
+.checkbox-wrapper .checkmark svg {
+  width: 0;
+  height: 0;
+  color: #0a0a0a;
+  z-index: 1;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
+}
+.checkbox-wrapper input:checked ~ .checkmark svg {
+  width: 15px;
+  height: 15px;
+  transform: rotate(360deg);
+}
+.checkbox-wrapper:hover .checkmark {
+  border-color: var(--checkbox-color);
+  transform: scale(1.08);
+  box-shadow:
+    0 0 16px var(--checkbox-shadow),
+    0 0 32px var(--checkbox-shadow),
+    inset 0 0 8px var(--checkbox-shadow);
+}
+.checkbox-wrapper input:checked ~ .checkmark {
+  animation: goldPulse 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+@keyframes goldPulse {
+  0% { transform: scale(1); box-shadow: 0 0 16px var(--checkbox-shadow); }
+  50% { transform: scale(0.9); box-shadow: 0 0 24px var(--checkbox-shadow), 0 0 40px var(--checkbox-shadow); }
+  100% { transform: scale(1); box-shadow: 0 0 16px var(--checkbox-shadow); }
+}
+.checkbox-wrapper .label {
+  margin-left: 12px;
+  font-family: 'Be Vietnam Pro', system-ui, sans-serif;
+  color: var(--checkbox-color);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 10px var(--checkbox-shadow);
+  opacity: 0.9;
+  transition: all 0.3s;
+}
+.checkbox-wrapper:hover .label {
+  opacity: 1;
+  transform: translateX(4px);
+}
+.checkbox-wrapper::after,
+.checkbox-wrapper::before {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--checkbox-color);
+  opacity: 0;
+  transition: all 0.5s;
+}
+.checkbox-wrapper::before { left: -4px; top: 50%; }
+.checkbox-wrapper::after { right: -4px; top: 50%; }
+.checkbox-wrapper:hover::before {
+  opacity: 1;
+  transform: translateX(-8px);
+  box-shadow: 0 0 10px var(--checkbox-color);
+}
+.checkbox-wrapper:hover::after {
+  opacity: 1;
+  transform: translateX(8px);
+  box-shadow: 0 0 10px var(--checkbox-color);
+}
+.checkbox-wrapper.shake { animation: chadShake .4s ease; }
+@keyframes chadShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
 }
 </style>
 </head>
@@ -122,42 +289,46 @@ button[type=submit]:hover { box-shadow: 0 20px 60px rgba(212,175,55,0.55) !impor
 <div class="font-serif italic text-xl text-gold">Charles &amp; Leticia</div>
 </header>
 
-<main class="pt-28 pb-32 px-[2rem] flex justify-center items-center min-h-screen relative">
-<div class="max-w-[600px] w-full">
-<section class="glass-panel rounded-[2rem] p-8 md:p-14 shadow-[0_20px_60px_rgba(0,0,0,0.6)] overflow-hidden relative border-gold/20">
-<div class="sparkle-bg absolute inset-0 pointer-events-none"></div>
-<div class="absolute inset-0 gold-shimmer opacity-40 pointer-events-none"></div>
+<main class="pt-24 pb-32 px-4 sm:px-[2rem] flex justify-center items-start sm:items-center min-h-screen relative">
+<div class="max-w-[520px] w-full">
+<section class="relative">
 
 <!-- Heading -->
-<div class="text-center mb-10 relative z-10">
-<span class="font-script-accent text-script-accent italic text-gold mb-2 block" style="font-size:3.5rem;">Kindly Respond</span>
-<h1 class="font-headline-xl text-white leading-tight" style="font-size:clamp(4rem,9vw,7rem);font-weight:900;letter-spacing:-0.04em;">RSVP</h1>
-<p id="greeting" class="font-body-lg text-on-surface-variant italic mt-3 hidden">Dear <span class="text-gold-light font-serif">guest</span>,</p>
-<div class="w-16 h-[1px] bg-gold mx-auto mt-6 opacity-50"></div>
-<p id="totalLine" class="font-label-sm text-gold uppercase tracking-[0.2em] mt-6"></p>
-<p id="coupleNote" class="font-label-sm text-gold-light uppercase tracking-[0.2em] mt-3 hidden">RSVPing for the two of you</p>
-<div id="priorStatus" class="hidden mt-5 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/40 bg-gold/10 font-label-sm text-gold uppercase tracking-[0.15em]">
+<div class="text-center mb-6 relative z-10">
+<span class="font-script-accent text-script-accent italic text-gold mb-1 block" style="font-size:2rem;">Kindly Respond</span>
+<h1 class="font-headline-xl text-white leading-tight" style="font-size:clamp(2.4rem,6vw,3.4rem);font-weight:800;letter-spacing:-0.02em;">RSVP</h1>
+<p id="greeting" class="font-body-lg text-on-surface-variant italic mt-2 hidden">Dear <span class="text-gold-light font-serif">guest</span>,</p>
+<div class="w-16 h-[1px] bg-gold mx-auto mt-4 opacity-50"></div>
+<p id="totalLine" class="font-label-sm text-gold uppercase tracking-[0.2em] mt-4"></p>
+<p id="coupleNote" class="font-label-sm text-gold-light uppercase tracking-[0.2em] mt-2 hidden">RSVPing for the two of you</p>
+<div id="priorStatus" class="hidden mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/40 bg-gold/10 font-label-sm text-gold uppercase tracking-[0.15em]">
 <span class="material-symbols-outlined text-base" style="font-variation-settings:'FILL' 1">verified</span>
 <span id="priorStatusText"></span>
 </div>
 </div>
 
 <!-- FORM -->
-<form id="rsvpForm" class="space-y-8 relative z-10" onsubmit="handleSubmit(event)">
+<form id="rsvpForm" class="chad-form relative z-10" onsubmit="handleSubmit(event)">
 <!-- SINGLE MODE -->
-<div id="singleFields" class="space-y-8">
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-<div class="relative">
-<label class="block font-headline-md text-white/70 mb-2 italic" for="name">First Name</label>
-<input class="w-full bg-transparent border-t-0 border-x-0 border-b border-gold/30 focus:border-gold focus:ring-0 text-headline-md font-script-accent italic py-3 transition-colors placeholder:opacity-20 text-white" id="name" name="name" placeholder="First name" type="text" autocomplete="given-name"/>
-</div>
-<div class="relative" id="lastNameField">
-<label class="block font-headline-md text-white/70 mb-2 italic" for="lastName">Last Name</label>
-<input class="w-full bg-transparent border-t-0 border-x-0 border-b border-gold/30 focus:border-gold focus:ring-0 text-headline-md font-script-accent italic py-3 transition-colors placeholder:opacity-20 text-white" id="lastName" name="lastName" placeholder="Last name" type="text" autocomplete="family-name"/>
+<div id="singleFields" class="space-y-4">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<div>
+<label class="chad-label" for="name">First Name</label>
+<div class="chad-field">
+<span class="material-symbols-outlined chad-ic">person</span>
+<input class="chad-input" id="name" name="name" placeholder="First name" type="text" autocomplete="given-name"/>
 </div>
 </div>
-<div class="space-y-5">
-<p class="font-label-sm text-on-surface-variant tracking-[0.2em] uppercase text-center">Will you be attending?</p>
+<div id="lastNameField">
+<label class="chad-label" for="lastName">Last Name</label>
+<div class="chad-field">
+<span class="material-symbols-outlined chad-ic">badge</span>
+<input class="chad-input" id="lastName" name="lastName" placeholder="Last name" type="text" autocomplete="family-name"/>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<p class="chad-prompt">Will you be attending?</p>
 <div class="att-choices pt-1" id="attChoices" role="radiogroup" aria-label="Attendance">
 <label class="att-choice" data-val="yes">
 <input class="sr-only" id="att-yes" name="attendance" type="radio" value="yes"/>
@@ -184,43 +355,52 @@ button[type=submit]:hover { box-shadow: 0 20px 60px rgba(212,175,55,0.55) !impor
 </div>
 </div>
 <!-- Guest count (shown when attending) -->
-<div id="guestField" class="hidden space-y-5">
+<div id="guestField" class="hidden space-y-4">
 <div>
-<p class="font-label-sm text-on-surface-variant tracking-[0.2em] uppercase mb-3">Number of guests attending <span class="text-gold-light normal-case tracking-normal">(including you)</span></p>
-<div class="flex items-center justify-center gap-6">
+<p class="chad-prompt mb-3">Number of guests attending <span class="text-gold-light normal-case tracking-normal">(including you)</span></p>
+<div class="flex items-center justify-center gap-5">
 <button type="button" onclick="stepGuests('guestCount',-1)" class="w-12 h-12 rounded-full border border-gold/30 text-gold hover:bg-gold/10 transition-colors text-2xl leading-none">−</button>
 <input id="guestCount" type="number" value="1" min="1" max="8" class="w-20 text-center bg-transparent border-b border-gold/30 focus:border-gold focus:ring-0 font-headline-xl text-gold-gradient" aria-label="Number of guests attending"/>
 <button type="button" onclick="stepGuests('guestCount',1)" class="w-12 h-12 rounded-full border border-gold/30 text-gold hover:bg-gold/10 transition-colors text-2xl leading-none">+</button>
 </div>
 </div>
 <div>
-<label class="block font-headline-md text-white/70 mb-2 italic" for="plusNames">Names of Additional Guests</label>
-<input class="w-full bg-transparent border-t-0 border-x-0 border-b border-gold/30 focus:border-gold focus:ring-0 text-body-lg py-3 transition-colors placeholder:opacity-30 text-white" id="plusNames" type="text" placeholder="e.g. Maria Lopez, Carlos Ruiz"/>
+<label class="chad-label" for="plusNames">Names of Additional Guests</label>
+<div class="chad-field">
+<span class="material-symbols-outlined chad-ic">group_add</span>
+<input class="chad-input" id="plusNames" type="text" placeholder="e.g. Maria Lopez, Carlos Ruiz"/>
+</div>
 </div>
 </div>
 </div>
 
 <!-- COUPLE MODE -->
-<div id="coupleFields" class="hidden space-y-10">
+<div id="coupleFields" class="hidden space-y-5">
 <!-- Guest 1 -->
-<div class="space-y-5">
+<div class="space-y-4">
 <div class="flex items-center gap-3">
 <div class="flex-1 h-[1px] bg-gold/30"></div>
-<span class="font-label-sm text-gold uppercase tracking-[0.2em]">Guest 1</span>
+<span class="chad-label mb-0 text-gold uppercase tracking-[0.2em]">Guest 1</span>
 <div class="flex-1 h-[1px] bg-gold/30"></div>
 </div>
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-<div class="relative">
-<label class="block font-headline-md text-white/70 mb-2 italic" for="nameA">First Name</label>
-<input class="w-full bg-transparent border-t-0 border-x-0 border-b border-gold/30 focus:border-gold focus:ring-0 text-headline-md font-script-accent italic py-3 transition-colors placeholder:opacity-20 text-white" id="nameA" placeholder="First name" type="text" autocomplete="given-name"/>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<div>
+<label class="chad-label" for="nameA">First Name</label>
+<div class="chad-field">
+<span class="material-symbols-outlined chad-ic">person</span>
+<input class="chad-input" id="nameA" placeholder="First name" type="text" autocomplete="given-name"/>
 </div>
-<div class="relative">
-<label class="block font-headline-md text-white/70 mb-2 italic" for="lastNameA">Last Name</label>
-<input class="w-full bg-transparent border-t-0 border-x-0 border-b border-gold/30 focus:border-gold focus:ring-0 text-headline-md font-script-accent italic py-3 transition-colors placeholder:opacity-20 text-white" id="lastNameA" placeholder="Last name" type="text" autocomplete="family-name"/>
+</div>
+<div>
+<label class="chad-label" for="lastNameA">Last Name</label>
+<div class="chad-field">
+<span class="material-symbols-outlined chad-ic">badge</span>
+<input class="chad-input" id="lastNameA" placeholder="Last name" type="text" autocomplete="family-name"/>
+</div>
 </div>
 </div>
 <div class="space-y-4">
-<p class="font-label-sm text-on-surface-variant tracking-[0.2em] uppercase text-center">Is this guest attending?</p>
+<p class="chad-prompt">Is this guest attending?</p>
 <div class="att-choices pt-1" id="attChoicesA" role="radiogroup" aria-label="Attendance for guest one">
 <label class="att-choice" data-val="yes">
 <input class="sr-only" id="att-yes-a" name="attendanceA" type="radio" value="yes"/>
@@ -247,8 +427,8 @@ button[type=submit]:hover { box-shadow: 0 20px 60px rgba(212,175,55,0.55) !impor
 </div>
 <div id="guestFieldA" class="hidden">
 <div>
-<p class="font-label-sm text-on-surface-variant tracking-[0.2em] uppercase mb-3 text-center">Guests attending <span class="text-gold-light normal-case tracking-normal">(including this person)</span></p>
-<div class="flex items-center justify-center gap-6">
+<p class="chad-prompt mb-3 text-center">Guests attending <span class="text-gold-light normal-case tracking-normal">(including this person)</span></p>
+<div class="flex items-center justify-center gap-5">
 <button type="button" onclick="stepGuests('guestCountA',-1)" class="w-12 h-12 rounded-full border border-gold/30 text-gold hover:bg-gold/10 transition-colors text-2xl leading-none">−</button>
 <input id="guestCountA" type="number" value="1" min="1" max="8" class="w-20 text-center bg-transparent border-b border-gold/30 focus:border-gold focus:ring-0 font-headline-xl text-gold-gradient" aria-label="Guests attending for guest one"/>
 <button type="button" onclick="stepGuests('guestCountA',1)" class="w-12 h-12 rounded-full border border-gold/30 text-gold hover:bg-gold/10 transition-colors text-2xl leading-none">+</button>
@@ -257,24 +437,30 @@ button[type=submit]:hover { box-shadow: 0 20px 60px rgba(212,175,55,0.55) !impor
 </div>
 </div>
 <!-- Guest 2 -->
-<div class="space-y-5">
+<div class="space-y-4">
 <div class="flex items-center gap-3">
 <div class="flex-1 h-[1px] bg-gold/30"></div>
-<span class="font-label-sm text-gold uppercase tracking-[0.2em]">Guest 2</span>
+<span class="chad-label mb-0 text-gold uppercase tracking-[0.2em]">Guest 2</span>
 <div class="flex-1 h-[1px] bg-gold/30"></div>
 </div>
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-<div class="relative">
-<label class="block font-headline-md text-white/70 mb-2 italic" for="nameB">First Name</label>
-<input class="w-full bg-transparent border-t-0 border-x-0 border-b border-gold/30 focus:border-gold focus:ring-0 text-headline-md font-script-accent italic py-3 transition-colors placeholder:opacity-20 text-white" id="nameB" placeholder="First name" type="text" autocomplete="given-name"/>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<div>
+<label class="chad-label" for="nameB">First Name</label>
+<div class="chad-field">
+<span class="material-symbols-outlined chad-ic">person</span>
+<input class="chad-input" id="nameB" placeholder="First name" type="text" autocomplete="given-name"/>
 </div>
-<div class="relative">
-<label class="block font-headline-md text-white/70 mb-2 italic" for="lastNameB">Last Name</label>
-<input class="w-full bg-transparent border-t-0 border-x-0 border-b border-gold/30 focus:border-gold focus:ring-0 text-headline-md font-script-accent italic py-3 transition-colors placeholder:opacity-20 text-white" id="lastNameB" placeholder="Last name" type="text" autocomplete="family-name"/>
+</div>
+<div>
+<label class="chad-label" for="lastNameB">Last Name</label>
+<div class="chad-field">
+<span class="material-symbols-outlined chad-ic">badge</span>
+<input class="chad-input" id="lastNameB" placeholder="Last name" type="text" autocomplete="family-name"/>
+</div>
 </div>
 </div>
 <div class="space-y-4">
-<p class="font-label-sm text-on-surface-variant tracking-[0.2em] uppercase text-center">Is this guest attending?</p>
+<p class="chad-prompt">Is this guest attending?</p>
 <div class="att-choices pt-1" id="attChoicesB" role="radiogroup" aria-label="Attendance for guest two">
 <label class="att-choice" data-val="yes">
 <input class="sr-only" id="att-yes-b" name="attendanceB" type="radio" value="yes"/>
@@ -301,8 +487,8 @@ button[type=submit]:hover { box-shadow: 0 20px 60px rgba(212,175,55,0.55) !impor
 </div>
 <div id="guestFieldB" class="hidden">
 <div>
-<p class="font-label-sm text-on-surface-variant tracking-[0.2em] uppercase mb-3 text-center">Guests attending <span class="text-gold-light normal-case tracking-normal">(including this person)</span></p>
-<div class="flex items-center justify-center gap-6">
+<p class="chad-prompt mb-3 text-center">Guests attending <span class="text-gold-light normal-case tracking-normal">(including this person)</span></p>
+<div class="flex items-center justify-center gap-5">
 <button type="button" onclick="stepGuests('guestCountB',-1)" class="w-12 h-12 rounded-full border border-gold/30 text-gold hover:bg-gold/10 transition-colors text-2xl leading-none">−</button>
 <input id="guestCountB" type="number" value="1" min="1" max="8" class="w-20 text-center bg-transparent border-b border-gold/30 focus:border-gold focus:ring-0 font-headline-xl text-gold-gradient" aria-label="Guests attending for guest two"/>
 <button type="button" onclick="stepGuests('guestCountB',1)" class="w-12 h-12 rounded-full border border-gold/30 text-gold hover:bg-gold/10 transition-colors text-2xl leading-none">+</button>
@@ -313,45 +499,66 @@ button[type=submit]:hover { box-shadow: 0 20px 60px rgba(212,175,55,0.55) !impor
 </div>
 
 <!-- SHARED FIELDS -->
-<div id="optionalFields" class="space-y-8">
-<div class="relative">
-<label class="block font-headline-md text-white/70 mb-2 italic" for="phone">Phone Number</label>
-<input class="w-full bg-transparent border-t-0 border-x-0 border-b border-gold/30 focus:border-gold focus:ring-0 text-body-lg py-3 transition-colors placeholder:opacity-30 text-white" id="phone" name="phone" placeholder="e.g. 501 600-1234" type="tel" autocomplete="tel"/>
+<div id="optionalFields" class="space-y-4">
+<div>
+<label class="chad-label" for="phone">Phone Number</label>
+<div class="chad-field">
+<span class="material-symbols-outlined chad-ic">call</span>
+<input class="chad-input" id="phone" name="phone" placeholder="e.g. 501 600-1234" type="tel" autocomplete="tel"/>
 </div>
-<div class="relative">
-<label class="block font-headline-md text-white/70 mb-2 italic" for="song">Song Request</label>
-<input class="w-full bg-transparent border-t-0 border-x-0 border-b border-gold/30 focus:border-gold focus:ring-0 text-body-lg py-3 transition-colors placeholder:opacity-30 text-white" id="song" type="text" placeholder="e.g. your favorite dance song, first dance, anything"/>
 </div>
-<div class="relative">
-<label class="block font-headline-md text-white/70 mb-2 italic" for="message">Message for the Couple</label>
-<textarea class="w-full bg-transparent border-t-0 border-x-0 border-b border-gold/30 focus:border-gold focus:ring-0 text-body-lg py-3 transition-colors placeholder:opacity-30 resize-none text-white" id="message" placeholder="Share a special note..." rows="2"></textarea>
+<div>
+<label class="chad-label" for="song">Song Request</label>
+<div class="chad-field">
+<span class="material-symbols-outlined chad-ic">music_note</span>
+<input class="chad-input" id="song" type="text" placeholder="your favorite dance song, first dance, anything"/>
+</div>
+</div>
+<div>
+<label class="chad-label" for="message">Message for the Couple</label>
+<div class="chad-field chad-field-textarea">
+<span class="material-symbols-outlined chad-ic">favorite</span>
+<textarea class="chad-input chad-area" id="message" placeholder="Share a special note..." rows="2"></textarea>
+</div>
 </div>
 </div>
 
-<div class="pt-8 text-center">
-<button type="submit" class="group relative px-12 py-5 rounded-full bg-gradient-to-r from-gold-light to-gold-dark text-ink font-label-sm tracking-widest uppercase border border-gold/40 shadow-[0_10px_30px_rgba(212,175,55,0.25)] hover:shadow-[0_10px_40px_rgba(212,175,55,0.45)] transition-all active:scale-95 duration-300 overflow-hidden">
-<span class="relative z-10">Send RSVP</span>
-<div class="absolute inset-0 bg-white/30 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
-</button>
-<p class="mt-6 font-label-sm text-on-surface-variant italic"><strong>Please reply by</strong> November 1st, 2026</p>
+<div class="pt-2 text-center">
+<label class="checkbox-wrapper" id="confirmWrap">
+  <input type="checkbox" id="confirmCheck"/>
+  <div class="checkmark">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <path d="M20 6L9 17L4 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+  </div>
+  <span class="label">I confirm my RSVP details</span>
+</label>
+<button type="submit" class="chad-btn chad-btn-gold w-full">Send RSVP</button>
+<p class="chad-deadline mt-3"><strong>Please reply by</strong> November 1st, 2026</p>
 </div>
 </form>
 
 <!-- SUCCESS -->
-<div id="success" class="hidden text-center relative z-10 space-y-6">
-<div class="success-pop w-20 h-20 mx-auto rounded-full bg-gold/10 border border-gold/40 flex items-center justify-center">
+<div id="success" class="hidden text-center relative z-10 space-y-5">
+<div class="success-pop w-20 h-20 mx-auto rounded-2xl bg-gold/10 border border-gold/40 flex items-center justify-center">
 <span class="material-symbols-outlined text-gold text-4xl" style="font-variation-settings:'FILL' 1" data-icon="check_circle">check_circle</span>
 </div>
 <h2 class="success-pop font-headline-xl text-white leading-tight">Thank You,<br/><span id="sucName" class="font-script-accent text-script-accent text-gold-gradient italic">Guest</span></h2>
 <p id="sucSummary" class="success-pop font-body-lg text-on-surface-variant"></p>
-<div id="sucResponses" class="success-pop inline-block glass-panel rounded-full px-6 py-2 border-gold/30 font-label-sm text-gold uppercase tracking-[0.15em]"></div>
+<div id="sucResponses" class="success-pop inline-block glass-panel rounded-xl px-6 py-2 border-gold/30 font-label-sm text-gold uppercase tracking-[0.15em]"></div>
 <p id="sucTotal" class="success-pop font-label-sm text-on-surface-variant uppercase tracking-[0.15em]"></p>
-<div class="success-pop flex flex-col sm:flex-row justify-center gap-4 pt-4">
-<a id="songRequestBtn" href="music.html" class="px-8 py-4 rounded-full bg-gradient-to-r from-gold-light to-gold-dark text-ink font-label-sm tracking-widest uppercase border border-gold/40 shadow-[0_10px_30px_rgba(212,175,55,0.25)] hover:shadow-[0_10px_40px_rgba(212,175,55,0.45)] transition-all active:scale-95 no-underline flex items-center justify-center gap-2">
+<div class="success-pop flex flex-col gap-3 pt-4 max-w-md mx-auto">
+<a id="songRequestBtn" href="music.html" class="chad-btn chad-btn-gold w-full flex items-center justify-center gap-2 no-underline">
   <span class="material-symbols-outlined text-xl">music_note</span> Make Song Request &amp; Vote
 </a>
-<button onclick="resetForAnother()" class="px-6 py-4 rounded-full border border-gold/30 text-gold font-label-sm tracking-widest uppercase hover:bg-gold/10 transition-colors">RSVP for another guest</button>
-<a id="doneLink" href="index.html" class="px-6 py-4 rounded-full border border-white/20 text-white/70 font-label-sm tracking-widest uppercase hover:bg-white/10 transition-colors no-underline">Back to invitation</a>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+  <button onclick="resetForAnother()" class="chad-btn w-full">
+    RSVP for another guest
+  </button>
+  <a id="doneLink" href="index.html" class="chad-btn w-full flex items-center justify-center no-underline">
+    Back to invitation
+  </a>
+</div>
 </div>
 </div>
 
@@ -372,7 +579,31 @@ button[type=submit]:hover { box-shadow: 0 20px 60px rgba(212,175,55,0.55) !impor
 </a>
 </nav>
 
-<!-- Error toast (adapted from Uiverse.io by seyed-mohsen-mousavi) -->
+<!-- CHAD NOT ON GUEST LIST MODAL -->
+<div id="notOnListModal" class="hidden fixed inset-0 z-[150] flex items-center justify-center p-4 bg-black/85 backdrop-blur-xl">
+  <div class="max-w-md w-full bg-[#12121a]/95 border-2 border-amber-500/40 rounded-2xl p-6 sm:p-8 shadow-[0_0_50px_rgba(212,175,55,0.2)] text-center space-y-5 relative overflow-hidden">
+    <div class="w-16 h-16 mx-auto rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
+      <span class="material-symbols-outlined text-4xl">no_accounts</span>
+    </div>
+    <div>
+      <span class="text-[10px] uppercase font-bold tracking-[0.25em] text-amber-400 block mb-1">Access Restricted</span>
+      <h2 class="font-serif text-2xl font-bold text-white tracking-wide" id="notOnListTitle">NOT ON GUEST LIST</h2>
+    </div>
+    <p class="text-sm text-slate-300/90 leading-relaxed font-sans" id="notOnListMsg">
+      We couldn't locate an active invitation for this link or name in our wedding registry. Please ensure you are using your personal invitation link.
+    </p>
+    <div class="pt-2 space-y-3">
+      <a href="https://wa.me/?text=Hi%20Charles%20%26%20Leticia!%20I'm%20trying%20to%20RSVP%20for%20your%20wedding%20and%20need%20my%20invitation%20link." target="_blank" class="w-full py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 no-underline shadow-lg shadow-emerald-900/30">
+        <span class="material-symbols-outlined text-lg">chat</span> Contact Charles &amp; Leticia
+      </a>
+      <button onclick="document.getElementById('notOnListModal').classList.add('hidden')" class="w-full py-3 px-4 rounded-xl border border-slate-700 hover:border-slate-500 text-slate-300 font-semibold text-xs uppercase tracking-wider bg-slate-900/60 transition-colors">
+        Close / Try Again
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Error toast -->
 <div id="errToast" class="hidden fixed top-4 left-1/2 -translate-x-1/2 z-[100] w-[calc(100vw-2rem)] max-w-sm">
 <div class="error-alert flex items-center justify-between w-full h-14 rounded-lg bg-[#232531]/95 backdrop-blur px-3 border border-[#d65563]/30 shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
 <div class="flex items-center gap-3 min-w-0">
@@ -544,6 +775,15 @@ button[type=submit]:hover { box-shadow: 0 20px 60px rgba(212,175,55,0.55) !impor
     if (errTimer) { clearTimeout(errTimer); errTimer = null; }
   };
   function showError(title, msg) {
+    if (title === 'Guest not found' || title === 'Not on guest list' || (msg && (msg.toLowerCase().includes('invitation link') || msg.toLowerCase().includes('reach us')))) {
+      var tEl = document.getElementById('notOnListTitle');
+      var mEl = document.getElementById('notOnListMsg');
+      if (tEl) tEl.textContent = title.toUpperCase();
+      if (mEl && msg) mEl.textContent = msg;
+      var modal = document.getElementById('notOnListModal');
+      if (modal) modal.classList.remove('hidden');
+      return;
+    }
     document.getElementById('errTitle').textContent = title;
     document.getElementById('errMsg').textContent = msg;
     var t = document.getElementById('errToast');
@@ -586,6 +826,14 @@ button[type=submit]:hover { box-shadow: 0 20px 60px rgba(212,175,55,0.55) !impor
 
   window.handleSubmit = function (e) {
     e.preventDefault();
+
+    var confirmEl = document.getElementById('confirmCheck');
+    if (confirmEl && !confirmEl.checked) {
+      showError('Please confirm', 'Check the box to confirm your RSVP details before sending.');
+      confirmEl.closest('.checkbox-wrapper').classList.add('shake');
+      setTimeout(function () { var w = confirmEl.closest('.checkbox-wrapper'); if (w) w.classList.remove('shake'); }, 500);
+      return;
+    }
 
     var phone = val('phone');
     var song = val('song');
@@ -731,6 +979,8 @@ button[type=submit]:hover { box-shadow: 0 20px 60px rgba(212,175,55,0.55) !impor
       var el = document.getElementById(id);
       if (el) el.value = '';
     });
+    var confirmEl = document.getElementById('confirmCheck');
+    if (confirmEl) confirmEl.checked = false;
     ['guestCount', 'guestCountA', 'guestCountB'].forEach(function (id) {
       var el = document.getElementById(id);
       if (el) el.value = '1';
