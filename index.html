@@ -1762,8 +1762,8 @@ function fallbackCopy(text) {
   if (!h3 || !head) return;
   function fit() {
     var mainEl = document.querySelector('main');
-    var wide = mainEl && mainEl.offsetWidth > head.offsetWidth;
-    var target = (wide ? mainEl.offsetWidth * 2 : head.offsetWidth) - 8;
+    var desktop = window.matchMedia('(min-width: 1024px)').matches;
+    var target = (desktop ? mainEl.offsetWidth * 2 : head.offsetWidth) - 8;
     if (target < 140) return;
     h3.style.fontSize = '20px';
     var w = h3.scrollWidth;
