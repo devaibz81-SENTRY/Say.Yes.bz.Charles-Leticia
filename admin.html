@@ -528,6 +528,65 @@
       color: #fff;
     }
 
+    /* Mobile guest card pieces (hidden on desktop) */
+    .g-mobile-cell { display: none; }
+    .guest-details { display: none; }
+    .g-avatar {
+      position: relative;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(201,168,76,0.25), rgba(201,168,76,0.08));
+      border: 1px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .g-avatar-txt { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 700; color: var(--gold-light); }
+    .g-avatar-size {
+      position: absolute;
+      bottom: -4px;
+      right: -4px;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 4px;
+      border-radius: 9999px;
+      background: var(--gold);
+      color: #000;
+      font-size: 0.62rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #0d0d1a;
+    }
+    .g-mobile-meta { display: flex; flex-direction: column; gap: 0.2rem; min-width: 0; }
+    .g-mobile-meta strong { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--text); line-height: 1.2; }
+    .g-mobile-pill { margin-top: 0.1rem; }
+    .g-mobile-pill .status-pill { padding: 0.25rem 0.7rem; font-size: 0.55rem; }
+    .g-mobile-contact { font-size: 0.72rem; color: var(--muted); }
+    .g-mobile-contact.g-no-phone { color: #999; font-style: italic; }
+    .g-toggle {
+      margin-left: auto;
+      flex-shrink: 0;
+      width: 2rem;
+      height: 2rem;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--gold);
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1rem;
+      line-height: 1;
+      transition: transform 0.2s;
+    }
+    .g-toggle.open { transform: rotate(180deg); }
+    .g-details { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+    .g-detail { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 6px; padding: 0.5rem 0.75rem; }
+    .g-detail span { display: block; font-size: 0.5rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: var(--gold-dim); margin-bottom: 0.2rem; }
+    .g-detail b { font-size: 0.85rem; color: var(--text); font-weight: 600; text-transform: capitalize; }
+
     /* Modal */
     .modal-overlay {
       position: fixed;
@@ -813,6 +872,20 @@
       .stat-num { font-size: 2.1rem; }
       .filter-bar { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 0.4rem; }
       .filter-btn { flex-shrink: 0; }
+      /* Guest table -> stacked cards */
+      thead { display: none; }
+      .table-shell { overflow-x: visible; }
+      table { min-width: 0; }
+      tbody tr { display: block; margin-bottom: 0.75rem; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 0.75rem; }
+      tbody tr.guest-details { display: none; padding: 0; background: rgba(0,0,0,0.22); border: none; border-radius: 0 0 10px 10px; margin: -0.4rem 0 0.75rem; }
+      tbody tr.guest-details.open { display: block; }
+      tbody td { display: block; padding: 0; border: none; }
+      .guest-details td { padding: 0.75rem !important; }
+      .g-hide-mobile { display: none !important; }
+      .g-mobile-cell { display: flex !important; align-items: center; gap: 0.75rem; }
+      .g-desktop-name { display: none; }
+      td.g-actions-cell { margin-top: 0.75rem; padding-top: 0.75rem !important; border-top: 1px solid var(--border) !important; }
+      .table-actions { flex-wrap: wrap; }
       th { padding: 0.9rem 0.9rem; }
       td { padding: 0.9rem 0.9rem; }
       .modal { width: 100%; margin: 0 1rem; padding: 1.5rem; }
@@ -1548,23 +1621,56 @@ Charles and Leticia</textarea>
         const pLabel = { attending: 'Yes', declined: 'No', later: 'Ask Later', invited: 'Invited' }[st];
         const key = getGuestKey(g);
         const hasPhone = !!normalizeWaPhone(g.phone);
+        const n1 = (g.first_name || '').trim();
+        const n2 = (g.spouse_name || g.last_name || '').trim();
+        const initials = ((n1[0] || '') + (n2[0] || '')).toUpperCase() || '?';
+        const nameFull = `${g.first_name}${g.spouse_name ? ' & ' + g.spouse_name : ''} ${g.last_name}`;
+        const deadline = g.deadline ? new Date(g.deadline).toLocaleDateString() : '-';
 
-        let displayName = `<strong>${g.first_name}${g.spouse_name ? ' & ' + g.spouse_name : ''} ${g.last_name}</strong>`;
-
-        return `<tr>
-          <td>${displayName}</td>
-          <td style="text-transform:capitalize">${g.guest_type || 'Single'}</td>
-          <td>${g.max_party || 1} allowed</td>
-          <td><span class="status-pill ${pClass}">${pLabel}</span></td>
-          <td>${g.phone || '-'}</td>
-          <td style="font-size:0.75rem">${g.deadline ? new Date(g.deadline).toLocaleDateString() : '-'}</td>
-          <td><div class="table-actions">
+        return `
+        <tr class="guest-row">
+          <td>
+            <div class="g-mobile-cell">
+              <div class="g-avatar"><span class="g-avatar-txt">${initials}</span><span class="g-avatar-size">${g.max_party || 1}</span></div>
+              <div class="g-mobile-meta">
+                <strong>${nameFull}</strong>
+                <span class="g-mobile-pill"><span class="status-pill ${pClass}">${pLabel}</span></span>
+                <span class="g-mobile-contact ${hasPhone ? '' : 'g-no-phone'}">${hasPhone ? (g.phone || '-') : 'No phone'}</span>
+              </div>
+              <button type="button" class="g-toggle" onclick="toggleGuestDetails(this)" aria-label="Show more">▾</button>
+            </div>
+            <strong class="g-desktop-name">${nameFull}</strong>
+          </td>
+          <td class="g-hide-mobile" style="text-transform:capitalize">${g.guest_type || 'Single'}</td>
+          <td class="g-hide-mobile">${g.max_party || 1} allowed</td>
+          <td class="g-hide-mobile"><span class="status-pill ${pClass}">${pLabel}</span></td>
+          <td class="g-hide-mobile">${g.phone || '-'}</td>
+          <td class="g-hide-mobile" style="font-size:0.75rem">${deadline}</td>
+          <td class="g-actions-cell"><div class="table-actions">
             <button class="action-btn" onclick="openEditGuest('${key}')" style="border-color:var(--gold);color:var(--gold);">Edit</button>
             ${hasPhone ? `<button class="action-btn wa" onclick="sendQuickWA('${key}')" title="Send individualized WhatsApp message">WhatsApp</button>` : `<span style="font-size:0.7rem;color:#999;">No phone</span>`}
             <button class="action-btn danger" onclick="deleteGuest('${key}')">Delete</button>
           </div></td>
+        </tr>
+        <tr class="guest-details" data-key="${key}">
+          <td colspan="7">
+            <div class="g-details">
+              <div class="g-detail"><span>Type</span><b>${g.guest_type || 'Single'}</b></div>
+              <div class="g-detail"><span>Party Size</span><b>${g.max_party || 1}</b></div>
+              <div class="g-detail"><span>Deadline</span><b>${deadline}</b></div>
+              <div class="g-detail"><span>Phone</span><b>${g.phone || '-'}</b></div>
+            </div>
+          </td>
         </tr>`;
       }).join('');
+    }
+
+    function toggleGuestDetails(btn) {
+      const row = btn.closest('tr');
+      const details = row && row.nextElementSibling;
+      if (!details || !details.classList.contains('guest-details')) return;
+      details.classList.toggle('open');
+      btn.classList.toggle('open');
     }
 
     // Adding from dashboard
