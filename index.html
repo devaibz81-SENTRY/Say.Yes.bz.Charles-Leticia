@@ -1762,12 +1762,13 @@ function fallbackCopy(text) {
   if (!h3 || !head) return;
   function fit() {
     var mainEl = document.querySelector('main');
-    var target = ((mainEl && mainEl.offsetWidth > head.offsetWidth) ? mainEl.offsetWidth : head.offsetWidth) - 8;
+    var wide = mainEl && mainEl.offsetWidth > head.offsetWidth;
+    var target = (wide ? mainEl.offsetWidth * 2 : head.offsetWidth) - 8;
     if (target < 140) return;
     h3.style.fontSize = '20px';
     var w = h3.scrollWidth;
     if (!w) return;
-    var size = Math.max(36, Math.min(200, 20 * target / w));
+    var size = Math.max(36, Math.min(400, 20 * target / w));
     h3.style.fontSize = size + 'px';
   }
   h3.style.lineHeight = '1.15';
