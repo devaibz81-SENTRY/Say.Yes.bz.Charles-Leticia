@@ -217,6 +217,21 @@ html.no-scroll, html.no-scroll body { overflow: hidden; }
 }
 .intro-scroll-away { animation: introScroll .95s cubic-bezier(.4, 0, .2, 1) forwards; }
 
+@keyframes lastFrameFly {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
+  100% { transform: translate(0, -115vh) scale(1.2) rotate(3deg); opacity: 0; }
+}
+.last-frame-fly { animation: lastFrameFly 1.25s cubic-bezier(.5, 0, .2, 1) forwards; }
+
+@keyframes introFadeAway { to { opacity: 0; } }
+.intro-fade-away { animation: introFadeAway .95s ease forwards; }
+
+@keyframes pageScaleIn {
+  0% { transform: scale(.92); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.page-scale-in { animation: pageScaleIn 1.15s cubic-bezier(.22, 1, .36, 1) forwards; }
+
 @keyframes revealFlash {
   0% { opacity: 0; transform: scale(.45); }
   35% { opacity: 1; transform: scale(1); }
@@ -503,13 +518,13 @@ section[id] { scroll-margin-top: 5rem; }
 <section class="relative max-w-[1200px] mx-auto px-5 sm:px-container-padding pt-12 pb-section-gap">
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
 <!-- Headline Block (full width) -->
-<div class="space-y-4 mb-8 lg:col-span-12" id="heroHead" style="overflow:hidden">
+<div class="space-y-4 mb-8 lg:col-span-12" id="heroHead">
 <div class="hd-fade inline-flex items-center px-3 py-1 rounded-full glass-panel border border-gold/30 shadow-sm">
 <span class="material-symbols-outlined text-[12px] mr-1.5 text-gold" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
 <span class="font-label-sm text-[10px] sm:text-[11px] text-gold-light uppercase tracking-[0.14em]">New Year's Eve &bull; Belize City</span>
 </div>
 <h2 class="hd-fade font-script-accent text-script-accent italic text-gold leading-[1.3]">Join us for the wedding of</h2>
-<h3 id="heroNames" class="hd-fade font-script-accent text-white leading-[1.15] whitespace-nowrap text-[clamp(36px,13vw,72px)] lg:text-[clamp(40px,6vw,76px)]">Charles <span class="text-gold">&amp;</span> Leticia</h3>
+<h3 id="heroNames" class="hd-fade font-script-accent text-white leading-[1.15] whitespace-nowrap text-center text-[clamp(54px,19.5vw,108px)] lg:text-[clamp(60px,9vw,114px)]">Charles <span class="text-gold">&amp;</span> Leticia</h3>
 <p class="hd-fade font-body-lg text-on-surface-variant max-w-xl">
                         As Belize City sparkles against the Caribbean night, we invite you to ring in 2027 with us &mdash; the start of forever, in black, white &amp; gold.
                     </p>
@@ -526,7 +541,6 @@ section[id] { scroll-margin-top: 5rem; }
 <div class="font-script-accent text-[20px] sm:text-[24px] leading-[1.3] pt-1 text-gold-gradient italic">Save the Date</div>
 <div class="flex items-center gap-1.5 font-label-sm text-on-surface-variant uppercase tracking-[0.12em]">
 <span>December 2026</span>
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="text-gold"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>
 </div>
 </div>
 <div class="flex items-center gap-2 font-body-md text-gold-light mb-4 relative z-10">
@@ -867,7 +881,8 @@ Bank Details
     setTimeout(function () { glowWash.style.opacity = '0'; }, 420);
   }
 
-  function Rocket() {
+  function Rocket(big) {
+    this.big = !!big;
     this.x = rand(W * 0.12, W * 0.88);
     this.y = H;
     this.targetY = rand(H * 0.08, H * 0.58);
@@ -903,12 +918,21 @@ Bank Details
   };
   Rocket.prototype.explode = function () {
     pulseGlow(this.color);
-    spawnFlash(this.x, this.y, this.color);
-    spawnBurst(this.x, this.y, this.color, this.type);
+    if (this.big) {
+      spawnBigFlash(this.x, this.y, this.color);
+      spawnBigBurst(this.x, this.y, this.color);
+    } else {
+      spawnFlash(this.x, this.y, this.color);
+      spawnBurst(this.x, this.y, this.color, this.type);
+    }
   };
 
   function spawnFlash(x, y, color) {
     particles.push({ x: x, y: y, vx: 0, vy: 0, life: 0, maxLife: 0.18, size: 26, color: color, flash: true });
+  }
+
+  function spawnBigFlash(x, y, color) {
+    particles.push({ x: x, y: y, vx: 0, vy: 0, life: 0, maxLife: 0.26, size: 46, color: color, flash: true });
   }
 
   function Spark(x, y, angle, speed, color, opts) {
@@ -998,6 +1022,35 @@ Bank Details
 
   function launchFirework() { rockets.push(new Rocket()); }
 
+  function spawnBigBurst(x, y, color) {
+    var secondColor = Math.random() > 0.45 ? choice(palette) : color;
+    var count = Math.floor(rand(80, 120));
+    for (var j = 0; j < count; j++) {
+      var ang = rand(0, Math.PI * 2);
+      var spd = rand(60, 170);
+      var c = j % 3 === 0 ? secondColor : color;
+      particles.push(new Spark(x, y, ang, spd, c, {
+        gravityMult: rand(0.85, 1.05),
+        dragMult: rand(0.95, 1.05),
+        maxLife: rand(1.8, 2.6),
+        crackle: Math.random() < 0.4,
+        size: rand(2.4, 3.8)
+      }));
+    }
+    spawnRingBurst(x, y, color);
+  }
+
+  function spawnRingBurst(x, y, color) {
+    var n = Math.floor(rand(26, 34));
+    for (var j = 0; j < n; j++) {
+      var ang = (Math.PI * 2 * j) / n;
+      particles.push(new Spark(x, y, ang, 130, '#fff3d0', {
+        gravityMult: 0.85, dragMult: 1.05, maxLife: rand(1.2, 1.6),
+        crackle: Math.random() < 0.3, size: rand(2, 3)
+      }));
+    }
+  }
+
   function scheduleNext() {
     launchFirework();
     if (Math.random() > 0.85) setTimeout(launchFirework, rand(200, 400));
@@ -1053,6 +1106,18 @@ Bank Details
     setTimeout(launchFirework, 900);
     setTimeout(scheduleNext, 2000);
   }
+
+  window.__bigFireworks = function (count) {
+    count = count || 5;
+    for (var i = 0; i < count; i++) {
+      (function (i) {
+        setTimeout(function () {
+          if (!canvas.isConnected) return;
+          rockets.push(new Rocket(true));
+        }, i * 160);
+      })(i);
+    }
+  };
 })();
 </script>
 
@@ -1386,6 +1451,7 @@ Bank Details
       revealFlash.classList.remove('hidden');
       revealFlash.classList.add('reveal-flash');
     }
+    if (window.__bigFireworks) window.__bigFireworks(6);
     setTimeout(exit, 650);
   }
 
@@ -1393,13 +1459,16 @@ Bank Details
     if (state !== 'revealing') return;
     state = 'exit';
     intro.classList.add('scatter');
-    intro.classList.add('intro-scroll-away');
+    intro.classList.add('intro-fade-away');
+    if (lastImg) lastImg.classList.add('last-frame-fly');
+    var pageEl = document.querySelector('main');
+    if (pageEl) pageEl.classList.add('page-scale-in');
     setTimeout(function () {
       try { sessionStorage.setItem('cl_intro_done', '1'); } catch (e) {}
       if (intro.parentNode) intro.parentNode.removeChild(intro);
       unlockScroll();
       if (window.__animateHero) window.__animateHero();
-    }, 1100);
+    }, 1200);
   }
 
   if (!intro) return;
@@ -1692,7 +1761,8 @@ function fallbackCopy(text) {
   var head = document.getElementById('heroHead');
   if (!h3 || !head) return;
   function fit() {
-    var target = head.offsetWidth - 8;
+    var mainEl = document.querySelector('main');
+    var target = ((mainEl && mainEl.offsetWidth > head.offsetWidth) ? mainEl.offsetWidth : head.offsetWidth) - 8;
     if (target < 140) return;
     h3.style.fontSize = '20px';
     var w = h3.scrollWidth;
@@ -1754,7 +1824,7 @@ function fallbackCopy(text) {
   var photoCard = document.getElementById('mainPhotoCard');
   var heartBtn = document.getElementById('photoHeartBtn');
   var container = document.getElementById('heartContainer');
-  var count = parseInt(localStorage.getItem('photo_hearts_local') || '142', 10);
+  var count = parseInt(localStorage.getItem('photo_hearts_local') || '0', 10);
   
   if (countEl) countEl.textContent = count;
 
