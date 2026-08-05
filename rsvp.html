@@ -140,6 +140,28 @@ button[type=submit]:hover { box-shadow: 0 14px 38px rgba(212,175,55,0.42) !impor
   color:#ffffff;font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:.92rem;
 }
 .chad-input::placeholder{color:rgba(211,211,211,.4)}
+/* Neutralize Tailwind Forms plugin white backgrounds + autofill white boxes */
+.chad-field input,
+.chad-field textarea,
+input[type='text'],
+input[type='tel'],
+input[type='number'],
+input[type='email'],
+input[type='date'],
+textarea {
+  background-color: transparent !important;
+  -webkit-box-shadow: none !important;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #0a0a0a inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff;
+  transition: background-color 9999s ease-in-out 0s;
+}
 .chad-area{resize:none;line-height:1.4}
 .chad-label{display:block;font-family:'Noto Serif',serif;font-style:italic;font-size:.78rem;color:rgba(245,245,245,.7);margin-bottom:.3rem;letter-spacing:.04em}
 .chad-prompt{font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(245,245,245,.85);text-align:center}

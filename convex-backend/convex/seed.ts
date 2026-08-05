@@ -21,3 +21,11 @@ export const clearAllGuests = mutation(async (ctx) => {
   }
   return { cleared: all.length };
 });
+
+export const clearAllSongs = mutation(async (ctx) => {
+  const all = await ctx.db.query("songs").collect();
+  for (const s of all) {
+    await ctx.db.delete(s._id);
+  }
+  return { cleared: all.length };
+});
