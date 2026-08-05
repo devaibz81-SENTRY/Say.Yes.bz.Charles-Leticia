@@ -1,7 +1,8 @@
 import { httpRouter } from "convex/server";
 import { login, logout, me } from "./auth";
 import { listGuests, upsertGuest, deleteGuest } from "./guests";
-import { submitRsvp, rsvpStatus } from "./rsvp";
+import { submitRsvp, rsvpStatus, rsvpCount } from "./rsvp";
+import { listSongsHttp, createSongHttp, voteSongHttp } from "./songs";
 
 const http = httpRouter();
 
@@ -28,5 +29,17 @@ http.route({ path: "/api/rsvp", method: "OPTIONS", handler: submitRsvp });
 
 http.route({ path: "/api/rsvp/status", method: "GET", handler: rsvpStatus });
 http.route({ path: "/api/rsvp/status", method: "OPTIONS", handler: rsvpStatus });
+
+http.route({ path: "/api/rsvp/count", method: "GET", handler: rsvpCount });
+http.route({ path: "/api/rsvp/count", method: "OPTIONS", handler: rsvpCount });
+
+http.route({ path: "/api/songs", method: "GET", handler: listSongsHttp });
+http.route({ path: "/api/songs", method: "OPTIONS", handler: listSongsHttp });
+
+http.route({ path: "/api/song", method: "POST", handler: createSongHttp });
+http.route({ path: "/api/song", method: "OPTIONS", handler: createSongHttp });
+
+http.route({ path: "/api/song/vote", method: "POST", handler: voteSongHttp });
+http.route({ path: "/api/song/vote", method: "OPTIONS", handler: voteSongHttp });
 
 export default http;

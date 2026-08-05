@@ -145,6 +145,19 @@
         @media (max-width: 639px) { .nav-ic { font-size: 20px; } }
         .song-row { transition: background .3s ease; }
         .song-row:hover { background: rgba(212, 175, 55, 0.06); }
+        .like-button { position: relative; cursor: pointer; display: flex; height: 44px; width: 120px; border-radius: 14px; border: none; background-color: #1d1d1d; overflow: hidden; flex-shrink: 0; box-shadow: inset -2px -2px 5px rgba(255,255,255,0.12), inset 2px 2px 5px rgba(0,0,0,0.4), 4px 4px 10px rgba(0,0,0,0.4), -2px -2px 8px rgba(212,175,55,0.08); }
+        .like-button .on { display: none; }
+        .like-button .like { width: 70%; height: 100%; display: flex; cursor: pointer; align-items: center; justify-content: space-evenly; }
+        .like-button .like-icon { fill: #505050; height: 26px; width: 26px; transition: fill .2s ease-out; }
+        .like-button .like-text { color: #fcfcfc; font-size: 15px; font-family: "Be Vietnam Pro", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
+        .like-button .like-count { position: absolute; right: 0; top: 0; width: 30%; height: 100%; display: flex; justify-content: center; align-items: center; color: #717070; font-size: 15px; border-left: 2px solid #4e4e4e; transition: transform .5s ease-out; }
+        .like-button .like-count.two { transform: translateY(44px); }
+        .like-button .on:checked ~ .like .like-icon { fill: #D4AF37; animation: heartEnlarge .25s ease-out 1; }
+        .like-button .on:checked ~ .like-count.two { transform: translateY(0); color: #fcfcfc; }
+        .like-button .on:checked ~ .like-count.one { transform: translateY(-44px); }
+        .like-button.disabled { cursor: default; opacity: .95; }
+        .like-button.disabled .on { cursor: default; }
+        @keyframes heartEnlarge { 0% { transform: scale(.5); } 100% { transform: scale(1.2); } }
     </style>
 <style>
     body { min-height: 100dvh; background: #0a0a0a; }
@@ -188,7 +201,7 @@
 <h2 class="font-headline-md text-white mb-2 italic">Song Requests</h2>
 <p class="font-body-md text-on-surface-variant mb-6">Guests can request songs when they RSVP. Keep the floor dancing all night long.</p>
 
-<div id="song-unlocked" class="hidden mb-6">
+<div id="song-unlocked" class="mb-6">
 <div class="flex items-center justify-between mb-4">
 <span class="font-label-sm text-gold uppercase tracking-[0.2em]">The Playlist</span>
 <span id="song-count" class="inline-flex items-center gap-1 rounded-full border border-gold/30 bg-gold/10 text-gold-light font-label-sm px-3 py-1"></span>
@@ -196,17 +209,65 @@
 <div id="song-list" class="max-h-[420px] overflow-y-auto pr-1 space-y-1"></div>
 </div>
 
-<div id="song-lock" class="mb-6">
-<p class="font-body-md text-on-surface-variant mb-4">Enter your passcode to reveal the requests.</p>
-<div class="flex gap-3">
-<input id="song-pass" type="password" placeholder="Passcode" autocomplete="current-password" class="flex-1 min-w-0 bg-transparent border-b border-gold/30 focus:border-gold focus:ring-0 text-body-lg py-2 placeholder:opacity-30 text-white outline-none" onkeydown="if(event.key==='Enter')unlockSongs()"/>
-<button onclick="unlockSongs()" class="shrink-0 inline-flex items-center gap-2 border border-gold/30 text-gold font-label-sm uppercase px-5 py-2.5 rounded-full hover:bg-gold/10 transition-colors">
-<span class="material-symbols-outlined text-base" data-icon="lock_open">lock_open</span>
-Unlock
+<div id="song-request" class="mb-6">
+<p class="font-body-md text-on-surface-variant mb-4">Request a song for the DJ &mdash; then tap the heart to vote for your favorites.</p>
+<div class="flex flex-col sm:flex-row gap-3">
+<input id="song-title" type="text" placeholder="Song title" class="flex-1 min-w-0 bg-transparent border-b border-gold/30 focus:border-gold focus:ring-0 text-body-lg py-2 placeholder:opacity-30 text-white outline-none" onkeydown="if(event.key==='Enter')submitSongRequest()"/>
+<input id="song-artist" type="text" placeholder="Artist (optional)" class="flex-1 min-w-0 bg-transparent border-b border-gold/30 focus:border-gold focus:ring-0 text-body-lg py-2 placeholder:opacity-30 text-white outline-none" onkeydown="if(event.key==='Enter')submitSongRequest()"/>
+<button onclick="submitSongRequest()" class="shrink-0 inline-flex items-center gap-2 border border-gold/30 text-gold font-label-sm uppercase px-5 py-2.5 rounded-full hover:bg-gold/10 transition-colors">
+<span class="material-symbols-outlined text-base" data-icon="library_music">library_music</span>
+Request
 </button>
 </div>
-<p id="song-lock-err" class="hidden font-label-sm text-red-400 mt-3">That passcode didn't work. Try again.</p>
+<p id="song-form-msg" class="hidden font-label-sm text-gold-light mt-3"></p>
 </div>
+
+<button class="group relative w-full sm:w-auto mb-3">
+<div class="absolute -inset-1 rounded-lg bg-gradient-to-r from-gold-light via-gold to-gold-dark opacity-30 blur-lg transition-all duration-500 group-hover:opacity-70 group-hover:blur-xl"></div>
+
+<div class="relative rounded-lg border border-white/10 bg-gradient-to-b from-[#151515] via-[#0f0f0f] to-black px-8 py-4 shadow-xl">
+<div class="absolute inset-x-0 top-px h-px bg-gradient-to-r from-transparent via-gold to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
+<div class="absolute inset-x-0 bottom-px h-px bg-gradient-to-r from-transparent via-gold-light to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
+
+<div class="relative flex items-center justify-between gap-6">
+<div class="flex items-center gap-4">
+<div class="relative flex h-12 w-12 items-center justify-center">
+<div class="absolute inset-0 rounded-full border border-gold/20 border-t-gold transition-transform duration-1000 group-hover:rotate-180"></div>
+<div class="absolute inset-[3px] rounded-full bg-black"></div>
+<span class="relative text-sm font-bold text-gold">C&amp;L</span>
+</div>
+
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<span class="text-base font-bold text-white">PLAYER.IO</span>
+<div class="h-1.5 w-1.5 rounded-full bg-gold shadow-lg shadow-gold/50"></div>
+</div>
+
+<div class="h-1.5 w-32 overflow-hidden rounded-full bg-white/10">
+<div class="h-full w-2/3 rounded-full bg-gradient-to-r from-gold to-gold-light transition-all duration-300 group-hover:w-full"></div>
+</div>
+</div>
+</div>
+
+<div class="flex items-center gap-3">
+<div class="relative flex h-8 w-8 items-center justify-center rounded-lg bg-gold/10">
+<svg stroke="currentColor" viewBox="0 0 24 24" fill="none" class="h-4 w-4 text-gold">
+<path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+</svg>
+<div class="absolute inset-0 rounded-lg bg-gold/10 blur-sm transition-all duration-300 group-hover:blur-md"></div>
+</div>
+
+<span class="text-sm font-semibold text-white">READY</span>
+
+<div class="flex gap-1">
+<div class="h-2 w-2 rounded-full bg-gold/40 transition-all duration-300 group-hover:bg-gold"></div>
+<div class="h-2 w-2 rounded-full bg-gold/40 transition-all duration-300 group-hover:bg-gold group-hover:delay-75"></div>
+<div class="h-2 w-2 rounded-full bg-gold/40 transition-all duration-300 group-hover:bg-gold group-hover:delay-150"></div>
+</div>
+</div>
+</div>
+</div>
+</button>
 
 <div class="flex flex-wrap gap-3">
 <button onclick="shareWithDj(event)" class="inline-flex items-center gap-2 bg-gradient-to-r from-gold-light to-gold-dark text-ink font-label-sm uppercase px-6 py-3.5 rounded-full border border-gold/40 shadow-[0_10px_30px_rgba(212,175,55,0.25)] hover:shadow-[0_10px_40px_rgba(212,175,55,0.45)] transition-all active:scale-95">
@@ -252,91 +313,125 @@ Download Messages
 (function () {
   const CONVEX_HTTP_URL = 'https://canny-hummingbird-920.convex.site';
   const WEDDING_URL = 'https://sayyesbzcharles-leticia.vercel.app';
-  const SESSION_KEY = 'cl_admin_token';
   const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw33IBpUacNLGAcqc4EGp5L2dlxaMkWSbEFvSTdFTDq6p9iO5oZCIWl6aS-BB6EIW-JUA/exec';
-  let adminToken = localStorage.getItem(SESSION_KEY) || '';
+  const DEVICE_KEY = 'cl_song_device';
+  const VOTED_KEY = 'cl_song_voted';
 
-  const lock = document.getElementById('song-lock');
-  const unlocked = document.getElementById('song-unlocked');
   const listEl = document.getElementById('song-list');
   const countEl = document.getElementById('song-count');
+  const formMsg = document.getElementById('song-form-msg');
 
-  function authHeaders() {
-    return adminToken ? { Authorization: 'Bearer ' + adminToken } : {};
+  let deviceId = localStorage.getItem(DEVICE_KEY);
+  if (!deviceId) {
+    deviceId = 'dev-' + Math.random().toString(36).slice(2) + Date.now().toString(36);
+    localStorage.setItem(DEVICE_KEY, deviceId);
   }
 
-  function showLock() {
-    lock.classList.remove('hidden');
-    unlocked.classList.add('hidden');
+  function votedSongs() {
+    try { return JSON.parse(localStorage.getItem(VOTED_KEY) || '[]'); } catch (e) { return []; }
   }
-  function showUnlocked() {
-    lock.classList.add('hidden');
-    unlocked.classList.remove('hidden');
-  }
-
-  function guestName(g) {
-    const parts = [];
-    if (g.first_name) parts.push(g.first_name);
-    if (g.last_name) parts.push(g.last_name);
-    let name = parts.join(' ') || 'Guest';
-    if (g.spouse_name) name += ' & ' + g.spouse_name;
-    return name;
-  }
-
-  function renderSongs(guests) {
-    const songs = guests
-      .filter(function (g) { return g.song && String(g.song).trim(); })
-      .sort(function (a, b) { return guestName(a).localeCompare(guestName(b)); });
-    countEl.textContent = (songs.length === 1 ? '1 request' : songs.length + ' requests');
-    if (!songs.length) {
-      listEl.innerHTML = '<div class="text-center py-10"><span class="material-symbols-outlined text-gold/50 text-4xl block mb-3" data-icon="music_off">music_off</span><p class="font-body-md text-on-surface-variant">No song requests yet &mdash; the first one is on its way.</p></div>';
-      return;
-    }
-    listEl.innerHTML = songs.map(function (g) {
-      return '<div class="song-row flex items-start gap-3 rounded-xl px-3 py-3">' +
-        '<span class="material-symbols-outlined text-gold mt-0.5 text-lg" data-icon="music_note">music_note</span>' +
-        '<div class="min-w-0">' +
-        '<p class="font-body-md text-white truncate">' + escapeHtml(String(g.song).trim()) + '</p>' +
-        '<p class="font-label-sm text-on-surface-variant mt-1">' + escapeHtml(guestName(g)) + '</p>' +
-        '</div></div>';
-    }).join('');
+  function markVoted(id) {
+    const set = votedSongs();
+    if (set.indexOf(id) === -1) set.push(id);
+    localStorage.setItem(VOTED_KEY, JSON.stringify(set));
   }
 
   function escapeHtml(s) {
     return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
-  async function loadSongs() {
-    try {
-      const res = await fetch(CONVEX_HTTP_URL + '/api/guests', { headers: authHeaders() });
-      if (res.status === 401) { showLock(); return; }
-      if (!res.ok) { showLock(); return; }
-      const guests = await res.json();
-      showUnlocked();
-      renderSongs(Array.isArray(guests) ? guests : []);
-    } catch (e) {
-      showLock();
-    }
+  function heartMarkup(song) {
+    const id = 'heart-' + song.id;
+    const checked = votedSongs().indexOf(song.id) !== -1 ? 'checked' : '';
+    const next = song.votes + 1;
+    return '<div class="like-button' + (checked ? ' disabled' : '') + '">' +
+      '<input class="on" id="' + id + '" type="checkbox" ' + checked + ' data-song="' + song.id + '" onchange="voteForSong(this)"/>' +
+      '<label class="like" for="' + id + '">' +
+      '<svg class="like-icon" fill-rule="nonzero" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z"></path></svg>' +
+      '<span class="like-text">Vote</span></label>' +
+      '<span class="like-count one">' + song.votes + '</span>' +
+      '<span class="like-count two">' + next + '</span>' +
+      '</div>';
   }
 
-  window.unlockSongs = async function () {
-    const pass = document.getElementById('song-pass').value;
-    const err = document.getElementById('song-lock-err');
-    err.classList.add('hidden');
-    if (!pass) return;
+  function renderSongs(songs) {
+    countEl.textContent = (songs.length === 1 ? '1 request' : songs.length + ' requests');
+    if (!songs.length) {
+      listEl.innerHTML = '<div class="text-center py-10"><span class="material-symbols-outlined text-gold/50 text-4xl block mb-3" data-icon="music_off">music_off</span><p class="font-body-md text-on-surface-variant">No song requests yet &mdash; be the first to add one.</p></div>';
+      return;
+    }
+    listEl.innerHTML = songs.map(function (s) {
+      return '<div class="song-row flex items-center gap-3 rounded-xl px-3 py-3">' +
+        '<span class="material-symbols-outlined text-gold text-lg" data-icon="music_note">music_note</span>' +
+        '<div class="min-w-0 flex-1">' +
+        '<p class="font-body-md text-white truncate">' + escapeHtml(s.title) + '</p>' +
+        '<p class="font-label-sm text-on-surface-variant mt-1 truncate">' + escapeHtml(s.artist || 'Unknown Artist') + '</p>' +
+        '</div>' + heartMarkup(s) +
+        '</div>';
+    }).join('');
+  }
+
+  window.voteForSong = function (el) {
+    const songId = el.getAttribute('data-song');
+    const btn = el.closest('.like-button');
+    if (votedSongs().indexOf(songId) !== -1) {
+      el.checked = true;
+      btn.classList.add('disabled');
+      return;
+    }
+    fetch(CONVEX_HTTP_URL + '/api/song/vote', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ songId: songId, deviceId: deviceId })
+    }).then(function (r) { return r.json(); }).then(function (data) {
+      if (data && typeof data.votes === 'number') {
+        markVoted(songId);
+        const one = btn.querySelector('.like-count.one');
+        const two = btn.querySelector('.like-count.two');
+        if (one) one.textContent = data.votes;
+        if (two) two.textContent = data.votes + 1;
+        btn.classList.add('disabled');
+        el.checked = true;
+      } else {
+        el.checked = false;
+      }
+    }).catch(function () {
+      el.checked = false;
+    });
+  };
+
+  async function loadSongs() {
     try {
-      const res = await fetch(CONVEX_HTTP_URL + '/api/auth/login', {
+      const res = await fetch(CONVEX_HTTP_URL + '/api/songs');
+      if (!res.ok) return;
+      const songs = await res.json();
+      renderSongs(Array.isArray(songs) ? songs : []);
+    } catch (e) { /* leave list empty */ }
+  }
+
+  window.submitSongRequest = async function () {
+    const titleEl = document.getElementById('song-title');
+    const artistEl = document.getElementById('song-artist');
+    const title = titleEl.value.trim();
+    if (!title) { titleEl.focus(); return; }
+    formMsg.classList.add('hidden');
+    try {
+      const res = await fetch(CONVEX_HTTP_URL + '/api/song', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: pass })
+        body: JSON.stringify({ title: title, artist: artistEl.value.trim(), requested_by: 'Guest', deviceId: deviceId })
       });
-      if (!res.ok) { err.classList.remove('hidden'); return; }
-      const data = await res.json();
-      adminToken = data.token;
-      localStorage.setItem(SESSION_KEY, adminToken);
+      const data = await res.json().catch(function () { return {}; });
+      if (!res.ok) { formMsg.textContent = 'Something went wrong. Please try again.'; formMsg.classList.remove('hidden'); return; }
+      titleEl.value = '';
+      artistEl.value = '';
+      if (data.id) markVoted(data.id);
+      formMsg.textContent = data.alreadyVoted ? 'Thanks! That song is already on the list.' : 'Song added to the playlist!';
+      formMsg.classList.remove('hidden');
       await loadSongs();
     } catch (e) {
-      err.classList.remove('hidden');
+      formMsg.textContent = 'Could not reach the song list right now. Please try again in a moment.';
+      formMsg.classList.remove('hidden');
     }
   };
 
@@ -365,13 +460,7 @@ Download Messages
     window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank', 'noopener');
   };
 
-  // Try to auto-load songs with an existing session.
-  (function init() {
-    if (!adminToken) { showLock(); return; }
-    fetch(CONVEX_HTTP_URL + '/api/auth/me', { headers: authHeaders() })
-      .then(function (r) { return r.ok ? loadSongs() : Promise.resolve(showLock()); })
-      .catch(function () { showLock(); });
-  })();
+  loadSongs();
 })();
 </script>
 </body>

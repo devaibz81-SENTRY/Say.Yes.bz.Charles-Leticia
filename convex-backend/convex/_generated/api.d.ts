@@ -15,6 +15,7 @@ import type * as http from "../http.js";
 import type * as rsvp from "../rsvp.js";
 import type * as seed from "../seed.js";
 import type * as seedData from "../seedData.js";
+import type * as songs from "../songs.js";
 
 import type {
   ApiFromModules,
@@ -30,6 +31,7 @@ declare const fullApi: ApiFromModules<{
   rsvp: typeof rsvp;
   seed: typeof seed;
   seedData: typeof seedData;
+  songs: typeof songs;
 }>;
 
 /**

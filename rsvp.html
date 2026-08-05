@@ -137,7 +137,7 @@ button[type=submit]:hover { box-shadow: 0 14px 38px rgba(212,175,55,0.42) !impor
 .chad-ic{font-size:1.15rem;color:rgba(212,175,55,.6);flex-shrink:0}
 .chad-input{
   background:none;border:none;outline:none;width:100%;
-  color:#d3d3d3;font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:.92rem;
+  color:#ffffff;font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:.92rem;
 }
 .chad-input::placeholder{color:rgba(211,211,211,.4)}
 .chad-area{resize:none;line-height:1.4}
@@ -702,11 +702,26 @@ button[type=submit]:hover { box-shadow: 0 14px 38px rgba(212,175,55,0.42) !impor
   document.getElementById('navHome').href = withParams('index.html');
 
   function updateTotals() {
-    var n = totalAttending();
     var line = document.getElementById('totalLine');
-    line.textContent = n > 0 ? 'Guests confirmed so far: ' + n : '';
     var t = document.getElementById('sucTotal');
-    t.textContent = 'Confirmed attending so far: ' + totalAttending();
+    fetch(CONVEX_HTTP_URL + '/api/rsvp/count')
+      .then(function (res) { return res.json().catch(function () { return {}; }); })
+      .then(function (data) {
+        var n = data.confirmedSeats;
+        if (typeof n === 'number') {
+          if (line) line.textContent = n > 0 ? 'Guests confirmed so far: ' + n : '';
+          if (t) t.textContent = 'Confirmed attending so far: ' + n;
+          return;
+        }
+        setFromLocal();
+      })
+      .catch(function () { setFromLocal(); });
+
+    function setFromLocal() {
+      var n = totalAttending();
+      if (line) line.textContent = n > 0 ? 'Guests confirmed so far: ' + n : '';
+      if (t) t.textContent = 'Confirmed attending so far: ' + totalAttending();
+    }
   }
 
   // ---- Status pill helpers ----

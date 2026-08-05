@@ -25,6 +25,12 @@ export const submitRsvp = httpAction(async (ctx, request) => {
       song: body.song ?? undefined,
       message: body.message ?? undefined,
     });
+    if (body.song && String(body.song).trim()) {
+      await ctx.runMutation(internal.db.createSong, {
+        title: String(body.song).trim(),
+        requested_by: body.name ? String(body.name) : undefined,
+      });
+    }
     return json(result);
   } catch (err: any) {
     if (err && String(err.message).includes("Guest not found")) {
@@ -49,4 +55,12 @@ export const rsvpStatus = httpAction(async (ctx, request) => {
     status: guest.attendance || "invited",
     name: `${guest.first_name || ""} ${guest.last_name || ""}`.trim() || guest.spouse_name || "",
   });
+});
+
+export const rsvpCount = httpAction(async (ctx, request) => {
+  if (request.method === "OPTIONS") return json({ ok: true });
+  if (request.method !== "GET") return json({ error: "Method not allowed" }, 405);
+
+  const stats = await ctx.runQuery(internal.db.countAttending);
+  return json(stats);
 });

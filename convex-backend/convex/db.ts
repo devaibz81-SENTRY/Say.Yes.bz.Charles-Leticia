@@ -231,27 +231,64 @@ export const createSong = internalMutation({
     title: v.string(),
     artist: v.optional(v.string()),
     requested_by: v.optional(v.string()),
+    deviceId: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
+    const title = args.title.trim();
+    const artist = (args.artist || "").trim();
+    const deviceId = args.deviceId || "";
+
+    const existing = await ctx.db.query("songs").collect();
+    const match = existing.find((s) =>
+      s.title.toLowerCase() === title.toLowerCase() &&
+      (artist === "" || (s.artist || "").toLowerCase() === artist.toLowerCase())
+    );
+
+    if (match) {
+      if (deviceId && (match.voters || []).includes(deviceId)) {
+        return { id: match._id, votes: match.votes, alreadyVoted: true };
+      }
+      const voters = match.voters || [];
+      if (deviceId) voters.push(deviceId);
+      await ctx.db.patch(match._id, { votes: match.votes + 1, voters });
+      return { id: match._id, votes: match.votes + 1, alreadyVoted: false };
+    }
+
     const newId = await ctx.db.insert("songs", {
       title: args.title,
       artist: args.artist || "Unknown Artist",
       requested_by: args.requested_by || "Guest",
       votes: 1,
+      voters: deviceId ? [deviceId] : [],
       createdAt: Date.now(),
     });
-    return newId;
+    return { id: newId, votes: 1, alreadyVoted: false };
   },
 });
 
 export const voteSong = internalMutation({
-  args: { songId: v.id("songs") },
-  handler: async (ctx, { songId }) => {
+  args: { songId: v.id("songs"), deviceId: v.optional(v.string()) },
+  handler: async (ctx, { songId, deviceId }) => {
     const song = await ctx.db.get(songId);
     if (!song) throw new Error("Song not found");
+
+    if (deviceId && (song.voters || []).includes(deviceId)) {
+      return { votes: song.votes, alreadyVoted: true };
+    }
+
+    const voters = song.voters || [];
+    if (deviceId) voters.push(deviceId);
     const updatedVotes = song.votes + 1;
-    await ctx.db.patch(songId, { votes: updatedVotes });
-    return updatedVotes;
+    await ctx.db.patch(songId, { votes: updatedVotes, voters });
+    return { votes: updatedVotes, alreadyVoted: false };
+  },
+});
+
+export const deleteSong = internalMutation({
+  args: { songId: v.id("songs") },
+  handler: async (ctx, { songId }) => {
+    await ctx.db.delete(songId);
+    return { ok: true };
   },
 });
 
@@ -268,6 +305,24 @@ export const listMessages = internalQuery({
         attendance: g.attendance || "invited",
         song: g.song || null,
       }));
+  },
+});
+
+export const countAttending = internalQuery({
+  args: {},
+  handler: async (ctx) => {
+    const guests = await ctx.db.query("guests").collect();
+    let confirmedSeats = 0;
+    let confirmedGuests = 0;
+    let totalInvited = 0;
+    for (const g of guests) {
+      totalInvited += g.max_party || 0;
+      if (g.attendance === "attending") {
+        confirmedGuests += 1;
+        confirmedSeats += g.max_party || 1;
+      }
+    }
+    return { confirmedSeats, confirmedGuests, totalInvited };
   },
 });
 

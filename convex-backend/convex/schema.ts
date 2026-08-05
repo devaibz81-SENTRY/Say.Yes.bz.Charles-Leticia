@@ -29,6 +29,7 @@ export default defineSchema({
     artist: v.optional(v.string()),
     requested_by: v.optional(v.string()),
     votes: v.number(),
+    voters: v.optional(v.array(v.string())),
     createdAt: v.number(),
   }),
 });

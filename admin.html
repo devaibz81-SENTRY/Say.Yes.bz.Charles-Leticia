@@ -1105,44 +1105,69 @@ Charles and Leticia</textarea>
         seating: 'Seating'
       };
       document.getElementById('view-title').textContent = titles[view] || 'Guest Management';
+
+      if (view === 'media') renderMediaView();
     }
 
     function renderMediaView() {
       const msgContainer = document.getElementById('admin-messages-list');
       const songContainer = document.getElementById('admin-songs-list');
-      
+
       if (!msgContainer || !songContainer) return;
 
+      renderMessagesInbox(msgContainer);
+      renderRequestedSongs(songContainer);
+    }
+
+    function renderMessagesInbox(msgContainer) {
       const msgs = guests.filter(g => g.message && g.message.trim() !== '');
       if (!msgs.length) {
-        msgContainer.innerHTML = '<div style="color:#888; padding:1rem; font-size:0.85rem;">No guest messages submitted yet.</div>';
-      } else {
-        msgContainer.innerHTML = msgs.map(g => `
+        msgContainer.innerHTML = '<div style="color:#888; padding:1rem; font-size:0.85rem; text-align:center;">No guest messages submitted yet.</div>';
+        return;
+      }
+      msgContainer.innerHTML = msgs.map(g => {
+        const name = escapeHtml((g.first_name || '') + ' ' + (g.last_name || '')).trim() || 'Guest';
+        const message = escapeHtml(g.message);
+        const song = g.song ? escapeHtml(g.song) : '';
+        const status = (g.attendance || 'invited');
+        return `
           <div style="background:#faf8f5; border:1px solid #e8e2d8; border-radius:6px; padding:1rem;">
-            <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;">
-              <strong style="color:var(--black); font-size:0.9rem;">${g.first_name || ''} ${g.last_name || ''}</strong>
-              <span style="font-size:0.65rem; text-transform:uppercase; background:var(--gold); color:#000; padding:2px 6px; border-radius:4px; font-weight:600;">${g.attendance || 'invited'}</span>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem; gap:0.5rem;">
+              <strong style="color:var(--black); font-size:0.9rem;">${name}</strong>
+              <span style="font-size:0.65rem; text-transform:uppercase; background:var(--gold); color:#000; padding:2px 6px; border-radius:4px; font-weight:600; white-space:nowrap;">${status}</span>
             </div>
-            <p style="color:#444; font-size:0.85rem; font-style:italic; margin-bottom:0.5rem;">"${g.message}"</p>
-            ${g.song ? `<div style="font-size:0.75rem; color:#888;">🎵 Song requested: <strong>${g.song}</strong></div>` : ''}
-          </div>
-        `).join('');
+            <p style="color:#444; font-size:0.85rem; font-style:italic; margin-bottom:0.5rem;">&ldquo;${message}&rdquo;</p>
+            ${song ? `<div style="font-size:0.75rem; color:#888;">🎵 Song requested: <strong>${song}</strong></div>` : ''}
+          </div>`;
+      }).join('');
+    }
+
+    async function renderRequestedSongs(songContainer) {
+      songContainer.innerHTML = '<div style="color:#888; padding:1rem; font-size:0.85rem; text-align:center;">Loading requested songs...</div>';
+      let songs = [];
+      try {
+        const res = await fetch(`${CONVEX_HTTP_URL}/api/songs`);
+        if (res.ok) {
+          const data = await res.json();
+          songs = Array.isArray(data) ? data : [];
+        }
+      } catch (e) { /* fall through */ }
+
+      if (!songs.length) {
+        songContainer.innerHTML = '<div style="color:#888; padding:1rem; font-size:0.85rem; text-align:center;">No song requests submitted yet.</div>';
+        return;
       }
 
-      const songs = guests.filter(g => g.song && g.song.trim() !== '');
-      if (!songs.length) {
-        songContainer.innerHTML = '<div style="color:#888; padding:1rem; font-size:0.85rem;">No song requests submitted yet.</div>';
-      } else {
-        songContainer.innerHTML = songs.map(g => `
-          <div style="background:#faf8f5; border:1px solid #e8e2d8; border-radius:6px; padding:1rem; display:flex; justify-content:space-between; align-items:center;">
-            <div>
-              <div style="font-weight:600; color:var(--black); font-size:0.9rem;">${g.song}</div>
-              <div style="font-size:0.75rem; color:#888;">Requested by: ${g.first_name || ''} ${g.last_name || ''}</div>
-            </div>
-            <span style="font-size:1.2rem;">🎵</span>
+      songs.sort((a, b) => (b.votes || 0) - (a.votes || 0));
+      songContainer.innerHTML = songs.map(g => `
+        <div style="background:#faf8f5; border:1px solid #e8e2d8; border-radius:6px; padding:1rem; display:flex; justify-content:space-between; align-items:center; gap:0.75rem;">
+          <div style="min-width:0;">
+            <div style="font-weight:600; color:var(--black); font-size:0.9rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${escapeHtml(g.title)}</div>
+            <div style="font-size:0.75rem; color:#888;">${g.artist ? escapeHtml(g.artist) : ''}${g.requested_by ? ` &middot; ${escapeHtml(g.requested_by)}` : ''}</div>
           </div>
-        `).join('');
-      }
+          <span style="display:inline-flex; align-items:center; gap:0.3rem; font-size:0.75rem; font-weight:700; color:var(--gold-dim); background:#f4eccb; border:1px solid #e4d9a8; border-radius:20px; padding:4px 10px; white-space:nowrap;">♥ ${g.votes || 0}</span>
+        </div>
+      `).join('');
     }
 
     // Seating functions
@@ -1460,11 +1485,6 @@ Charles and Leticia</textarea>
           </div></td>
         </tr>`;
       }).join('');
-    }
-
-    function renderMediaView() {
-      // Media view now shows simple buttons to external Google Apps Script pages
-      // No local rendering needed - view-media div contains static HTML
     }
 
     // Adding from dashboard
