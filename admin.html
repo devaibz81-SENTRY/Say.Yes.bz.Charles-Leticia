@@ -802,7 +802,7 @@
     .mobile-nav-item.active { color: var(--gold); background: rgba(201,168,76,0.12); }
 
     /* === Responsive: tablets & phones === */
-    @media (max-width: 900px) {
+    @media (max-width: 1024px) {
       #sidebar { display: none; }
       #main { width: 100%; }
       #content { padding: 1.25rem 1rem 6.5rem; }
@@ -1914,19 +1914,19 @@ Charles and Leticia</textarea>
   <!-- Mobile bottom nav -->
   <nav id="mobile-nav" aria-label="Mobile navigation">
     <div class="mobile-nav-list">
-      <button class="mobile-nav-item" onclick="showView('guests', event)">
+      <button class="mobile-nav-item" data-view="guests" onclick="showView('guests', event)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         Guests
       </button>
-      <button class="mobile-nav-item" onclick="showView('media', event)">
+      <button class="mobile-nav-item" data-view="media" onclick="showView('media', event)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
         Songs
       </button>
-      <button class="mobile-nav-item" onclick="showView('whatsapp', event)">
+      <button class="mobile-nav-item" data-view="whatsapp" onclick="showView('whatsapp', event)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
         WhatsApp
       </button>
-      <button class="mobile-nav-item" onclick="showView('seating', event); loadSeating()">
+      <button class="mobile-nav-item" data-view="seating" onclick="showView('seating', event); loadSeating()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
         Seating
       </button>
