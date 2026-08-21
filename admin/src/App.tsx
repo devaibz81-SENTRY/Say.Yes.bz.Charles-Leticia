@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const CONVEX_URL = 'https://canny-hummingbird-920.convex.site';
+const CONVEX_URL = 'https://neat-bee-452.convex.site';
 
 interface Guest {
   _id: string;

@@ -10,6 +10,7 @@ export default defineSchema({
     max_party: v.optional(v.number()),
     phone: v.optional(v.string()),
     attendance: v.optional(v.string()),
+    attending_count: v.optional(v.number()),
     deadline: v.optional(v.string()),
     easy_mode: v.optional(v.boolean()),
     plus_names: v.optional(v.string()),

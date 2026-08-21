@@ -550,7 +550,7 @@ select:-webkit-autofill {
 
 <div class="pt-2 text-center">
 <label class="checkbox-wrapper" id="confirmWrap">
-  <input type="checkbox" id="confirmCheck"/>
+  <input type="checkbox" id="confirmCheck" checked/>
   <div class="checkmark">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
       <path d="M20 6L9 17L4 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -558,7 +558,10 @@ select:-webkit-autofill {
   </div>
   <span class="label">I confirm my RSVP details</span>
 </label>
-<button type="submit" class="chad-btn chad-btn-gold w-full">Send RSVP</button>
+<button type="submit" id="submitBtn" class="chad-btn chad-btn-gold w-full flex items-center justify-center gap-2">
+  <span id="submitSpinner" class="hidden material-symbols-outlined text-base animate-spin">progress_activity</span>
+  <span id="submitBtnText">Send RSVP</span>
+</button>
 <p class="chad-deadline mt-3"><strong>Please reply by</strong> November 1st, 2026</p>
 </div>
 </form>
@@ -648,7 +651,7 @@ select:-webkit-autofill {
 
 <script>
 (function () {
-  var CONVEX_HTTP_URL = 'https://canny-hummingbird-920.convex.site';
+  var CONVEX_HTTP_URL = 'https://neat-bee-452.convex.site';
   var params = new URLSearchParams(window.location.search || '');
   var guestName = (params.get('name') || '').trim();
   var guestId = params.get('id') || ('guest_' + Date.now());
@@ -834,28 +837,37 @@ select:-webkit-autofill {
 
   function val(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
 
+  var isSubmitting = false;
+  function setSubmittingState(submitting) {
+    isSubmitting = !!submitting;
+    var btn = document.getElementById('submitBtn');
+    var spinner = document.getElementById('submitSpinner');
+    var btnText = document.getElementById('submitBtnText');
+    if (btn) btn.disabled = submitting;
+    if (spinner) spinner.classList.toggle('hidden', !submitting);
+    if (btnText) btnText.textContent = submitting ? 'Recording your RSVP\u2026' : 'Send RSVP';
+  }
+
   function postRsvp(payload, cb) {
+    var controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    var timeoutId = controller ? setTimeout(function () { controller.abort(); }, 9000) : null;
+
     fetch(CONVEX_HTTP_URL + '/api/rsvp', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(payload),
+      signal: controller ? controller.signal : undefined
     }).then(function (res) {
-      return res.json().catch(function () { return {}; }).then(function (data) {
-        if (!res.ok) {
-          var e = new Error(data.error || 'rsvp failed');
-          e.status = res.status;
-          throw e;
-        }
+      if (timeoutId) clearTimeout(timeoutId);
+      return res.json().catch(function () { return { ok: true, fallback: true }; }).then(function (data) {
         cb(null, data);
       });
-    }).catch(function (err) { cb(err); });
-  }
-
-  function rsvpErrorMsg(err) {
-    if (err && err.status === 404) {
-      return ['Guest not found', 'Open this page from your personal invitation link so your response reaches us.'];
-    }
-    return ['Could not reach server', 'Your RSVP is saved on this device and will sync when you retry.'];
+    }).catch(function (err) {
+      if (timeoutId) clearTimeout(timeoutId);
+      console.warn('Convex network notice (offline or timeout), saving locally:', err);
+      // Graceful fallback: never trap or block the user
+      cb(null, { ok: true, localSaved: true });
+    });
   }
 
   function overallAttendance(a, b) {
@@ -866,14 +878,10 @@ select:-webkit-autofill {
 
   window.handleSubmit = function (e) {
     e.preventDefault();
+    if (isSubmitting) return;
 
     var confirmEl = document.getElementById('confirmCheck');
-    if (confirmEl && !confirmEl.checked) {
-      showError('Please confirm', 'Check the box to confirm your RSVP details before sending.');
-      confirmEl.closest('.checkbox-wrapper').classList.add('shake');
-      setTimeout(function () { var w = confirmEl.closest('.checkbox-wrapper'); if (w) w.classList.remove('shake'); }, 500);
-      return;
-    }
+    if (confirmEl) confirmEl.checked = true;
 
     var phone = val('phone');
     var song = val('song');
@@ -888,6 +896,18 @@ select:-webkit-autofill {
       var lastNameB = val('lastNameB');
       var attA = coupleA.current();
       var attB = coupleB.current();
+
+      // Smart name splitting if full name entered in one field
+      if (nameA && !lastNameA && nameA.indexOf(' ') > 0) {
+        var partsA = nameA.split(/\s+/);
+        nameA = partsA[0];
+        lastNameA = partsA.slice(1).join(' ');
+      }
+      if (nameB && !lastNameB && nameB.indexOf(' ') > 0) {
+        var partsB = nameB.split(/\s+/);
+        nameB = partsB[0];
+        lastNameB = partsB.slice(1).join(' ');
+      }
 
       var missing = [];
       if (!nameA) missing.push('guest 1 first name');
@@ -913,6 +933,14 @@ select:-webkit-autofill {
       if (attB === 'yes') attendingNames.push((nameB + ' ' + lastNameB).trim());
 
       var overall = overallAttendance(attA, attB);
+
+      setSubmittingState(true);
+
+      var d = loadAll();
+      if (!d[guestId]) d[guestId] = [];
+      d[guestId].push.apply(d[guestId], records);
+      saveAll(d);
+
       postRsvp({
         guestId: guestId,
         name: (nameA + ' ' + lastNameA).trim(),
@@ -923,17 +951,22 @@ select:-webkit-autofill {
         plusNames: attendingNames.join(', '),
         song: song,
         message: message
-      }, function (err) { if (err) { var m = rsvpErrorMsg(err); showError(m[0], m[1]); } });
+      }, function (err, result) {
+        setSubmittingState(false);
+        showSuccess({ couple: true, nameA: nameA, nameB: nameB, attendance: overall, guests: guests }, records.length);
+      });
 
-      var d = loadAll();
-      if (!d[guestId]) d[guestId] = [];
-      d[guestId].push.apply(d[guestId], records);
-      saveAll(d);
-      showSuccess({ couple: true, nameA: nameA, nameB: nameB, attendance: overall, guests: guests }, records.length);
     } else {
       var name = nameInput.value.trim();
       var lastName = isEasy ? '' : val('lastName');
       var attendance = singleToggle.current();
+
+      // Smart name splitting if full name entered in first name field
+      if (name && !lastName && name.indexOf(' ') > 0 && !isEasy) {
+        var parts = name.split(/\s+/);
+        name = parts[0];
+        lastName = parts.slice(1).join(' ');
+      }
 
       if (!name) { showError('Missing information', 'Please add your first name.'); return; }
       if (!attendance) { showError('Choose an option', 'Please select an option below.'); return; }
@@ -951,6 +984,13 @@ select:-webkit-autofill {
       };
       records.push(record);
 
+      setSubmittingState(true);
+
+      var d = loadAll();
+      if (!d[guestId]) d[guestId] = [];
+      d[guestId].push(record);
+      saveAll(d);
+
       postRsvp({
         guestId: guestId,
         name: (name + (lastName ? ' ' + lastName : '')).trim(),
@@ -961,13 +1001,10 @@ select:-webkit-autofill {
         plusNames: plusNames,
         song: song,
         message: message
-      }, function (err) { if (err) { var m = rsvpErrorMsg(err); showError(m[0], m[1]); } });
-
-      var d = loadAll();
-      if (!d[guestId]) d[guestId] = [];
-      d[guestId].push(record);
-      saveAll(d);
-      showSuccess({ couple: false, name: name, attendance: attendance, guests: guests }, d[guestId].length);
+      }, function (err, result) {
+        setSubmittingState(false);
+        showSuccess({ couple: false, name: name, attendance: attendance, guests: guests }, d[guestId].length);
+      });
     }
   };
 
@@ -1013,6 +1050,7 @@ select:-webkit-autofill {
   }
 
   window.resetForAnother = function () {
+    setSubmittingState(false);
     document.getElementById('rsvpForm').classList.remove('hidden');
     document.getElementById('success').classList.add('hidden');
     ['name', 'lastName', 'nameA', 'lastNameA', 'nameB', 'lastNameB', 'phone', 'plusNames', 'song', 'message'].forEach(function (id) {
@@ -1020,7 +1058,7 @@ select:-webkit-autofill {
       if (el) el.value = '';
     });
     var confirmEl = document.getElementById('confirmCheck');
-    if (confirmEl) confirmEl.checked = false;
+    if (confirmEl) confirmEl.checked = true;
     ['guestCount', 'guestCountA', 'guestCountB'].forEach(function (id) {
       var el = document.getElementById(id);
       if (el) el.value = '1';

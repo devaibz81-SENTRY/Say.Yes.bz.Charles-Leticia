@@ -117,10 +117,28 @@ export const deleteGuest = internalMutation({
 
 // ---------- public RSVP ----------
 
+function normalizeText(str?: string | null): string {
+  if (!str) return "";
+  return str
+    .toString()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") // strip accent marks
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function cleanPhone(str?: string | null): string {
+  if (!str) return "";
+  return str.replace(/\D/g, "");
+}
+
 export const submitRsvp = internalMutation({
   args: {
     guestId: v.string(),
     attendance: v.string(),
+    guests: v.optional(v.number()),
     name: v.optional(v.string()),
     lastName: v.optional(v.string()),
     phone: v.optional(v.string()),
@@ -130,23 +148,28 @@ export const submitRsvp = internalMutation({
   },
   handler: async (ctx, args) => {
     let existing: any = null;
-    try {
-      existing = await ctx.db.get(args.guestId as Id<"guests">);
-    } catch {
-      existing = null;
-    }
-    if (!existing) {
-      const cleanId = args.guestId.split(":")[0];
+
+    // 1. Try finding by direct ID if valid
+    if (args.guestId && !args.guestId.startsWith("guest_")) {
       try {
-        existing = await ctx.db.get(cleanId as Id<"guests">);
+        existing = await ctx.db.get(args.guestId as Id<"guests">);
       } catch {
         existing = null;
       }
+      if (!existing) {
+        const cleanId = args.guestId.split(":")[0];
+        try {
+          existing = await ctx.db.get(cleanId as Id<"guests">);
+        } catch {
+          existing = null;
+        }
+      }
     }
+
+    // 2. Try finding by smart name/phone matching
     if (!existing) {
-      existing = await findGuestByName(ctx, args.name, args.lastName);
+      existing = await findGuestByName(ctx, args.name, args.lastName, args.phone);
     }
-    if (!existing) throw new Error("Guest not found");
 
     const attendance =
       args.attendance === "yes"
@@ -155,37 +178,120 @@ export const submitRsvp = internalMutation({
           ? "later"
           : "declined";
 
-    const patch: Record<string, unknown> = { attendance };
-    if (args.phone !== undefined && args.phone !== null) patch.phone = args.phone;
-    if (args.plus_names !== undefined && args.plus_names !== null) patch.plus_names = args.plus_names;
-    if (args.song !== undefined && args.song !== null) patch.song = args.song;
-    if (args.message !== undefined && args.message !== null) patch.message = args.message;
+    const requestedSeats = Math.max(1, args.guests || 1);
+    const confirmedCount = attendance === "attending" ? requestedSeats : 0;
+
+    // 3. Fallback: If not found in pre-seeded list, AUTO-REGISTER the guest!
+    // This guarantees 0% error/rejection rate for any invited or walk-in guest.
+    if (!existing) {
+      const rawName = (args.name || "").trim();
+      const rawLast = (args.lastName || "").trim();
+      let firstName = rawName;
+      let lastName = rawLast;
+
+      if (!lastName && rawName.includes(" ")) {
+        const parts = rawName.split(/\s+/);
+        firstName = parts[0];
+        lastName = parts.slice(1).join(" ");
+      }
+
+      const newGuestId = await ctx.db.insert("guests", {
+        first_name: firstName || "Guest",
+        last_name: lastName || undefined,
+        guest_type: requestedSeats > 1 ? "couple" : "single",
+        max_party: requestedSeats,
+        attending_count: confirmedCount,
+        phone: args.phone ? String(args.phone).trim() : undefined,
+        attendance,
+        plus_names: args.plus_names ? String(args.plus_names).trim() : undefined,
+        song: args.song ? String(args.song).trim() : undefined,
+        message: args.message ? String(args.message).trim() : undefined,
+      });
+
+      return { ok: true, attendance, guestId: newGuestId, isNew: true };
+    }
+
+    // 4. Update existing guest
+    const patch: Record<string, unknown> = {
+      attendance,
+      attending_count: confirmedCount,
+    };
+    if (args.phone !== undefined && args.phone !== null) patch.phone = String(args.phone).trim();
+    if (args.plus_names !== undefined && args.plus_names !== null) patch.plus_names = String(args.plus_names).trim();
+    if (args.song !== undefined && args.song !== null) patch.song = String(args.song).trim();
+    if (args.message !== undefined && args.message !== null) patch.message = String(args.message).trim();
+
     await ctx.db.patch(existing._id, patch);
-    return { ok: true, attendance, guestId: existing._id };
+    return { ok: true, attendance, guestId: existing._id, isNew: false };
   },
 });
 
-async function findGuestByName(ctx: any, name?: string, lastName?: string) {
-  const first = (name || "").trim();
-  const last = (lastName || "").trim();
-  if (!first && !last) return null;
+async function findGuestByName(ctx: any, name?: string, lastName?: string, phone?: string) {
+  const normFirst = normalizeText(name);
+  const normLast = normalizeText(lastName);
+  const userPhone = cleanPhone(phone);
 
-  const fullKey = `${first} ${last}`.replace(/\s+/g, " ").trim().toLowerCase();
-  const firstKey = first.toLowerCase();
+  if (!normFirst && !normLast && !userPhone) return null;
+
+  // If user entered full name into first name input ("John Doe", "")
+  const combinedInput = `${normFirst} ${normLast}`.trim();
+  const inputParts = combinedInput.split(/\s+/).filter(Boolean);
 
   const all = await ctx.db.query("guests").collect();
-  return (
-    all.find((g: any) => {
-      const gFirst = (g.first_name || "").trim();
-      const gLast = (g.last_name || "").trim();
-      const gFull = `${gFirst} ${gLast}`.replace(/\s+/g, " ").trim().toLowerCase();
-      if (fullKey && gFull === fullKey) return true;
-      if (firstKey && gFirst.toLowerCase() === firstKey && (!last || gLast.toLowerCase() === last.toLowerCase())) {
-        return true;
+
+  // Try phone match first if provided (exact 7+ digits)
+  if (userPhone && userPhone.length >= 7) {
+    const phoneMatch = all.find((g: any) => {
+      const gPhone = cleanPhone(g.phone);
+      return gPhone && (gPhone === userPhone || gPhone.endsWith(userPhone) || userPhone.endsWith(gPhone));
+    });
+    if (phoneMatch) return phoneMatch;
+  }
+
+  // 1. Exact full name match (first + last OR spouse name)
+  for (const g of all) {
+    const gFirst = normalizeText(g.first_name);
+    const gLast = normalizeText(g.last_name);
+    const gSpouse = normalizeText(g.spouse_name);
+    const gFull = `${gFirst} ${gLast}`.trim();
+
+    if (combinedInput && (gFull === combinedInput || gSpouse === combinedInput)) {
+      return g;
+    }
+  }
+
+  // 2. Token overlap match (e.g. "Charles Gale" matches DB "Charles", "Gale")
+  if (inputParts.length >= 2) {
+    for (const g of all) {
+      const gFirst = normalizeText(g.first_name);
+      const gLast = normalizeText(g.last_name);
+      if (inputParts.includes(gFirst) && inputParts.includes(gLast)) {
+        return g;
       }
+    }
+  }
+
+  // 3. First name match (when last name is empty or matches)
+  if (normFirst) {
+    const firstOnlyMatches = all.filter((g: any) => {
+      const gFirst = normalizeText(g.first_name);
+      const gSpouse = normalizeText(g.spouse_name);
+      if (gFirst === normFirst) return true;
+      if (gSpouse && (gSpouse === normFirst || gSpouse.startsWith(normFirst))) return true;
       return false;
-    }) || null
-  );
+    });
+
+    if (firstOnlyMatches.length === 1) {
+      return firstOnlyMatches[0];
+    }
+    // If multiple first names match, pick the one matching last name if given
+    if (firstOnlyMatches.length > 1 && normLast) {
+      const best = firstOnlyMatches.find((g: any) => normalizeText(g.last_name) === normLast);
+      if (best) return best;
+    }
+  }
+
+  return null;
 }
 
 // ---------- photo hearts & song requests ----------
@@ -316,10 +422,14 @@ export const countAttending = internalQuery({
     let confirmedGuests = 0;
     let totalInvited = 0;
     for (const g of guests) {
-      totalInvited += g.max_party || 0;
+      totalInvited += g.max_party || 1;
       if (g.attendance === "attending") {
         confirmedGuests += 1;
-        confirmedSeats += g.max_party || 1;
+        const seats =
+          g.attending_count !== undefined && g.attending_count !== null
+            ? g.attending_count
+            : (g.max_party || 1);
+        confirmedSeats += seats;
       }
     }
     return { confirmedSeats, confirmedGuests, totalInvited };
