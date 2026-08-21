@@ -890,10 +890,12 @@ select:-webkit-autofill {
       }
 
       var missing = [];
-      if (!nameA) missing.push('guest 1 first name');
-      if (!nameB) missing.push('guest 2 first name');
+      if (!nameA && attA === 'yes') missing.push('guest 1 first name');
+      if (!nameB && attB === 'yes') missing.push('guest 2 first name');
       if (missing.length) { showError('Missing information', 'Please add ' + missing.join(', ') + '.'); return; }
       if (!attA || !attB) { showError('Choose an option', 'Please select an option for both guests.'); return; }
+      if (!nameA) nameA = 'Guest 1';
+      if (!nameB) nameB = 'Guest 2';
 
       var countA = attA === 'yes' ? 1 : 0;
       var countB = attB === 'yes' ? 1 : 0;
