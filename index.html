@@ -148,6 +148,133 @@
     }
   </style>
 <style>
+/* =====================================================================
+   PREMIUM UPLIFT — champagne ivory light sections
+   ===================================================================== */
+
+/* ---- 1. Paper-noise texture overlay for light sections ---- */
+.light-section {
+  background-color: #FBF8F3;
+  position: relative;
+}
+.light-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.038'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 300px 300px;
+  pointer-events: none;
+  z-index: 0;
+}
+.light-section > * { position: relative; z-index: 1; }
+
+/* ---- 2. Ornamental divider ---- */
+.ornament-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin: 0 auto;
+  width: fit-content;
+}
+.ornament-divider svg { display: block; }
+
+/* ---- 3. Warm bento card ---- */
+.bento-card {
+  background: #FFFEF9 !important;
+  border-color: rgba(212,175,55,0.22) !important;
+  box-shadow: 0 4px 40px rgba(168,134,43,0.08), 0 1px 3px rgba(168,134,43,0.06) !important;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.bento-card:hover {
+  background: #FDF9F0 !important;
+  border-color: rgba(212,175,55,0.5) !important;
+  box-shadow: 0 8px 50px rgba(168,134,43,0.14), 0 2px 6px rgba(168,134,43,0.08) !important;
+}
+.bento-heading { color: #2C1F0E !important; }
+.bento-body    { color: #4A3F32 !important; font-weight: 300; }
+.bento-accent  { color: #A8862B !important; }
+
+/* ---- 4. Velvet hero overlay (warm amber instead of cool black) ---- */
+.hero-overlay-velvet {
+  background: linear-gradient(
+    to bottom,
+    rgba(18,10,2,0.62) 0%,
+    rgba(13,7,0,0.44) 45%,
+    rgba(8,4,0,0.90) 100%
+  );
+}
+
+/* ---- 5. Frosted countdown pill ---- */
+.countdown-pill {
+  background: rgba(255,254,249,0.10);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(212,175,55,0.30);
+  border-radius: 9999px;
+  padding: 0.55rem 1.4rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.08);
+}
+.countdown-pill .cd-sep {
+  color: rgba(212,175,55,0.38);
+  font-size: 22px;
+  font-weight: 200;
+  line-height: 1;
+  padding: 0 4px;
+  align-self: flex-start;
+  margin-top: 4px;
+}
+.countdown-pill .cd-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 0.5rem;
+}
+
+/* ---- 6. Gallery fan card: cream photo mat ---- */
+.fan-card-mat {
+  position: absolute;
+  inset: 7px;
+  border-radius: 18px;
+  border: 2px solid rgba(250,246,239,0.75);
+  pointer-events: none;
+  z-index: 2;
+  box-shadow: inset 0 0 0 1px rgba(212,175,55,0.12);
+}
+
+/* ---- 7. RSVP pull-quote ---- */
+.rsvp-pull {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(1.6rem, 4vw, 2.1rem);
+  color: #A8862B;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+  opacity: 0.88;
+}
+
+/* ---- 8. Enhanced label tracking ---- */
+.label-premium { letter-spacing: 0.22em; }
+
+/* ---- 9. Glass nav: warm ivory glass (always) ---- */
+.glass-radio-group {
+  --bg: rgba(251,248,243,0.82);
+  --text: #5A4A35;
+  border-color: rgba(212,175,55,0.30) !important;
+  background: var(--bg) !important;
+  box-shadow:
+    inset 1px 1px 4px rgba(255,255,255,0.70),
+    inset -1px -1px 6px rgba(168,134,43,0.06),
+    0 6px 24px rgba(0,0,0,0.13) !important;
+}
+.glass-radio-group a { color: var(--text) !important; }
+.glass-radio-group a:hover { color: #2C1F0E !important; }
+.glass-radio-group a.active { color: #0a0a0a !important; }
+</style>
+<style>
 .vows-countdown .vows-cd-num { color: #D4AF37; }
 .vows-countdown .vows-cd-label { color: #D4AF37; opacity: 0.6; }
 .vows-countdown .vows-cd-digits { color: #D4AF37; }
@@ -528,7 +655,7 @@ section[id] { scroll-margin-top: 5rem; }
 <!-- Background Photo with Overlay and Heart clicker capability -->
 <div class="absolute inset-0 z-0" id="mainPhotoCard">
   <img src="../galery%20(2).jpeg" class="w-full h-full object-cover object-center lg:object-[50%_20%] transition-transform duration-1000" alt="Charles and Leticia Background" />
-  <div class="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/65 via-[#0a0a0a]/50 to-[#0a0a0a]"></div>
+  <div class="absolute inset-0 hero-overlay-velvet"></div>
 </div>
 
 <div class="relative z-10 max-w-[1200px] w-full mx-auto px-5 sm:px-container-padding flex flex-col items-center flex-1 justify-between gap-10 lg:gap-8">
@@ -574,8 +701,10 @@ section[id] { scroll-margin-top: 5rem; }
 
   <!-- Countdown — unboxed, floating over the photo -->
   <div class="hd-fade text-center" id="countdown-block">
-    <div class="font-label-sm text-gold uppercase tracking-[0.25em] mb-3">Counting down to forever</div>
-    <div id="countdown" class="flex items-center justify-center gap-3 sm:gap-4"></div>
+    <div class="font-label-sm label-premium text-gold uppercase tracking-[0.25em] mb-3">Counting down to forever</div>
+    <div class="countdown-pill">
+      <div id="countdown" class="flex items-center justify-center gap-0"></div>
+    </div>
   </div>
 </div>
 </div>
@@ -587,23 +716,31 @@ section[id] { scroll-margin-top: 5rem; }
 </div>
 </section>
 <!-- Light Section: The Celebration & Dress Code -->
-<div class="bg-[#FAF9F6] text-[#1A1A1A] border-t border-b border-gold/15 py-6">
+<div class="light-section text-[#1A1A1A] border-t border-b border-gold/15 py-6">
   <!-- Details Section: Bento Grid -->
-  <section id="details" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding py-12">
+  <section id="details" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding py-14">
     <div class="rv text-center mb-16">
-      <h2 class="font-headline-lg text-[#A8862B] mb-4 italic">The Celebration</h2>
-      <div class="w-24 h-[1px] bg-gold mx-auto"></div>
+      <h2 class="font-headline-lg bento-heading mb-5 italic">The Celebration</h2>
+      <!-- Ornamental divider -->
+      <div class="ornament-divider">
+        <svg width="80" height="12" viewBox="0 0 80 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="0" y1="6" x2="28" y2="6" stroke="#D4AF37" stroke-opacity="0.5" stroke-width="0.75"/>
+          <path d="M34 6 L37 3 L40 6 L37 9 Z" fill="#D4AF37" opacity="0.7"/>
+          <path d="M40 6 L43 3 L46 6 L43 9 Z" fill="#D4AF37" opacity="0.4"/>
+          <line x1="52" y1="6" x2="80" y2="6" stroke="#D4AF37" stroke-opacity="0.5" stroke-width="0.75"/>
+        </svg>
+      </div>
     </div>
     <div class="rv-g grid grid-cols-1 md:grid-cols-3 gap-8">
       <!-- Bento Card 1: Our Story -->
-      <div id="story" class="md:col-span-2 bg-white/80 border border-gold/25 rounded-[32px] p-7 sm:p-10 flex flex-col justify-between relative overflow-hidden group shadow-[0_10px_35px_rgba(212,175,55,0.06)] hover:border-[#A8862B]/50 transition-colors">
+      <div id="story" class="bento-card md:col-span-2 border border-gold/25 rounded-[28px] p-7 sm:p-10 flex flex-col justify-between relative overflow-hidden group">
         <div class="relative z-10">
-          <span class="font-label-sm text-[#A8862B] uppercase tracking-widest block mb-4">A love story</span>
-          <h3 class="font-headline-md text-[#1A1A1A] mb-4 italic">Our Journey Together</h3>
-          <p class="font-body-md text-[#4A453F] max-w-lg mb-6">
+          <span class="font-label-sm label-premium bento-accent uppercase tracking-widest block mb-4">A love story</span>
+          <h3 class="font-headline-md bento-heading mb-4 italic">Our Journey Together</h3>
+          <p class="font-body-md bento-body max-w-[52ch] mb-6">
             From chance meetings to a love that lights up every room, our journey has been written in laughter, late-night talks and big dreams. This New Year's Eve, we write our next chapter &mdash; together, with you by our side.
           </p>
-          <a class="inline-flex items-center text-[#A8862B] font-label-sm uppercase hover:gap-3 transition-all" href="story.html">
+          <a class="inline-flex items-center bento-accent font-label-sm label-premium uppercase hover:gap-3 transition-all" href="story.html">
             Read the full story <span class="material-symbols-outlined ml-2" data-icon="chevron_right">chevron_right</span>
           </a>
         </div>
@@ -612,38 +749,38 @@ section[id] { scroll-margin-top: 5rem; }
         </div>
       </div>
       <!-- Bento Card 2: Reception -->
-      <div id="reception" class="bg-white/80 border border-gold/25 rounded-[32px] p-8 shadow-[0_10px_35px_rgba(212,175,55,0.06)] hover:border-[#A8862B]/50 transition-colors">
-        <span class="material-symbols-outlined text-[#A8862B] mb-4" data-icon="local_bar">local_bar</span>
-        <h3 class="font-headline-md text-[#1A1A1A] mb-4 italic">The Reception</h3>
-        <p class="font-body-md text-[#4A453F] mb-4">
+      <div id="reception" class="bento-card border border-gold/25 rounded-[28px] p-8">
+        <span class="material-symbols-outlined bento-accent mb-4" data-icon="local_bar">local_bar</span>
+        <h3 class="font-headline-md bento-heading mb-4 italic">The Reception</h3>
+        <p class="font-body-md bento-body mb-4">
           New Year's Eve Celebration<br/>
           Cocktails, Dinner &amp; Dancing until midnight
         </p>
-        <div class="flex items-center gap-2 text-[#A8862B] font-label-sm">
+        <div class="flex items-center gap-2 bento-accent font-label-sm label-premium">
           <span class="material-symbols-outlined text-sm" data-icon="nights_stay">nights_stay</span>
           <span>Rich, Elegant &amp; Timeless Attire</span>
         </div>
       </div>
       <!-- Bento Card 3: Ceremony Details -->
-      <div class="bg-white/80 border border-gold/25 rounded-[32px] p-8 shadow-[0_10px_35px_rgba(212,175,55,0.06)] hover:border-[#A8862B]/50 transition-colors">
+      <div class="bento-card border border-gold/25 rounded-[28px] p-8">
         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 512 512" class="text-[#A8862B] mb-4 inline-block"><path d="M64 208c0 7.8 4.4 18.7 17.1 30.3C126.5 214.1 188.9 200 256 200s129.5 14.1 174.9 38.3C443.6 226.7 448 215.8 448 208c0-12.3-10.8-32-47.9-50.6C364.9 139.8 314 128 256 128s-108.9 11.8-144.1 29.4C74.8 176 64 195.7 64 208zm192 40c-47 0-89.3 7.6-122.9 19.7C166.3 280.2 208.8 288 256 288s89.7-7.8 122.9-20.3C345.3 255.6 303 248 256 248zM0 208c0-49.6 39.4-85.8 83.3-107.8C129.1 77.3 190.3 64 256 64s126.9 13.3 172.7 36.2c43.9 22 83.3 58.2 83.3 107.8l0 96c0 49.6-39.4 85.8-83.3 107.8C382.9 434.7 321.7 448 256 448s-126.9-13.3-172.7-36.2C39.4 389.8 0 353.6 0 304l0-96z"/></svg>
-        <h3 class="font-headline-md text-[#1A1A1A] mb-4 italic">The Ceremony</h3>
-        <p class="font-body-md text-[#4A453F] mb-4">
+        <h3 class="font-headline-md bento-heading mb-4 italic">The Ceremony</h3>
+        <p class="font-body-md bento-body mb-4">
           Grand Resort &amp; Residences<br/>
           Belize City, Belize
         </p>
-        <div class="flex items-center gap-2 text-[#A8862B] font-label-sm">
+        <div class="flex items-center gap-2 bento-accent font-label-sm label-premium">
           <span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
           <span>Starts at 6:00 PM</span>
         </div>
       </div>
       <!-- Bento Card 4: Destination -->
-      <a href="https://maps.app.goo.gl/BrJ1PJeSXihXyeW77" target="_blank" rel="noopener" aria-label="Get directions to Grand Resort &amp; Residences" class="block md:col-span-2 bg-white/80 border border-gold/25 rounded-[32px] overflow-hidden shadow-[0_10px_35px_rgba(212,175,55,0.06)] relative group hover:border-[#A8862B]/50 transition-colors">
+      <a href="https://maps.app.goo.gl/BrJ1PJeSXihXyeW77" target="_blank" rel="noopener" aria-label="Get directions to Grand Resort &amp; Residences" class="bento-card block md:col-span-2 border border-gold/25 rounded-[28px] overflow-hidden relative group min-h-[220px]">
         <div class="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors duration-500 z-10"></div>
         <img class="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700" alt="Grand Resort &amp; Residences, Belize City" src="https://res.cloudinary.com/dl5gbzrgh/image/upload/c_limit,w_3840/f_auto/q_75/grand_resort/gallery/bpemf7dj2xurneumcwdu"/>
         <div class="absolute bottom-6 left-6 z-20">
           <div class="bg-white/95 border border-[#D4AF37]/45 px-4 py-3 rounded-2xl shadow-lg backdrop-blur-md">
-            <span class="block font-serif text-[15px] sm:text-base font-semibold text-[#1A1A1A] mb-1">Grand Resort &amp; Residences</span>
+            <span class="block font-serif text-[15px] sm:text-base font-semibold bento-heading mb-1">Grand Resort &amp; Residences</span>
             <div class="flex items-center gap-1.5 text-[#A8862B]">
               <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
               <span class="font-label-sm">4.4</span>
@@ -658,9 +795,10 @@ section[id] { scroll-margin-top: 5rem; }
     </div>
   </section>
 
+
   <!-- Dress Code Section -->
   <section id="dresscode" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding py-12">
-    <div class="rv bg-white/80 border border-gold/25 rounded-[32px] relative overflow-hidden shadow-[0_10px_35px_rgba(212,175,55,0.06)]">
+    <div class="rv bento-card border border-gold/25 rounded-[28px] relative overflow-hidden">
       <div class="sparkle-bg absolute inset-0 pointer-events-none"></div>
       <div class="relative z-10 bg-black/5 flex items-center justify-center p-6 sm:p-10 cursor-zoom-in" onclick="openDressCode()">
         <img src="../dress-code (right).png" alt="Dress code guide - Brown, Dark Green, Blue, Burgundy, Maroon, Black, and Shimmer" class="w-full max-w-[780px] h-auto object-contain rounded-2xl border border-gold/25 shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-transform duration-700 hover:scale-[1.02]"/>
@@ -670,17 +808,17 @@ section[id] { scroll-margin-top: 5rem; }
       </div>
       <!-- Details -->
       <div class="relative z-10 text-center p-8 sm:p-12 md:p-14">
-        <span class="font-label-sm text-[#A8862B] uppercase tracking-[0.25em] block mb-4">Dress Code</span>
+        <span class="font-label-sm label-premium bento-accent uppercase tracking-[0.25em] block mb-4">Dress Code</span>
         <h2 class="font-script-accent text-[40px] sm:text-[46px] text-gold-gradient italic mb-5">Guest Attire Palette</h2>
-        <p class="font-body-lg text-[#4A453F] max-w-xl mx-auto mb-8">
-          Celebrate the night in our warm and rich color palette: **Brown, Dark Green, Blue, Burgundy, Maroon, Black, and Shimmer**. We invite men and women to wear these rich, elegant, and timeless colors to ring in the new year together. Tap the photo to view the full guide, or download a copy to keep close.
+        <p class="font-body-lg bento-body max-w-[52ch] mx-auto mb-8">
+          Celebrate the night in our warm and rich color palette: Brown, Dark Green, Blue, Burgundy, Maroon, Black, and Shimmer. We invite men and women to wear these rich, elegant, and timeless colors to ring in the new year together.
         </p>
         <div class="flex flex-wrap justify-center gap-4">
-          <button onclick="openDressCode()" class="inline-flex items-center gap-2 bg-gradient-to-r from-gold-light to-gold-dark text-ink font-label-sm uppercase px-8 py-4 rounded-full border border-gold/40 shadow-[0_10px_30px_rgba(212,175,55,0.25)] hover:shadow-[0_10px_40px_rgba(212,175,55,0.45)] transition-all active:scale-95">
+          <button onclick="openDressCode()" class="inline-flex items-center gap-2 bg-gradient-to-r from-gold-light to-gold-dark text-ink font-label-sm label-premium uppercase px-8 py-4 rounded-full border border-gold/40 shadow-[0_10px_30px_rgba(212,175,55,0.25)] hover:shadow-[0_10px_40px_rgba(212,175,55,0.45)] transition-all active:scale-95">
             <span class="material-symbols-outlined text-lg" data-icon="fullscreen">fullscreen</span>
             View Full Guide
           </button>
-          <a href="../dress-code (right).png" download="Dress-Code.png" class="inline-flex items-center gap-2 border border-gold/30 text-[#A8862B] font-label-sm uppercase px-8 py-4 rounded-full hover:bg-gold/10 transition-colors no-underline">
+          <a href="../dress-code (right).png" download="Dress-Code.png" class="inline-flex items-center gap-2 border border-gold/30 bento-accent font-label-sm label-premium uppercase px-8 py-4 rounded-full hover:bg-gold/10 transition-colors no-underline">
             <span class="material-symbols-outlined text-lg" data-icon="download">download</span>
             Download
           </a>
@@ -693,36 +831,54 @@ section[id] { scroll-margin-top: 5rem; }
 <section id="gallery" class="relative max-w-[1200px] mx-auto px-5 sm:px-container-padding py-section-gap">
 <div id="galleryHearts" class="absolute inset-0 pointer-events-none z-30" aria-hidden="true"></div>
 <div class="rv text-center mb-16">
-<h2 class="font-headline-lg text-gold mb-4 italic">Our Moments</h2>
-<div class="w-24 h-[1px] bg-gold mx-auto"></div>
+<h2 class="font-headline-lg text-gold mb-5 italic">Our Moments</h2>
+<!-- Ornamental divider (dark/gold on dark section) -->
+<div class="ornament-divider">
+  <svg width="80" height="12" viewBox="0 0 80 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="0" y1="6" x2="28" y2="6" stroke="#D4AF37" stroke-opacity="0.5" stroke-width="0.75"/>
+    <path d="M34 6 L37 3 L40 6 L37 9 Z" fill="#D4AF37" opacity="0.7"/>
+    <path d="M40 6 L43 3 L46 6 L43 9 Z" fill="#D4AF37" opacity="0.4"/>
+    <line x1="52" y1="6" x2="80" y2="6" stroke="#D4AF37" stroke-opacity="0.5" stroke-width="0.75"/>
+  </svg>
+</div>
 <p class="font-body-md text-on-surface-variant max-w-md mx-auto mt-6">A glimpse of the laughter, love and light that brought us here.</p>
 </div>
 <div class="rv fan-layout">
-<div class="fan-card"><img src="../galery%20(1).jpeg" alt="Charles and Leticia moment"/></div>
-<div class="fan-card"><img src="../galery%20(2).jpeg" alt="Charles and Leticia moment"/></div>
-<div class="fan-card"><img src="../galery%20(4).jpeg" alt="Charles and Leticia moment"/></div>
-<div class="fan-card"><img src="../galery%20(5).jpeg" alt="Charles and Leticia moment"/></div>
-<div class="fan-card"><img src="../galery%20(3).jpeg" alt="Charles and Leticia moment"/></div>
+<!-- fan-card-mat adds a cream photo mat overlay inside each card -->
+<div class="fan-card"><img src="../galery%20(1).jpeg" alt="Charles and Leticia moment"/><div class="fan-card-mat"></div></div>
+<div class="fan-card"><img src="../galery%20(2).jpeg" alt="Charles and Leticia moment"/><div class="fan-card-mat"></div></div>
+<div class="fan-card"><img src="../galery%20(4).jpeg" alt="Charles and Leticia moment"/><div class="fan-card-mat"></div></div>
+<div class="fan-card"><img src="../galery%20(5).jpeg" alt="Charles and Leticia moment"/><div class="fan-card-mat"></div></div>
+<div class="fan-card"><img src="../galery%20(3).jpeg" alt="Charles and Leticia moment"/><div class="fan-card-mat"></div></div>
 </div>
     <div class="mt-10 flex flex-col items-center gap-2 text-center">
       <p class="font-script-accent text-script-accent text-gold-gradient italic">See you at midnight</p>
-      <span class="font-label-sm text-on-surface-variant uppercase tracking-[0.25em]">December 31, 2026</span>
-      <span class="font-label-sm text-gold uppercase tracking-[0.15em] block mt-1">Rich, Elegant &amp; Timeless</span>
+      <span class="font-label-sm label-premium text-on-surface-variant uppercase tracking-[0.25em]">December 31, 2026</span>
+      <span class="font-label-sm label-premium text-gold uppercase tracking-[0.15em] block mt-1">Rich, Elegant &amp; Timeless</span>
     </div>
   </section>
 
   <!-- Light Section: RSVP & Gift -->
-  <div class="bg-[#FAF9F6] text-[#1A1A1A] border-t border-b border-gold/15 py-12 lg:py-20">
+  <div class="light-section text-[#1A1A1A] border-t border-b border-gold/15 py-12 lg:py-20">
     <!-- RSVP Section -->
     <section id="rsvp" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding pb-16">
       <div class="rv text-center mb-10">
-        <span class="font-script-accent text-script-accent text-[#A8862B] italic mb-3 block" style="font-size: 2rem;">Kindly Respond</span>
-        <h2 class="font-headline-lg text-[#A8862B] mb-4 italic">RSVP</h2>
-        <div class="w-24 h-[1px] bg-gold mx-auto"></div>
-        <p class="font-body-lg text-[#4A453F] max-w-xl mx-auto mt-6">
+        <!-- Pull-quote above the section heading -->
+        <p class="rsvp-pull mb-3">We'd be honoured by your presence</p>
+        <h2 class="font-headline-lg bento-heading mb-5 italic">RSVP</h2>
+        <!-- Ornamental divider -->
+        <div class="ornament-divider mb-6">
+          <svg width="80" height="12" viewBox="0 0 80 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="0" y1="6" x2="28" y2="6" stroke="#D4AF37" stroke-opacity="0.5" stroke-width="0.75"/>
+            <path d="M34 6 L37 3 L40 6 L37 9 Z" fill="#D4AF37" opacity="0.7"/>
+            <path d="M40 6 L43 3 L46 6 L43 9 Z" fill="#D4AF37" opacity="0.4"/>
+            <line x1="52" y1="6" x2="80" y2="6" stroke="#D4AF37" stroke-opacity="0.5" stroke-width="0.75"/>
+          </svg>
+        </div>
+        <p class="font-body-lg bento-body max-w-[52ch] mx-auto mt-2">
           We would love for you to join us under the stars as we ring in 2027 together. Kindly let us know by November 1st, 2026.
         </p>
-        <p class="font-body-md text-[#A8862B] italic max-w-xl mx-auto mt-4 px-4 font-semibold">
+        <p class="font-body-md bento-accent italic max-w-xl mx-auto mt-4 px-4 font-semibold">
           Please note: While we love your little ones, our wedding will be an adult-only celebration.
         </p>
       </div>
@@ -735,18 +891,18 @@ section[id] { scroll-margin-top: 5rem; }
 
     <!-- Gift Section -->
     <section id="gift" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding pt-12 border-t border-gold/15">
-      <div class="rv bg-white/80 border border-gold/25 rounded-[32px] p-10 sm:p-14 text-center relative overflow-hidden shadow-[0_10px_35px_rgba(212,175,55,0.06)] max-w-2xl mx-auto">
+      <div class="rv bento-card border border-gold/25 rounded-[28px] p-10 sm:p-14 text-center relative overflow-hidden max-w-2xl mx-auto">
         <div class="absolute inset-0 gold-shimmer pointer-events-none"></div>
         <div class="sparkle-bg absolute inset-0 pointer-events-none"></div>
         <div class="relative z-10">
           <div class="w-20 h-20 rounded-full bg-gold/5 border border-gold/25 flex items-center justify-center mx-auto mb-8">
-            <span class="material-symbols-outlined text-[#A8862B] text-4xl" data-icon="card_travel" style="font-variation-settings:'FILL' 1;">card_travel</span>
+            <span class="material-symbols-outlined bento-accent text-4xl" data-icon="card_travel" style="font-variation-settings:'FILL' 1;">card_travel</span>
           </div>
           <h2 class="font-script-accent text-[42px] text-gold-gradient italic mb-4">Honeymoon Fund</h2>
-          <p class="font-body-lg text-[#4A453F] max-w-xl mx-auto mb-8">
+          <p class="font-body-lg bento-body max-w-[52ch] mx-auto mb-8">
             Your presence is our greatest gift. Should you wish to honor us with a contribution, a monetary gift is preferred. A card and gift box will be available at the reception.
           </p>
-          <p class="font-label-sm text-[#8A6B1F] italic mt-6">Thank you for celebrating with us &mdash; your kindness means the world.</p>
+          <p class="font-label-sm label-premium text-[#8A6B1F] italic mt-6">Thank you for celebrating with us &mdash; your kindness means the world.</p>
         </div>
       </div>
     </section>
@@ -773,14 +929,20 @@ section[id] { scroll-margin-top: 5rem; }
     { key: 's', label: 'Seconds' }
   ];
   var cells = {};
-  units.forEach(function (u) {
+  units.forEach(function (u, i) {
+    if (i > 0) {
+      var sep = document.createElement('span');
+      sep.className = 'cd-sep';
+      sep.textContent = ':';
+      block.appendChild(sep);
+    }
     var el = document.createElement('div');
-    el.className = 'flex flex-col items-center glass-panel rounded-xl px-2 py-2.5 sm:px-4 sm:py-3 border-gold/20 min-w-[56px] sm:min-w-[72px]';
+    el.className = 'cd-unit';
     var num = document.createElement('span');
-    num.className = 'font-headline-lg text-gold-gradient text-[24px] sm:text-[34px]';
+    num.className = 'font-headline-lg text-gold-gradient text-[22px] sm:text-[30px] tabular-nums';
     num.id = 'cd-' + u.key;
     var lab = document.createElement('span');
-    lab.className = 'font-label-sm text-on-surface-variant uppercase mt-1';
+    lab.className = 'font-label-sm label-premium text-gold/60 uppercase mt-0.5 text-[9px] sm:text-[10px]';
     lab.textContent = u.label;
     el.appendChild(num);
     el.appendChild(lab);
