@@ -514,58 +514,15 @@ section[id] { scroll-margin-top: 5rem; }
 <div class="absolute -bottom-24 -right-24 w-[500px] h-[500px] opacity-10 pointer-events-none -rotate-12">
 <img class="w-full h-full object-contain" alt="Decorative gold ornament" src="../Element%20(5).png"/>
 </div>
-<!-- Hero Section -->
-<section class="relative max-w-[1200px] mx-auto px-5 sm:px-container-padding pt-12 pb-section-gap">
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
-<!-- Headline Block (full width) -->
-<div class="space-y-4 mb-8 lg:col-span-12" id="heroHead">
-<div class="hd-fade inline-flex items-center px-3 py-1 rounded-full glass-panel border border-gold/30 shadow-sm">
-<span class="material-symbols-outlined text-[12px] mr-1.5 text-gold" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
-<span class="font-label-sm text-[10px] sm:text-[11px] text-gold-light uppercase tracking-[0.14em]">New Year's Eve &bull; Belize City</span>
+<!-- Hero Section with Photo Background -->
+<section class="relative min-h-[90vh] lg:min-h-[95vh] flex items-center justify-center overflow-hidden py-12 lg:py-20">
+<!-- Background Photo with Overlay and Heart clicker capability -->
+<div class="absolute inset-0 z-0 cursor-pointer" id="mainPhotoCard">
+  <img src="../main.jpeg" class="w-full h-full object-cover object-center lg:object-top transition-transform duration-1000" alt="Charles and Leticia Background" />
+  <div class="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/65 via-[#0a0a0a]/50 to-[#0a0a0a]"></div>
+  <!-- Container for Floating Hearts Animation -->
+  <div id="heartContainer" class="absolute inset-0 pointer-events-none z-30 overflow-hidden"></div>
 </div>
-<h2 class="hd-fade font-script-accent text-script-accent italic text-gold leading-[1.3]">Join us for the wedding of</h2>
-<h3 id="heroNames" class="hd-fade font-script-accent text-white leading-[1.15] whitespace-nowrap text-center text-[clamp(54px,19.5vw,108px)] lg:text-[clamp(60px,9vw,114px)]">Charles <span class="text-gold">&amp;</span> Leticia</h3>
-<p class="hd-fade font-body-lg text-on-surface-variant max-w-xl">
-                        As Belize City sparkles against the Caribbean night, we invite you to ring in 2027 with us &mdash; the start of forever, in black, white &amp; gold.
-                    </p>
-</div>
-<!-- Left Narrative Block -->
-<div class="hero-side lg:col-span-5 z-10 space-y-element-gap">
-<!-- Save-the-Date Calendar Card -->
-<div class="pt-8">
-<div class="hd-fade nye-cal inline-block glass-panel p-6 rounded-2xl shadow-[0_20px_50px_rgba(212,175,55,0.12)] border border-gold/25 w-full max-w-md relative overflow-hidden group" id="saveDateCard">
-<div class="absolute inset-0 gold-shimmer pointer-events-none"></div>
-<canvas id="stdFwCanvas" class="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true"></canvas>
-<div class="absolute inset-0 z-[1] bg-[#070b16]/70 pointer-events-none" aria-hidden="true"></div>
-<div class="flex justify-between items-center mb-3 relative z-10">
-<div class="font-script-accent text-[20px] sm:text-[24px] leading-[1.3] pt-1 text-gold-gradient italic">Save the Date</div>
-<div class="flex items-center gap-1.5 font-label-sm text-on-surface-variant uppercase tracking-[0.12em]">
-<span>December 2026</span>
-</div>
-</div>
-<div class="flex items-center gap-2 font-body-md text-gold-light mb-4 relative z-10">
-<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" class="text-gold"><path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/></svg>
-<span>New Year's Eve Wedding &bull; Thu, 31</span>
-</div>
-<div class="day-strip relative z-10" id="nye-strip"></div>
-<div class="indicator-container relative z-10" id="nye-indicators"></div>
-<div class="mt-4 pt-4 border-t border-gold/20 flex items-center gap-2 font-label-sm text-on-surface-variant relative z-10">
-<span class="material-symbols-outlined text-gold text-sm" data-icon="location_on">location_on</span>
-<span class="tracking-[0.1em] font-semibold text-gold-light">Grand Resort &amp; Residences &bull; Belize City &bull; 6:00 PM</span>
-</div>
-</div>
-</div>
-<!-- Countdown -->
-<div class="hd-fade pt-6" id="countdown-block">
-<div class="font-label-sm text-gold uppercase tracking-[0.25em] mb-3">Counting down to forever</div>
-<div id="countdown" class="flex items-center justify-start gap-3 sm:gap-4"></div>
-</div>
-</div>
-<!-- Right Visual Block: Hero Image with Shimmer & Floating Elements -->
-<div class="hero-side lg:col-span-7 relative">
-<div class="hd-fade relative w-full max-w-[340px] mx-auto sm:max-w-none aspect-[3/4] sm:aspect-square rounded-[40px] overflow-hidden border border-gold/25 shadow-[0_40px_100px_rgba(0,0,0,0.7)] group cursor-pointer" id="mainPhotoCard">
-<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Charles and Leticia" src="../main.jpeg"/>
-<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
 
 <!-- Interactive Heart Clicker Button -->
 <div class="absolute bottom-6 right-6 z-20 flex items-center gap-3 bg-black/60 backdrop-blur-md px-4 py-2 rounded-full border border-gold/40 shadow-lg hover:scale-105 transition-transform" id="photoHeartBtn">
@@ -576,8 +533,58 @@ section[id] { scroll-margin-top: 5rem; }
   </button>
 </div>
 
-<!-- Container for Floating Hearts Animation -->
-<div id="heartContainer" class="absolute inset-0 pointer-events-none z-30 overflow-hidden"></div>
+<div class="relative z-10 max-w-[1200px] w-full mx-auto px-5 sm:px-container-padding flex flex-col items-center">
+  <!-- Headline Block -->
+  <div class="space-y-4 mb-10 text-center" id="heroHead">
+    <div class="hd-fade inline-flex items-center px-3 py-1 rounded-full glass-panel border border-gold/30 shadow-sm">
+      <span class="material-symbols-outlined text-[12px] mr-1.5 text-gold" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+      <span class="font-label-sm text-[10px] sm:text-[11px] text-gold-light uppercase tracking-[0.14em]">New Year's Eve &bull; Belize City</span>
+    </div>
+    <h2 class="hd-fade font-script-accent text-script-accent italic text-gold leading-[1.3] text-3xl sm:text-4xl">Join us for the wedding of</h2>
+    <h3 id="heroNames" class="hd-fade font-script-accent text-white leading-[1.15] whitespace-nowrap text-center text-[clamp(54px,19.5vw,108px)] lg:text-[clamp(60px,7.5vw,96px)]">Charles <span class="text-gold">&amp;</span> Leticia</h3>
+    <p class="hd-fade font-body-lg text-on-surface-variant max-w-xl mx-auto text-center mt-3 text-white/90">
+      On New Year's Eve, as Belize City sparkles against the Caribbean night, we invite you to ring in 2027 with us &mdash; the start of forever.
+    </p>
+  </div>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl items-stretch">
+    <!-- Save-the-Date Calendar Card -->
+    <div class="hd-fade nye-cal glass-panel p-6 rounded-2xl shadow-[0_20px_50px_rgba(212,175,55,0.12)] border border-gold/25 relative overflow-hidden group flex flex-col justify-between" id="saveDateCard">
+      <div class="absolute inset-0 gold-shimmer pointer-events-none"></div>
+      <canvas id="stdFwCanvas" class="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true"></canvas>
+      <div class="absolute inset-0 z-[1] bg-[#070b16]/70 pointer-events-none" aria-hidden="true"></div>
+      <div class="relative z-10">
+        <div class="flex justify-between items-center mb-3">
+          <div class="font-script-accent text-[20px] sm:text-[24px] leading-[1.3] pt-1 text-gold-gradient italic">Save the Date</div>
+          <div class="flex items-center gap-1.5 font-label-sm text-on-surface-variant uppercase tracking-[0.12em] text-white/80">
+            <span>December 2026</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 font-body-md text-gold-light mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" class="text-gold"><path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/></svg>
+          <span class="text-white">New Year's Eve Wedding &bull; Thu, 31</span>
+        </div>
+        <div class="day-strip" id="nye-strip"></div>
+        <div class="indicator-container" id="nye-indicators"></div>
+      </div>
+      <div class="mt-6 pt-4 border-t border-gold/20 flex items-center gap-2 font-label-sm text-on-surface-variant relative z-10">
+        <span class="material-symbols-outlined text-gold text-sm" data-icon="location_on">location_on</span>
+        <span class="tracking-[0.1em] font-semibold text-gold-light">Grand Resort &amp; Residences &bull; Belize City &bull; 6:00 PM</span>
+      </div>
+    </div>
+    
+    <!-- Countdown Card -->
+    <div class="hd-fade glass-panel p-6 rounded-2xl shadow-[0_20px_50px_rgba(212,175,55,0.12)] border border-gold/25 relative overflow-hidden flex flex-col justify-center items-center text-center" id="countdown-block">
+      <div class="absolute inset-0 gold-shimmer pointer-events-none"></div>
+      <div class="relative z-10 w-full">
+        <div class="font-label-sm text-gold uppercase tracking-[0.25em] mb-4">Counting down to forever</div>
+        <div id="countdown" class="flex items-center justify-center gap-3 sm:gap-4"></div>
+        <p class="font-body-md text-white/80 max-w-sm mx-auto mt-6">
+          We cannot wait to celebrate the beginning of our new chapter with you under the sparkling Caribbean night.
+        </p>
+      </div>
+    </div>
+  </div>
 </div>
 <!-- Floating Sparkle Particles (Simulated) -->
 <div class="absolute -top-10 -right-10 w-24 h-24 bg-gold/20 blur-3xl rounded-full floating"></div>
@@ -586,106 +593,109 @@ section[id] { scroll-margin-top: 5rem; }
 </div>
 </div>
 </section>
-<!-- Details Section: Bento Grid -->
-<section id="details" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding py-section-gap">
-<div class="rv text-center mb-16">
-<h2 class="font-headline-lg text-gold mb-4 italic">The Celebration</h2>
-<div class="w-24 h-[1px] bg-gold mx-auto"></div>
+<!-- Light Section: The Celebration & Dress Code -->
+<div class="bg-[#FAF9F6] text-[#1A1A1A] border-t border-b border-gold/15 py-6">
+  <!-- Details Section: Bento Grid -->
+  <section id="details" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding py-12">
+    <div class="rv text-center mb-16">
+      <h2 class="font-headline-lg text-[#A8862B] mb-4 italic">The Celebration</h2>
+      <div class="w-24 h-[1px] bg-gold mx-auto"></div>
+    </div>
+    <div class="rv-g grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Bento Card 1: Our Story -->
+      <div id="story" class="md:col-span-2 bg-white/80 border border-gold/25 rounded-[32px] p-7 sm:p-10 flex flex-col justify-between relative overflow-hidden group shadow-[0_10px_35px_rgba(212,175,55,0.06)] hover:border-[#A8862B]/50 transition-colors">
+        <div class="relative z-10">
+          <span class="font-label-sm text-[#A8862B] uppercase tracking-widest block mb-4">A love story</span>
+          <h3 class="font-headline-md text-[#1A1A1A] mb-4 italic">Our Journey Together</h3>
+          <p class="font-body-md text-[#4A453F] max-w-lg mb-6">
+            From chance meetings to a love that lights up every room, our journey has been written in laughter, late-night talks and big dreams. This New Year's Eve, we write our next chapter &mdash; together, with you by our side.
+          </p>
+          <a class="inline-flex items-center text-[#A8862B] font-label-sm uppercase hover:gap-3 transition-all" href="story.html">
+            Read the full story <span class="material-symbols-outlined ml-2" data-icon="chevron_right">chevron_right</span>
+          </a>
+        </div>
+        <div class="mt-8 mx-auto md:mt-0 md:mx-0 md:absolute md:bottom-6 md:right-6 w-32 h-32 sm:w-40 sm:h-40 md:w-44 md:h-44 rounded-full overflow-hidden border-2 border-gold/40 shadow-[0_0_45px_rgba(212,175,55,0.25)] pointer-events-none group-hover:scale-105 transition-transform duration-1000">
+          <img class="w-full h-full object-cover object-top" alt="A memory from their journey" src="../galery%20(1).jpeg"/>
+        </div>
+      </div>
+      <!-- Bento Card 2: Reception -->
+      <div id="reception" class="bg-white/80 border border-gold/25 rounded-[32px] p-8 shadow-[0_10px_35px_rgba(212,175,55,0.06)] hover:border-[#A8862B]/50 transition-colors">
+        <span class="material-symbols-outlined text-[#A8862B] mb-4" data-icon="local_bar">local_bar</span>
+        <h3 class="font-headline-md text-[#1A1A1A] mb-4 italic">The Reception</h3>
+        <p class="font-body-md text-[#4A453F] mb-4">
+          New Year's Eve Celebration<br/>
+          Cocktails, Dinner &amp; Dancing until midnight
+        </p>
+        <div class="flex items-center gap-2 text-[#A8862B] font-label-sm">
+          <span class="material-symbols-outlined text-sm" data-icon="nights_stay">nights_stay</span>
+          <span>Rich, Elegant &amp; Timeless Attire</span>
+        </div>
+      </div>
+      <!-- Bento Card 3: Ceremony Details -->
+      <div class="bg-white/80 border border-gold/25 rounded-[32px] p-8 shadow-[0_10px_35px_rgba(212,175,55,0.06)] hover:border-[#A8862B]/50 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 512 512" class="text-[#A8862B] mb-4 inline-block"><path d="M64 208c0 7.8 4.4 18.7 17.1 30.3C126.5 214.1 188.9 200 256 200s129.5 14.1 174.9 38.3C443.6 226.7 448 215.8 448 208c0-12.3-10.8-32-47.9-50.6C364.9 139.8 314 128 256 128s-108.9 11.8-144.1 29.4C74.8 176 64 195.7 64 208zm192 40c-47 0-89.3 7.6-122.9 19.7C166.3 280.2 208.8 288 256 288s89.7-7.8 122.9-20.3C345.3 255.6 303 248 256 248zM0 208c0-49.6 39.4-85.8 83.3-107.8C129.1 77.3 190.3 64 256 64s126.9 13.3 172.7 36.2c43.9 22 83.3 58.2 83.3 107.8l0 96c0 49.6-39.4 85.8-83.3 107.8C382.9 434.7 321.7 448 256 448s-126.9-13.3-172.7-36.2C39.4 389.8 0 353.6 0 304l0-96z"/></svg>
+        <h3 class="font-headline-md text-[#1A1A1A] mb-4 italic">The Ceremony</h3>
+        <p class="font-body-md text-[#4A453F] mb-4">
+          Grand Resort &amp; Residences<br/>
+          Belize City, Belize
+        </p>
+        <div class="flex items-center gap-2 text-[#A8862B] font-label-sm">
+          <span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+          <span>Starts at 6:00 PM</span>
+        </div>
+      </div>
+      <!-- Bento Card 4: Destination -->
+      <a href="https://maps.app.goo.gl/BrJ1PJeSXihXyeW77" target="_blank" rel="noopener" aria-label="Get directions to Grand Resort &amp; Residences" class="block md:col-span-2 bg-white/80 border border-gold/25 rounded-[32px] overflow-hidden shadow-[0_10px_35px_rgba(212,175,55,0.06)] relative group hover:border-[#A8862B]/50 transition-colors">
+        <div class="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors duration-500 z-10"></div>
+        <img class="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700" alt="Grand Resort &amp; Residences, Belize City" src="https://res.cloudinary.com/dl5gbzrgh/image/upload/c_limit,w_3840/f_auto/q_75/grand_resort/gallery/bpemf7dj2xurneumcwdu"/>
+        <div class="absolute bottom-6 left-6 z-20">
+          <div class="bg-white/95 border border-[#D4AF37]/45 px-4 py-3 rounded-2xl shadow-lg backdrop-blur-md">
+            <span class="block font-serif text-[15px] sm:text-base font-semibold text-[#1A1A1A] mb-1">Grand Resort &amp; Residences</span>
+            <div class="flex items-center gap-1.5 text-[#A8862B]">
+              <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
+              <span class="font-label-sm">4.4</span>
+            </div>
+            <div class="flex items-center gap-2 text-[#8A6B1F] font-label-sm mt-1.5">
+              <span class="material-symbols-outlined text-sm" data-icon="directions">directions</span>
+              <span>Get Directions</span>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Dress Code Section -->
+  <section id="dresscode" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding py-12">
+    <div class="rv bg-white/80 border border-gold/25 rounded-[32px] relative overflow-hidden shadow-[0_10px_35px_rgba(212,175,55,0.06)]">
+      <div class="sparkle-bg absolute inset-0 pointer-events-none"></div>
+      <div class="relative z-10 bg-black/5 flex items-center justify-center p-6 sm:p-10 cursor-zoom-in" onclick="openDressCode()">
+        <img src="../dress-code-palette.jpg" alt="Dress code guide - Brown, Dark Green, Blue, Burgundy, Maroon, Black, and Shimmer" class="w-full max-w-[780px] h-auto object-contain rounded-2xl border border-gold/25 shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-transform duration-700 hover:scale-[1.02]"/>
+        <div class="absolute top-4 left-4 z-10">
+          <span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-[0.18em] uppercase bg-gold/90 text-ink shadow-lg">Dress Code Guide</span>
+        </div>
+      </div>
+      <!-- Details -->
+      <div class="relative z-10 text-center p-8 sm:p-12 md:p-14">
+        <span class="font-label-sm text-[#A8862B] uppercase tracking-[0.25em] block mb-4">Dress Code</span>
+        <h2 class="font-script-accent text-[40px] sm:text-[46px] text-gold-gradient italic mb-5">Guest Attire Palette</h2>
+        <p class="font-body-lg text-[#4A453F] max-w-xl mx-auto mb-8">
+          Celebrate the night in our warm and rich color palette: **Brown, Dark Green, Blue, Burgundy, Maroon, Black, and Shimmer**. We invite men and women to wear these rich, elegant, and timeless colors to ring in the new year together. Tap the photo to view the full guide, or download a copy to keep close.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <button onclick="openDressCode()" class="inline-flex items-center gap-2 bg-gradient-to-r from-gold-light to-gold-dark text-ink font-label-sm uppercase px-8 py-4 rounded-full border border-gold/40 shadow-[0_10px_30px_rgba(212,175,55,0.25)] hover:shadow-[0_10px_40px_rgba(212,175,55,0.45)] transition-all active:scale-95">
+            <span class="material-symbols-outlined text-lg" data-icon="fullscreen">fullscreen</span>
+            View Full Guide
+          </button>
+          <a href="../dress-code-palette.jpg" download="Dress-Code-Palette.jpg" class="inline-flex items-center gap-2 border border-gold/30 text-[#A8862B] font-label-sm uppercase px-8 py-4 rounded-full hover:bg-gold/10 transition-colors no-underline">
+            <span class="material-symbols-outlined text-lg" data-icon="download">download</span>
+            Download
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
-<div class="rv-g grid grid-cols-1 md:grid-cols-3 gap-8">
-<!-- Bento Card 1: Our Story -->
-<div id="story" class="md:col-span-2 glass-panel rounded-[32px] p-7 sm:p-10 flex flex-col justify-between relative overflow-hidden group shadow-[0_10px_30px_rgba(212,175,55,0.05)] hover:border-gold/40 transition-colors">
-<div class="relative z-10">
-<span class="font-label-sm text-gold uppercase tracking-widest block mb-4">A love story</span>
-<h3 class="font-headline-md text-white mb-4 italic">Our Journey Together</h3>
-<p class="font-body-md text-on-surface-variant max-w-lg mb-6">
-                            From chance meetings to a love that lights up every room, our journey has been written in laughter, late-night talks and big dreams. This New Year's Eve, we write our next chapter &mdash; together, with you by our side.
-                        </p>
-<a class="inline-flex items-center text-gold font-label-sm uppercase hover:gap-3 transition-all" href="story.html">
-                            Read the full story <span class="material-symbols-outlined ml-2" data-icon="chevron_right">chevron_right</span>
-</a>
-</div>
-<div class="mt-8 mx-auto md:mt-0 md:mx-0 md:absolute md:bottom-6 md:right-6 w-32 h-32 sm:w-40 sm:h-40 md:w-44 md:h-44 rounded-full overflow-hidden border-2 border-gold/40 shadow-[0_0_45px_rgba(212,175,55,0.25)] pointer-events-none group-hover:scale-105 transition-transform duration-1000">
-<img class="w-full h-full object-cover object-top" alt="A memory from their journey" src="../galery%20(1).jpeg"/>
-</div>
-</div>
-<!-- Bento Card 4: Reception -->
-<div id="reception" class="glass-panel rounded-[32px] p-8 shadow-[0_10px_30px_rgba(212,175,55,0.05)] bg-gradient-to-bl from-[#1a1a1a]/80 to-gold/5 hover:border-gold/40 transition-colors">
-<span class="material-symbols-outlined text-gold mb-4" data-icon="local_bar">local_bar</span>
-<h3 class="font-headline-md text-white mb-4 italic">The Reception</h3>
-<p class="font-body-md text-on-surface-variant mb-4">
-                        New Year's Eve Celebration<br/>
-                        Cocktails, Dinner &amp; Dancing until midnight
-                    </p>
-<div class="flex items-center gap-2 text-gold font-label-sm">
-<span class="material-symbols-outlined text-sm" data-icon="nights_stay">nights_stay</span>
-<span>Black, White &amp; Gold Attire</span>
-</div>
-</div>
-<!-- Bento Card 2: Ceremony Details -->
-<div class="glass-panel rounded-[32px] p-8 shadow-[0_10px_30px_rgba(212,175,55,0.05)] bg-gradient-to-tr from-[#1a1a1a]/80 to-gold/5 hover:border-gold/40 transition-colors">
-<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 512 512" class="text-gold mb-4 inline-block"><path d="M64 208c0 7.8 4.4 18.7 17.1 30.3C126.5 214.1 188.9 200 256 200s129.5 14.1 174.9 38.3C443.6 226.7 448 215.8 448 208c0-12.3-10.8-32-47.9-50.6C364.9 139.8 314 128 256 128s-108.9 11.8-144.1 29.4C74.8 176 64 195.7 64 208zm192 40c-47 0-89.3 7.6-122.9 19.7C166.3 280.2 208.8 288 256 288s89.7-7.8 122.9-20.3C345.3 255.6 303 248 256 248zM0 208c0-49.6 39.4-85.8 83.3-107.8C129.1 77.3 190.3 64 256 64s126.9 13.3 172.7 36.2c43.9 22 83.3 58.2 83.3 107.8l0 96c0 49.6-39.4 85.8-83.3 107.8C382.9 434.7 321.7 448 256 448s-126.9-13.3-172.7-36.2C39.4 389.8 0 353.6 0 304l0-96z"/></svg>
-<h3 class="font-headline-md text-white mb-4 italic">The Ceremony</h3>
-<p class="font-body-md text-on-surface-variant mb-4">
-                        Grand Resort &amp; Residences<br/>
-                        Belize City, Belize
-                    </p>
-<div class="flex items-center gap-2 text-gold font-label-sm">
-<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
-<span>Starts at 6:00 PM</span>
-</div>
-</div>
-<!-- Bento Card 4: Destination -->
-<a href="https://maps.app.goo.gl/BrJ1PJeSXihXyeW77" target="_blank" rel="noopener" aria-label="Get directions to Grand Resort &amp; Residences" class="block md:col-span-2 glass-panel rounded-[32px] overflow-hidden shadow-[0_10px_30px_rgba(212,175,55,0.05)] relative group border-gold/20 hover:border-gold/50 transition-colors">
-<div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors duration-500 z-10"></div>
-<img class="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700" alt="Grand Resort &amp; Residences, Belize City" src="https://res.cloudinary.com/dl5gbzrgh/image/upload/c_limit,w_3840/f_auto/q_75/grand_resort/gallery/bpemf7dj2xurneumcwdu"/>
-<div class="absolute bottom-6 left-6 z-20">
-<div class="glass-panel px-4 py-3 rounded-2xl border border-gold/40 backdrop-blur-md">
-<span class="block font-serif text-[15px] sm:text-base font-semibold text-white mb-1">Grand Resort &amp; Residences</span>
-<div class="flex items-center gap-1.5 text-gold">
-<span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="font-label-sm">4.4</span>
-</div>
-<div class="flex items-center gap-2 text-gold-light font-label-sm mt-1.5">
-<span class="material-symbols-outlined text-sm" data-icon="directions">directions</span>
-<span>Get Directions</span>
-</div>
-</div>
-</div>
-</a>
-</div>
-</section>
-<!-- Dress Code Section -->
-<section id="dresscode" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding py-section-gap">
-<div class="rv glass-panel rounded-[32px] relative overflow-hidden shadow-[0_10px_30px_rgba(212,175,55,0.05)] bg-gradient-to-tl from-[#1a1a1a]/80 to-gold/5 border-gold/20">
-<div class="sparkle-bg absolute inset-0 pointer-events-none"></div>
-<div class="absolute inset-0 gold-shimmer pointer-events-none"></div>
-<div class="relative z-10 bg-black/40 flex items-center justify-center p-6 sm:p-10 cursor-zoom-in" onclick="openDressCode()">
-<img src="../dress-code.jpeg" alt="Dress code guide - Black, White &amp; Gold" class="w-full max-w-[780px] h-auto object-contain rounded-2xl border border-gold/25 shadow-[0_30px_80px_rgba(0,0,0,0.7)] transition-transform duration-700 hover:scale-[1.02]"/>
-<div class="absolute top-4 left-4 z-10">
-<span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-[0.18em] uppercase bg-gold/90 text-ink shadow-lg">Dress Code Guide</span>
-</div>
-</div>
-<!-- Details -->
-<div class="relative z-10 text-center p-8 sm:p-12 md:p-14">
-<span class="font-label-sm text-gold uppercase tracking-[0.25em] block mb-4">Dress Code</span>
-<h2 class="font-script-accent text-[40px] sm:text-[46px] text-gold-gradient italic mb-5">Black, White &amp; Gold</h2>
-<p class="font-body-lg text-on-surface-variant max-w-xl mx-auto mb-8">
-Celebrate the night in elegant black, crisp white and shimmering gold. Tap the photo to view the full guide, or download a copy to keep close.
-</p>
-<div class="flex flex-wrap justify-center gap-4">
-<button onclick="openDressCode()" class="inline-flex items-center gap-2 bg-gradient-to-r from-gold-light to-gold-dark text-ink font-label-sm uppercase px-8 py-4 rounded-full border border-gold/40 shadow-[0_10px_30px_rgba(212,175,55,0.25)] hover:shadow-[0_10px_40px_rgba(212,175,55,0.45)] transition-all active:scale-95">
-<span class="material-symbols-outlined text-lg" data-icon="fullscreen">fullscreen</span>
-View Full Guide
-</button>
-<a href="../dress-code.jpeg" download="Dress-Code.jpeg" class="inline-flex items-center gap-2 border border-gold/30 text-gold font-label-sm uppercase px-8 py-4 rounded-full hover:bg-gold/10 transition-colors no-underline">
-<span class="material-symbols-outlined text-lg" data-icon="download">download</span>
-Download
-</a>
-</div>
-</div>
-</div>
-</section>
 <!-- Gallery Section -->
 <section id="gallery" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding py-section-gap">
 <div class="rv text-center mb-16">
@@ -700,45 +710,53 @@ Download
 <div class="fan-card"><img src="../galery%20(5).jpeg" alt="Charles and Leticia moment"/></div>
 <div class="fan-card"><img src="../galery%20(3).jpeg" alt="Charles and Leticia moment"/></div>
 </div>
-<div class="mt-10 flex flex-col items-center gap-2 text-center">
-<p class="font-script-accent text-script-accent text-gold-gradient italic">See you at midnight</p>
-<span class="font-label-sm text-on-surface-variant uppercase tracking-[0.25em]">December 31, 2026</span>
-<span class="font-label-sm text-gold uppercase tracking-[0.2em]">Black &bull; White &bull; Gold</span>
-</div>
-</section>
-<!-- RSVP Section -->
-<section id="rsvp" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding py-section-gap">
-<div class="rv text-center mb-14">
-<span class="font-script-accent text-script-accent text-gold-gradient italic mb-3 block">Kindly Respond</span>
-<h2 class="font-headline-lg text-gold mb-4 italic">RSVP</h2>
-<div class="w-24 h-[1px] bg-gold mx-auto"></div>
-<p class="font-body-lg text-on-surface-variant max-w-xl mx-auto mt-6">We would love for you to join us under the stars as we ring in 2027 together. Kindly let us know by November 1st, 2026.</p>
-</div>
-<div class="rv flex justify-center">
-<a href="rsvp.html" class="group inline-block" aria-label="Open the RSVP form">
-<img src="../RSVP%20BUTTON.png" alt="RSVP" draggable="false" class="rsvp-img w-full max-w-[300px] sm:max-w-[380px] h-auto select-none pointer-events-none transition-transform duration-300 group-hover:scale-105 group-active:scale-95"/>
-</a>
-</div>
-</section>
-<!-- Gift Section -->
-<section id="gift" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding py-section-gap">
-<div class="rv glass-panel rounded-[32px] p-10 sm:p-14 text-center relative overflow-hidden shadow-[0_10px_30px_rgba(212,175,55,0.05)] bg-gradient-to-br from-[#1a1a1a]/80 to-gold/5 border-gold/20">
-<div class="absolute inset-0 gold-shimmer pointer-events-none"></div>
-<div class="sparkle-bg absolute inset-0 pointer-events-none"></div>
-<div class="relative z-10">
-<div class="w-20 h-20 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center mx-auto mb-8">
-<span class="material-symbols-outlined text-gold text-4xl" data-icon="card_travel" style="font-variation-settings:'FILL' 1;">card_travel</span>
-</div>
-<h2 class="font-script-accent text-[42px] text-gold-gradient italic mb-4">Honeymoon Fund</h2>
-<p class="font-body-lg text-on-surface-variant max-w-xl mx-auto mb-8">Your presence is our greatest gift. If you wish to honor us with a token toward our honeymoon, the details are a tap away.</p>
-<a href="honeymoon.html" class="inline-flex items-center gap-2 bg-gradient-to-r from-gold-light to-gold-dark text-ink font-label-sm uppercase px-8 py-4 rounded-full border border-gold/40 shadow-[0_10px_30px_rgba(212,175,55,0.25)] hover:shadow-[0_10px_40px_rgba(212,175,55,0.45)] transition-all active:scale-95">
-<span class="material-symbols-outlined text-lg" data-icon="content_copy">content_copy</span>
-Bank Details
-</a>
-<p class="font-label-sm text-on-surface-variant italic mt-6">Thank you for celebrating with us &mdash; your kindness means the world.</p>
-</div>
-</div>
-</section>
+    <div class="mt-10 flex flex-col items-center gap-2 text-center">
+      <p class="font-script-accent text-script-accent text-gold-gradient italic">See you at midnight</p>
+      <span class="font-label-sm text-on-surface-variant uppercase tracking-[0.25em]">December 31, 2026</span>
+      <span class="font-label-sm text-gold uppercase tracking-[0.15em] block mt-1">Rich, Elegant &amp; Timeless</span>
+    </div>
+  </section>
+
+  <!-- Light Section: RSVP & Gift -->
+  <div class="bg-[#FAF9F6] text-[#1A1A1A] border-t border-b border-gold/15 py-12 lg:py-20">
+    <!-- RSVP Section -->
+    <section id="rsvp" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding pb-16">
+      <div class="rv text-center mb-10">
+        <span class="font-script-accent text-script-accent text-[#A8862B] italic mb-3 block" style="font-size: 2rem;">Kindly Respond</span>
+        <h2 class="font-headline-lg text-[#A8862B] mb-4 italic">RSVP</h2>
+        <div class="w-24 h-[1px] bg-gold mx-auto"></div>
+        <p class="font-body-lg text-[#4A453F] max-w-xl mx-auto mt-6">
+          We would love for you to join us under the stars as we ring in 2027 together. Kindly let us know by November 1st, 2026.
+        </p>
+        <p class="font-body-md text-[#A8862B] italic max-w-xl mx-auto mt-4 px-4 font-semibold">
+          Please note: While we love your little ones, our wedding will be an adult-only celebration.
+        </p>
+      </div>
+      <div class="rv flex justify-center">
+        <a href="rsvp.html" class="group inline-block" aria-label="Open the RSVP form">
+          <img src="../RSVP%20BUTTON.png" alt="RSVP" draggable="false" class="rsvp-img w-full max-w-[300px] sm:max-w-[380px] h-auto select-none pointer-events-none transition-transform duration-300 group-hover:scale-105 group-active:scale-95"/>
+        </a>
+      </div>
+    </section>
+
+    <!-- Gift Section -->
+    <section id="gift" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding pt-12 border-t border-gold/15">
+      <div class="rv bg-white/80 border border-gold/25 rounded-[32px] p-10 sm:p-14 text-center relative overflow-hidden shadow-[0_10px_35px_rgba(212,175,55,0.06)] max-w-2xl mx-auto">
+        <div class="absolute inset-0 gold-shimmer pointer-events-none"></div>
+        <div class="sparkle-bg absolute inset-0 pointer-events-none"></div>
+        <div class="relative z-10">
+          <div class="w-20 h-20 rounded-full bg-gold/5 border border-gold/25 flex items-center justify-center mx-auto mb-8">
+            <span class="material-symbols-outlined text-[#A8862B] text-4xl" data-icon="card_travel" style="font-variation-settings:'FILL' 1;">card_travel</span>
+          </div>
+          <h2 class="font-script-accent text-[42px] text-gold-gradient italic mb-4">Honeymoon Fund</h2>
+          <p class="font-body-lg text-[#4A453F] max-w-xl mx-auto mb-8">
+            Your presence is our greatest gift. Should you wish to honor us with a contribution, a monetary gift is preferred. A card and gift box will be available at the reception.
+          </p>
+          <p class="font-label-sm text-[#8A6B1F] italic mt-6">Thank you for celebrating with us &mdash; your kindness means the world.</p>
+        </div>
+      </div>
+    </section>
+  </div>
 </main>
 <!-- Glass NavBar -->
 <nav class="glass-radio-group fixed bottom-5 left-1/2 -translate-x-1/2 z-50" aria-label="Site navigation">
