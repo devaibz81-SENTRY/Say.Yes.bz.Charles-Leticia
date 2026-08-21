@@ -478,7 +478,7 @@ section[id] { scroll-margin-top: 5rem; }
 <div class="relative z-10 flex flex-col items-center center-reveal">
 <div class="relative" style="width:min(117vw,750px);height:min(87vh,750px);">
 <img id="firstImg" src="../intro-first.png" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-500"/>
-<video id="gifImg" muted playsinline preload="auto" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-700 opacity-0" style="mix-blend-mode:screen"><source src="../intro-once.webm" type="video/webm"><source src="../intro-once.mp4" type="video/mp4"></video>
+<img id="gifImg" src="" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-700 opacity-0"/>
 <img id="lastImg" src="../intro-last.png" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-500 opacity-0"/>
 </div>
 <div id="hintPill" class="hidden mt-6 hint-pulse inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-gold/40" style="background:rgba(18,18,18,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);">
@@ -1354,7 +1354,7 @@ section[id] { scroll-margin-top: 5rem; }
   var loadProgress = document.getElementById('loadProgress');
   var revealFlash = document.getElementById('revealFlash');
 
-  var GIF_SRC = '../intro-once.mp4';   // play-once envelope animation (video, not GIF — avoids browser auto-loop)
+  var GIF_SRC = '../intro_1.gif';   // full-quality 1080x1261 envelope animation (25fps, 127 frames, transparent BG)
 
   var state = 'loading';             // loading -> ready -> playing -> revealing -> exit
   var gifFailTimer = null;
@@ -1420,23 +1420,60 @@ section[id] { scroll-margin-top: 5rem; }
     if (state !== 'ready') return;
     state = 'playing';
     if (hint) hint.textContent = 'Enjoy the moment\u2026';
-    gifImg.addEventListener('canplay', onVideoReady, { once: true });
+    gifImg.addEventListener('load', onGifLoaded, { once: true });
     gifImg.addEventListener('error', onGifFailed, { once: true });
     gifImg.src = GIF_SRC;
-    gifImg.load();
     gifImg.classList.remove('opacity-0');
-    // Safety net: if the video can't start within 12s, reveal anyway - never trap the guest.
+    // Safety: if nothing fires within 12s, reveal anyway — never trap the guest.
     gifFailTimer = setTimeout(onGifFailed, 12000);
   }
 
-  // Video fires 'canplay' once enough data is buffered to begin playback.
-  function onVideoReady() {
+  // GIF loads from cache (preloaded). Once the first frame has painted, hide the
+  // still poster and start watching for one complete animation cycle.
+  function onGifLoaded() {
     if (gifFailTimer) clearTimeout(gifFailTimer);
     if (state !== 'playing') return;
-    if (firstImg) firstImg.style.display = 'none';
-    gifImg.play().catch(function () {});
-    // When the video ends (plays once, no loop), transition automatically.
-    gifImg.addEventListener('ended', function () { beginReveal(); }, { once: true });
+    requestAnimationFrame(function () {
+      if (state !== 'playing') return;
+      if (firstImg) firstImg.style.display = 'none';
+      watchCycle();
+    });
+  }
+
+  // Draw the animated GIF to a tiny canvas each frame. The browser loops <img>
+  // GIFs by default (no NETSCAPE extension = loop forever). When the first
+  // frame's pixel hash reappears after 3+ seconds, one cycle is complete —
+  // swap to the static last frame and begin the reveal.
+  function watchCycle() {
+    var probe = document.createElement('canvas');
+    probe.width = 12; probe.height = 14;
+    var pctx = null;
+    try { pctx = probe.getContext('2d'); } catch (e) {}
+    if (!pctx) { setTimeout(beginReveal, 6500); return; }
+    var firstHash = null, started = Date.now();
+    function tick() {
+      if (state !== 'playing') return;
+      try {
+        pctx.drawImage(gifImg, 0, 0, 12, 14);
+        var d = pctx.getImageData(0, 0, 12, 14).data;
+        var h = 0;
+        for (var i = 0; i < d.length; i += 4) h = (h * 31 + d[i] + d[i + 1] + d[i + 2]) | 0;
+        if (firstHash === null) { firstHash = h; }
+        else if (h === firstHash && Date.now() - started > 3000) {
+          // One full cycle done — swap to static last frame, then reveal
+          gifImg.onload = function () { beginReveal(); };
+          gifImg.src = '../intro-last.png';
+          setTimeout(beginReveal, 400);
+          return;
+        }
+      } catch (e) {
+        // Canvas tainted etc. — fall back to generous fixed timer
+        setTimeout(beginReveal, Math.max(0, 6500 - (Date.now() - started)));
+        return;
+      }
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
   }
 
   function onGifFailed() {
