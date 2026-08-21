@@ -539,7 +539,7 @@ section[id] { scroll-margin-top: 5rem; }
       <span class="font-label-sm text-[10px] sm:text-[11px] text-gold-light uppercase tracking-[0.14em]">New Year's Eve &bull; Belize City</span>
     </div>
     <h2 class="hd-fade font-script-accent text-script-accent italic text-gold leading-[1.3] text-3xl sm:text-4xl">Join us for the wedding of</h2>
-    <h3 id="heroNames" class="hd-fade font-script-accent text-white leading-[1.15] whitespace-nowrap text-center mt-8 sm:mt-10 text-[clamp(54px,19.5vw,116px)] lg:text-[clamp(64px,8.5vw,114px)]">Charles <span class="text-gold">&amp;</span> Leticia</h3>
+    <h3 id="heroNames" class="hd-fade font-script-accent text-white leading-[1.15] whitespace-nowrap text-center mt-12 sm:mt-16 text-[clamp(54px,19.5vw,116px)] lg:text-[clamp(64px,8.5vw,114px)]">Charles <span class="text-gold">&amp;</span> Leticia</h3>
     <p class="hd-fade font-body-lg text-on-surface-variant max-w-xl mx-auto text-center mt-3 text-white/90">
       On New Year's Eve, as Belize City sparkles against the Caribbean night, we invite you to ring in 2027 with us &mdash; the start of forever.
     </p>
@@ -1438,8 +1438,42 @@ section[id] { scroll-margin-top: 5rem; }
     requestAnimationFrame(function () {
       if (state !== 'playing') return;
       if (firstImg) firstImg.style.display = 'none';
-      setTimeout(beginReveal, Math.max(0, GIF_DURATION - REVEAL_HEAD));
+      watchGifEnd();
     });
+  }
+
+  // Browsers often play large GIFs slower than their nominal fps, so a fixed timer
+  // fires too early and the reveal cuts in while the GIF is still moving.
+  // Instead, poll a tiny canvas copy of the GIF: when its pixels stop changing
+  // (a play-once GIF freezes on its final frame), the animation has truly ended.
+  var gifStart = 0;
+  var REVEAL_FALLBACK = 9500;   // hard cap in case pixel probing is unavailable
+
+  function watchGifEnd() {
+    gifStart = Date.now();
+    var probe = document.createElement('canvas');
+    probe.width = 24; probe.height = 28;
+    var pctx = null;
+    try { pctx = probe.getContext('2d', { willReadFrequently: true }); } catch (e) {}
+    if (!pctx) { setTimeout(beginReveal, Math.max(0, GIF_DURATION - REVEAL_HEAD)); return; }
+    var lastSig = null, stable = 0;
+    var iv = setInterval(function () {
+      if (state !== 'playing') { clearInterval(iv); return; }
+      var elapsed = Date.now() - gifStart;
+      if (elapsed > REVEAL_FALLBACK) { clearInterval(iv); beginReveal(); return; }
+      try {
+        pctx.drawImage(gifImg, 0, 0, probe.width, probe.height);
+        var d = pctx.getImageData(0, 0, probe.width, probe.height).data;
+        var sig = 0;
+        for (var i = 0; i < d.length; i += 4) sig = (sig * 31 + d[i] + d[i + 1] + d[i + 2]) | 0;
+        if (sig === lastSig) stable++; else { stable = 0; lastSig = sig; }
+        // Frozen for ~600ms after at least 3s of playback -> the GIF has finished
+        if (elapsed > 3000 && stable >= 3) { clearInterval(iv); beginReveal(); }
+      } catch (e) {
+        clearInterval(iv);
+        setTimeout(beginReveal, Math.max(0, GIF_DURATION - REVEAL_HEAD - (Date.now() - gifStart)));
+      }
+    }, 200);
   }
 
   function onGifFailed() {
@@ -1474,11 +1508,14 @@ section[id] { scroll-margin-top: 5rem; }
     if (lastImg) lastImg.classList.add('last-frame-fly');
     var pageEl = document.querySelector('main');
     if (pageEl) pageEl.classList.add('page-scale-in');
+    // Keep the sky alive through the handoff to the page
+    if (window.__bigFireworks) window.__bigFireworks(4);
+    // Hero content rises while the intro veil is still fading away
+    setTimeout(function () { if (window.__animateHero) window.__animateHero(); }, 450);
     setTimeout(function () {
       try { sessionStorage.setItem('cl_intro_done', '1'); } catch (e) {}
       if (intro.parentNode) intro.parentNode.removeChild(intro);
       unlockScroll();
-      if (window.__animateHero) window.__animateHero();
       // Show the music toggle button once intro is done
       var btn = document.getElementById('musicBtn');
       if (btn) btn.classList.remove('hidden');
