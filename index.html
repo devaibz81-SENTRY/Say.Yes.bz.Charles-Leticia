@@ -449,7 +449,7 @@ section[id] { scroll-margin-top: 5rem; }
   <source src="../Bad Bunny ft. Bomba Est&#233;reo - Ojitos Lindos (Video Oficial) _ Un Verano Sin Ti.mp3" type="audio/mpeg">
 </audio>
 <!-- Music toggle button (appears after intro exits) -->
-<div id="musicBtn" class="hidden fixed bottom-5 left-5 z-[9999] flex items-center gap-2 bg-black/60 backdrop-blur-md px-4 py-2 rounded-full border border-gold/40 shadow-lg hover:scale-105 transition-transform cursor-pointer" onclick="toggleMusic()" title="Toggle music">
+<div id="musicBtn" class="hidden fixed top-5 right-5 z-[9999] flex items-center gap-2 bg-black/60 backdrop-blur-md px-4 py-2 rounded-full border border-gold/40 shadow-lg hover:scale-105 transition-transform cursor-pointer" onclick="toggleMusic()" title="Toggle music">
   <span id="musicIcon" class="material-symbols-outlined text-gold text-xl" style="font-variation-settings:'FILL' 1">music_note</span>
   <span id="musicLabel" class="font-label-sm text-gold-light uppercase tracking-wider text-xs">Music On</span>
 </div>
@@ -539,7 +539,7 @@ section[id] { scroll-margin-top: 5rem; }
       <span class="font-label-sm text-[10px] sm:text-[11px] text-gold-light uppercase tracking-[0.14em]">New Year's Eve &bull; Belize City</span>
     </div>
     <h2 class="hd-fade font-script-accent text-script-accent italic text-gold leading-[1.3] text-3xl sm:text-4xl">Join us for the wedding of</h2>
-    <h3 id="heroNames" class="hd-fade font-script-accent text-white leading-[1.15] whitespace-nowrap text-center mt-16 sm:mt-20 text-[clamp(54px,19.5vw,116px)] lg:text-[clamp(64px,8.5vw,114px)]">Charles <span class="text-gold">&amp;</span> Leticia</h3>
+    <h3 id="heroNames" class="hd-fade font-script-accent text-white leading-[1.15] whitespace-nowrap text-center mt-24 sm:mt-28 text-[clamp(54px,19.5vw,116px)] lg:text-[clamp(64px,8.5vw,114px)]">Charles <span class="text-gold">&amp;</span> Leticia</h3>
     <p class="hd-fade font-body-lg text-on-surface-variant max-w-xl mx-auto text-center mt-3 text-white/90">
       On New Year's Eve, as Belize City sparkles against the Caribbean night, we invite you to ring in 2027 with us &mdash; the start of forever.
     </p>
@@ -1355,6 +1355,7 @@ section[id] { scroll-margin-top: 5rem; }
   var revealFlash = document.getElementById('revealFlash');
 
   var GIF_SRC = '../intro_1.gif';   // full-quality 1080x1261 envelope animation (25fps, 127 frames, transparent BG)
+  var GIF_DURATION = 5080;          // 127 frames @ 25fps — one full playthrough
 
   var state = 'loading';             // loading -> ready -> playing -> revealing -> exit
   var gifFailTimer = null;
@@ -1428,62 +1429,19 @@ section[id] { scroll-margin-top: 5rem; }
     gifFailTimer = setTimeout(onGifFailed, 12000);
   }
 
-  // GIF loads from cache (preloaded). Once the first frame has painted, hide the
-  // still poster and start watching for the FINAL frame of the first playthrough.
+  // GIF loads from cache (preloaded). Once the first frame has painted, start a
+  // fixed timer for exactly one playthrough. A beat BEFORE the GIF would loop,
+  // we crossfade to the static final-frame image (intro-last.png) — so the
+  // animation holds on its last frame and the reveal fires fast, with no loop
+  // and no flash of frame 0.
   function onGifLoaded() {
     if (gifFailTimer) clearTimeout(gifFailTimer);
     if (state !== 'playing') return;
     requestAnimationFrame(function () {
       if (state !== 'playing') return;
       if (firstImg) firstImg.style.display = 'none';
-      watchForFinalFrame();
+      setTimeout(beginReveal, Math.max(0, GIF_DURATION - 250));
     });
-  }
-
-  // Compute a hash of the static last frame (intro-last.png) once, then watch
-  // the animated GIF each frame. The moment the GIF's current frame matches the
-  // final-frame hash, the first playthrough has reached its end — trigger the
-  // reveal immediately. No loop, no flash of frame 0.
-  function watchForFinalFrame() {
-    var probe = document.createElement('canvas');
-    probe.width = 12; probe.height = 14;
-    var pctx = null;
-    try { pctx = probe.getContext('2d'); } catch (e) {}
-    if (!pctx) { setTimeout(beginReveal, 6500); return; }
-
-    // Pre-compute hash of the static last frame (intro-last.png)
-    var finalImg = new Image();
-    finalImg.onload = function () {
-      pctx.drawImage(finalImg, 0, 0, 12, 14);
-      var d = pctx.getImageData(0, 0, 12, 14).data;
-      var finalHash = 0;
-      for (var i = 0; i < d.length; i += 4) finalHash = (finalHash * 31 + d[i] + d[i + 1] + d[i + 2]) | 0;
-      startWatching(finalHash);
-    };
-    finalImg.onerror = function () { startWatching(null); };
-    finalImg.src = '../intro-last.png';
-
-    function startWatching(finalHash) {
-      if (!finalHash) { setTimeout(beginReveal, 6500); return; }
-      function tick() {
-        if (state !== 'playing') return;
-        try {
-          pctx.drawImage(gifImg, 0, 0, 12, 14);
-          var d = pctx.getImageData(0, 0, 12, 14).data;
-          var h = 0;
-          for (var i = 0; i < d.length; i += 4) h = (h * 31 + d[i] + d[i + 1] + d[i + 2]) | 0;
-          if (h === finalHash) {
-            beginReveal();
-            return;
-          }
-        } catch (e) {
-          setTimeout(beginReveal, 6500);
-          return;
-        }
-        requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
-    }
   }
 
   function onGifFailed() {
@@ -1492,8 +1450,8 @@ section[id] { scroll-margin-top: 5rem; }
     beginReveal();
   }
 
-  // Reveal begins a beat BEFORE the animation ends: the last frame is held and
-  // we crossfade into it, so the "end" of the animation is never actually seen.
+  // The GIF's final frame is held via the static last-frame image (crossfaded
+  // in above), then we transition FAST: flash + fireworks + fly away.
   function beginReveal() {
     if (state !== 'playing') return;
     state = 'revealing';
@@ -1507,7 +1465,7 @@ section[id] { scroll-margin-top: 5rem; }
       revealFlash.classList.add('reveal-flash');
     }
     if (window.__bigFireworks) window.__bigFireworks(6);
-    setTimeout(exit, 650);
+    setTimeout(exit, 450);
   }
 
   function exit() {
