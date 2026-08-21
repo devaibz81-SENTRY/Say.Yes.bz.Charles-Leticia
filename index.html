@@ -556,7 +556,7 @@ section[id] { scroll-margin-top: 5rem; }
     </p>
   </div>
   
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl items-stretch">
+  <div class="w-full max-w-md mx-auto">
     <!-- Save-the-Date Calendar Card -->
     <div class="hd-fade nye-cal glass-panel p-6 rounded-2xl shadow-[0_20px_50px_rgba(212,175,55,0.12)] border border-gold/25 relative overflow-hidden group flex flex-col justify-between" id="saveDateCard">
       <div class="absolute inset-0 gold-shimmer pointer-events-none"></div>
@@ -581,19 +581,14 @@ section[id] { scroll-margin-top: 5rem; }
         <span class="tracking-[0.1em] font-semibold text-gold-light">Grand Resort &amp; Residences &bull; Belize City &bull; 6:00 PM</span>
       </div>
     </div>
-    
-    <!-- Countdown Card -->
-    <div class="hd-fade glass-panel p-6 rounded-2xl shadow-[0_20px_50px_rgba(212,175,55,0.12)] border border-gold/25 relative overflow-hidden flex flex-col justify-center items-center text-center" id="countdown-block">
-      <div class="absolute inset-0 gold-shimmer pointer-events-none"></div>
-      <div class="relative z-10 w-full">
-        <div class="font-label-sm text-gold uppercase tracking-[0.25em] mb-4">Counting down to forever</div>
-        <div id="countdown" class="flex items-center justify-center gap-3 sm:gap-4"></div>
-        <p class="font-body-md text-white/80 max-w-sm mx-auto mt-6">
-          We cannot wait to celebrate the beginning of our new chapter with you under the sparkling Caribbean night.
-        </p>
-      </div>
-    </div>
   </div>
+
+  <!-- Countdown — unboxed, floating over the photo -->
+  <div class="hd-fade text-center" id="countdown-block">
+    <div class="font-label-sm text-gold uppercase tracking-[0.25em] mb-3">Counting down to forever</div>
+    <div id="countdown" class="flex items-center justify-center gap-3 sm:gap-4"></div>
+  </div>
+</div>
 </div>
 <!-- Floating Sparkle Particles (Simulated) -->
 <div class="absolute -top-10 -right-10 w-24 h-24 bg-gold/20 blur-3xl rounded-full floating"></div>
