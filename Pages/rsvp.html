@@ -109,21 +109,6 @@ input[type=number]{-moz-appearance:textfield}
 <span id="statusPill" class="att-status hidden"><span class="material-symbols-outlined text-base"></span><span class="att-status-text"></span></span>
 </div>
 </div>
-<!-- Guest count (shown when attending) -->
-<div id="guestField" class="hidden space-y-5">
-<div>
-<p class="font-label-sm text-on-surface-variant tracking-[0.2em] uppercase mb-3">Number of guests attending <span class="text-gold-light normal-case tracking-normal">(including you)</span></p>
-<div class="flex items-center justify-center gap-6">
-<button type="button" onclick="stepGuests('guestCount',-1)" class="w-12 h-12 rounded-full border border-gold/30 text-gold hover:bg-gold/10 transition-colors text-2xl leading-none">−</button>
-<input id="guestCount" type="number" value="1" min="1" max="8" class="w-20 text-center bg-transparent border-b border-gold/30 focus:border-gold focus:ring-0 font-headline-xl text-gold-gradient" aria-label="Number of guests attending"/>
-<button type="button" onclick="stepGuests('guestCount',1)" class="w-12 h-12 rounded-full border border-gold/30 text-gold hover:bg-gold/10 transition-colors text-2xl leading-none">+</button>
-</div>
-</div>
-<div>
-<label class="block font-headline-md text-white/70 mb-2 italic" for="plusNames">Names of Additional Guests</label>
-<input class="w-full bg-transparent border-t-0 border-x-0 border-b border-gold/30 focus:border-gold focus:ring-0 text-body-lg py-3 transition-colors placeholder:opacity-30 text-white" id="plusNames" type="text" placeholder="e.g. Maria Lopez, Carlos Ruiz"/>
-</div>
-</div>
 </div>
 
 <!-- COUPLE MODE -->
@@ -164,16 +149,6 @@ input[type=number]{-moz-appearance:textfield}
 <span id="statusPillA" class="att-status hidden"><span class="material-symbols-outlined text-base"></span><span class="att-status-text"></span></span>
 </div>
 </div>
-<div id="guestFieldA" class="hidden">
-<div>
-<p class="font-label-sm text-on-surface-variant tracking-[0.2em] uppercase mb-3 text-center">Guests attending <span class="text-gold-light normal-case tracking-normal">(including this person)</span></p>
-<div class="flex items-center justify-center gap-6">
-<button type="button" onclick="stepGuests('guestCountA',-1)" class="w-12 h-12 rounded-full border border-gold/30 text-gold hover:bg-gold/10 transition-colors text-2xl leading-none">−</button>
-<input id="guestCountA" type="number" value="1" min="1" max="8" class="w-20 text-center bg-transparent border-b border-gold/30 focus:border-gold focus:ring-0 font-headline-xl text-gold-gradient" aria-label="Guests attending for guest one"/>
-<button type="button" onclick="stepGuests('guestCountA',1)" class="w-12 h-12 rounded-full border border-gold/30 text-gold hover:bg-gold/10 transition-colors text-2xl leading-none">+</button>
-</div>
-</div>
-</div>
 </div>
 <!-- Guest 2 -->
 <div class="space-y-5">
@@ -209,16 +184,6 @@ input[type=number]{-moz-appearance:textfield}
 </div>
 <div class="flex justify-center pt-2">
 <span id="statusPillB" class="att-status hidden"><span class="material-symbols-outlined text-base"></span><span class="att-status-text"></span></span>
-</div>
-</div>
-<div id="guestFieldB" class="hidden">
-<div>
-<p class="font-label-sm text-on-surface-variant tracking-[0.2em] uppercase mb-3 text-center">Guests attending <span class="text-gold-light normal-case tracking-normal">(including this person)</span></p>
-<div class="flex items-center justify-center gap-6">
-<button type="button" onclick="stepGuests('guestCountB',-1)" class="w-12 h-12 rounded-full border border-gold/30 text-gold hover:bg-gold/10 transition-colors text-2xl leading-none">−</button>
-<input id="guestCountB" type="number" value="1" min="1" max="8" class="w-20 text-center bg-transparent border-b border-gold/30 focus:border-gold focus:ring-0 font-headline-xl text-gold-gradient" aria-label="Guests attending for guest two"/>
-<button type="button" onclick="stepGuests('guestCountB',1)" class="w-12 h-12 rounded-full border border-gold/30 text-gold hover:bg-gold/10 transition-colors text-2xl leading-none">+</button>
-</div>
 </div>
 </div>
 </div>
@@ -513,8 +478,8 @@ input[type=number]{-moz-appearance:textfield}
       if (missing.length) { showError('Missing information', 'Please add ' + missing.join(', ') + '.'); return; }
       if (!attA || !attB) { showError('Choose an option', 'Please select accepting or declining for both guests.'); return; }
 
-      var countA = attA === 'yes' ? (parseInt(document.getElementById('guestCountA').value, 10) || 1) : 0;
-      var countB = attB === 'yes' ? (parseInt(document.getElementById('guestCountB').value, 10) || 1) : 0;
+      var countA = attA === 'yes' ? 1 : 0;
+      var countB = attB === 'yes' ? 1 : 0;
       guests = countA + countB;
 
       records.push({
@@ -553,12 +518,10 @@ input[type=number]{-moz-appearance:textfield}
       if (!name) { showError('Missing information', 'Please add your first name.'); return; }
       if (!attendance) { showError('Choose an option', 'Please select accepting or declining.'); return; }
       var yes = attendance === 'yes';
-      var count = yes ? (parseInt(document.getElementById('guestCount').value, 10) || 1) : 0;
-      if (isEasy) count = yes ? 1 : 0;
-      if (yes && (count < 1 || count > 8)) { showError('Guest count', 'Please choose a guest count between 1 and 8.'); return; }
+      var count = yes ? 1 : 0;
       guests = count;
 
-      var plusNames = val('plusNames');
+      var plusNames = '';
       var record = {
         id: guestId, name: name, lastName: lastName, phone: phone,
         attendance: attendance, guests: guests, plusNames: plusNames,
@@ -656,15 +619,11 @@ input[type=number]{-moz-appearance:textfield}
       var el = document.getElementById(id);
       if (el) el.value = '';
     });
-    ['guestCount', 'guestCountA', 'guestCountB'].forEach(function (id) {
-      var el = document.getElementById(id);
-      if (el) el.value = '1';
-    });
     [singleToggle, coupleA, coupleB].forEach(function (tg) {
       tg.toggler.checked = false;
       tg.attYes.checked = false;
       tg.attNo.checked = false;
-      tg.guestField.classList.add('hidden');
+      if (tg.guestField) tg.guestField.classList.add('hidden');
       setPill(document.getElementById(tg === singleToggle ? 'statusPill' : (tg === coupleA ? 'statusPillA' : 'statusPillB')), '');
     });
     window.hideError();

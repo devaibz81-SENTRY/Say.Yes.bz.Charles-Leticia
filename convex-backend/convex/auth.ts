@@ -25,9 +25,9 @@ export const login = httpAction(async (ctx, request) => {
   if (request.method === "OPTIONS") return json({ ok: true });
   if (request.method !== "POST") return json({ error: "Method not allowed" }, 405);
   const body = await request.json().catch(() => ({}));
-  const password = body.password ?? "";
-  const expected = process.env.ADMIN_PASSWORD ?? "";
-  if (!expected || password !== expected) {
+  const password = (body.password ?? "").trim();
+  const expected = (process.env.ADMIN_PASSWORD || "Charles-Leticia@27").trim();
+  if (!password || password !== expected) {
     return json({ error: "Invalid password" }, 401);
   }
   const token = TOKEN_PREFIX + Math.random().toString(36).slice(2) + Date.now().toString(36);

@@ -576,10 +576,9 @@ section[id] { scroll-margin-top: 5rem; }
   <source src="../Bad Bunny ft. Bomba Est&#233;reo - Ojitos Lindos (Video Oficial) _ Un Verano Sin Ti.mp3" type="audio/mpeg">
 </audio>
 <!-- Music toggle button (appears after intro exits) -->
-<div id="musicBtn" class="hidden fixed top-5 right-5 z-[9999] flex items-center gap-2 bg-black/60 backdrop-blur-md px-4 py-2 rounded-full border border-gold/40 shadow-lg hover:scale-105 transition-transform cursor-pointer" onclick="toggleMusic()" title="Toggle music">
-  <span id="musicIcon" class="material-symbols-outlined text-gold text-xl" style="font-variation-settings:'FILL' 1">music_note</span>
-  <span id="musicLabel" class="font-label-sm text-gold-light uppercase tracking-wider text-xs">Music On</span>
-</div>
+<button id="musicBtn" class="hidden fixed top-5 right-5 z-[9999] w-10 h-10 rounded-full bg-[#0a0a14]/90 border border-gold/40 shadow-[0_4px_16px_rgba(0,0,0,0.6)] flex items-center justify-center text-gold hover:text-gold-light hover:border-gold hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-md" onclick="toggleMusic()" aria-label="Mute or unmute music" title="Mute / Unmute music">
+  <span id="musicIcon" class="material-symbols-outlined text-xl" style="font-variation-settings:'FILL' 1">volume_up</span>
+</button>
 <!-- ===================== INTRO EXPERIENCE ===================== -->
 <div id="introScreen" class="fixed inset-0 z-[10000] flex items-center justify-center satin-gradient cursor-pointer select-none overflow-hidden">
 <div class="sparkle-bg absolute inset-0 pointer-events-none"></div>
@@ -748,7 +747,20 @@ section[id] { scroll-margin-top: 5rem; }
           <img class="w-full h-full object-cover object-top" alt="A memory from their journey" src="../galery%20(1).jpeg"/>
         </div>
       </div>
-      <!-- Bento Card 2: Reception -->
+      <!-- Bento Card 2: Ceremony Details -->
+      <div id="ceremony" class="bento-card border border-gold/25 rounded-[28px] p-8">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 512 512" class="text-[#A8862B] mb-4 inline-block"><path d="M64 208c0 7.8 4.4 18.7 17.1 30.3C126.5 214.1 188.9 200 256 200s129.5 14.1 174.9 38.3C443.6 226.7 448 215.8 448 208c0-12.3-10.8-32-47.9-50.6C364.9 139.8 314 128 256 128s-108.9 11.8-144.1 29.4C74.8 176 64 195.7 64 208zm192 40c-47 0-89.3 7.6-122.9 19.7C166.3 280.2 208.8 288 256 288s89.7-7.8 122.9-20.3C345.3 255.6 303 248 256 248zM0 208c0-49.6 39.4-85.8 83.3-107.8C129.1 77.3 190.3 64 256 64s126.9 13.3 172.7 36.2c43.9 22 83.3 58.2 83.3 107.8l0 96c0 49.6-39.4 85.8-83.3 107.8C382.9 434.7 321.7 448 256 448s-126.9-13.3-172.7-36.2C39.4 389.8 0 353.6 0 304l0-96z"/></svg>
+        <h3 class="font-headline-md bento-heading mb-4 italic">The Ceremony</h3>
+        <p class="font-body-md bento-body mb-4">
+          Grand Resort &amp; Residences<br/>
+          Belize City, Belize
+        </p>
+        <div class="flex items-center gap-2 bento-accent font-label-sm label-premium">
+          <span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+          <span>Starts at 6:00 PM</span>
+        </div>
+      </div>
+      <!-- Bento Card 3: Reception -->
       <div id="reception" class="bento-card border border-gold/25 rounded-[28px] p-8">
         <span class="material-symbols-outlined bento-accent mb-4" data-icon="local_bar">local_bar</span>
         <h3 class="font-headline-md bento-heading mb-4 italic">The Reception</h3>
@@ -759,19 +771,6 @@ section[id] { scroll-margin-top: 5rem; }
         <div class="flex items-center gap-2 bento-accent font-label-sm label-premium">
           <span class="material-symbols-outlined text-sm" data-icon="nights_stay">nights_stay</span>
           <span>Rich, Elegant &amp; Timeless Attire</span>
-        </div>
-      </div>
-      <!-- Bento Card 3: Ceremony Details -->
-      <div class="bento-card border border-gold/25 rounded-[28px] p-8">
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 512 512" class="text-[#A8862B] mb-4 inline-block"><path d="M64 208c0 7.8 4.4 18.7 17.1 30.3C126.5 214.1 188.9 200 256 200s129.5 14.1 174.9 38.3C443.6 226.7 448 215.8 448 208c0-12.3-10.8-32-47.9-50.6C364.9 139.8 314 128 256 128s-108.9 11.8-144.1 29.4C74.8 176 64 195.7 64 208zm192 40c-47 0-89.3 7.6-122.9 19.7C166.3 280.2 208.8 288 256 288s89.7-7.8 122.9-20.3C345.3 255.6 303 248 256 248zM0 208c0-49.6 39.4-85.8 83.3-107.8C129.1 77.3 190.3 64 256 64s126.9 13.3 172.7 36.2c43.9 22 83.3 58.2 83.3 107.8l0 96c0 49.6-39.4 85.8-83.3 107.8C382.9 434.7 321.7 448 256 448s-126.9-13.3-172.7-36.2C39.4 389.8 0 353.6 0 304l0-96z"/></svg>
-        <h3 class="font-headline-md bento-heading mb-4 italic">The Ceremony</h3>
-        <p class="font-body-md bento-body mb-4">
-          Grand Resort &amp; Residences<br/>
-          Belize City, Belize
-        </p>
-        <div class="flex items-center gap-2 bento-accent font-label-sm label-premium">
-          <span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
-          <span>Starts at 6:00 PM</span>
         </div>
       </div>
       <!-- Bento Card 4: Destination -->
@@ -1657,6 +1656,8 @@ section[id] { scroll-margin-top: 5rem; }
     if (sessionStorage.getItem('cl_intro_done')) {
       if (intro.parentNode) intro.parentNode.removeChild(intro);
       if (window.__animateHero) window.__animateHero();
+      var btn = document.getElementById('musicBtn');
+      if (btn) btn.classList.remove('hidden');
       return;
     }
   } catch (e) {}
@@ -2012,16 +2013,22 @@ function fallbackCopy(text) {
 function toggleMusic() {
   var music = document.getElementById('bgMusic');
   var icon = document.getElementById('musicIcon');
-  var label = document.getElementById('musicLabel');
+  var btn = document.getElementById('musicBtn');
   if (!music) return;
   if (music.paused) {
     music.play().catch(function () {});
-    if (icon) icon.textContent = 'music_note';
-    if (label) label.textContent = 'Music On';
+    if (icon) icon.textContent = 'volume_up';
+    if (btn) {
+      btn.classList.remove('opacity-60');
+      btn.setAttribute('title', 'Mute music');
+    }
   } else {
     music.pause();
-    if (icon) icon.textContent = 'music_off';
-    if (label) label.textContent = 'Music Off';
+    if (icon) icon.textContent = 'volume_off';
+    if (btn) {
+      btn.classList.add('opacity-60');
+      btn.setAttribute('title', 'Play music');
+    }
   }
 }
 </script>

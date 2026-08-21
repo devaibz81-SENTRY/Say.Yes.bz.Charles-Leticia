@@ -379,25 +379,6 @@ select:-webkit-autofill {
 <span id="statusPill" class="att-status hidden"><span class="material-symbols-outlined text-base"></span><span class="att-status-text"></span></span>
 </div>
 </div>
-<!-- Guest count (shown when attending) -->
-<div id="guestField" class="hidden space-y-4">
-<div>
-<p class="chad-prompt mb-3">Number of guests attending <span class="text-gold-light normal-case tracking-normal">(including you)</span></p>
-<div class="flex items-center justify-center gap-5">
-<button type="button" onclick="stepGuests('guestCount',-1)" class="w-12 h-12 rounded-full border border-gold/30 text-gold hover:bg-gold/10 transition-colors text-2xl leading-none">−</button>
-<input id="guestCount" type="number" value="1" min="1" max="8" class="w-20 text-center bg-transparent border-b border-gold/30 focus:border-gold focus:ring-0 font-headline-xl text-gold-gradient" aria-label="Number of guests attending"/>
-<button type="button" onclick="stepGuests('guestCount',1)" class="w-12 h-12 rounded-full border border-gold/30 text-gold hover:bg-gold/10 transition-colors text-2xl leading-none">+</button>
-</div>
-</div>
-<div>
-<label class="chad-label" for="plusNames">Names of Additional Guests</label>
-<div class="chad-field">
-<span class="material-symbols-outlined chad-ic">group_add</span>
-<input class="chad-input" id="plusNames" type="text" placeholder="e.g. Maria Lopez, Carlos Ruiz"/>
-</div>
-</div>
-</div>
-</div>
 
 <!-- COUPLE MODE -->
 <div id="coupleFields" class="hidden space-y-5">
@@ -450,15 +431,6 @@ select:-webkit-autofill {
 <span id="statusPillA" class="att-status hidden"><span class="material-symbols-outlined text-base"></span><span class="att-status-text"></span></span>
 </div>
 </div>
-<div id="guestFieldA" class="hidden">
-<div>
-<p class="chad-prompt mb-3 text-center">Guests attending <span class="text-gold-light normal-case tracking-normal">(including this person)</span></p>
-<div class="flex items-center justify-center gap-5">
-<button type="button" onclick="stepGuests('guestCountA',-1)" class="w-12 h-12 rounded-full border border-gold/30 text-gold hover:bg-gold/10 transition-colors text-2xl leading-none">−</button>
-<input id="guestCountA" type="number" value="1" min="1" max="8" class="w-20 text-center bg-transparent border-b border-gold/30 focus:border-gold focus:ring-0 font-headline-xl text-gold-gradient" aria-label="Guests attending for guest one"/>
-<button type="button" onclick="stepGuests('guestCountA',1)" class="w-12 h-12 rounded-full border border-gold/30 text-gold hover:bg-gold/10 transition-colors text-2xl leading-none">+</button>
-</div>
-</div>
 </div>
 </div>
 <!-- Guest 2 -->
@@ -508,16 +480,6 @@ select:-webkit-autofill {
 </div>
 <div class="flex justify-center pt-2">
 <span id="statusPillB" class="att-status hidden"><span class="material-symbols-outlined text-base"></span><span class="att-status-text"></span></span>
-</div>
-</div>
-<div id="guestFieldB" class="hidden">
-<div>
-<p class="chad-prompt mb-3 text-center">Guests attending <span class="text-gold-light normal-case tracking-normal">(including this person)</span></p>
-<div class="flex items-center justify-center gap-5">
-<button type="button" onclick="stepGuests('guestCountB',-1)" class="w-12 h-12 rounded-full border border-gold/30 text-gold hover:bg-gold/10 transition-colors text-2xl leading-none">−</button>
-<input id="guestCountB" type="number" value="1" min="1" max="8" class="w-20 text-center bg-transparent border-b border-gold/30 focus:border-gold focus:ring-0 font-headline-xl text-gold-gradient" aria-label="Guests attending for guest two"/>
-<button type="button" onclick="stepGuests('guestCountB',1)" class="w-12 h-12 rounded-full border border-gold/30 text-gold hover:bg-gold/10 transition-colors text-2xl leading-none">+</button>
-</div>
 </div>
 </div>
 </div>
@@ -933,8 +895,8 @@ select:-webkit-autofill {
       if (missing.length) { showError('Missing information', 'Please add ' + missing.join(', ') + '.'); return; }
       if (!attA || !attB) { showError('Choose an option', 'Please select an option for both guests.'); return; }
 
-      var countA = attA === 'yes' ? (parseInt(document.getElementById('guestCountA').value, 10) || 1) : 0;
-      var countB = attB === 'yes' ? (parseInt(document.getElementById('guestCountB').value, 10) || 1) : 0;
+      var countA = attA === 'yes' ? 1 : 0;
+      var countB = attB === 'yes' ? 1 : 0;
       guests = countA + countB;
 
       records.push({
@@ -989,12 +951,10 @@ select:-webkit-autofill {
       if (!name) { showError('Missing information', 'Please add your first name.'); return; }
       if (!attendance) { showError('Choose an option', 'Please select an option below.'); return; }
       var yes = attendance === 'yes';
-      var count = yes ? (parseInt(document.getElementById('guestCount').value, 10) || 1) : 0;
-      if (isEasy) count = yes ? 1 : 0;
-      if (yes && (count < 1 || count > 8)) { showError('Guest count', 'Please choose a guest count between 1 and 8.'); return; }
+      var count = yes ? 1 : 0;
       guests = count;
 
-      var plusNames = val('plusNames');
+      var plusNames = '';
       var record = {
         id: guestId, name: name, lastName: lastName, phone: phone,
         attendance: attendance, guests: guests, plusNames: plusNames,
@@ -1124,10 +1084,6 @@ select:-webkit-autofill {
     });
     var confirmEl = document.getElementById('confirmCheck');
     if (confirmEl) confirmEl.checked = true;
-    ['guestCount', 'guestCountA', 'guestCountB'].forEach(function (id) {
-      var el = document.getElementById(id);
-      if (el) el.value = '1';
-    });
     [singleToggle, coupleA, coupleB].forEach(function (tg) {
       tg.radios.forEach(function (r) { r.checked = false; });
       if (tg.guestField) tg.guestField.classList.add('hidden');
