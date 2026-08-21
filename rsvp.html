@@ -575,7 +575,25 @@ select:-webkit-autofill {
 <p id="sucSummary" class="success-pop font-body-lg text-on-surface-variant"></p>
 <div id="sucResponses" class="success-pop inline-block glass-panel rounded-xl px-6 py-2 border-gold/30 font-label-sm text-gold uppercase tracking-[0.15em]"></div>
 <p id="sucTotal" class="success-pop font-label-sm text-on-surface-variant uppercase tracking-[0.15em]"></p>
-<div class="success-pop flex flex-col gap-3 pt-4 max-w-md mx-auto">
+
+<!-- Add to Calendar Box (Shown on attending response) -->
+<div id="sucCalendarBlock" class="success-pop bg-white/5 border border-gold/30 rounded-2xl p-5 text-center space-y-3">
+  <div class="flex items-center justify-center gap-2 text-gold font-label-sm uppercase tracking-[0.2em]">
+    <span class="material-symbols-outlined text-lg">event</span>
+    <span>Add to Your Calendar</span>
+  </div>
+  <p class="text-xs text-white/70 font-sans">Lock in New Year's Eve 2026 in Belize City so you don't miss a moment.</p>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+    <button onclick="downloadIcs()" type="button" class="chad-btn bg-white/10 hover:bg-white/20 border border-gold/40 flex items-center justify-center gap-2 text-white font-semibold text-xs py-3 rounded-xl transition-all">
+      <span class="material-symbols-outlined text-base text-gold">apple</span> Apple / iCal (.ics)
+    </button>
+    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Charles+%26+Leticia+%E2%80%94+Wedding&dates=20270101T000000Z/20270101T080000Z&details=Join+Charles+%26+Leticia+as+we+ring+in+2027+together+and+celebrate+our+wedding+ceremony+%26+reception+in+Belize+City!&location=Grand+Resort+%26+Residences%2C+Belize+City%2C+Belize" target="_blank" rel="noopener" class="chad-btn bg-white/10 hover:bg-white/20 border border-gold/40 flex items-center justify-center gap-2 text-white font-semibold text-xs py-3 rounded-xl transition-all no-underline">
+      <span class="material-symbols-outlined text-base text-gold">calendar_today</span> Google Calendar
+    </a>
+  </div>
+</div>
+
+<div class="success-pop flex flex-col gap-3 pt-2 max-w-md mx-auto">
 <a id="songRequestBtn" href="music.html" class="chad-btn chad-btn-gold w-full flex items-center justify-center gap-2 no-underline">
   <span class="material-symbols-outlined text-xl">music_note</span> Make Song Request &amp; Vote
 </a>
@@ -1008,18 +1026,65 @@ select:-webkit-autofill {
     }
   };
 
+  function downloadIcs() {
+    var icsData = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Charles & Leticia Wedding//EN',
+      'CALSCALE:GREGORIAN',
+      'METHOD:PUBLISH',
+      'BEGIN:VEVENT',
+      'UID:charles-leticia-wedding-20261231@sayyes.bz',
+      'DTSTAMP:' + new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z',
+      'DTSTART:20270101T000000Z',
+      'DTEND:20270101T080000Z',
+      'SUMMARY:Charles & Leticia \u2014 New Year\'s Eve Wedding',
+      'DESCRIPTION:Join Charles & Leticia as we ring in 2027 together and celebrate our wedding ceremony & reception in Belize City!\\n\\nVenue: Grand Resort & Residences\\nTime: 6:00 PM',
+      'LOCATION:Grand Resort & Residences, Belize City, Belize',
+      'STATUS:CONFIRMED',
+      'BEGIN:VALARM',
+      'TRIGGER:-P1D',
+      'ACTION:DISPLAY',
+      'DESCRIPTION:Reminder: Charles & Leticia Wedding Tomorrow!',
+      'END:VALARM',
+      'BEGIN:VALARM',
+      'TRIGGER:-PT2H',
+      'ACTION:DISPLAY',
+      'DESCRIPTION:Charles & Leticia Wedding starts in 2 hours!',
+      'END:VALARM',
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\r\n');
+
+    var blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'Charles-and-Leticia-Wedding.ics';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 500);
+  }
+  window.downloadIcs = downloadIcs;
+
   function showSuccess(info, count) {
     document.getElementById('rsvpForm').classList.add('hidden');
     document.getElementById('success').classList.remove('hidden');
     document.getElementById('sucName').textContent = info.couple ? (info.nameA + ' & ' + info.nameB) : info.name;
     var summary = document.getElementById('sucSummary');
+    var calBlock = document.getElementById('sucCalendarBlock');
+
     if (info.attendance === 'yes') {
+      if (calBlock) calBlock.classList.remove('hidden');
       summary.textContent = info.couple
         ? 'You confirmed ' + info.guests + ' seat' + (info.guests > 1 ? 's' : '') + ' for the two of you. We can\u2019t wait to celebrate with you!'
         : (info.guests > 1 ? 'You confirmed ' + info.guests + ' seats. We can\u2019t wait to celebrate with you!' : 'You confirmed 1 seat. We can\u2019t wait to celebrate with you!');
     } else if (info.attendance === 'maybe') {
+      if (calBlock) calBlock.classList.remove('hidden');
       summary.textContent = 'Thanks for letting us know. We\u2019ll keep you posted and check back soon!';
     } else {
+      if (calBlock) calBlock.classList.add('hidden');
       summary.textContent = 'We will miss you. Thank you for letting us know.';
     }
     document.getElementById('sucResponses').textContent = count > 1
