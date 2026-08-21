@@ -526,20 +526,9 @@ section[id] { scroll-margin-top: 5rem; }
 <!-- Hero Section with Photo Background -->
 <section class="relative min-h-[100svh] lg:h-[100vh] flex flex-col items-center justify-center overflow-hidden py-12 lg:py-14">
 <!-- Background Photo with Overlay and Heart clicker capability -->
-<div class="absolute inset-0 z-0 cursor-pointer" id="mainPhotoCard">
+<div class="absolute inset-0 z-0" id="mainPhotoCard">
   <img src="../galery%20(2).jpeg" class="w-full h-full object-cover object-center lg:object-[50%_20%] transition-transform duration-1000" alt="Charles and Leticia Background" />
   <div class="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/65 via-[#0a0a0a]/50 to-[#0a0a0a]"></div>
-  <!-- Container for Floating Hearts Animation -->
-  <div id="heartContainer" class="absolute inset-0 pointer-events-none z-30 overflow-hidden"></div>
-</div>
-
-<!-- Interactive Heart Clicker Button -->
-<div class="absolute bottom-6 right-6 z-20 flex items-center gap-3 bg-black/60 backdrop-blur-md px-4 py-2 rounded-full border border-gold/40 shadow-lg hover:scale-105 transition-transform" id="photoHeartBtn">
-  <button type="button" class="flex items-center gap-2 text-gold focus:outline-none" aria-label="Send Love Heart">
-    <span class="material-symbols-outlined text-2xl text-red-500 animate-pulse" style="font-variation-settings: 'FILL' 1;">favorite</span>
-    <span class="font-bold text-white text-sm" id="photoHeartCount">0</span>
-    <span class="text-xs text-gold-light uppercase tracking-wider hidden sm:inline">Send Love</span>
-  </button>
 </div>
 
 <div class="relative z-10 max-w-[1200px] w-full mx-auto px-5 sm:px-container-padding flex flex-col items-center flex-1 justify-between gap-10 lg:gap-8">
@@ -550,7 +539,7 @@ section[id] { scroll-margin-top: 5rem; }
       <span class="font-label-sm text-[10px] sm:text-[11px] text-gold-light uppercase tracking-[0.14em]">New Year's Eve &bull; Belize City</span>
     </div>
     <h2 class="hd-fade font-script-accent text-script-accent italic text-gold leading-[1.3] text-3xl sm:text-4xl">Join us for the wedding of</h2>
-    <h3 id="heroNames" class="hd-fade font-script-accent text-white leading-[1.15] whitespace-nowrap text-center mt-5 sm:mt-6 text-[clamp(54px,19.5vw,116px)] lg:text-[clamp(64px,8.5vw,114px)]">Charles <span class="text-gold">&amp;</span> Leticia</h3>
+    <h3 id="heroNames" class="hd-fade font-script-accent text-white leading-[1.15] whitespace-nowrap text-center mt-8 sm:mt-10 text-[clamp(54px,19.5vw,116px)] lg:text-[clamp(64px,8.5vw,114px)]">Charles <span class="text-gold">&amp;</span> Leticia</h3>
     <p class="hd-fade font-body-lg text-on-surface-variant max-w-xl mx-auto text-center mt-3 text-white/90">
       On New Year's Eve, as Belize City sparkles against the Caribbean night, we invite you to ring in 2027 with us &mdash; the start of forever.
     </p>
@@ -701,7 +690,8 @@ section[id] { scroll-margin-top: 5rem; }
   </section>
 </div>
 <!-- Gallery Section -->
-<section id="gallery" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding py-section-gap">
+<section id="gallery" class="relative max-w-[1200px] mx-auto px-5 sm:px-container-padding py-section-gap">
+<div id="galleryHearts" class="absolute inset-0 pointer-events-none z-30" aria-hidden="true"></div>
 <div class="rv text-center mb-16">
 <h2 class="font-headline-lg text-gold mb-4 italic">Our Moments</h2>
 <div class="w-24 h-[1px] bg-gold mx-auto"></div>
@@ -1871,60 +1861,40 @@ function toggleMusic() {
 
 <script>
 (function() {
-  var countEl = document.getElementById('photoHeartCount');
-  var photoCard = document.getElementById('mainPhotoCard');
-  var heartBtn = document.getElementById('photoHeartBtn');
-  var container = document.getElementById('heartContainer');
-  var count = parseInt(localStorage.getItem('photo_hearts_local') || '0', 10);
-  
-  if (countEl) countEl.textContent = count;
+  var gallery = document.getElementById('gallery');
+  var layer = document.getElementById('galleryHearts');
+  if (!gallery || !layer) return;
 
-  function createFloatingHeart(x, y) {
-    if (!container) return;
+  function spawnHeart(x, y) {
     var heart = document.createElement('div');
-    heart.className = 'absolute pointer-events-none text-red-500 font-bold select-none text-2xl transition-all duration-1000';
-    heart.innerHTML = '❤️';
-    
-    var rect = container.getBoundingClientRect();
-    var posX = (x || (rect.width / 2)) - (rect.left || 0);
-    var posY = (y || (rect.height / 2)) - (rect.top || 0);
-    
-    heart.style.left = posX + 'px';
-    heart.style.top = posY + 'px';
+    heart.className = 'absolute pointer-events-none select-none text-2xl';
+    heart.innerHTML = Math.random() > 0.5 ? '❤️' : '💖';
+    var rect = layer.getBoundingClientRect();
+    heart.style.left = (x - rect.left) + 'px';
+    heart.style.top = (y - rect.top) + 'px';
     heart.style.opacity = '1';
-    heart.style.transform = 'translate(-50%, -50%) scale(0.8)';
-    
-    container.appendChild(heart);
-    
-    var randomX = (Math.random() - 0.5) * 80;
-    var randomRotate = (Math.random() - 0.5) * 60;
-    
+    heart.style.transform = 'translate(-50%, -50%) scale(0.6)';
+    layer.appendChild(heart);
+    var driftX = (Math.random() - 0.5) * 90;
+    var rot = (Math.random() - 0.5) * 70;
+    var scale = 1 + Math.random() * 0.9;
     requestAnimationFrame(function() {
-      heart.style.transform = 'translate(calc(-50% + ' + randomX + 'px), -120px) scale(1.5) rotate(' + randomRotate + 'deg)';
+      heart.style.transition = 'all 1.1s cubic-bezier(.22,1,.36,1)';
+      heart.style.transform = 'translate(calc(-50% + ' + driftX + 'px), -130px) scale(' + scale + ') rotate(' + rot + 'deg)';
       heart.style.opacity = '0';
     });
-    
-    setTimeout(function() {
-      if (heart && heart.parentNode) {
-        heart.parentNode.removeChild(heart);
+    setTimeout(function() { if (heart.parentNode) heart.parentNode.removeChild(heart); }, 1150);
+  }
+
+  Array.prototype.forEach.call(gallery.querySelectorAll('.fan-card'), function(card) {
+    card.addEventListener('click', function(e) {
+      var bursts = 5 + Math.floor(Math.random() * 3);
+      for (var i = 0; i < bursts; i++) {
+        setTimeout(function() {
+          spawnHeart(e.clientX + (Math.random() - 0.5) * 30, e.clientY + (Math.random() - 0.5) * 20);
+        }, i * 70);
       }
-    }, 1000);
-  }
-
-  function handleHeartClick(e) {
-    count++;
-    if (countEl) countEl.textContent = count;
-    localStorage.setItem('photo_hearts_local', count.toString());
-    
-    var clickX = e ? e.clientX : null;
-    var clickY = e ? e.clientY : null;
-    createFloatingHeart(clickX, clickY);
-  }
-
-  if (photoCard) photoCard.addEventListener('click', handleHeartClick);
-  if (heartBtn) heartBtn.addEventListener('click', function(e) {
-    e.stopPropagation();
-    handleHeartClick(e);
+    });
   });
 })();
 </script>
