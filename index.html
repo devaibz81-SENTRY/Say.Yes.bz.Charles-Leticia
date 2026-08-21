@@ -478,7 +478,7 @@ section[id] { scroll-margin-top: 5rem; }
 <div class="relative z-10 flex flex-col items-center center-reveal">
 <div class="relative" style="width:min(117vw,750px);height:min(87vh,750px);">
 <img id="firstImg" src="../intro-first.png" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-500"/>
-<img id="gifImg" src="" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-700 opacity-0"/>
+<video id="gifImg" muted playsinline preload="auto" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-700 opacity-0"><source src="../intro-once.webm" type="video/webm"><source src="../intro-once.mp4" type="video/mp4"></video>
 <img id="lastImg" src="../intro-last.png" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-500 opacity-0"/>
 </div>
 <div id="hintPill" class="hidden mt-6 hint-pulse inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-gold/40" style="background:rgba(18,18,18,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);">
@@ -1354,8 +1354,7 @@ section[id] { scroll-margin-top: 5rem; }
   var loadProgress = document.getElementById('loadProgress');
   var revealFlash = document.getElementById('revealFlash');
 
-  var GIF_SRC = '../intro_1.gif';   // full-quality 1080x1261 envelope animation (25fps, 127 frames)
-  var GIF_DURATION = 5080;           // full animation length in ms
+  var GIF_SRC = '../intro-once.mp4';   // play-once envelope animation (video, not GIF — avoids browser auto-loop)
 
   var state = 'loading';             // loading -> ready -> playing -> revealing -> exit
   var gifFailTimer = null;
@@ -1365,7 +1364,7 @@ section[id] { scroll-margin-top: 5rem; }
     document.body.classList.remove('no-scroll');
   }
 
-  // ---- Loading first: the loader exists so the GIF (and the page) is ready before the tap ----
+  // ---- Loading first: the loader exists so the video (and the page) is ready before the tap ----
   var assetsToPreload = [
     GIF_SRC,
     '../galery (1).jpeg',
@@ -1421,28 +1420,23 @@ section[id] { scroll-margin-top: 5rem; }
     if (state !== 'ready') return;
     state = 'playing';
     if (hint) hint.textContent = 'Enjoy the moment\u2026';
-    gifImg.addEventListener('load', onGifLoaded, { once: true });
+    gifImg.addEventListener('canplay', onVideoReady, { once: true });
     gifImg.addEventListener('error', onGifFailed, { once: true });
     gifImg.src = GIF_SRC;
+    gifImg.load();
     gifImg.classList.remove('opacity-0');
-    // Safety net: if the GIF can't start within 12s, reveal anyway - never trap the guest.
+    // Safety net: if the video can't start within 12s, reveal anyway - never trap the guest.
     gifFailTimer = setTimeout(onGifFailed, 12000);
   }
 
-  // Keep the still envelope visible until the GIF's first frame has actually painted,
-  // so there is never a black gap between the poster and the animation.
-  function onGifLoaded() {
+  // Video fires 'canplay' once enough data is buffered to begin playback.
+  function onVideoReady() {
     if (gifFailTimer) clearTimeout(gifFailTimer);
     if (state !== 'playing') return;
-    requestAnimationFrame(function () {
-      if (state !== 'playing') return;
-      if (firstImg) firstImg.style.display = 'none';
-      // GIF is play-once (no loop block). When it finishes it freezes on the final frame,
-      // which is identical to lastImg — so the crossfade is invisible at any point after
-      // the real end. Use a generous fixed buffer above the nominal duration to absorb
-      // slow playback on low-end devices, then reveal automatically.
-      setTimeout(beginReveal, GIF_DURATION + 3500);
-    });
+    if (firstImg) firstImg.style.display = 'none';
+    gifImg.play().catch(function () {});
+    // When the video ends (plays once, no loop), transition automatically.
+    gifImg.addEventListener('ended', function () { beginReveal(); }, { once: true });
   }
 
   function onGifFailed() {
