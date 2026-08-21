@@ -444,6 +444,15 @@ section[id] { scroll-margin-top: 5rem; }
 </style>
 </head>
 <body class="bg-background text-on-background font-body-md selection:bg-gold/30 selection:text-white">
+<!-- Background music — starts on first user interaction (browser autoplay policy) -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="../Bad Bunny ft. Bomba Est&#233;reo - Ojitos Lindos (Video Oficial) _ Un Verano Sin Ti.mp3" type="audio/mpeg">
+</audio>
+<!-- Music toggle button (appears after intro exits) -->
+<div id="musicBtn" class="hidden fixed bottom-5 left-5 z-[9999] flex items-center gap-2 bg-black/60 backdrop-blur-md px-4 py-2 rounded-full border border-gold/40 shadow-lg hover:scale-105 transition-transform cursor-pointer" onclick="toggleMusic()" title="Toggle music">
+  <span id="musicIcon" class="material-symbols-outlined text-gold text-xl" style="font-variation-settings:'FILL' 1">music_note</span>
+  <span id="musicLabel" class="font-label-sm text-gold-light uppercase tracking-wider text-xs">Music On</span>
+</div>
 <!-- ===================== INTRO EXPERIENCE ===================== -->
 <div id="introScreen" class="fixed inset-0 z-[10000] flex items-center justify-center satin-gradient cursor-pointer select-none overflow-hidden">
 <div class="sparkle-bg absolute inset-0 pointer-events-none"></div>
@@ -515,10 +524,10 @@ section[id] { scroll-margin-top: 5rem; }
 <img class="w-full h-full object-contain" alt="Decorative gold ornament" src="../Element%20(5).png"/>
 </div>
 <!-- Hero Section with Photo Background -->
-<section class="relative min-h-[90vh] lg:min-h-[95vh] flex items-center justify-center overflow-hidden py-12 lg:py-20">
+<section class="relative min-h-[100svh] lg:h-[100vh] flex flex-col items-center justify-center overflow-hidden py-12 lg:py-14">
 <!-- Background Photo with Overlay and Heart clicker capability -->
 <div class="absolute inset-0 z-0 cursor-pointer" id="mainPhotoCard">
-  <img src="../main.jpeg" class="w-full h-full object-cover object-center lg:object-top transition-transform duration-1000" alt="Charles and Leticia Background" />
+  <img src="../main.jpeg" class="w-full h-full object-cover object-center transition-transform duration-1000" alt="Charles and Leticia Background" />
   <div class="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/65 via-[#0a0a0a]/50 to-[#0a0a0a]"></div>
   <!-- Container for Floating Hearts Animation -->
   <div id="heartContainer" class="absolute inset-0 pointer-events-none z-30 overflow-hidden"></div>
@@ -533,9 +542,9 @@ section[id] { scroll-margin-top: 5rem; }
   </button>
 </div>
 
-<div class="relative z-10 max-w-[1200px] w-full mx-auto px-5 sm:px-container-padding flex flex-col items-center">
+<div class="relative z-10 max-w-[1200px] w-full mx-auto px-5 sm:px-container-padding flex flex-col items-center flex-1 justify-between gap-10 lg:gap-8">
   <!-- Headline Block -->
-  <div class="space-y-4 mb-10 text-center" id="heroHead">
+  <div class="space-y-4 text-center" id="heroHead">
     <div class="hd-fade inline-flex items-center px-3 py-1 rounded-full glass-panel border border-gold/30 shadow-sm">
       <span class="material-symbols-outlined text-[12px] mr-1.5 text-gold" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
       <span class="font-label-sm text-[10px] sm:text-[11px] text-gold-light uppercase tracking-[0.14em]">New Year's Eve &bull; Belize City</span>
@@ -670,7 +679,7 @@ section[id] { scroll-margin-top: 5rem; }
     <div class="rv bg-white/80 border border-gold/25 rounded-[32px] relative overflow-hidden shadow-[0_10px_35px_rgba(212,175,55,0.06)]">
       <div class="sparkle-bg absolute inset-0 pointer-events-none"></div>
       <div class="relative z-10 bg-black/5 flex items-center justify-center p-6 sm:p-10 cursor-zoom-in" onclick="openDressCode()">
-        <img src="../dress-code-palette.jpg" alt="Dress code guide - Brown, Dark Green, Blue, Burgundy, Maroon, Black, and Shimmer" class="w-full max-w-[780px] h-auto object-contain rounded-2xl border border-gold/25 shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-transform duration-700 hover:scale-[1.02]"/>
+        <img src="../dress-code (right).png" alt="Dress code guide - Brown, Dark Green, Blue, Burgundy, Maroon, Black, and Shimmer" class="w-full max-w-[780px] h-auto object-contain rounded-2xl border border-gold/25 shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-transform duration-700 hover:scale-[1.02]"/>
         <div class="absolute top-4 left-4 z-10">
           <span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-[0.18em] uppercase bg-gold/90 text-ink shadow-lg">Dress Code Guide</span>
         </div>
@@ -687,7 +696,7 @@ section[id] { scroll-margin-top: 5rem; }
             <span class="material-symbols-outlined text-lg" data-icon="fullscreen">fullscreen</span>
             View Full Guide
           </button>
-          <a href="../dress-code-palette.jpg" download="Dress-Code-Palette.jpg" class="inline-flex items-center gap-2 border border-gold/30 text-[#A8862B] font-label-sm uppercase px-8 py-4 rounded-full hover:bg-gold/10 transition-colors no-underline">
+          <a href="../dress-code (right).png" download="Dress-Code.png" class="inline-flex items-center gap-2 border border-gold/30 text-[#A8862B] font-label-sm uppercase px-8 py-4 rounded-full hover:bg-gold/10 transition-colors no-underline">
             <span class="material-symbols-outlined text-lg" data-icon="download">download</span>
             Download
           </a>
@@ -817,7 +826,7 @@ section[id] { scroll-margin-top: 5rem; }
 <script>
 (function () {
   function animateHero() {
-    var els = document.querySelectorAll('#heroHead .hd-fade, .hero-side .hd-fade');
+    var els = document.querySelectorAll('#heroHead .hd-fade, #saveDateCard.hd-fade, #countdown-block.hd-fade');
     els.forEach(function (el, i) {
       el.style.transitionDelay = (i * 130) + 'ms';
       el.classList.add('hd-anim');
@@ -1381,7 +1390,7 @@ section[id] { scroll-margin-top: 5rem; }
     '../galery (3).jpeg',
     '../galery (4).jpeg',
     '../galery (5).jpeg',
-    '../dress-code.jpeg',
+    '../dress-code (right).png',
     '../RSVP BUTTON.png',
     '../Element (1).png',
     '../Element (2).png',
@@ -1486,6 +1495,9 @@ section[id] { scroll-margin-top: 5rem; }
       if (intro.parentNode) intro.parentNode.removeChild(intro);
       unlockScroll();
       if (window.__animateHero) window.__animateHero();
+      // Show the music toggle button once intro is done
+      var btn = document.getElementById('musicBtn');
+      if (btn) btn.classList.remove('hidden');
     }, 1200);
   }
 
@@ -1502,7 +1514,15 @@ section[id] { scroll-margin-top: 5rem; }
   document.body.classList.add('no-scroll');
 
   intro.addEventListener('click', function () {
-    if (state === 'ready') play();
+    if (state === 'ready') {
+      // Start music on first user gesture (satisfies browser autoplay policy)
+      var music = document.getElementById('bgMusic');
+      if (music && music.paused) {
+        music.volume = 0.45;
+        music.play().catch(function () {});
+      }
+      play();
+    }
   });
 
   if (total === 0) {
@@ -1798,9 +1818,9 @@ function fallbackCopy(text) {
 </script>
 <!-- Dress code fullscreen viewer -->
 <div id="dressOverlay" class="hidden fixed inset-0 z-[10001] bg-black/90 backdrop-blur-md flex items-center justify-center cursor-pointer" onclick="if(event.target===this)closeDressCode()">
-<img src="../dress-code.jpeg" alt="Dress code guide" class="max-w-[92vw] max-h-[88vh] w-auto h-auto object-contain select-none" style="box-shadow:0 0 80px rgba(212,175,55,.28)"/>
+<img src="../dress-code (right).png" alt="Dress code guide" class="max-w-[92vw] max-h-[88vh] w-auto h-auto object-contain select-none" style="box-shadow:0 0 80px rgba(212,175,55,.28)"/>
 <div class="absolute top-4 right-4 flex gap-3">
-<a href="../dress-code.jpeg" download="Dress-Code.jpeg" onclick="event.stopPropagation()" class="w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors no-underline" aria-label="Download dress code">
+<a href="../dress-code (right).png" download="Dress-Code.png" onclick="event.stopPropagation()" class="w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors no-underline" aria-label="Download dress code">
 <span class="material-symbols-outlined" data-icon="download">download</span>
 </a>
 <button onclick="event.stopPropagation();closeDressCode()" class="w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors" aria-label="Close">
@@ -1836,7 +1856,25 @@ function fallbackCopy(text) {
 })();
 </script>
 
-<!-- Heart Clicker Logic -->
+<!-- Music toggle logic -->
+<script>
+function toggleMusic() {
+  var music = document.getElementById('bgMusic');
+  var icon = document.getElementById('musicIcon');
+  var label = document.getElementById('musicLabel');
+  if (!music) return;
+  if (music.paused) {
+    music.play().catch(function () {});
+    if (icon) icon.textContent = 'music_note';
+    if (label) label.textContent = 'Music On';
+  } else {
+    music.pause();
+    if (icon) icon.textContent = 'music_off';
+    if (label) label.textContent = 'Music Off';
+  }
+}
+</script>
+
 <script>
 (function() {
   var countEl = document.getElementById('photoHeartCount');
