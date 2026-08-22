@@ -393,31 +393,31 @@ html.no-scroll, html.no-scroll body { overflow: hidden; }
 }
 </style>
 <style>
-/* ---- Save-the-Date calendar card (meeting-card style) ---- */
-.nye-cal .day-strip { display: flex; gap: 6px; }
+/* ---- Save-the-Date calendar card (compact luxury style) ---- */
+.nye-cal .day-strip { display: flex; gap: 4px; }
 .nye-cal .day-item {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  padding: 10px 0 8px;
-  border-radius: 14px;
+  gap: 3px;
+  padding: 6px 0 5px;
+  border-radius: 10px;
   cursor: default;
   transition: background .25s ease, transform .25s ease, box-shadow .25s ease;
 }
-.nye-cal .day-item .day-number { font-size: 20px; font-weight: 600; color: #f5f5f5; line-height: 1; }
-.nye-cal .day-item .day-name { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: #b9b9b9; }
+.nye-cal .day-item .day-number { font-size: 15px; font-weight: 600; color: #f5f5f5; line-height: 1; }
+.nye-cal .day-item .day-name { font-size: 8.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: #b9b9b9; }
 .nye-cal .day-item.day-active {
   background: linear-gradient(160deg, #F5D76E 0%, #D4AF37 55%, #A8862B 100%);
-  box-shadow: 0 10px 26px rgba(212, 175, 55, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(212, 175, 55, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
 }
 .nye-cal .day-item.day-active .day-number,
 .nye-cal .day-item.day-active .day-name { color: #0a0a0a; }
-.nye-cal .indicator-container { display: flex; justify-content: center; gap: 9px; margin-top: 14px; }
-.nye-cal .indicator-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(212, 175, 55, 0.28); transition: background .25s ease, box-shadow .25s ease; }
-.nye-cal .indicator-dot.indicator-active { background: #D4AF37; box-shadow: 0 0 9px rgba(212, 175, 55, 0.9); }
+.nye-cal .indicator-container { display: flex; justify-content: center; gap: 6px; margin-top: 8px; }
+.nye-cal .indicator-dot { width: 4.5px; height: 4.5px; border-radius: 50%; background: rgba(212, 175, 55, 0.28); transition: background .25s ease, box-shadow .25s ease; }
+.nye-cal .indicator-dot.indicator-active { background: #D4AF37; box-shadow: 0 0 7px rgba(212, 175, 55, 0.9); }
 .rsvp-img {
   filter: drop-shadow(0 0 16px rgba(212, 175, 55, 0.55)) drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
   animation: rsvp-glow 2.6s ease-in-out infinite;
@@ -508,6 +508,17 @@ html.no-scroll, html.no-scroll body { overflow: hidden; }
   width: fit-content;
   max-width: calc(100vw - 20px);
   border: 1px solid rgba(212, 175, 55, 0.25);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease;
+}
+.glass-radio-group.nav-hidden {
+  transform: translate(-50%, 140%) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+.glass-radio-group.nav-visible {
+  transform: translate(-50%, 0) !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
 }
 .glass-radio-group a {
   flex: 1;
@@ -848,71 +859,86 @@ section[id] { scroll-margin-top: 5rem; }
   <div class="absolute inset-0 hero-overlay-velvet"></div>
 </div>
 
-<div class="relative z-10 max-w-[1200px] w-full mx-auto px-5 sm:px-container-padding flex flex-col items-center flex-1 justify-between gap-10 lg:gap-8">
+<div class="relative z-10 max-w-[1200px] w-full mx-auto px-5 sm:px-container-padding flex flex-col items-center flex-1 justify-center gap-6 lg:gap-8 my-auto">
   <!-- Headline Block -->
-  <div class="space-y-4 text-center" id="heroHead">
-    <div class="hd-fade inline-flex items-center px-3 py-1 rounded-full glass-panel border border-gold/30 shadow-sm">
-      <span class="material-symbols-outlined text-[12px] mr-1.5 text-gold" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
-      <span class="font-label-sm text-[10px] sm:text-[11px] text-gold-light uppercase tracking-[0.14em]">New Year's Eve &bull; Belize City</span>
-    </div>
-    <h2 class="hd-fade font-script-accent text-script-accent italic text-gold leading-[1.3] text-3xl sm:text-4xl">Join us for the wedding of</h2>
-    <h3 id="heroNames" class="hd-fade font-script-accent text-white leading-[1.15] whitespace-nowrap text-center mt-24 sm:mt-28 text-[clamp(54px,19.5vw,116px)] lg:text-[clamp(64px,8.5vw,114px)]">Charles <span class="text-gold">&amp;</span> Leticia</h3>
-    <p class="hd-fade font-body-lg text-on-surface-variant max-w-xl mx-auto text-center mt-3 text-white/90">
-      On New Year's Eve, as Belize City sparkles against the Caribbean night, we invite you to ring in 2027 with us &mdash; the start of forever.
-    </p>
+  <div class="space-y-3 text-center" id="heroHead">
+    <h2 class="hd-fade font-script-accent text-script-accent italic text-gold leading-[1.3] text-2xl sm:text-3xl lg:text-4xl">Join us for the wedding of</h2>
+    <h3 id="heroNames" class="hd-fade font-script-accent text-white leading-[1.1] whitespace-nowrap text-center text-[clamp(54px,18vw,114px)] lg:text-[clamp(64px,8vw,112px)]">Charles <span class="text-gold">&amp;</span> Leticia</h3>
   </div>
   
-  <div class="w-full max-w-md mx-auto">
+  <div class="w-full max-w-[340px] sm:max-w-[380px] mx-auto">
     <!-- Save-the-Date Calendar Card -->
-    <div class="hd-fade nye-cal glass-panel p-6 rounded-2xl shadow-[0_20px_50px_rgba(212,175,55,0.12)] border border-gold/25 relative overflow-hidden group flex flex-col justify-between" id="saveDateCard">
+    <div class="hd-fade nye-cal glass-panel p-4 sm:p-5 rounded-2xl shadow-[0_16px_40px_rgba(212,175,55,0.1)] border border-gold/25 relative overflow-hidden group flex flex-col justify-between" id="saveDateCard">
       <div class="absolute inset-0 gold-shimmer pointer-events-none"></div>
       <canvas id="stdFwCanvas" class="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true"></canvas>
       <div class="absolute inset-0 z-[1] bg-[#070b16]/70 pointer-events-none" aria-hidden="true"></div>
       <div class="relative z-10">
-        <div class="flex justify-between items-center mb-3">
-          <div class="font-script-accent text-[20px] sm:text-[24px] leading-[1.3] pt-1 text-gold-gradient italic">Save the Date</div>
-          <div class="flex items-center gap-1.5 font-label-sm text-on-surface-variant uppercase tracking-[0.12em] text-white/80">
+        <div class="flex justify-between items-center mb-2">
+          <div class="font-script-accent text-[17px] sm:text-[20px] leading-[1.2] pt-0.5 text-gold-gradient italic">Save the Date</div>
+          <div class="flex items-center gap-1 font-label-sm text-on-surface-variant uppercase tracking-[0.1em] text-white/80 text-[10px] sm:text-[11px]">
             <span>December 2026</span>
           </div>
         </div>
-        <div class="flex items-center gap-2 font-body-md text-gold-light mb-4">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" class="text-gold"><path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/></svg>
+        <div class="flex items-center gap-1.5 font-body-md text-gold-light mb-2.5 text-xs sm:text-[13px]">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16" class="text-gold flex-shrink-0"><path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/></svg>
           <span class="text-white">New Year's Eve Wedding &bull; Thu, 31</span>
         </div>
         <div class="day-strip" id="nye-strip"></div>
         <div class="indicator-container" id="nye-indicators"></div>
       </div>
-      <div class="mt-6 pt-4 border-t border-gold/20 flex items-center gap-2 font-label-sm text-on-surface-variant relative z-10">
-        <span class="material-symbols-outlined text-gold text-sm" data-icon="location_on">location_on</span>
-        <span class="tracking-[0.1em] font-semibold text-gold-light">Grand Resort &amp; Residences &bull; Belize City &bull; 6:00 PM</span>
+      <div class="mt-3.5 pt-2.5 border-t border-gold/20 flex items-center gap-1.5 font-label-sm text-on-surface-variant relative z-10 text-[9.5px] sm:text-[10.5px]">
+        <span class="material-symbols-outlined text-gold text-[13px]" data-icon="location_on">location_on</span>
+        <span class="tracking-[0.06em] font-medium text-gold-light/90 truncate">Grand Resort &amp; Residences &bull; Belize City &bull; 6:00 PM</span>
       </div>
     </div>
   </div>
 
-  <!-- Countdown — unboxed, floating over the photo -->
-  <div class="hd-fade text-center" id="countdown-block">
-    <div class="font-label-sm label-premium text-gold uppercase tracking-[0.25em] mb-3">Counting down to forever</div>
+  <!-- Countdown & Moved-down Inviting Note -->
+  <div class="hd-fade flex flex-col items-center gap-3 text-center" id="countdown-block">
+    <div class="font-label-sm label-premium text-gold uppercase tracking-[0.25em]">Counting down to forever</div>
     <div class="countdown-pill">
       <div id="countdown" class="flex items-center justify-center gap-0"></div>
     </div>
+    <p class="font-body-md text-white/80 max-w-lg mx-auto text-center italic tracking-wide text-xs sm:text-sm mt-1 px-4">
+      On New Year's Eve, as Belize City sparkles against the Caribbean night, we invite you to ring in 2027 with us &mdash; the start of forever.
+    </p>
   </div>
 </div>
 </div>
-<!-- Floating Sparkle Particles (Simulated) -->
-<div class="absolute -top-10 -right-10 w-24 h-24 bg-gold/20 blur-3xl rounded-full floating"></div>
-<div class="absolute top-1/2 -left-12 w-16 h-16 bg-gold/10 blur-2xl rounded-full floating" style="animation-delay: 1s;"></div>
-<div class="absolute -bottom-8 right-1/4 w-20 h-20 bg-gold/15 blur-2xl rounded-full floating" style="animation-delay: 2s;"></div>
-</div>
-</div>
+<!-- Hero floral corner accents -->
+<div class="floral-corner floral-tl floral-float" aria-hidden="true"><img src="../Element%20(1).png" alt=""/></div>
+<div class="floral-corner floral-br floral-float-rev" aria-hidden="true"><img src="../Element%20(5).png" alt=""/></div>
 </section>
-<!-- Light Section: The Celebration & Dress Code -->
-<div class="light-section text-[#1A1A1A] border-t border-b border-gold/15 py-6">
-  <!-- Details Section: Bento Grid -->
-  <section id="details" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding py-14">
-    <div class="rv text-center mb-16">
-      <h2 class="font-headline-lg bento-heading mb-5 italic">The Celebration</h2>
-      <!-- Ornamental divider -->
-      <div class="ornament-divider">
+
+<!-- ============================================================ -->
+<!-- SCROLL BREAK 1 — cinematic chapter break after hero         -->
+<!-- ============================================================ -->
+<div class="cinematic-break">
+  <div class="cb-photo"><img src="../galery%20(4).jpeg" alt="Charles and Leticia"/></div>
+  <div class="cb-vignette"></div>
+  <div class="cb-content rv-up">
+    <span class="font-label-sm label-premium text-gold/80 uppercase tracking-[0.3em] block mb-3">A love story — Belize City, 2026</span>
+    <div class="cb-ornament"></div>
+    <p class="font-script-accent text-[clamp(28px,5vw,52px)] text-white/90 italic leading-snug">"To love and be loved<br/>is to feel the sun from both sides."</p>
+    <div class="cb-ornament"></div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- THE CELEBRATION SECTION (dark resort photo background)      -->
+<!-- ============================================================ -->
+<div class="celebration-section border-t border-b border-gold/10">
+  <div class="cel-photo-bg" aria-hidden="true">
+    <img src="https://res.cloudinary.com/dl5gbzrgh/image/upload/c_limit,w_3840/f_auto/q_75/grand_resort/gallery/bpemf7dj2xurneumcwdu" alt="" loading="lazy"/>
+  </div>
+  <div class="cel-fade" aria-hidden="true"></div>
+  <div class="floral-corner floral-tr" style="opacity:0.09" aria-hidden="true"><img src="../Element%20(3).png" alt=""/></div>
+  <div class="floral-corner floral-bl" style="opacity:0.08" aria-hidden="true"><img src="../Element%20(2).png" alt=""/></div>
+  <div class="inner max-w-[1200px] mx-auto px-5 sm:px-container-padding py-20">
+    <div class="text-center mb-14" id="details">
+      <span class="font-label-sm label-premium text-gold/70 uppercase tracking-[0.3em] block mb-3 rv-up">The Evening</span>
+      <h2 class="font-headline-lg dark-section-heading mb-5 italic rv-up" style="transition-delay:.1s">The Celebration</h2>
+      <div class="ornament-divider rv-up" style="transition-delay:.2s">
         <svg width="80" height="12" viewBox="0 0 80 12" fill="none" xmlns="http://www.w3.org/2000/svg">
           <line x1="0" y1="6" x2="28" y2="6" stroke="#D4AF37" stroke-opacity="0.5" stroke-width="0.75"/>
           <path d="M34 6 L37 3 L40 6 L37 9 Z" fill="#D4AF37" opacity="0.7"/>
@@ -921,61 +947,52 @@ section[id] { scroll-margin-top: 5rem; }
         </svg>
       </div>
     </div>
-    <div class="rv-g grid grid-cols-1 md:grid-cols-3 gap-8">
-      <!-- Bento Card 1: Our Story -->
-      <div id="story" class="bento-card md:col-span-2 border border-gold/25 rounded-[28px] p-7 sm:p-10 flex flex-col justify-between relative overflow-hidden group">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+      <!-- Card 1: Our Story — LEFT -->
+      <div id="story" class="bento-card bento-card-dark md:col-span-2 rounded-[28px] p-7 sm:p-10 flex flex-col justify-between relative overflow-hidden group rv-left">
+        <div class="floral-corner floral-br" style="opacity:0.07" aria-hidden="true"><img src="../Element%20(6).png" alt=""/></div>
         <div class="relative z-10">
           <span class="font-label-sm label-premium bento-accent uppercase tracking-widest block mb-4">A love story</span>
           <h3 class="font-headline-md bento-heading mb-4 italic">Our Journey Together</h3>
-          <p class="font-body-md bento-body max-w-[52ch] mb-6">
-            From chance meetings to a love that lights up every room, our journey has been written in laughter, late-night talks and big dreams. This New Year's Eve, we write our next chapter &mdash; together, with you by our side.
-          </p>
-          <a class="inline-flex items-center bento-accent font-label-sm label-premium uppercase hover:gap-3 transition-all" href="story.html">
-            Read the full story <span class="material-symbols-outlined ml-2" data-icon="chevron_right">chevron_right</span>
-          </a>
+          <p class="font-body-md bento-body max-w-[52ch] mb-6">From chance meetings to a love that lights up every room, our journey has been written in laughter, late-night talks and big dreams. This New Year's Eve, we write our next chapter &mdash; together, with you by our side.</p>
+          <a class="inline-flex items-center bento-accent font-label-sm label-premium uppercase hover:gap-3 transition-all" href="story.html">Read the full story <span class="material-symbols-outlined ml-2" data-icon="chevron_right">chevron_right</span></a>
         </div>
         <div class="mt-8 mx-auto md:mt-0 md:mx-0 md:absolute md:bottom-6 md:right-6 w-32 h-32 sm:w-40 sm:h-40 md:w-44 md:h-44 rounded-full overflow-hidden border-2 border-gold/40 shadow-[0_0_45px_rgba(212,175,55,0.25)] pointer-events-none group-hover:scale-105 transition-transform duration-1000">
           <img class="w-full h-full object-cover object-top" alt="A memory from their journey" src="../galery%20(1).jpeg"/>
         </div>
       </div>
-      <!-- Bento Card 2: Ceremony Details -->
-      <div id="ceremony" class="bento-card border border-gold/25 rounded-[28px] p-8">
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 512 512" class="text-[#A8862B] mb-4 inline-block"><path d="M64 208c0 7.8 4.4 18.7 17.1 30.3C126.5 214.1 188.9 200 256 200s129.5 14.1 174.9 38.3C443.6 226.7 448 215.8 448 208c0-12.3-10.8-32-47.9-50.6C364.9 139.8 314 128 256 128s-108.9 11.8-144.1 29.4C74.8 176 64 195.7 64 208zm192 40c-47 0-89.3 7.6-122.9 19.7C166.3 280.2 208.8 288 256 288s89.7-7.8 122.9-20.3C345.3 255.6 303 248 256 248zM0 208c0-49.6 39.4-85.8 83.3-107.8C129.1 77.3 190.3 64 256 64s126.9 13.3 172.7 36.2c43.9 22 83.3 58.2 83.3 107.8l0 96c0 49.6-39.4 85.8-83.3 107.8C382.9 434.7 321.7 448 256 448s-126.9-13.3-172.7-36.2C39.4 389.8 0 353.6 0 304l0-96z"/></svg>
+      <!-- Card 2: Ceremony — RIGHT -->
+      <div id="ceremony" class="bento-card bento-card-dark rounded-[28px] p-8 rv-right">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 512 512" class="text-[#F5D76E] mb-4 inline-block"><path d="M64 208c0 7.8 4.4 18.7 17.1 30.3C126.5 214.1 188.9 200 256 200s129.5 14.1 174.9 38.3C443.6 226.7 448 215.8 448 208c0-12.3-10.8-32-47.9-50.6C364.9 139.8 314 128 256 128s-108.9 11.8-144.1 29.4C74.8 176 64 195.7 64 208zm192 40c-47 0-89.3 7.6-122.9 19.7C166.3 280.2 208.8 288 256 288s89.7-7.8 122.9-20.3C345.3 255.6 303 248 256 248zM0 208c0-49.6 39.4-85.8 83.3-107.8C129.1 77.3 190.3 64 256 64s126.9 13.3 172.7 36.2c43.9 22 83.3 58.2 83.3 107.8l0 96c0 49.6-39.4 85.8-83.3 107.8C382.9 434.7 321.7 448 256 448s-126.9-13.3-172.7-36.2C39.4 389.8 0 353.6 0 304l0-96z"/></svg>
         <h3 class="font-headline-md bento-heading mb-4 italic">The Ceremony</h3>
-        <p class="font-body-md bento-body mb-4">
-          Grand Resort &amp; Residences<br/>
-          Belize City, Belize
-        </p>
+        <p class="font-body-md bento-body mb-4">Grand Resort &amp; Residences<br/>Belize City, Belize</p>
         <div class="flex items-center gap-2 bento-accent font-label-sm label-premium">
           <span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
           <span>Starts at 6:00 PM</span>
         </div>
       </div>
-      <!-- Bento Card 3: Reception -->
-      <div id="reception" class="bento-card border border-gold/25 rounded-[28px] p-8">
-        <span class="material-symbols-outlined bento-accent mb-4" data-icon="local_bar">local_bar</span>
+      <!-- Card 3: Reception — LEFT -->
+      <div id="reception" class="bento-card bento-card-dark rounded-[28px] p-8 rv-left" style="transition-delay:.08s">
+        <span class="material-symbols-outlined bento-accent mb-4 text-2xl" data-icon="local_bar">local_bar</span>
         <h3 class="font-headline-md bento-heading mb-4 italic">The Reception</h3>
-        <p class="font-body-md bento-body mb-4">
-          New Year's Eve Celebration<br/>
-          Cocktails, Dinner &amp; Dancing until midnight
-        </p>
+        <p class="font-body-md bento-body mb-4">New Year's Eve Celebration<br/>Cocktails, Dinner &amp; Dancing until midnight</p>
         <div class="flex items-center gap-2 bento-accent font-label-sm label-premium">
           <span class="material-symbols-outlined text-sm" data-icon="nights_stay">nights_stay</span>
           <span>Rich, Elegant &amp; Timeless Attire</span>
         </div>
       </div>
-      <!-- Bento Card 4: Destination -->
-      <a href="https://maps.app.goo.gl/BrJ1PJeSXihXyeW77" target="_blank" rel="noopener" aria-label="Get directions to Grand Resort &amp; Residences" class="bento-card block md:col-span-2 border border-gold/25 rounded-[28px] overflow-hidden relative group min-h-[220px]">
+      <!-- Card 4: Map — RIGHT -->
+      <a href="https://maps.app.goo.gl/BrJ1PJeSXihXyeW77" target="_blank" rel="noopener" aria-label="Get directions to Grand Resort &amp; Residences" class="bento-card bento-card-dark block md:col-span-2 rounded-[28px] overflow-hidden relative group min-h-[220px] rv-right" style="transition-delay:.08s">
         <div class="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors duration-500 z-10"></div>
-        <img class="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700" alt="Grand Resort &amp; Residences, Belize City" src="https://res.cloudinary.com/dl5gbzrgh/image/upload/c_limit,w_3840/f_auto/q_75/grand_resort/gallery/bpemf7dj2xurneumcwdu"/>
+        <img class="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700" alt="Grand Resort &amp; Residences, Belize City" src="https://res.cloudinary.com/dl5gbzrgh/image/upload/c_limit,w_3840/f_auto/q_75/grand_resort/gallery/bpemf7dj2xurneumcwdu" loading="lazy"/>
         <div class="absolute bottom-6 left-6 z-20">
-          <div class="bg-white/95 border border-[#D4AF37]/45 px-4 py-3 rounded-2xl shadow-lg backdrop-blur-md">
-            <span class="block font-serif text-[15px] sm:text-base font-semibold bento-heading mb-1">Grand Resort &amp; Residences</span>
-            <div class="flex items-center gap-1.5 text-[#A8862B]">
+          <div class="bg-black/80 border border-[#D4AF37]/45 px-4 py-3 rounded-2xl shadow-lg backdrop-blur-md">
+            <span class="block font-serif text-[15px] sm:text-base font-semibold text-white mb-1">Grand Resort &amp; Residences</span>
+            <div class="flex items-center gap-1.5 text-[#F5D76E]">
               <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
               <span class="font-label-sm">4.4</span>
             </div>
-            <div class="flex items-center gap-2 text-[#8A6B1F] font-label-sm mt-1.5">
+            <div class="flex items-center gap-2 text-[#F5D76E]/80 font-label-sm mt-1.5">
               <span class="material-symbols-outlined text-sm" data-icon="directions">directions</span>
               <span>Get Directions</span>
             </div>
@@ -1159,8 +1176,8 @@ section[id] { scroll-margin-top: 5rem; }
   </div>
 </div>
 </main>
-<!-- Glass NavBar -->
-<nav class="glass-radio-group fixed bottom-5 left-1/2 -translate-x-1/2 z-50" aria-label="Site navigation">
+<!-- Glass NavBar (hidden on hero, appears on scroll to details/sections) -->
+<nav class="glass-radio-group fixed bottom-5 left-1/2 -translate-x-1/2 z-50 nav-hidden" aria-label="Site navigation">
 <a href="#story" class="active" aria-label="Story"><span class="nav-ic material-symbols-outlined">auto_stories</span></a>
 <a href="#reception" aria-label="Reception"><span class="nav-ic material-symbols-outlined">local_bar</span></a>
 <a href="#gallery" aria-label="Gallery"><span class="nav-ic material-symbols-outlined">photo_library</span></a>
@@ -2442,7 +2459,7 @@ function fallbackCopy(text) {
   });
 })();
 </script>
-<!-- Glass nav: sliding gold glider + scroll spy -->
+<!-- Glass nav: sliding gold glider + scroll spy + hero show/hide -->
 <script>
 (function () {
   var nav = document.querySelector('.glass-radio-group');
@@ -2454,10 +2471,13 @@ function fallbackCopy(text) {
   glider.style.width = (100 / n) + '%';
 
   function setActive(link) {
-    if (link.classList.contains('active')) return;
+    if (!link) return;
     links.forEach(function (l) { l.classList.remove('active'); });
     link.classList.add('active');
-    glider.style.transform = 'translateX(' + (links.indexOf(link) * 100) + '%)';
+    var idx = links.indexOf(link);
+    if (idx >= 0) {
+      glider.style.transform = 'translateX(' + (idx * 100) + '%)';
+    }
   }
 
   links.forEach(function (link) {
@@ -2473,12 +2493,31 @@ function fallbackCopy(text) {
   var map = {};
   links.forEach(function (l) { map[l.getAttribute('href').slice(1)] = l; });
   var secs = Object.keys(map).map(function (id) { return document.getElementById(id); }).filter(Boolean);
+  
+  // Show / Hide navbar depending on scroll position (hidden on hero, visible once scrolled down)
+  function checkNavVisibility() {
+    var threshold = Math.min(window.innerHeight * 0.45, 380);
+    if (window.scrollY > threshold) {
+      nav.classList.remove('nav-hidden');
+      nav.classList.add('nav-visible');
+    } else {
+      nav.classList.add('nav-hidden');
+      nav.classList.remove('nav-visible');
+    }
+  }
+
+  window.addEventListener('scroll', checkNavVisibility, { passive: true });
+  checkNavVisibility();
+
+  // Scroll spy observer for section glider transitions
   if ('IntersectionObserver' in window && secs.length) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
-        if (en.isIntersecting && map[en.target.id]) setActive(map[en.target.id]);
+        if (en.isIntersecting && map[en.target.id]) {
+          setActive(map[en.target.id]);
+        }
       });
-    }, { rootMargin: '-45% 0px -50% 0px' });
+    }, { rootMargin: '-25% 0px -40% 0px' });
     secs.forEach(function (s) { io.observe(s); });
   }
 })();
