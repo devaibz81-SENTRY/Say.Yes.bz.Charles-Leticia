@@ -471,7 +471,7 @@ select:-webkit-autofill {
 <div class="space-y-4">
 <div class="flex items-center gap-3">
 <div class="flex-1 h-[1px] bg-gold/30"></div>
-<span class="chad-label mb-0 text-gold uppercase tracking-[0.2em]">Guest 2</span>
+<span class="chad-label mb-0 text-gold uppercase tracking-[0.2em]">Guest 2 <span style="opacity:.5;letter-spacing:.08em">— optional</span></span>
 <div class="flex-1 h-[1px] bg-gold/30"></div>
 </div>
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -961,11 +961,20 @@ select:-webkit-autofill {
         lastNameB = partsB.slice(1).join(' ');
       }
 
+      // Guest 2 is optional — can leave blank and RSVP for Guest 1 only, fill later
       var missing = [];
-      if (!nameA && attA === 'yes') missing.push('guest 1 first name');
-      if (!nameB && attB === 'yes') missing.push('guest 2 first name');
+      if (!nameA) missing.push('guest 1 first name');
+      // Guest 2 first name only required if they are attending and name is provided
+      if (nameB && attB === 'yes' && !nameB) missing.push('guest 2 first name');
       if (missing.length) { showError('Missing information', 'Please add ' + missing.join(', ') + '.'); return; }
-      if (!attA || !attB) { showError('Choose an option', 'Please select an option for both guests.'); return; }
+      if (!attA) { showError('Choose an option', 'Please select an option for Guest 1.'); return; }
+      // Guest 2 attendance only required if name is provided
+      if (nameB && !attB) { showError('Choose an option', 'Please select an option for Guest 2 or leave Guest 2 blank.'); return; }
+      if (!nameB) attB = 'maybe'; // treat blank secondary as Ask Later / not yet confirmed
+      if (!lastNameA) { showError('Missing information', 'Please add Guest 1 last name — required for main guest.'); return; }
+      if (!nameA) nameA = 'Guest 1';
+      if (!nameB) nameB = '';
+      if (!nameB) nameB = '';
       if (!nameA) nameA = 'Guest 1';
       if (!nameB) nameB = 'Guest 2';
 
@@ -1029,6 +1038,7 @@ select:-webkit-autofill {
       var plusNames = plusOneRaw ? plusOneRaw.trim() : '';
 
       if (!name) { showError('Missing information', 'Please add your name — first name is enough.'); return; }
+      if (!lastName) { showError('Missing information', 'Please add your last name — required for main guest.'); return; }
       if (!attendance) { showError('Choose an option', 'Please tap Yes, No, or Ask Later.'); return; }
       var yes = attendance === 'yes';
       var isPlus = !!(yes && plusNames);
