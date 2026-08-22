@@ -2497,49 +2497,42 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
       firstImg.style.display = progress < 0.18 ? 'block' : 'none';
     }
     if (seqImg) {
-      var showSeq = progress > 0.06 && progress < 0.94;
+      var showSeq = progress > 0.06 && progress < 0.985;
       if (showSeq) {
         seqImg.classList.remove('hidden');
         seqImg.style.display = 'block';
         seqImg.style.transform = '';
-        var frame = Math.floor(progress * (frameCount - 1)) + 1;
+        var frame = Math.floor(Math.min(progress, 0.94) * (frameCount - 1)) + 1;
         if (frame < 1) frame = 1;
         if (frame > frameCount) frame = frameCount;
         var src = frameSrc(frame);
         if (seqImg.getAttribute('src') !== src) seqImg.src = src;
         preloadAround(frame);
+        // hold last frame 0.94-0.985 — keep seqImg on frame 127, don't disappear
+        if (progress >= 0.94) {
+          var holdSrc = frameSrc(frameCount);
+          if (seqImg.getAttribute('src') !== holdSrc) seqImg.src = holdSrc;
+        }
+      } else if (progress >= 0.985) {
+        // scroll the held last frame off — keep visible and translate with center
+        seqImg.style.display = 'block';
+        seqImg.classList.remove('hidden');
+        seqImg.src = frameSrc(frameCount);
+        var t2 = (progress - 0.985) / 0.015;
+        t2 = Math.max(0, Math.min(1, t2));
+        if (center) center.style.transform = 'translateY(' + (-t2 * 115) + 'vh) scale(' + (1 + t2 * 0.14) + ') rotate(' + (t2 * 2.5) + 'deg)';
+        else seqImg.style.transform = 'translateY(' + (-t2 * 115) + 'vh)';
       } else {
         seqImg.style.display = 'none';
         seqImg.style.transform = '';
       }
     }
     if (lastImg) {
-      var showLast = progress >= 0.82;
-      if (showLast) {
-        lastImg.style.display = 'block';
-        lastImg.classList.remove('opacity-0');
-        if (progress < 0.94) {
-          var op = (progress - 0.82) / 0.12;
-          lastImg.style.opacity = String(Math.max(0, Math.min(1, op)));
-          lastImg.style.transform = '';
-          if (center) center.style.transform = '';
-        } else if (progress < 0.985) {
-          // hold last frame — don't disappear
-          lastImg.style.opacity = '1';
-          lastImg.style.transform = '';
-          if (center) center.style.transform = '';
-        } else {
-          // scroll it off — hold then translate up with scroll
-          var t = (progress - 0.985) / 0.015;
-          t = Math.max(0, Math.min(1, t));
-          lastImg.style.opacity = '1';
-          if (center) center.style.transform = 'translateY(' + (-t * 115) + 'vh) scale(' + (1 + t * 0.14) + ') rotate(' + (t * 2.5) + 'deg)';
-          else lastImg.style.transform = 'translateY(' + (-t * 115) + 'vh)';
-        }
-      } else {
-        lastImg.style.display = 'none';
-        lastImg.style.opacity = '0';
-        if (center) center.style.transform = '';
+      // keep lastImg hidden during scrub — seqImg holds the last frame instead for seamless hold
+      lastImg.style.display = 'none';
+      lastImg.style.opacity = '0';
+      if (progress >= 0.985 && center) {
+        // ensure center scroll still drives even though lastImg hidden — seqImg is the holder
       }
     }
     if (hintPill) {
