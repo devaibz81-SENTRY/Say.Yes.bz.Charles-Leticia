@@ -44,31 +44,48 @@ input[type=number]{-moz-appearance:textfield}
 .att-choice.selected .att-lbl{color:#F5D76E}
 .att-choice.selected .att-sub{color:rgba(245,215,110,.6)}
 .att-choice.selected::after{content:"";position:absolute;left:.4rem;right:.4rem;bottom:0;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,#D4AF37,transparent)}
+/* Color-coded Yes / No / Ask Later — premium tinted cards */
+.att-choice{border:1px solid transparent}
+.att-choice[data-val="yes"].selected{color:#34D399;background:rgba(16,185,129,0.07);border-color:rgba(52,211,153,0.32);box-shadow:0 6px 20px rgba(16,185,129,0.14),inset 0 1px 0 rgba(52,211,153,0.12)}
+.att-choice[data-val="yes"].selected .att-ic{color:#10B981}
+.att-choice[data-val="yes"].selected .att-lbl{color:#6EE7B7}
+.att-choice[data-val="yes"].selected .att-sub{color:rgba(52,211,153,.65)}
+.att-choice[data-val="yes"].selected::after{background:linear-gradient(90deg,transparent,#10B981,transparent)}
+.att-choice[data-val="no"].selected{color:#F87171;background:rgba(239,68,68,0.06);border-color:rgba(248,113,113,0.32);box-shadow:0 6px 20px rgba(239,68,68,0.13),inset 0 1px 0 rgba(248,113,113,0.12)}
+.att-choice[data-val="no"].selected .att-ic{color:#EF4444}
+.att-choice[data-val="no"].selected .att-lbl{color:#FCA5A5}
+.att-choice[data-val="no"].selected .att-sub{color:rgba(248,113,113,.65)}
+.att-choice[data-val="no"].selected::after{background:linear-gradient(90deg,transparent,#EF4444,transparent)}
+.att-choice[data-val="maybe"].selected{color:#FBBF24;background:rgba(245,158,11,0.07);border-color:rgba(251,191,36,0.30);box-shadow:0 6px 20px rgba(245,158,11,0.13),inset 0 1px 0 rgba(251,191,36,0.12)}
+.att-choice[data-val="maybe"].selected .att-ic{color:#F59E0B}
+.att-choice[data-val="maybe"].selected .att-lbl{color:#FDE68A}
+.att-choice[data-val="maybe"].selected .att-sub{color:rgba(251,191,36,.65)}
+.att-choice[data-val="maybe"].selected::after{background:linear-gradient(90deg,transparent,#F59E0B,transparent)}
 @keyframes successPop{0%{opacity:0;transform:scale(.6)}60%{transform:scale(1.06)}100%{opacity:1;transform:scale(1)}}
 #success .success-pop{animation:successPop .6s cubic-bezier(.34,1.56,.64,1) both}
 #success .success-pop:nth-child(2){animation-delay:.08s}
 #success .success-pop:nth-child(3){animation-delay:.16s}
 #success .success-pop:nth-child(4){animation-delay:.24s}
 #success .success-pop:nth-child(5){animation-delay:.32s}
-/* === CHAD COMPACT === */
+/* === CHAD COMPACT — ULTRA COMPACT V2 === */
 /* RSVP title */
-h1 { font-size: clamp(2rem, 5vw, 3rem) !important; font-weight: 800 !important; letter-spacing: -0.02em !important; }
+h1 { font-size: clamp(1.65rem, 4.2vw, 2.4rem) !important; font-weight: 800 !important; letter-spacing: -0.02em !important; line-height:1.1 !important; }
 
 /* Script accent */
-.font-script-accent.italic { font-size: clamp(1.4rem, 3.4vw, 2rem) !important; }
+.font-script-accent.italic { font-size: clamp(1.15rem, 2.8vw, 1.55rem) !important; }
 
 /* Bolder form labels */
 label { font-weight: 600 !important; }
-label.chad-label { font-size: 0.78rem !important; }
+label.chad-label { font-size: 0.70rem !important; }
 
 /* Attendance section label */
-.att-choices ~ p, p:has(+ .att-choices) { font-size: 0.75rem !important; font-weight: 600 !important; letter-spacing: 0.16em !important; }
+.att-choices ~ p, p:has(+ .att-choices) { font-size: 0.68rem !important; font-weight: 600 !important; letter-spacing: 0.16em !important; }
 
-/* Attendance row */
-.att-choice { padding: 0.7rem 0.4rem 0.5rem !important; }
-.att-choice .att-ic { font-size: 22px !important; }
-.att-choice .att-lbl { font-size: 11px !important; font-weight: 600 !important; letter-spacing: 0.14em !important; }
-.att-choice .att-sub { font-size: 9px !important; }
+/* Attendance row — compact */
+.att-choice { padding: 0.45rem 0.3rem 0.35rem !important; }
+.att-choice .att-ic { font-size: 20px !important; }
+.att-choice .att-lbl { font-size: 10px !important; font-weight: 600 !important; letter-spacing: 0.13em !important; }
+.att-choice .att-sub { font-size: 8px !important; }
 
 /* Submit button */
 button[type=submit] { padding: 0.9rem 2.2rem !important; font-size: 0.72rem !important; font-weight: 700 !important; letter-spacing: 0.24em !important; box-shadow: 0 10px 30px rgba(212,175,55,0.28) !important; }
@@ -118,26 +135,26 @@ button[type=submit]:hover { box-shadow: 0 14px 38px rgba(212,175,55,0.42) !impor
   input.py-3, textarea.py-3 { padding-top: 0.6rem; padding-bottom: 0.6rem; }
 }
 
-/* === UIVERSE-STYLE CHAD FORM (adapted from Uiverse.io by Praashoo7) === */
+/* === UIVERSE-STYLE CHAD FORM — ULTRA COMPACT V3 (first principles) === */
 .chad-form{
-  display:flex;flex-direction:column;gap:14px;
-  padding:1.4em 1.4em 1.2em;
-  background-color:#171717;border-radius:25px;
-  box-shadow:0 20px 60px rgba(0,0,0,.5);
+  display:flex;flex-direction:column;gap:8px;
+  padding:.85em .9em .8em;
+  background-color:#171717;border-radius:16px;
+  box-shadow:0 12px 32px rgba(0,0,0,.5);
 }
 .chad-field{
-  display:flex;align-items:center;gap:.55em;
-  border-radius:25px;padding:.6em 1em;border:none;outline:none;color:#fff;
-  background-color:#171717;box-shadow:inset 2px 5px 10px rgb(5,5,5);
+  display:flex;align-items:center;gap:.45em;
+  border-radius:16px;padding:.42em .85em;border:none;outline:none;color:#fff;
+  background-color:#171717;box-shadow:inset 1px 3px 8px rgb(5,5,5);
   transition:.2s ease;
 }
 .chad-field:focus-within{box-shadow:inset 2px 5px 10px rgb(5,5,5),0 0 0 1px rgba(212,175,55,.5)}
 .chad-field-textarea{align-items:flex-start}
 .chad-field-textarea .chad-ic{margin-top:.25em}
-.chad-ic{font-size:1.15rem;color:rgba(212,175,55,.6);flex-shrink:0}
+.chad-ic{font-size:1rem;color:rgba(212,175,55,.6);flex-shrink:0}
 .chad-input{
   background:none;border:none;outline:none;width:100%;
-  color:#ffffff;font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:.92rem;
+  color:#ffffff;font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:.82rem;
 }
 .chad-input::placeholder{color:rgba(211,211,211,.4)}
 /* Neutralize Tailwind Forms plugin white backgrounds + autofill white boxes */
@@ -162,14 +179,14 @@ select:-webkit-autofill {
   caret-color: #ffffff;
   transition: background-color 9999s ease-in-out 0s;
 }
-.chad-area{resize:none;line-height:1.4}
-.chad-label{display:block;font-family:'Noto Serif',serif;font-style:italic;font-size:.78rem;color:rgba(245,245,245,.7);margin-bottom:.3rem;letter-spacing:.04em}
-.chad-prompt{font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(245,245,245,.85);text-align:center}
-.chad-deadline{font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:.7rem;color:rgba(212,175,55,.7);letter-spacing:.06em}
+.chad-area{resize:none;line-height:1.35}
+.chad-label{display:block;font-family:'Noto Serif',serif;font-style:italic;font-size:.70rem;color:rgba(245,245,245,.7);margin-bottom:.2rem;letter-spacing:.04em}
+.chad-prompt{font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:.66rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(245,245,245,.85);text-align:center}
+.chad-deadline{font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:.66rem;color:rgba(212,175,55,.7);letter-spacing:.06em}
 .chad-btn{
-  padding:.75em 1.4em;border-radius:10px;border:none;outline:none;cursor:pointer;
+  padding:.60em 1.2em;border-radius:9px;border:none;outline:none;cursor:pointer;
   transition:.3s ease-in-out;background-color:#252525;color:#fff;
-  font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;
+  font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:.64rem;letter-spacing:.17em;text-transform:uppercase;font-weight:600;
 }
 .chad-btn:hover{background-color:#000;color:#fff}
 .chad-btn-gold{background:#D4AF37;color:#0a0a0a}
@@ -324,22 +341,24 @@ select:-webkit-autofill {
 <div class="font-serif italic text-xl text-gold">Charles &amp; Leticia</div>
 </header>
 
-<main class="pt-24 pb-32 px-4 sm:px-[2rem] flex justify-center items-start sm:items-center min-h-screen relative z-20">
-<div class="max-w-[520px] w-full">
+<main class="pt-16 pb-12 px-4 sm:px-[1rem] flex justify-center items-start sm:items-center min-h-screen relative z-20">
+<div class="max-w-[400px] w-full">
 <section class="relative">
 
-<!-- Heading -->
-<div class="text-center mb-6 relative z-10">
-<span class="font-script-accent text-script-accent italic text-gold mb-1 block" style="font-size:2rem;">Kindly Respond</span>
-<h1 class="font-headline-xl text-white leading-tight" style="font-size:clamp(2.4rem,6vw,3.4rem);font-weight:800;letter-spacing:-0.02em;">RSVP</h1>
-<p id="greeting" class="font-body-lg text-on-surface-variant italic mt-2 hidden">Dear <span class="text-gold-light font-serif">guest</span>,</p>
-<div class="w-16 h-[1px] bg-gold mx-auto mt-4 opacity-50"></div>
-<p class="font-body-md text-on-surface-variant italic mt-4 max-w-sm mx-auto px-4" style="color: rgba(245, 245, 245, 0.75);">
-  Please note: While we love your little ones, our wedding will be an adult-only celebration.
-</p>
-<p id="totalLine" class="font-label-sm text-gold uppercase tracking-[0.2em] mt-4"></p>
-<p id="coupleNote" class="font-label-sm text-gold-light uppercase tracking-[0.2em] mt-2 hidden">RSVPing for the two of you</p>
-<div id="priorStatus" class="hidden mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/40 bg-gold/10 font-label-sm text-gold uppercase tracking-[0.15em]">
+<!-- Heading — compact (visible on form, hidden on post-RSVP success) -->
+<div id="rsvpHeading" class="text-center mb-4 relative z-10">
+<span class="font-script-accent text-script-accent italic text-gold mb-1 block" style="font-size:1.55rem;">Kindly Respond</span>
+<h1 class="font-headline-xl text-white leading-tight" style="font-size:clamp(1.9rem,5vw,2.5rem);font-weight:800;letter-spacing:-0.02em;">RSVP</h1>
+<p id="greeting" class="font-body-lg text-on-surface-variant italic mt-1.5 hidden">Dear <span class="text-gold-light font-serif">guest</span>,</p>
+<div class="w-16 h-[1px] bg-gold mx-auto mt-3 opacity-50"></div>
+<div class="mt-3 mx-auto max-w-[360px] flex items-center justify-center gap-2 px-3 py-2 rounded-full bg-white/[0.04] border border-gold/15">
+<span class="material-symbols-outlined text-gold text-sm" style="font-variation-settings:'FILL' 1">favorite</span>
+<span class="font-label-sm text-white/70 tracking-wide" style="font-size:.62rem;letter-spacing:.08em">We love your babies — but this is an <strong class="text-gold-light font-semibold">adults-only</strong> celebration</span>
+</div>
+
+<p id="totalLine" class="font-label-sm text-gold uppercase tracking-[0.2em] mt-3" style="font-size:.66rem;"></p>
+<p id="coupleNote" class="font-label-sm text-gold-light uppercase tracking-[0.2em] mt-1.5 hidden" style="font-size:.66rem;">RSVPing for the two of you</p>
+<div id="priorStatus" class="hidden mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-gold/40 bg-gold/10 font-label-sm text-gold uppercase tracking-[0.15em]" style="font-size:.66rem;">
 <span class="material-symbols-outlined text-base" style="font-variation-settings:'FILL' 1">verified</span>
 <span id="priorStatusText"></span>
 </div>
@@ -392,15 +411,7 @@ select:-webkit-autofill {
 <span id="statusPill" class="att-status hidden"><span class="material-symbols-outlined text-base"></span><span class="att-status-text"></span></span>
 </div>
 </div>
-<!-- Easy plus-one — always visible, partner + you in one go -->
-<div id="easyPlusOneField" class="space-y-2 pt-2">
-<label class="chad-label" for="plusOneName">Partner's name — your plus one (optional, add it yourself)</label>
-<div class="chad-field">
-<span class="material-symbols-outlined chad-ic">group_add</span>
-<input class="chad-input" id="plusOneName" placeholder="Full name of your partner / plus one" type="text" autocomplete="name"/>
-</div>
-<p class="text-xs text-white/45">Put your name above and your partner's name here — no extra link needed. We'll count you both.</p>
-</div>
+
 
 <!-- COUPLE MODE -->
 <div id="coupleFields" class="hidden space-y-5">
@@ -507,60 +518,58 @@ select:-webkit-autofill {
 </div>
 </div>
 
-<!-- SHARED FIELDS -->
-<div id="optionalFields" class="space-y-4">
-<div>
-<label class="chad-label" for="phone">Phone Number</label>
-<div class="chad-field">
-<span class="material-symbols-outlined chad-ic">call</span>
-<input class="chad-input" id="phone" name="phone" placeholder="e.g. 501 600-1234" type="tel" autocomplete="tel"/>
-</div>
-</div>
-<div>
-<label class="chad-label" for="song">Song Request</label>
-<div class="chad-field">
-<span class="material-symbols-outlined chad-ic">music_note</span>
-<input class="chad-input" id="song" type="text" placeholder="your favorite dance song, first dance, anything"/>
-</div>
-</div>
-<div>
-<label class="chad-label" for="message">Message for the Couple</label>
-<div class="chad-field chad-field-textarea">
-<span class="material-symbols-outlined chad-ic">favorite</span>
-<textarea class="chad-input chad-area" id="message" placeholder="Share a special note..." rows="2"></textarea>
-</div>
-</div>
-</div>
-
-<div class="pt-2 text-center">
-<label class="checkbox-wrapper" id="confirmWrap">
-  <input type="checkbox" id="confirmCheck" checked/>
-  <div class="checkmark">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-      <path d="M20 6L9 17L4 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
-    </svg>
-  </div>
-  <span class="label">I confirm my RSVP details</span>
-</label>
+<div class="pt-3 text-center">
+<!-- kept checked hidden — no visual checkbox needed for first principles -->
+<input type="checkbox" id="confirmCheck" checked class="hidden"/>
+<!-- keep song/message inputs hidden in form for JS compatibility but moved to post-RSVP -->
+<input type="hidden" id="song" value=""/>
+<textarea id="message" class="hidden"></textarea>
 <button type="submit" id="submitBtn" class="chad-btn chad-btn-gold w-full flex items-center justify-center gap-2">
   <span id="submitSpinner" class="hidden material-symbols-outlined text-base animate-spin">progress_activity</span>
-  <span id="submitBtnText">Send RSVP</span>
+  <span class="material-symbols-outlined text-base" style="font-variation-settings:'FILL' 1">favorite</span>
+  <span id="submitBtnText">Say Yes — With Love</span>
 </button>
-<p class="chad-deadline mt-3"><strong>Please reply by</strong> November 1st, 2026</p>
+<p class="chad-deadline mt-2" style="font-size:.58rem;opacity:.45">Reply by <strong>Nov 1, 2026</strong></p>
 </div>
 </form>
 
 <!-- SUCCESS -->
 <div id="success" class="hidden text-center relative z-10 space-y-5">
-<div class="success-pop w-20 h-20 mx-auto rounded-2xl bg-gold/10 border border-gold/40 flex items-center justify-center">
-<span class="material-symbols-outlined text-gold text-4xl" style="font-variation-settings:'FILL' 1" data-icon="check_circle">check_circle</span>
-</div>
 <h2 class="success-pop font-headline-xl text-white leading-tight">Thank You,<br/><span id="sucName" class="font-script-accent text-script-accent text-gold-gradient italic">Guest</span></h2>
-<p id="sucSummary" class="success-pop font-body-lg text-on-surface-variant"></p>
-<div id="sucResponses" class="success-pop inline-block glass-panel rounded-xl px-6 py-2 border-gold/30 font-label-sm text-gold uppercase tracking-[0.15em]"></div>
+<!-- Fused animated check + YOUR RSVP HAS BEEN RECEIVED -->
+<div id="sucResponsesWrap" class="success-pop inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gold/10 border border-gold/40 mx-auto">
+<span class="material-symbols-outlined text-gold text-3xl" style="font-variation-settings:'FILL' 1">check_circle</span>
+<span id="sucResponses" class="font-label-sm text-gold uppercase tracking-[0.15em]">YOUR RSVP HAS BEEN RECEIVED</span>
+</div>
+<p id="sucSummary" class="hidden"></p>
 <p id="sucTotal" class="success-pop font-label-sm text-on-surface-variant uppercase tracking-[0.15em]"></p>
 
-<!-- Add to Calendar Box (Shown on attending response) -->
+<!-- Post-RSVP: sweet & funny love note — offered AFTER the yes (as requested) -->
+<div id="postRsvpLove" class="success-pop chad-form text-left space-y-3 mt-1">
+<div class="text-center pb-1">
+<p class="font-script-accent text-gold italic" style="font-size:1.25rem">Leave a little love</p>
+<p class="chad-label !mb-0" style="font-size:.66rem;opacity:.6;letter-spacing:.12em;text-transform:uppercase">Your song & note — make them smile</p>
+</div>
+<div>
+<label class="chad-label" for="postSong">Song request</label>
+<div class="chad-field">
+<span class="material-symbols-outlined chad-ic">music_note</span>
+<input class="chad-input" id="postSong" type="text" placeholder="e.g. Ojitos Lindos, your all-night anthem…"/>
+</div>
+</div>
+<div>
+<label class="chad-label" for="postMessage" style="color:rgba(245,215,110,.9)">Whisper to the couple <span style="opacity:.5">— leave a little love</span></label>
+<div class="chad-field chad-field-textarea">
+<span class="material-symbols-outlined chad-ic">favorite</span>
+<textarea class="chad-input chad-area" id="postMessage" placeholder="A sweet or funny note for Charles & Leticia… make them smile" rows="2"></textarea>
+</div>
+</div>
+<button onclick="savePostLove()" id="postLoveBtn" type="button" class="chad-btn chad-btn-gold w-full flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-base">send</span> Send my love
+</button>
+<p id="postLoveOk" class="hidden text-center text-emerald-400 font-label-sm" style="font-size:.68rem;letter-spacing:.08em">Sent — they’ll feel it 💛</p>
+</div>
+
 <div id="sucCalendarBlock" class="success-pop bg-white/5 border border-gold/30 rounded-2xl p-5 text-center space-y-3">
   <div class="flex items-center justify-center gap-2 text-gold font-label-sm uppercase tracking-[0.2em]">
     <span class="material-symbols-outlined text-lg">event</span>
@@ -568,17 +577,19 @@ select:-webkit-autofill {
   </div>
   <p class="text-xs text-white/70 font-sans">Lock in New Year's Eve 2026 in Belize City so you don't miss a moment.</p>
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
-    <button onclick="downloadIcs()" type="button" class="chad-btn bg-white/10 hover:bg-white/20 border border-gold/40 flex items-center justify-center gap-2 text-white font-semibold text-xs py-3 rounded-xl transition-all">
-      <span class="material-symbols-outlined text-base text-gold">apple</span> Apple / iCal (.ics)
+    <button onclick="downloadIcs()" type="button" class="chad-btn bg-white hover:bg-zinc-100 border border-zinc-200 flex items-center justify-center gap-2 text-zinc-900 font-semibold text-xs py-3 rounded-xl transition-all">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" width="26" height="30" alt="Apple" style="object-fit:contain"/>
+      Apple / iCal (.ics)
     </button>
-    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Charles+%26+Leticia+%E2%80%94+Wedding&dates=20270101T000000Z/20270101T080000Z&details=Join+Charles+%26+Leticia+as+we+ring+in+2027+together+and+celebrate+our+wedding+ceremony+%26+reception+in+Belize+City!&location=Grand+Resort+%26+Residences%2C+Belize+City%2C+Belize" target="_blank" rel="noopener" class="chad-btn bg-white/10 hover:bg-white/20 border border-gold/40 flex items-center justify-center gap-2 text-white font-semibold text-xs py-3 rounded-xl transition-all no-underline">
-      <span class="material-symbols-outlined text-base text-gold">calendar_today</span> Google Calendar
+    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Charles+%26+Leticia+%E2%80%94+Wedding&dates=20270101T000000Z/20270101T080000Z&details=Join+Charles+%26+Leticia+as+we+ring+in+2027+together+and+celebrate+our+wedding+ceremony+%26+reception+in+Belize+City!&location=Grand+Resort+%26+Residences%2C+Belize+City%2C+Belize" target="_blank" rel="noopener" class="chad-btn bg-white hover:bg-zinc-50 border border-zinc-200 flex items-center justify-center gap-2 text-zinc-800 font-semibold text-xs py-3 rounded-xl transition-all no-underline">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/3840px-Google_%22G%22_logo.svg.png" width="28" height="28" alt="Google" style="object-fit:contain"/>
+      Google Calendar
     </a>
   </div>
 </div>
 
 <div class="success-pop flex flex-col gap-3 pt-2 max-w-md mx-auto">
-<a id="songRequestBtn" href="music.html" class="chad-btn chad-btn-gold w-full flex items-center justify-center gap-2 no-underline">
+<a id="songRequestBtn" href="music.html" class="hidden chad-btn chad-btn-gold w-full flex items-center justify-center gap-2 no-underline">
   <span class="material-symbols-outlined text-xl">music_note</span> Make Song Request &amp; Vote
 </a>
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -855,7 +866,7 @@ select:-webkit-autofill {
     var btnText = document.getElementById('submitBtnText');
     if (btn) btn.disabled = submitting;
     if (spinner) spinner.classList.toggle('hidden', !submitting);
-    if (btnText) btnText.textContent = submitting ? 'Recording your RSVP\u2026' : 'Send RSVP';
+    if (btnText) btnText.textContent = submitting ? 'Sealing your yes…' : 'Say Yes — With Love';
   }
 
   function postRsvp(payload, cb) {
@@ -1080,6 +1091,7 @@ select:-webkit-autofill {
   function showSuccess(info, count) {
     document.getElementById('rsvpForm').classList.add('hidden');
     document.getElementById('success').classList.remove('hidden');
+    var hd = document.getElementById('rsvpHeading'); if (hd) hd.classList.add('hidden');
     document.getElementById('sucName').textContent = info.couple ? (info.nameA + ' & ' + info.nameB) : info.name;
     var summary = document.getElementById('sucSummary');
     var calBlock = document.getElementById('sucCalendarBlock');
@@ -1123,11 +1135,32 @@ select:-webkit-autofill {
       .catch(function () {});
   }
 
+  window.savePostLove = function () {
+    var song = (document.getElementById('postSong') ? document.getElementById('postSong').value.trim() : '');
+    var msg = (document.getElementById('postMessage') ? document.getElementById('postMessage').value.trim() : '');
+    if (!song && !msg) { showError('Add something', 'Drop a song or a little love note — even one word counts.'); return; }
+    var btn = document.getElementById('postLoveBtn');
+    var ok = document.getElementById('postLoveOk');
+    if (btn) { btn.disabled = true; btn.innerHTML = '<span class="material-symbols-outlined text-base animate-spin">progress_activity</span> Sending…'; }
+    // also mirror into hidden fields for local storage consistency
+    var sEl = document.getElementById('song'); if (sEl) sEl.value = song;
+    var mEl = document.getElementById('message'); if (mEl) mEl.value = msg;
+    postRsvp({ guestId: guestId, name: guestName || 'Guest', attendance: 'yes', guests: 0, song: song, message: msg, postLove: true }, function(err){
+      if (btn) { btn.disabled = false; btn.innerHTML = '<span class="material-symbols-outlined text-base">send</span> Send my love'; }
+      if (ok) { ok.classList.remove('hidden'); setTimeout(function(){ ok.classList.add('hidden'); }, 3500); }
+      // also save locally
+      try {
+        var d = loadAll(); if (!d[guestId]) d[guestId]=[]; d[guestId].push({ song: song, message: msg, at: new Date().toISOString(), postLove: true }); saveAll(d);
+      } catch(e){}
+    });
+  };
+
   window.resetForAnother = function () {
     setSubmittingState(false);
     document.getElementById('rsvpForm').classList.remove('hidden');
     document.getElementById('success').classList.add('hidden');
-    ['name', 'lastName', 'nameA', 'lastNameA', 'nameB', 'lastNameB', 'phone', 'plusOneName', 'plusNames', 'song', 'message'].forEach(function (id) {
+    var hd2 = document.getElementById('rsvpHeading'); if (hd2) hd2.classList.remove('hidden');
+    ['name', 'lastName', 'nameA', 'lastNameA', 'nameB', 'lastNameB', 'phone', 'plusOneName', 'plusNames', 'song', 'message', 'postSong', 'postMessage'].forEach(function (id) {
       var el = document.getElementById(id);
       if (el) el.value = '';
     });
@@ -1143,6 +1176,10 @@ select:-webkit-autofill {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Preview: ?showSuccess=1 shows the post-RSVP page instantly
+  if (params.get('showSuccess') === '1') {
+    setTimeout(function(){ showSuccess({ couple: false, name: (guestName||'Elvis'), attendance: 'yes', guests: 1 }, 1); }, 120);
+  }
   window.stepGuests = stepGuests;
   updateTotals();
   fetchPriorStatus();

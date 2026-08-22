@@ -1332,6 +1332,27 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
     <p class="font-body-md dark-section-body mt-4 italic">"The best is yet to come."</p>
   </div>
 </div>
+
+<!-- BOTTOM EVENT — Add to Calendar with real logos (as requested) -->
+<section class="max-w-[520px] mx-auto px-5 sm:px-6 py-10 text-center">
+<div class="bg-white/[0.04] border border-gold/20 rounded-2xl p-6 sm:p-7 backdrop-blur-md">
+<div class="flex items-center justify-center gap-2 text-gold font-label-sm uppercase tracking-[0.2em] mb-2">
+<span class="material-symbols-outlined text-lg">event</span>
+<span>Add to Your Calendar</span>
+</div>
+<p class="text-xs text-white/60 font-sans mb-4">New Year's Eve 2026 · Grand Resort & Residences, Belize City · 6:00 PM</p>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<button onclick="if(typeof downloadIcs==='function')downloadIcs();else{var a=document.createElement('a');a.href='data:text/calendar;charset=utf-8,BEGIN:VCALENDAR%0AVERSION:2.0%0ABEGIN:VEVENT%0ADTSTART:20270101T000000Z%0ADTEND:20270101T080000Z%0ASUMMARY:Charles%20%26%20Leticia%20Wedding%0AEND:VEVENT%0AEND:VCALENDAR';a.download='Charles-and-Leticia-Wedding.ics';a.click();}" type="button" class="bg-white hover:bg-zinc-100 border border-zinc-200 flex items-center justify-center gap-2 text-zinc-900 font-semibold text-xs py-3.5 rounded-xl transition-all">
+<img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" width="26" height="30" alt="Apple" style="object-fit:contain"/>
+Apple / iCal
+</button>
+<a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Charles+%26+Leticia+%E2%80%94+Wedding&dates=20270101T000000Z/20270101T080000Z&details=Join+Charles+%26+Leticia+as+we+ring+in+2027+together+and+celebrate+our+wedding+ceremony+%26+reception+in+Belize+City!&location=Grand+Resort+%26+Residences%2C+Belize+City%2C+Belize" target="_blank" rel="noopener" class="bg-white hover:bg-zinc-50 border border-zinc-200 flex items-center justify-center gap-2 text-zinc-800 font-semibold text-xs py-3.5 rounded-xl transition-all no-underline">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/3840px-Google_%22G%22_logo.svg.png" width="28" height="28" alt="Google" style="object-fit:contain"/>
+Google Calendar
+</a>
+</div>
+</div>
+</section>
 </main>
 <!-- Glass NavBar (hidden on hero, appears on scroll to details/sections) -->
 <nav class="glass-radio-group fixed bottom-5 left-1/2 -translate-x-1/2 z-50 nav-hidden" aria-label="Site navigation">
