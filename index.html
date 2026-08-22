@@ -569,6 +569,225 @@ section[id] { scroll-margin-top: 5rem; }
   .hd-fade, .rv { opacity: 1; transform: none; transition: none; }
 }
 </style>
+
+<!-- ===================== LUXURY REDESIGN STYLES ===================== -->
+<style>
+/* ---- Directional scroll reveals ---- */
+.rv-left  { opacity: 0; transform: translateX(-60px); transition: opacity .75s ease, transform .75s cubic-bezier(.22,1,.36,1); }
+.rv-right { opacity: 0; transform: translateX(60px);  transition: opacity .75s ease, transform .75s cubic-bezier(.22,1,.36,1); }
+.rv-up    { opacity: 0; transform: translateY(40px);  transition: opacity .75s ease, transform .75s cubic-bezier(.22,1,.36,1); }
+.rv-left.rv-in, .rv-right.rv-in, .rv-up.rv-in { opacity: 1; transform: none; }
+
+/* ---- Word-by-word heading reveal ---- */
+.word-reveal-wrap { overflow: hidden; display: inline-block; }
+.word-reveal { display: inline-block; opacity: 0; transform: translateY(100%); transition: opacity .65s ease, transform .65s cubic-bezier(.22,1,.36,1); }
+.word-reveal.rv-in { opacity: 1; transform: none; }
+
+/* ---- Cinematic scroll break ---- */
+.cinematic-break {
+  position: relative;
+  width: 100%;
+  min-height: clamp(320px, 55vw, 580px);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cinematic-break .cb-photo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.cinematic-break .cb-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  filter: brightness(0.32) saturate(0.65);
+}
+.cinematic-break .cb-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(to bottom, rgba(10,10,10,.95) 0%, transparent 28%, transparent 72%, rgba(10,10,10,.95) 100%),
+    linear-gradient(to right,  rgba(10,10,10,.6) 0%, transparent 30%, transparent 70%, rgba(10,10,10,.6) 100%);
+}
+.cinematic-break .cb-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  max-width: 700px;
+}
+.cinematic-break .cb-ornament {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+  margin: 1.2rem auto;
+}
+
+/* ---- Floral corner accents ---- */
+.floral-corner {
+  position: absolute;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0.12;
+}
+.floral-corner img { width: 100%; height: 100%; object-fit: contain; }
+.floral-tl { top: -2%; left: -3%; width: clamp(120px,20vw,260px); height: clamp(120px,20vw,260px); transform: rotate(0deg); }
+.floral-tr { top: -2%; right: -3%; width: clamp(120px,22vw,300px); height: clamp(120px,22vw,300px); transform: rotate(90deg) scaleX(-1); }
+.floral-bl { bottom: -2%; left: -3%; width: clamp(100px,18vw,240px); height: clamp(100px,18vw,240px); transform: rotate(-90deg); }
+.floral-br { bottom: -2%; right: -3%; width: clamp(120px,20vw,260px); height: clamp(120px,20vw,260px); transform: rotate(180deg); }
+
+/* ---- Frosted bento card (dark context) ---- */
+.bento-card-dark {
+  background: rgba(12,10,8,.72) !important;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(212,175,55,.22) !important;
+  box-shadow: 0 8px 50px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.05) !important;
+}
+.bento-card-dark .bento-heading { color: #F5F0E8 !important; }
+.bento-card-dark .bento-body    { color: rgba(245,240,232,.72) !important; }
+.bento-card-dark .bento-accent  { color: #F5D76E !important; }
+
+/* ---- Closing hero ---- */
+.closing-hero {
+  position: relative;
+  min-height: clamp(340px, 55vh, 620px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.closing-hero .ch-photo {
+  position: absolute; inset: 0; z-index: 0;
+}
+.closing-hero .ch-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center 25%;
+  filter: brightness(0.3) saturate(0.6);
+}
+.closing-hero .ch-vignette {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to bottom, rgba(10,10,10,.9) 0%, rgba(10,10,10,.25) 45%, rgba(10,10,10,.9) 100%);
+}
+.closing-hero .ch-content { position: relative; z-index: 2; text-align: center; padding: 3rem 1.5rem; }
+
+/* ---- RSVP section photo backdrop ---- */
+.rsvp-photo-section {
+  position: relative;
+  overflow: hidden;
+}
+.rsvp-photo-section .rsvp-bg-photo {
+  position: absolute; inset: 0; z-index: 0;
+}
+.rsvp-photo-section .rsvp-bg-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center 20%;
+  filter: brightness(0.22) saturate(0.5);
+}
+.rsvp-photo-section .rsvp-bg-vignette {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to bottom, rgba(10,10,10,.85) 0%, transparent 25%, transparent 75%, rgba(10,10,10,.85) 100%);
+}
+.rsvp-photo-section > .inner { position: relative; z-index: 2; }
+
+/* ---- Celebration dark overlay (over resort photo) ---- */
+.celebration-section {
+  position: relative;
+  overflow: hidden;
+}
+.celebration-section .cel-photo-bg {
+  position: absolute; inset: 0; z-index: 0;
+}
+.celebration-section .cel-photo-bg img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center 40%;
+  filter: brightness(0.18) saturate(0.5) blur(1px);
+}
+.celebration-section .cel-fade {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to bottom, rgba(10,10,10,.92) 0%, rgba(10,10,10,.5) 40%, rgba(10,10,10,.5) 65%, rgba(10,10,10,.92) 100%);
+}
+.celebration-section > .inner { position: relative; z-index: 2; }
+
+/* ---- Dress code section backdrop ---- */
+.dresscode-section {
+  position: relative;
+  overflow: hidden;
+}
+.dresscode-section .dc-photo-bg {
+  position: absolute; inset: 0; z-index: 0;
+}
+.dresscode-section .dc-photo-bg img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center 60%;
+  filter: brightness(0.22) saturate(0.55) blur(1px);
+}
+.dresscode-section .dc-fade {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to bottom, rgba(10,10,10,.92) 0%, rgba(10,10,10,.45) 45%, rgba(10,10,10,.92) 100%);
+}
+.dresscode-section > .inner { position: relative; z-index: 2; }
+
+/* ---- Gallery section backdrop ---- */
+.gallery-section {
+  position: relative;
+  overflow: hidden;
+}
+.gallery-section .gal-photo-bg {
+  position: absolute; inset: 0; z-index: 0;
+}
+.gallery-section .gal-photo-bg img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center 30%;
+  filter: brightness(0.15) saturate(0.4) blur(2px);
+}
+.gallery-section .gal-fade {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to bottom, rgba(10,10,10,.95) 0%, rgba(10,10,10,.55) 30%, rgba(10,10,10,.55) 70%, rgba(10,10,10,.95) 100%);
+}
+.gallery-section > .inner { position: relative; z-index: 2; padding-top: 4rem; padding-bottom: 4rem; }
+
+/* ---- Gift section floral texture ---- */
+.gift-section {
+  position: relative;
+  overflow: hidden;
+}
+.gift-section > .inner { position: relative; z-index: 2; }
+
+/* ---- Heading text color in dark photo sections ---- */
+.dark-section-heading { color: #F5F0E8 !important; }
+.dark-section-subheading { color: rgba(245,240,232,.72) !important; }
+.dark-section-body { color: rgba(245,240,232,.65) !important; }
+
+/* ---- Light section: now fully transparent, remove paper bg ---- */
+.light-section {
+  background: transparent !important;
+}
+.light-section::before { display: none !important; }
+
+/* ---- Hero vignette upgrade ---- */
+.hero-overlay-velvet {
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 50%, transparent 30%, rgba(5,3,1,.8) 100%),
+    linear-gradient(to bottom, rgba(10,5,0,.7) 0%, rgba(8,4,0,.3) 40%, rgba(8,4,0,.95) 100%) !important;
+}
+
+/* ---- Section floral float ---- */
+.floral-float { animation: floralFloat 10s ease-in-out infinite; }
+.floral-float-rev { animation: floralFloat 13s ease-in-out infinite reverse; }
+@keyframes floralFloat {
+  0%,100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-14px) rotate(4deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rv-left, .rv-right, .rv-up { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .word-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+</style>
 </head>
 <body class="bg-background text-on-background font-body-md selection:bg-gold/30 selection:text-white">
 <!-- Background music — starts on first user interaction (browser autoplay policy) -->
@@ -1482,7 +1701,7 @@ section[id] { scroll-margin-top: 5rem; }
 
   function drawSky() {
     ctx.globalCompositeOperation = 'source-over';
-    ctx.fillStyle = 'rgba(3, 5, 12, 0.24)';
+    ctx.fillStyle = 'rgba(10, 10, 10, 0.24)';
     ctx.fillRect(0, 0, W, H);
 
     ctx.globalCompositeOperation = 'lighter';
