@@ -904,6 +904,13 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
 }
 .parallax-slow { transition: transform .12s linear; }
 
+/* Event cards — animated SVG icons, main attraction */
+.event-icon { width: 44px; height: 44px; color: #F5D76E; margin-bottom: 1rem; display: inline-block; filter: drop-shadow(0 0 8px rgba(212,175,55,0.25)); }
+.event-icon-rings { animation: ringPulse 2.8s ease-in-out infinite; transform-origin: center; }
+.event-icon-toast { animation: toastSway 3.2s ease-in-out infinite; transform-origin: bottom center; }
+@keyframes ringPulse { 0%,100% { transform: scale(1); filter: drop-shadow(0 0 6px rgba(245,215,110,0.35)); } 50% { transform: scale(1.08); filter: drop-shadow(0 0 16px rgba(245,215,110,0.65)); } }
+@keyframes toastSway { 0%,100% { transform: rotate(0deg) translateY(0); } 20% { transform: rotate(-7deg) translateY(-2px); } 80% { transform: rotate(7deg) translateY(-2px); } }
+
 /* ---- Interactive cards — 3D tilt + glare, keeps black ---- */
 .bento-card-dark, .bento-card, .fan-card { transform-style: preserve-3d; }
 .bento-card-dark .tilt-glare, .bento-card .tilt-glare, .fan-card .tilt-glare {
@@ -1099,23 +1106,10 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
         </svg>
       </div>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-      <!-- Card 1: Our Story — LEFT -->
-      <div id="story" class="bento-card bento-card-dark md:col-span-2 rounded-[28px] p-7 sm:p-10 flex flex-col justify-between relative overflow-hidden group rv-left">
-        <div class="floral-corner floral-br" style="opacity:0.07" aria-hidden="true"><img src="../Element%20(6).png" alt=""/></div>
-        <div class="relative z-10">
-          <span class="font-label-sm label-premium bento-accent uppercase tracking-widest block mb-4">A love story</span>
-          <h3 class="font-headline-md bento-heading mb-4 italic">Our Journey Together</h3>
-          <p class="font-body-md bento-body max-w-[52ch] mb-6">From chance meetings to a love that lights up every room, our journey has been written in laughter, late-night talks and big dreams. This New Year's Eve, we write our next chapter &mdash; together, with you by our side.</p>
-          <a class="inline-flex items-center bento-accent font-label-sm label-premium uppercase hover:gap-3 transition-all" href="story.html">Read the full story <span class="material-symbols-outlined ml-2" data-icon="chevron_right">chevron_right</span></a>
-        </div>
-        <div class="mt-8 mx-auto md:mt-0 md:mx-0 md:absolute md:bottom-6 md:right-6 w-32 h-32 sm:w-40 sm:h-40 md:w-44 md:h-44 rounded-full overflow-hidden border-2 border-gold/40 shadow-[0_0_45px_rgba(212,175,55,0.25)] pointer-events-none group-hover:scale-105 transition-transform duration-1000">
-          <img class="w-full h-full object-cover object-top" alt="A memory from their journey" src="../galery%20(1).jpeg"/>
-        </div>
-      </div>
-      <!-- Card 2: Ceremony — RIGHT -->
-      <div id="ceremony" class="bento-card bento-card-dark rounded-[28px] p-8 rv-right">
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 512 512" class="text-[#F5D76E] mb-4 inline-block"><path d="M64 208c0 7.8 4.4 18.7 17.1 30.3C126.5 214.1 188.9 200 256 200s129.5 14.1 174.9 38.3C443.6 226.7 448 215.8 448 208c0-12.3-10.8-32-47.9-50.6C364.9 139.8 314 128 256 128s-108.9 11.8-144.1 29.4C74.8 176 64 195.7 64 208zm192 40c-47 0-89.3 7.6-122.9 19.7C166.3 280.2 208.8 288 256 288s89.7-7.8 122.9-20.3C345.3 255.6 303 248 256 248zM0 208c0-49.6 39.4-85.8 83.3-107.8C129.1 77.3 190.3 64 256 64s126.9 13.3 172.7 36.2c43.9 22 83.3 58.2 83.3 107.8l0 96c0 49.6-39.4 85.8-83.3 107.8C382.9 434.7 321.7 448 256 448s-126.9-13.3-172.7-36.2C39.4 389.8 0 353.6 0 304l0-96z"/></svg>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+      <!-- Ceremony — now main attraction LEFT -->
+      <div id="ceremony" class="bento-card bento-card-dark rounded-[28px] p-8 lg:p-10 rv-right">
+        <svg class="event-icon event-icon-rings" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="22" cy="32" r="14" stroke="currentColor" stroke-width="2.6"/><circle cx="42" cy="32" r="14" stroke="currentColor" stroke-width="2.6"/><path d="M22 18.5 C28.5 18.5 32.5 24 32.5 32 C32.5 40 28.5 45.5 22 45.5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
         <h3 class="font-headline-md bento-heading mb-4 italic">The Ceremony</h3>
         <p class="font-body-md bento-body mb-4">Grand Resort &amp; Residences<br/>Belize City, Belize</p>
         <div class="flex items-center gap-2 bento-accent font-label-sm label-premium">
@@ -1123,9 +1117,9 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
           <span>Starts at 6:00 PM</span>
         </div>
       </div>
-      <!-- Card 3: Reception — LEFT -->
-      <div id="reception" class="bento-card bento-card-dark rounded-[28px] p-8 rv-left" style="transition-delay:.08s">
-        <span class="material-symbols-outlined bento-accent mb-4 text-2xl" data-icon="local_bar">local_bar</span>
+      <!-- Reception — main attraction (animated toast) -->
+      <div id="reception" class="bento-card bento-card-dark rounded-[28px] p-8 lg:p-10 rv-left" style="transition-delay:.08s">
+        <svg class="event-icon event-icon-toast" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18 12 L18 28 C18 34 24 40 32 40 C40 40 46 34 46 28 L46 12 Z" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/><path d="M32 40 L32 52 M26 52 L38 52" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><circle cx="52" cy="14" r="2.2" fill="currentColor" opacity="0.95"><animate attributeName="cy" values="14;8;14" dur="2.8s" repeatCount="indefinite"/></circle><circle cx="12" cy="16" r="1.7" fill="currentColor" opacity="0.7"><animate attributeName="cy" values="16;10;16" dur="3s" repeatCount="indefinite"/></circle></svg>
         <h3 class="font-headline-md bento-heading mb-4 italic">The Reception</h3>
         <p class="font-body-md bento-body mb-4">New Year's Eve Celebration<br/>Cocktails, Dinner &amp; Dancing until midnight</p>
         <div class="flex items-center gap-2 bento-accent font-label-sm label-premium">
@@ -1233,6 +1227,19 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
       <div class="fan-card rv-left cursor-pointer touch-manipulation select-none active:scale-[0.98]" style="transition-delay:.16s" role="button" tabindex="0" aria-label="Tap for hearts"><img src="../galery%20(4).jpeg" alt="Charles and Leticia moment" class="scale-x-[-1]" style="object-position:center 38%;"/><div class="fan-card-mat"></div></div>
       <div class="fan-card rv-right cursor-pointer touch-manipulation select-none active:scale-[0.98]" style="transition-delay:.24s" role="button" tabindex="0" aria-label="Tap for hearts"><img src="../galery%20(5).jpeg" alt="Charles and Leticia moment"/><div class="fan-card-mat"></div></div>
       <div class="fan-card rv-left cursor-pointer touch-manipulation select-none active:scale-[0.98]" style="transition-delay:.32s" role="button" tabindex="0" aria-label="Tap for hearts"><img src="../galery%20(3).jpeg" alt="Charles and Leticia moment"/><div class="fan-card-mat"></div></div>
+    </div>
+    <!-- Love Story — moved under Memories as requested -->
+    <div id="story" class="bento-card bento-card-dark rounded-[28px] p-7 sm:p-10 flex flex-col justify-between relative overflow-hidden group rv-up mt-10 max-w-3xl mx-auto">
+      <div class="floral-corner floral-br" style="opacity:0.06" aria-hidden="true"><img src="../Element%20(6).png" alt=""/></div>
+      <div class="relative z-10">
+        <span class="font-label-sm label-premium bento-accent uppercase tracking-widest block mb-4">A love story</span>
+        <h3 class="font-headline-md bento-heading mb-4 italic">Our Journey Together</h3>
+        <p class="font-body-md bento-body max-w-[52ch] mb-6">From chance meetings to a love that lights up every room, our journey has been written in laughter, late-night talks and big dreams. This New Year's Eve, we write our next chapter &mdash; together, with you by our side.</p>
+        <a class="inline-flex items-center bento-accent font-label-sm label-premium uppercase hover:gap-3 transition-all" href="story.html">Read the full story <span class="material-symbols-outlined ml-2" data-icon="chevron_right">chevron_right</span></a>
+      </div>
+      <div class="mt-8 mx-auto md:mt-0 md:mx-0 md:absolute md:bottom-6 md:right-6 w-32 h-32 sm:w-40 sm:h-40 md:w-44 md:h-44 rounded-full overflow-hidden border-2 border-gold/40 shadow-[0_0_45px_rgba(212,175,55,0.25)] pointer-events-none group-hover:scale-105 transition-transform duration-1000">
+        <img class="w-full h-full object-cover object-top" alt="A memory from their journey" src="../galery%20(1).jpeg"/>
+      </div>
     </div>
     <div class="mt-12 flex flex-col items-center gap-2 text-center rv-up">
       <p class="font-script-accent text-script-accent text-gold-gradient italic">See you at midnight</p>

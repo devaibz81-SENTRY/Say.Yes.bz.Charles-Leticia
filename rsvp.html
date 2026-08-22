@@ -392,6 +392,15 @@ select:-webkit-autofill {
 <span id="statusPill" class="att-status hidden"><span class="material-symbols-outlined text-base"></span><span class="att-status-text"></span></span>
 </div>
 </div>
+<!-- Easy plus-one — always available, impossible to mess up -->
+<div id="easyPlusOneField" class="hidden space-y-2 pt-2">
+<label class="chad-label" for="plusOneName">Plus one — add their full name yourself (optional)</label>
+<div class="chad-field">
+<span class="material-symbols-outlined chad-ic">group_add</span>
+<input class="chad-input" id="plusOneName" placeholder="Full name of your plus one — leave blank if solo" type="text" autocomplete="name"/>
+</div>
+<p class="text-xs text-white/45">No extra link needed — just type their name and we'll save them with you.</p>
+</div>
 
 <!-- COUPLE MODE -->
 <div id="coupleFields" class="hidden space-y-5">
@@ -797,6 +806,23 @@ select:-webkit-autofill {
   var coupleA = makeChoices({ group: 'attChoicesA', yes: 'att-yes-a', no: 'att-no-a', maybe: 'att-maybe-a', guestField: 'guestFieldA', pill: 'statusPillA' });
   var coupleB = makeChoices({ group: 'attChoicesB', yes: 'att-yes-b', no: 'att-no-b', maybe: 'att-maybe-b', guestField: 'guestFieldB', pill: 'statusPillB' });
 
+  // Easy plus-one: show when attending = yes (impossible to mess up)
+  (function(){
+    var plusWrap = document.getElementById('easyPlusOneField');
+    if (!plusWrap) return;
+    function syncPlus(){
+      var v = singleToggle.current();
+      var show = v === 'yes';
+      plusWrap.classList.toggle('hidden', !show);
+    }
+    // listen to all three radios
+    ['att-yes','att-no','att-maybe'].forEach(function(id){
+      var el = document.getElementById(id);
+      if (el) el.addEventListener('change', syncPlus);
+    });
+    syncPlus();
+  })();
+
   function stepGuests(id, d) {
     var el = document.getElementById(id);
     var v = parseInt(el.value, 10) || 1;
@@ -953,29 +979,42 @@ select:-webkit-autofill {
 
     } else {
       var name = nameInput.value.trim();
-      var lastName = isEasy ? '' : val('lastName');
-      var attendance = singleToggle.current();
-
-      // Smart name splitting if full name entered in first name field
-      if (name && !lastName && name.indexOf(' ') > 0 && !isEasy) {
+      var lastName = val('lastName');
+      // allow full name in first field — split smartly, impossible to mess up
+      if (name && !lastName && name.indexOf(' ') > 0) {
         var parts = name.split(/\s+/);
         name = parts[0];
         lastName = parts.slice(1).join(' ');
       }
+      var attendance = singleToggle.current();
+      var plusOneRaw = val('plusOneName');
+      var plusNames = plusOneRaw ? plusOneRaw.trim() : '';
 
-      if (!name) { showError('Missing information', 'Please add your first name.'); return; }
-      if (!attendance) { showError('Choose an option', 'Please select an option below.'); return; }
+      if (!name) { showError('Missing information', 'Please add your name — first name is enough.'); return; }
+      if (!attendance) { showError('Choose an option', 'Please tap Yes, No, or Ask Later.'); return; }
       var yes = attendance === 'yes';
-      var count = yes ? 1 : 0;
-      guests = count;
+      var isPlus = !!(yes && plusNames);
+      guests = isPlus ? 2 : (yes ? 1 : 0);
+      // plusNames for display / backend
+      if (isPlus) plusNames = plusNames;
+      else plusNames = '';
 
-      var plusNames = '';
       var record = {
         id: guestId, name: name, lastName: lastName, phone: phone,
         attendance: attendance, guests: guests, plusNames: plusNames,
         song: song, message: message, at: new Date().toISOString()
       };
       records.push(record);
+      // also store plus-one as separate local record so headcount is correct
+      if (isPlus) {
+        var pParts = plusNames.split(/\s+/);
+        var pFirst = pParts[0] || plusNames;
+        var pLast = pParts.slice(1).join(' ');
+        records.push({
+          id: guestId + ':plus1', name: pFirst, lastName: pLast, phone: phone,
+          attendance: 'yes', guests: 1, plusNames: '', song: '', message: '', at: new Date().toISOString()
+        });
+      }
 
       setSubmittingState(true);
 
