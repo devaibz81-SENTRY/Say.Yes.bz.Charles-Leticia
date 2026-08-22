@@ -953,14 +953,15 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
 <div class="relative z-10 flex flex-col items-center center-reveal">
 <div class="relative" style="width:min(115vw,720px);height:min(72vh,620px);">
 <img id="firstImg" src="../intro-first.png" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-500"/>
-<img id="gifImg" src="" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-700 opacity-0"/>
+<video id="introVideo" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none hidden" playsinline muted preload="auto" poster="../intro-first.png"><source src="../intro-once.mp4" type="video/mp4"/><source src="../intro-once.webm" type="video/webm"/></video>
+<img id="gifImg" src="" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-700 opacity-0 hidden"/>
 <img id="lastImg" src="../intro-last.png" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-500 opacity-0"/>
 </div>
-<div id="hintPill" class="hidden -mt-6 sm:-mt-10 z-20 hint-pulse inline-flex items-center gap-2.5 px-6 py-3 rounded-full border border-gold/50 shadow-[0_8px_32px_rgba(0,0,0,0.75)]" style="background:rgba(12,12,18,.8);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);">
-<span class="material-symbols-outlined text-gold text-xl" data-icon="touch_app">touch_app</span>
-<span id="hintText" class="font-label-sm text-gold-light uppercase tracking-[0.25em] font-semibold text-xs sm:text-sm">Tap to Begin</span>
+<div id="hintPill" class="-mt-6 sm:-mt-10 z-20 hint-pulse inline-flex items-center gap-2.5 px-6 py-3 rounded-full border border-gold/50 shadow-[0_8px_32px_rgba(0,0,0,0.75)]" style="background:rgba(12,12,18,.8);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);">
+<span class="material-symbols-outlined text-gold text-xl" data-icon="south">south</span>
+<span id="hintText" class="font-label-sm text-gold-light uppercase tracking-[0.25em] font-semibold text-xs sm:text-sm">Scroll to Start the Celebration</span>
 </div>
-<div id="loaderCard" class="mt-2 flex flex-col items-center gap-3 px-6 py-4 rounded-2xl border border-gold/40 glass-panel shadow-[0_10px_30px_rgba(0,0,0,0.5)] min-w-[260px]">
+<div id="loaderCard" class="hidden mt-2 flex flex-col items-center gap-3 px-6 py-4 rounded-2xl border border-gold/40 glass-panel shadow-[0_10px_30px_rgba(0,0,0,0.5)] min-w-[260px]">
 <div class="flex items-center gap-2.5">
 <span class="material-symbols-outlined text-gold text-xl animate-spin" data-icon="auto_awesome">auto_awesome</span>
 <span id="loadText" class="font-label-sm text-gold-light uppercase tracking-[0.2em]">Loading your invitation…</span>
@@ -2386,120 +2387,72 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
 (function () {
   var intro = document.getElementById('introScreen');
   var firstImg = document.getElementById('firstImg');
+  var video = document.getElementById('introVideo');
   var gifImg = document.getElementById('gifImg');
   var lastImg = document.getElementById('lastImg');
   var hintPill = document.getElementById('hintPill');
   var hint = document.getElementById('hintText');
-  var loaderCard = document.getElementById('loaderCard');
-  var loadText = document.getElementById('loadText');
-  var loadProgress = document.getElementById('loadProgress');
   var revealFlash = document.getElementById('revealFlash');
-
-  var GIF_SRC = '../intro_1.gif';   // full-quality 1080x1261 envelope animation (25fps, 127 frames, transparent BG)
-  var GIF_DURATION = 5080;          // 127 frames @ 25fps — one full playthrough
-
-  var state = 'loading';             // loading -> ready -> playing -> revealing -> exit
-  var gifFailTimer = null;
 
   function unlockScroll() {
     document.documentElement.classList.remove('no-scroll');
     document.body.classList.remove('no-scroll');
   }
 
-  // ---- Loading first: the loader exists so the video (and the page) is ready before the tap ----
-  var assetsToPreload = [
-    GIF_SRC,
-    '../galery (1).jpeg',
-    '../galery (2).jpeg',
-    '../galery (3).jpeg',
-    '../galery (4).jpeg',
-    '../galery (5).jpeg',
-    '../dress-code (right).png',
-    '../RSVP BUTTON.png',
-    '../Element (1).png',
-    '../Element (2).png',
-    '../Element (3).png',
-    '../Element (4).png',
-    '../Element (5).png',
-    '../Element (6).png'
-  ];
+  var state = 'scrolling';
+  var progress = 0;
+  var accumulated = 0;
+  var maxScroll = 1400;
+  var videoReady = false;
+  var isRevealing = false;
 
-  var total = assetsToPreload.length;
-  var loaded = 0;
-  var minDisplayTime = 1500;
-  var startTime = Date.now();
-  var raf = null;
-
-  function setProgress(pct) {
-    if (loadProgress) loadProgress.style.width = Math.min(100, Math.max(0, pct)) + '%';
-    if (loadText) loadText.textContent = 'Loading your invitation\u2026 ' + Math.round(pct) + '%';
+  function setProgress(p) {
+    progress = Math.max(0, Math.min(1, p));
+    if (firstImg) {
+      var fOp = progress < 0.08 ? (1 - progress / 0.08) : 0;
+      firstImg.style.opacity = String(fOp);
+      firstImg.style.display = progress < 0.08 ? 'block' : 'none';
+    }
+    if (video) {
+      var showVideo = progress > 0.02 && progress < 0.92;
+      if (showVideo) {
+        video.classList.remove('hidden');
+        video.style.display = 'block';
+      } else {
+        video.style.display = 'none';
+      }
+      if (videoReady && video.duration) {
+        try { video.currentTime = Math.max(0, Math.min(video.duration - 0.06, progress * video.duration)); } catch (e) {}
+      }
+    }
+    if (lastImg) {
+      var lastOp = progress > 0.92 ? (progress - 0.92) / 0.08 : 0;
+      lastImg.style.opacity = String(Math.max(0, Math.min(1, lastOp)));
+      lastImg.style.display = progress > 0.88 ? 'block' : 'none';
+      if (progress > 0.88) lastImg.classList.remove('opacity-0');
+    }
+    if (hintPill) {
+      var hintOp = 1 - progress * 1.7;
+      hintPill.style.opacity = String(Math.max(0, hintOp));
+      hintPill.style.transform = 'translateY(' + (progress * 14) + 'px)';
+      if (progress > 0.62) hintPill.style.pointerEvents = 'none';
+    }
+    if (progress >= 0.985 && !isRevealing) {
+      beginReveal();
+    }
   }
 
-  function draw() {
-    var target = total ? (loaded / total) * 100 : 100;
-    var current = loadProgress ? parseFloat(loadProgress.style.width) || 0 : 0;
-    var next = current + Math.max(1, (target - current) * 0.25);
-    if (next > target) next = target;
-    setProgress(next);
-    if (loaded < total) raf = requestAnimationFrame(draw);
-    else finishLoading();
-  }
-
-  function finishLoading() {
-    if (state !== 'loading') return;
-    var elapsed = Date.now() - startTime;
-    var remaining = Math.max(0, minDisplayTime - elapsed);
-    setTimeout(function () {
-      if (state !== 'loading') return;
-      state = 'ready';
-      if (loaderCard) loaderCard.classList.add('hidden');
-      if (hintPill) hintPill.classList.remove('hidden');
-      if (hint) hint.textContent = 'Tap to Begin';
-    }, remaining);
-  }
-
-  function play() {
-    if (state !== 'ready') return;
-    state = 'playing';
-    if (hint) hint.textContent = 'Enjoy the moment\u2026';
-    gifImg.addEventListener('load', onGifLoaded, { once: true });
-    gifImg.addEventListener('error', onGifFailed, { once: true });
-    gifImg.src = GIF_SRC;
-    gifImg.classList.remove('opacity-0');
-    // Safety: if nothing fires within 12s, reveal anyway — never trap the guest.
-    gifFailTimer = setTimeout(onGifFailed, 12000);
-  }
-
-  // GIF loads from cache (preloaded). Once the first frame has painted, start a
-  // fixed timer for exactly one playthrough. A beat BEFORE the GIF would loop,
-  // we crossfade to the static final-frame image (intro-last.png) — so the
-  // animation holds on its last frame and the reveal fires fast, with no loop
-  // and no flash of frame 0.
-  function onGifLoaded() {
-    if (gifFailTimer) clearTimeout(gifFailTimer);
-    if (state !== 'playing') return;
-    requestAnimationFrame(function () {
-      if (state !== 'playing') return;
-      if (firstImg) firstImg.style.display = 'none';
-      setTimeout(beginReveal, Math.max(0, GIF_DURATION - 250));
-    });
-  }
-
-  function onGifFailed() {
-    if (gifFailTimer) clearTimeout(gifFailTimer);
-    if (state !== 'playing') return;
-    beginReveal();
-  }
-
-  // The GIF's final frame is held via the static last-frame image (crossfaded
-  // in above), then we transition FAST: flash + fireworks + fly away.
   function beginReveal() {
-    if (state !== 'playing') return;
+    if (isRevealing) return;
+    isRevealing = true;
     state = 'revealing';
+    if (video) { try { video.pause(); } catch (e) {} video.style.display = 'none'; }
+    if (firstImg) firstImg.style.display = 'none';
     if (gifImg) gifImg.style.display = 'none';
     if (lastImg) {
-      lastImg.classList.remove('opacity-0');
       lastImg.style.display = 'block';
+      lastImg.classList.remove('opacity-0');
+      lastImg.style.opacity = '1';
     }
     if (revealFlash) {
       revealFlash.classList.remove('hidden');
@@ -2510,25 +2463,70 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
   }
 
   function exit() {
-    if (state !== 'revealing') return;
+    if (state === 'exit') return;
     state = 'exit';
     intro.classList.add('scatter');
     intro.classList.add('intro-fade-away');
     if (lastImg) lastImg.classList.add('last-frame-fly');
     var pageEl = document.querySelector('main');
     if (pageEl) pageEl.classList.add('page-scale-in');
-    // Keep the sky alive through the handoff to the page
     if (window.__bigFireworks) window.__bigFireworks(4);
-    // Hero content rises while the intro veil is still fading away
     setTimeout(function () { if (window.__animateHero) window.__animateHero(); }, 450);
     setTimeout(function () {
       try { sessionStorage.setItem('cl_intro_done', '1'); } catch (e) {}
       if (intro.parentNode) intro.parentNode.removeChild(intro);
       unlockScroll();
-      // Show the music toggle button once intro is done
+      window.removeEventListener('wheel', onWheel, { passive: false });
+      window.removeEventListener('touchstart', onTouchStart, { passive: false });
+      window.removeEventListener('touchmove', onTouchMove, { passive: false });
+      window.removeEventListener('keydown', onKey);
       var btn = document.getElementById('musicBtn');
       if (btn) btn.classList.remove('hidden');
     }, 1200);
+  }
+
+  function onWheel(e) {
+    if (state !== 'scrolling') return;
+    e.preventDefault();
+    var delta = e.deltaY;
+    if (Math.abs(delta) < 4) delta *= 4;
+    accumulated += delta;
+    accumulated = Math.max(0, Math.min(maxScroll, accumulated));
+    setProgress(accumulated / maxScroll);
+  }
+
+  var touchStartY = 0;
+  function onTouchStart(e) {
+    if (e.touches && e.touches[0]) touchStartY = e.touches[0].clientY;
+  }
+  function onTouchMove(e) {
+    if (state !== 'scrolling') return;
+    if (!e.touches || !e.touches[0]) return;
+    var curY = e.touches[0].clientY;
+    var delta = touchStartY - curY;
+    if (Math.abs(delta) < 2) return;
+    e.preventDefault();
+    accumulated += delta * 1.35;
+    touchStartY = curY;
+    accumulated = Math.max(0, Math.min(maxScroll, accumulated));
+    setProgress(accumulated / maxScroll);
+  }
+
+  function onKey(e) {
+    if (state !== 'scrolling') return;
+    if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+      e.preventDefault();
+      accumulated += 180;
+      accumulated = Math.min(maxScroll, accumulated);
+      setProgress(accumulated / maxScroll);
+    } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+      e.preventDefault();
+      accumulated -= 180;
+      accumulated = Math.max(0, accumulated);
+      setProgress(accumulated / maxScroll);
+    } else if (e.key === 'Enter') {
+      if (progress > 0.08) { accumulated = maxScroll; setProgress(1); }
+    }
   }
 
   if (!intro) return;
@@ -2536,8 +2534,8 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
     if (sessionStorage.getItem('cl_intro_done')) {
       if (intro.parentNode) intro.parentNode.removeChild(intro);
       if (window.__animateHero) window.__animateHero();
-      var btn = document.getElementById('musicBtn');
-      if (btn) btn.classList.remove('hidden');
+      var btn2 = document.getElementById('musicBtn');
+      if (btn2) btn2.classList.remove('hidden');
       return;
     }
   } catch (e) {}
@@ -2545,15 +2543,48 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
   document.documentElement.classList.add('no-scroll');
   document.body.classList.add('no-scroll');
 
+  if (hintPill) { hintPill.classList.remove('hidden'); hintPill.style.opacity = '1'; }
+  if (hint) hint.textContent = 'Scroll to Start the Celebration';
+  if (firstImg) { firstImg.style.display = 'block'; firstImg.style.opacity = '1'; }
+  if (lastImg) { lastImg.style.display = 'none'; lastImg.style.opacity = '0'; }
+  if (video) {
+    video.muted = true;
+    video.playsInline = true;
+    try { video.load(); } catch (e) {}
+    video.addEventListener('loadedmetadata', function () { videoReady = true; setProgress(0); });
+    video.addEventListener('canplay', function () { videoReady = true; });
+    setTimeout(function () { videoReady = videoReady || !!video.duration; setProgress(0); }, 900);
+  } else {
+    setProgress(0);
+  }
+
+  window.addEventListener('wheel', onWheel, { passive: false });
+  window.addEventListener('touchstart', onTouchStart, { passive: false });
+  window.addEventListener('touchmove', onTouchMove, { passive: false });
+  window.addEventListener('keydown', onKey);
+
   intro.addEventListener('click', function () {
-    if (state === 'ready') {
-      // Start music on first user gesture (satisfies browser autoplay policy)
-      var music = document.getElementById('bgMusic');
-      if (music && music.paused) {
-        music.volume = 0.45;
-        music.play().catch(function () {});
-      }
-      play();
+    if (state !== 'scrolling') return;
+    var music = document.getElementById('bgMusic');
+    if (music && music.paused) {
+      music.volume = 0.45;
+      music.play().catch(function () {});
+    }
+    accumulated += maxScroll * 0.18;
+    accumulated = Math.min(maxScroll, accumulated);
+    setProgress(accumulated / maxScroll);
+  });
+
+  window.addEventListener('scroll', function () {
+    if (state !== 'scrolling') return;
+    var cur = window.scrollY;
+    var lastY = window.__lastScrollY || 0;
+    var dy = cur - lastY;
+    window.__lastScrollY = cur;
+    if (Math.abs(dy) > 1) {
+      accumulated += dy * 2.2;
+      accumulated = Math.max(0, Math.min(maxScroll, accumulated));
+      setProgress(accumulated / maxScroll);
     }
   });
 
