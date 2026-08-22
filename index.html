@@ -877,10 +877,29 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
 }
 .cinematic-break.with-love .cb-photo img { object-position: center 38% !important; filter: brightness(0.36) saturate(0.62) !important; }
 
+/* ---- Premium parallax — subtle crisp move, scale to hide edges ---- */
+.cb-photo, .ch-photo, .rsvp-bg-photo, .gal-photo-bg, .dc-photo-bg { overflow: hidden; }
+.cb-photo img, .ch-photo img, .rsvp-bg-photo img, .gal-photo-bg img, .dc-photo-bg img {
+  will-change: transform;
+  transform: translate3d(0, 0, 0) scale(1.08);
+}
+.parallax-slow { transition: transform .12s linear; }
+
+/* ---- Interactive cards — 3D tilt + glare, keeps black ---- */
+.bento-card-dark, .bento-card, .fan-card { transform-style: preserve-3d; }
+.bento-card-dark .tilt-glare, .bento-card .tilt-glare, .fan-card .tilt-glare {
+  position: absolute; inset: 0; border-radius: inherit;
+  background: radial-gradient(520px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,.13), transparent 60%);
+  opacity: 0; transition: opacity .35s ease; pointer-events: none; z-index: 2;
+}
+.bento-card-dark:hover .tilt-glare, .bento-card:hover .tilt-glare, .fan-card:hover .tilt-glare { opacity: 1; }
+
 @media (prefers-reduced-motion: reduce) {
   .rv-left, .rv-right, .rv-up { opacity: 1 !important; transform: none !important; transition: none !important; }
   .word-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
   .rv-scale, .rv-blur { opacity: 1 !important; transform: none !important; filter: none !important; }
+  .cb-photo img, .ch-photo img, .rsvp-bg-photo img, .gal-photo-bg img, .dc-photo-bg img { transform: none !important; }
+  .bento-card-dark, .bento-card, .fan-card { transform: none !important; }
 }
 </style>
 </head>
@@ -1447,19 +1466,109 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
 
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);
+
+  // ---- Ensure EVERY heading gets consistent word reveal (fallback) ----
+  var FALLBACK_SEL = 'h2.font-headline-lg, h3.bento-heading, .gift-section h2, .rsvp-photo-section h2, #gallery h2, .cinematic-break p.font-script-accent, .closing-hero p.font-script-accent';
+  function fallbackWrap() {
+    document.querySelectorAll(FALLBACK_SEL).forEach(function (h) {
+      if (!h.dataset.wrapped && h.textContent.trim().length > 1) wrapWords(h);
+    });
+  }
+  if (document.readyState !== 'loading') fallbackWrap();
+  else document.addEventListener('DOMContentLoaded', fallbackWrap);
+  window.addEventListener('load', function () { setTimeout(fallbackWrap, 400); });
 })();
 </script>
 
-<!-- Reactive Physics Fireworks backdrop behind intro -->
+<!-- Premium: Every heading animates, cards feel interactive, bg photos have subtle parallax -->
+<script>
+(function () {
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+
+  // ---- 1. Ensure every heading has Word Reveal (catch any missed) ----
+  // handled above fallback; this block adds staggered delay consistency check
+  // (already word-reveal CSS handles 45ms per word — consistent across all headings)
+
+  // ---- 2. Subtle parallax for bg photos — crisp premium, 6-8% move ----
+  var parallaxImgs = document.querySelectorAll('.cb-photo img, .ch-photo img, .rsvp-bg-photo img, .gal-photo-bg img, .dc-photo-bg img');
+  if (parallaxImgs.length && 'IntersectionObserver' in window) {
+    var ticking = false;
+    function updateParallax() {
+      var vh = window.innerHeight;
+      parallaxImgs.forEach(function (img) {
+        var sec = img.closest('.cinematic-break, .closing-hero, .rsvp-photo-section, .gallery-section, .dresscode-section');
+        if (!sec) return;
+        var rect = sec.getBoundingClientRect();
+        // progress 0 (below viewport) -> 1 (above viewport)
+        var progress = (vh - rect.top) / (vh + rect.height);
+        progress = Math.max(0, Math.min(1, progress));
+        // subtle 36px total travel (-18 to +18) + scale 1.08 already in CSS
+        var y = (progress - 0.5) * 36;
+        img.style.transform = 'translate3d(0,' + y.toFixed(2) + 'px,0) scale(1.08)';
+      });
+      ticking = false;
+    }
+    function onScroll() {
+      if (!ticking) { ticking = true; requestAnimationFrame(updateParallax); }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    // initial
+    updateParallax();
+  }
+
+  // ---- 3. Cards feel interactive — 3D tilt + glare, keeps black ----
+  var cards = document.querySelectorAll('.bento-card-dark, .bento-card, .fan-card');
+  cards.forEach(function (card) {
+    // inject glare layer once
+    if (!card.querySelector('.tilt-glare')) {
+      var glare = document.createElement('span');
+      glare.className = 'tilt-glare';
+      glare.setAttribute('aria-hidden', 'true');
+      card.style.position = card.style.position || 'relative';
+      card.style.overflow = 'hidden';
+      card.appendChild(glare);
+    }
+    var glareEl = card.querySelector('.tilt-glare');
+    card.addEventListener('mousemove', function (e) {
+      var r = card.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width;
+      var y = (e.clientY - r.top) / r.height;
+      var rotY = (x - 0.5) * 9;   // subtle 9deg max
+      var rotX = (0.5 - y) * 7;
+      card.style.transform = 'perspective(900px) rotateX(' + rotX.toFixed(2) + 'deg) rotateY(' + rotY.toFixed(2) + 'deg) translateY(-4px) scale(1.01)';
+      card.style.setProperty('--mx', (x * 100) + '%');
+      card.style.setProperty('--my', (y * 100) + '%');
+      if (glareEl) glareEl.style.opacity = '1';
+    });
+    card.addEventListener('mouseleave', function () {
+      card.style.transform = '';
+      if (glareEl) glareEl.style.opacity = '0';
+    });
+    // keyboard focus also shows subtle lift
+    card.addEventListener('focusin', function () {
+      card.style.transform = 'perspective(900px) translateY(-3px) scale(1.005)';
+    });
+    card.addEventListener('focusout', function () {
+      card.style.transform = '';
+    });
+  });
+})();
+</script>
+
+<!-- Reactive Physics Fireworks backdrop behind intro (Optimized: Max 3-6 fireworks limit, ultra-lightweight 60fps) -->
 <script>
 (function () {
   const canvas = document.getElementById('fwCanvas');
   if (!canvas || !canvas.getContext) return;
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext('2d', { alpha: true });
   let W, H, DPR;
+  let isRunning = true;
+  let rafId = null;
 
   function resize() {
-    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    DPR = Math.min(window.devicePixelRatio || 1, 1.5);
     W = window.innerWidth;
     H = window.innerHeight;
     canvas.width = W * DPR;
@@ -1472,19 +1581,21 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
   window.addEventListener('resize', resize);
 
   // ---------- physical constants ----------
-  const GRAVITY = 0.055;          // downward acceleration, px/frame^2
-  const AIR_DRAG = 0.988;         // velocity retained per frame
-  const WIND = 0.006;             // gentle horizontal drift
+  const GRAVITY = 0.055;
+  const AIR_DRAG = 0.988;
+  const WIND = 0.005;
+  const MAX_ACTIVE_SHELLS = 5;      // User limit: Max 3-6 fireworks at any given time
+  const MAX_TOTAL_SPARKS = 180;     // Ultra-lightweight pool limit for high browser performance
 
-  // ---------- background stars ----------
+  // ---------- background stars (lightweight) ----------
   const stars = [];
-  for (let i = 0; i < 180; i++) {
+  for (let i = 0; i < 65; i++) {
     stars.push({
       x: Math.random() * W,
-      y: Math.random() * H * 0.75,
-      r: Math.random() * 1.2 + 0.2,
+      y: Math.random() * H * 0.7,
+      r: Math.random() * 1.1 + 0.3,
       phase: Math.random() * Math.PI * 2,
-      speed: 0.005 + Math.random() * 0.01
+      speed: 0.008 + Math.random() * 0.012
     });
   }
 
@@ -1493,8 +1604,7 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
     [45, 38],    // gold -> amber
     [50, 44],    // bright gold -> champagne
     [42, 34],    // warm gold -> honey
-    [47, 41],    // yellow gold
-    [0, 0]       // pure white (reserved, used via useWhite)
+    [47, 41]     // yellow gold
   ];
 
   function hsl(h, s, l, a) {
@@ -1513,21 +1623,21 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
       this.vx = Math.cos(angle) * speed;
       this.vy = Math.sin(angle) * speed;
       this.hue = hue;
-      this.sat = opts.sat ?? (65 + Math.random() * 25);
-      this.baseLight = opts.light ?? (48 + Math.random() * 16);
+      this.sat = opts.sat || (70 + Math.random() * 20);
+      this.baseLight = opts.light || (52 + Math.random() * 14);
       this.life = 1;
-      this.decay = opts.decay ?? (0.010 + Math.random() * 0.012);
-      this.size = opts.size ?? (1.1 + Math.random() * 1.6);
-      this.gravityMul = opts.gravityMul ?? 1;
-      this.dragMul = opts.dragMul ?? 1;
-      this.flicker = opts.flicker ?? false;
-      this.crackle = opts.crackle ?? false;
-      this.crackleAt = this.crackle ? (0.15 + Math.random() * 0.35) : -1;
+      this.decay = opts.decay || (0.014 + Math.random() * 0.014);
+      this.size = opts.size || (1.1 + Math.random() * 1.2);
+      this.gravityMul = opts.gravityMul || 1;
+      this.dragMul = opts.dragMul || 1;
+      this.flicker = opts.flicker || false;
+      this.crackle = opts.crackle || false;
+      this.crackleAt = this.crackle ? (0.2 + Math.random() * 0.3) : -1;
       this.hasCrackled = false;
       this.trail = [];
-      this.trailLen = opts.trailLen ?? 4;
-      this.white = opts.white ?? false;
-      this.hotSpan = 0.06 + Math.random() * 0.06;
+      this.trailLen = opts.trailLen || 2;
+      this.white = opts.white || false;
+      this.hotSpan = 0.08;
       this.px = x; this.py = y;
     }
     step() {
@@ -1558,67 +1668,33 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
         return { h: 40, s: 10 + dying * 20, l: 92 - dying * 35 };
       }
       if (ageFrac < this.hotSpan) {
-        const t = ageFrac / this.hotSpan;
-        return {
-          h: this.hue,
-          s: this.sat * (0.15 + t * 0.85),
-          l: 96 - t * (96 - this.baseLight)
-        };
-      }
-      const deathStart = 0.72;
-      if (ageFrac > deathStart) {
-        const t = Math.min(1, (ageFrac - deathStart) / (1 - deathStart));
-        const h = this.hue + (18 - this.hue) * t * 0.6;
-        const l = this.baseLight - t * (this.baseLight - 14);
-        const s = Math.min(100, this.sat + t * 15);
-        return { h, s, l };
+        return { h: this.hue, s: this.sat * 0.4, l: 95 };
       }
       return { h: this.hue, s: this.sat, l: this.baseLight };
     }
 
     draw() {
       const a = Math.max(this.life, 0);
-      if (a <= 0) return;
+      if (a <= 0.01) return;
       const ageFrac = 1 - this.life;
-      const flick = this.flicker ? (0.55 + Math.random() * 0.45) : 1;
+      const flick = this.flicker ? (0.6 + Math.random() * 0.4) : 1;
       const c = this.thermal(ageFrac);
 
-      if (this.trail.length > 1) {
-        ctx.lineCap = 'round';
-        for (let i = 1; i < this.trail.length; i++) {
-          const p0 = this.trail[i - 1];
-          const p1 = this.trail[i];
-          const tAlpha = (i / this.trail.length) * a * 0.65 * flick;
-          if (tAlpha <= 0.01) continue;
-          ctx.strokeStyle = hsl(c.h, c.s, c.l, tAlpha);
-          ctx.lineWidth = this.size * (0.35 + (i / this.trail.length) * 0.35);
-          ctx.beginPath();
-          ctx.moveTo(p0.x, p0.y);
-          ctx.lineTo(p1.x, p1.y);
-          ctx.stroke();
-        }
-        const last = this.trail[this.trail.length - 1];
-        ctx.strokeStyle = hsl(c.h, c.s, c.l, a * 0.7 * flick);
-        ctx.lineWidth = this.size * 0.55;
+      // Lightweight 1-step line trail
+      if (this.trail.length > 0) {
+        const p0 = this.trail[0];
+        ctx.strokeStyle = hsl(c.h, c.s, c.l, a * 0.45 * flick);
+        ctx.lineWidth = this.size * 0.6;
         ctx.beginPath();
-        ctx.moveTo(last.x, last.y);
+        ctx.moveTo(p0.x, p0.y);
         ctx.lineTo(this.x, this.y);
         ctx.stroke();
       }
 
-      const r = this.size * (0.7 + a * 0.5);
-      const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, r * 2.2);
-      grad.addColorStop(0, hsl(c.h, c.s, Math.min(c.l + 22, 99), a * flick));
-      grad.addColorStop(0.5, hsl(c.h, c.s, c.l, a * 0.4 * flick));
-      grad.addColorStop(1, hsl(c.h, c.s, c.l, 0));
-      ctx.fillStyle = grad;
+      // Fast core spark
+      ctx.fillStyle = hsl(c.h, c.s, c.l, a * flick);
       ctx.beginPath();
-      ctx.arc(this.x, this.y, r * 2.2, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.beginPath();
-      ctx.fillStyle = hsl(c.h, c.s * 0.6, Math.min(c.l + 18, 99), a * flick);
-      ctx.arc(this.x, this.y, r * 0.45, 0, Math.PI * 2);
+      ctx.arc(this.x, this.y, this.size * (0.6 + a * 0.4), 0, Math.PI * 2);
       ctx.fill();
     }
   }
@@ -1626,22 +1702,19 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
   class Smoke {
     constructor(x, y) {
       this.x = x; this.y = y;
-      this.vx = (Math.random() - 0.5) * 0.3;
-      this.vy = -0.15 - Math.random() * 0.15;
-      this.r = 3 + Math.random() * 5;
+      this.r = 3 + Math.random() * 3;
       this.life = 1;
-      this.decay = 0.006 + Math.random() * 0.006;
+      this.decay = 0.015 + Math.random() * 0.015;
     }
     step() {
-      this.x += this.vx; this.y += this.vy;
-      this.vx += WIND * 0.3;
-      this.r += 0.12;
+      this.y -= 0.15;
+      this.r += 0.08;
       this.life -= this.decay;
     }
     get dead() { return this.life <= 0; }
     draw() {
       ctx.beginPath();
-      ctx.fillStyle = 'rgba(180,180,190,' + (this.life * 0.06) + ')';
+      ctx.fillStyle = 'rgba(180,180,190,' + (this.life * 0.04) + ')';
       ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
       ctx.fill();
     }
@@ -1651,28 +1724,24 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
     constructor(x, targetY, hueSeed, scale = 1) {
       this.x = x;
       this.startX = x;
-      this.y = H + 10;
-      const dist = (H + 10 - targetY);
+      this.y = H + 8;
+      const dist = (H + 8 - targetY);
       this.vy = -Math.sqrt(2 * GRAVITY * dist) * 1.02;
-      this.vx = (Math.random() - 0.5) * 0.6;
+      this.vx = (Math.random() - 0.5) * 0.5;
       this.targetY = targetY;
       this.hueSeed = hueSeed;
-      this.scale = scale;
+      this.scale = Math.min(scale, 1.2);
       this.trail = [];
       this.dead = false;
     }
     step() {
       this.trail.push({ x: this.x, y: this.y });
-      if (this.trail.length > 10) this.trail.shift();
+      if (this.trail.length > 5) this.trail.shift();
 
       this.vy += GRAVITY * 0.9;
       this.vx *= 0.995;
       this.x += this.vx;
       this.y += this.vy;
-
-      if (Math.random() < 0.7) {
-        smokePuffs.push(new Smoke(this.x + (Math.random() - 0.5) * 2, this.y + 4));
-      }
 
       if (this.vy >= -0.5 || this.y <= this.targetY) {
         this.explode();
@@ -1682,98 +1751,53 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
     draw() {
       for (let i = 0; i < this.trail.length; i++) {
         const t = this.trail[i];
-        const a = (i / this.trail.length) * 0.85;
+        const a = (i / this.trail.length) * 0.7;
         ctx.beginPath();
         ctx.fillStyle = 'rgba(255, 235, 200, ' + a + ')';
-        ctx.arc(t.x, t.y, 1.6, 0, Math.PI * 2);
+        ctx.arc(t.x, t.y, 1.3, 0, Math.PI * 2);
         ctx.fill();
       }
-      const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, 8);
-      g.addColorStop(0, 'rgba(255,250,230,0.9)');
-      g.addColorStop(1, 'rgba(255,250,230,0)');
-      ctx.fillStyle = g;
+      ctx.fillStyle = 'rgba(255,250,230,0.85)';
       ctx.beginPath();
-      ctx.arc(this.x, this.y, 8, 0, Math.PI * 2);
+      ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
       ctx.fill();
     }
     explode() {
       const type = Math.random();
       const s = this.scale;
       const mom = { x: this.vx, y: this.vy };
-      if (type < 0.32) burstPeony(this.x, this.y, this.hueSeed, s, mom);
-      else if (type < 0.55) burstWillow(this.x, this.y, this.hueSeed, s, mom);
-      else if (type < 0.75) burstChrysanthemum(this.x, this.y, this.hueSeed, s, mom);
-      else if (type < 0.9) burstCrackle(this.x, this.y, this.hueSeed, s, mom);
+      if (type < 0.35) burstPeony(this.x, this.y, this.hueSeed, s, mom);
+      else if (type < 0.6) burstWillow(this.x, this.y, this.hueSeed, s, mom);
+      else if (type < 0.8) burstChrysanthemum(this.x, this.y, this.hueSeed, s, mom);
+      else if (type < 0.92) burstCrackle(this.x, this.y, this.hueSeed, s, mom);
       else burstRing(this.x, this.y, this.hueSeed, s, mom);
 
-      const smokeCount = Math.round(5 * s);
-      for (let i = 0; i < smokeCount; i++) smokePuffs.push(new Smoke(this.x, this.y));
+      if (smokePuffs.length < 8) smokePuffs.push(new Smoke(this.x, this.y));
       flashAt(this.x, this.y, s);
     }
   }
 
   function flashAt(x, y, scale = 1) {
-    flashes.push({ x, y, life: 1, scale });
+    if (flashes.length < 3) flashes.push({ x, y, life: 1, scale });
   }
 
   function pickHue(seed) {
     if (seed === -1) return null;
-    return seed + (Math.random() * 8 - 4);
+    return seed + (Math.random() * 6 - 3);
   }
 
   function burstPeony(x, y, hueSeed, scale = 1, mom = { x: 0, y: 0 }) {
+    if (sparks.length >= MAX_TOTAL_SPARKS) return;
     const white = hueSeed === -1;
-    const count = Math.floor((90 + Math.random() * 40) * scale);
-    const speedBase = (3.2 + Math.random() * 1.4) * (0.85 + scale * 0.25);
+    const count = Math.floor((32 + Math.random() * 14) * scale);
+    const speedBase = (2.8 + Math.random() * 1.0) * (0.9 + scale * 0.2);
     for (let i = 0; i < count; i++) {
-      if (Math.random() < 0.04) continue;
-      const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.4;
-      const speed = speedBase * (0.7 + Math.random() * 0.6);
-      const sp = new Spark(x, y, angle, speed, white ? 0 : pickHue(hueSeed), {
-        decay: 0.009 + Math.random() * 0.008,
-        size: 1.3 + Math.random() * 1.3,
-        trailLen: 5,
-        white
-      });
-      sp.vx += mom.x * 0.22; sp.vy += mom.y * 0.22;
-      sparks.push(sp);
-    }
-  }
-
-  function burstChrysanthemum(x, y, hueSeed, scale = 1, mom = { x: 0, y: 0 }) {
-    const white = hueSeed === -1;
-    const count = Math.floor((130 + Math.random() * 40) * scale);
-    const speedBase = (3.6 + Math.random() * 1.2) * (0.85 + scale * 0.25);
-    for (let i = 0; i < count; i++) {
-      if (Math.random() < 0.03) continue;
       const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.3;
-      const speed = speedBase * (0.8 + Math.random() * 0.4);
-      const sp = new Spark(x, y, angle, speed, white ? 0 : pickHue(hueSeed), {
-        decay: 0.007 + Math.random() * 0.006,
-        size: 1.0 + Math.random() * 1.0,
-        trailLen: 7,
-        flicker: true,
-        white
-      });
-      sp.vx += mom.x * 0.2; sp.vy += mom.y * 0.2;
-      sparks.push(sp);
-    }
-  }
-
-  function burstWillow(x, y, hueSeed, scale = 1, mom = { x: 0, y: 0 }) {
-    const white = hueSeed === -1;
-    const count = Math.floor((70 + Math.random() * 30) * scale);
-    const speedBase = (2.6 + Math.random() * 1.0) * (0.85 + scale * 0.25);
-    for (let i = 0; i < count; i++) {
-      if (Math.random() < 0.04) continue;
-      const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.45;
       const speed = speedBase * (0.75 + Math.random() * 0.5);
       const sp = new Spark(x, y, angle, speed, white ? 0 : pickHue(hueSeed), {
-        decay: 0.0035 + Math.random() * 0.003,
-        size: 1.0 + Math.random() * 0.8,
-        trailLen: 14,
-        gravityMul: 1.6,
-        dragMul: 0.998,
+        decay: 0.012 + Math.random() * 0.01,
+        size: 1.2 + Math.random() * 1.0,
+        trailLen: 2,
         white
       });
       sp.vx += mom.x * 0.18; sp.vy += mom.y * 0.18;
@@ -1781,38 +1805,19 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
     }
   }
 
-  function burstCrackle(x, y, hueSeed, scale = 1, mom = { x: 0, y: 0 }) {
+  function burstChrysanthemum(x, y, hueSeed, scale = 1, mom = { x: 0, y: 0 }) {
+    if (sparks.length >= MAX_TOTAL_SPARKS) return;
     const white = hueSeed === -1;
-    const count = Math.floor((60 + Math.random() * 25) * scale);
-    const speedBase = (3.0 + Math.random() * 1.2) * (0.85 + scale * 0.25);
+    const count = Math.floor((38 + Math.random() * 14) * scale);
+    const speedBase = (3.0 + Math.random() * 1.0) * (0.9 + scale * 0.2);
     for (let i = 0; i < count; i++) {
-      if (Math.random() < 0.04) continue;
-      const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.5;
-      const speed = speedBase * (0.65 + Math.random() * 0.6);
+      const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.25;
+      const speed = speedBase * (0.8 + Math.random() * 0.4);
       const sp = new Spark(x, y, angle, speed, white ? 0 : pickHue(hueSeed), {
-        decay: 0.011 + Math.random() * 0.01,
-        size: 1.2 + Math.random() * 1.0,
-        trailLen: 4,
-        crackle: true,
-        white
-      });
-      sp.vx += mom.x * 0.2; sp.vy += mom.y * 0.2;
-      sparks.push(sp);
-    }
-  }
-
-  function burstRing(x, y, hueSeed, scale = 1, mom = { x: 0, y: 0 }) {
-    const white = hueSeed === -1;
-    const count = Math.floor(100 * scale);
-    const speedBase = 3.4 * (0.85 + scale * 0.25);
-    for (let i = 0; i < count; i++) {
-      const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.06;
-      const speed = speedBase * (0.94 + Math.random() * 0.08);
-      const sp = new Spark(x, y, angle, speed, white ? 0 : pickHue(hueSeed), {
-        decay: 0.008 + Math.random() * 0.005,
-        size: 1.2 + Math.random() * 1.0,
-        trailLen: 6,
-        gravityMul: 0.7,
+        decay: 0.010 + Math.random() * 0.008,
+        size: 1.0 + Math.random() * 0.8,
+        trailLen: 3,
+        flicker: true,
         white
       });
       sp.vx += mom.x * 0.15; sp.vy += mom.y * 0.15;
@@ -1820,15 +1825,77 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
     }
   }
 
+  function burstWillow(x, y, hueSeed, scale = 1, mom = { x: 0, y: 0 }) {
+    if (sparks.length >= MAX_TOTAL_SPARKS) return;
+    const white = hueSeed === -1;
+    const count = Math.floor((26 + Math.random() * 12) * scale);
+    const speedBase = (2.2 + Math.random() * 0.8) * (0.9 + scale * 0.2);
+    for (let i = 0; i < count; i++) {
+      const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.35;
+      const speed = speedBase * (0.75 + Math.random() * 0.45);
+      const sp = new Spark(x, y, angle, speed, white ? 0 : pickHue(hueSeed), {
+        decay: 0.006 + Math.random() * 0.004,
+        size: 1.0 + Math.random() * 0.6,
+        trailLen: 5,
+        gravityMul: 1.4,
+        dragMul: 0.996,
+        white
+      });
+      sp.vx += mom.x * 0.15; sp.vy += mom.y * 0.15;
+      sparks.push(sp);
+    }
+  }
+
+  function burstCrackle(x, y, hueSeed, scale = 1, mom = { x: 0, y: 0 }) {
+    if (sparks.length >= MAX_TOTAL_SPARKS) return;
+    const white = hueSeed === -1;
+    const count = Math.floor((24 + Math.random() * 10) * scale);
+    const speedBase = (2.5 + Math.random() * 1.0) * (0.9 + scale * 0.2);
+    for (let i = 0; i < count; i++) {
+      const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.4;
+      const speed = speedBase * (0.7 + Math.random() * 0.5);
+      const sp = new Spark(x, y, angle, speed, white ? 0 : pickHue(hueSeed), {
+        decay: 0.014 + Math.random() * 0.012,
+        size: 1.1 + Math.random() * 0.8,
+        trailLen: 2,
+        crackle: true,
+        white
+      });
+      sp.vx += mom.x * 0.16; sp.vy += mom.y * 0.16;
+      sparks.push(sp);
+    }
+  }
+
+  function burstRing(x, y, hueSeed, scale = 1, mom = { x: 0, y: 0 }) {
+    if (sparks.length >= MAX_TOTAL_SPARKS) return;
+    const white = hueSeed === -1;
+    const count = Math.floor(28 * scale);
+    const speedBase = 2.8 * (0.9 + scale * 0.2);
+    for (let i = 0; i < count; i++) {
+      const angle = (Math.PI * 2 * i) / count;
+      const speed = speedBase * (0.95 + Math.random() * 0.06);
+      const sp = new Spark(x, y, angle, speed, white ? 0 : pickHue(hueSeed), {
+        decay: 0.010 + Math.random() * 0.006,
+        size: 1.1 + Math.random() * 0.8,
+        trailLen: 3,
+        gravityMul: 0.7,
+        white
+      });
+      sp.vx += mom.x * 0.12; sp.vy += mom.y * 0.12;
+      sparks.push(sp);
+    }
+  }
+
   function spawnCrackleBurst(x, y) {
-    const count = 6 + Math.floor(Math.random() * 6);
+    if (sparks.length >= MAX_TOTAL_SPARKS) return;
+    const count = 4 + Math.floor(Math.random() * 3);
     for (let i = 0; i < count; i++) {
       const angle = Math.random() * Math.PI * 2;
-      const speed = 0.6 + Math.random() * 1.4;
+      const speed = 0.5 + Math.random() * 1.0;
       sparks.push(new Spark(x, y, angle, speed, 0, {
-        decay: 0.03 + Math.random() * 0.02,
-        size: 0.8 + Math.random() * 0.6,
-        trailLen: 2,
+        decay: 0.035 + Math.random() * 0.02,
+        size: 0.8 + Math.random() * 0.5,
+        trailLen: 1,
         white: true
       }));
     }
@@ -1836,41 +1903,41 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
 
   let recentX = [];
   function pickLaunchX() {
-    const margin = W * 0.1;
-    for (let attempt = 0; attempt < 6; attempt++) {
+    const margin = W * 0.12;
+    for (let attempt = 0; attempt < 4; attempt++) {
       const x = margin + Math.random() * (W - margin * 2);
-      const tooClose = recentX.some(rx => Math.abs(rx - x) < W * 0.16);
+      const tooClose = recentX.some(rx => Math.abs(rx - x) < W * 0.18);
       if (!tooClose) {
         recentX.push(x);
-        if (recentX.length > 4) recentX.shift();
+        if (recentX.length > 3) recentX.shift();
         return x;
       }
     }
     const x = margin + Math.random() * (W - margin * 2);
     recentX.push(x);
-    if (recentX.length > 4) recentX.shift();
+    if (recentX.length > 3) recentX.shift();
     return x;
   }
 
   function launchShell(x, scale = 1) {
+    if (!isRunning || shells.length >= MAX_ACTIVE_SHELLS) return;
     const px = x !== undefined ? x : pickLaunchX();
-    const heightBias = Math.min(scale, 1.5) * 0.06;
-    const targetY = H * (0.14 + heightBias + Math.random() * 0.28);
-    const useWhite = Math.random() < 0.12;
-    const hueSeed = useWhite ? -1 : PALETTES[Math.floor(Math.random() * (PALETTES.length - 1))][Math.random() < 0.5 ? 0 : 1];
+    const targetY = H * (0.16 + Math.random() * 0.26);
+    const useWhite = Math.random() < 0.14;
+    const hueSeed = useWhite ? -1 : PALETTES[Math.floor(Math.random() * PALETTES.length)][Math.random() < 0.5 ? 0 : 1];
     shells.push(new Shell(px, targetY, hueSeed, scale));
   }
 
-  function launchSalvo(count, scaleBase = 1.1) {
-    const lanes = Math.min(count, 4);
-    const laneWidth = W / (lanes + 1);
-    for (let i = 0; i < count; i++) {
-      const lane = i % lanes;
-      const jitter = (Math.random() - 0.5) * laneWidth * 0.5;
-      const x = laneWidth * (lane + 1) + jitter;
+  function launchSalvo(count, scaleBase = 1.0) {
+    if (!isRunning) return;
+    const allowed = Math.min(count, MAX_ACTIVE_SHELLS - shells.length, 3);
+    if (allowed <= 0) return;
+    const laneWidth = W / (allowed + 1);
+    for (let i = 0; i < allowed; i++) {
+      const x = laneWidth * (i + 1) + (Math.random() - 0.5) * laneWidth * 0.4;
       setTimeout(() => {
-        launchShell(x, scaleBase * (0.85 + Math.random() * 0.3));
-      }, i * (70 + Math.random() * 60));
+        if (isRunning) launchShell(x, scaleBase * (0.9 + Math.random() * 0.2));
+      }, i * 90);
     }
   }
 
@@ -1878,10 +1945,10 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
   const introEl = document.getElementById('introScreen');
   const targetForClick = introEl || canvas;
   targetForClick.addEventListener('click', (e) => {
-    launchShell(e.clientX, 1.0 + Math.random() * 0.25);
+    launchShell(e.clientX, 1.0);
   });
   targetForClick.addEventListener('touchstart', (e) => {
-    if (e.touches && e.touches[0]) launchShell(e.touches[0].clientX, 1.0 + Math.random() * 0.25);
+    if (e.touches && e.touches[0]) launchShell(e.touches[0].clientX, 1.0);
   }, { passive: true });
 
   let frameCount = 0;
@@ -1892,10 +1959,10 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
 
   function enterPhase(phase) {
     const durations = {
-      calm:   [400, 750],
-      build:  [500, 850],
-      finale: [220, 360],
-      rest:   [600, 950]
+      calm:   [300, 600],
+      build:  [400, 700],
+      finale: [180, 300],
+      rest:   [500, 800]
     };
     const [lo, hi] = durations[phase];
     phaseEndFrame = frameCount + lo + Math.random() * (hi - lo);
@@ -1904,7 +1971,7 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
 
   function directorTick() {
     if (frameCount < phaseEndFrame) {
-      if (sparks.length < 900) scheduleWithinPhase();
+      if (shells.length < MAX_ACTIVE_SHELLS && sparks.length < MAX_TOTAL_SPARKS) scheduleWithinPhase();
     } else {
       phaseIndex = (phaseIndex + 1) % PHASES.length;
       enterPhase(PHASES[phaseIndex]);
@@ -1916,30 +1983,30 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
     const phase = PHASES[phaseIndex];
 
     if (phase === 'calm') {
-      launchShell(undefined, 0.7 + Math.random() * 0.3);
-      nextAutoLaunch = frameCount + 80 + Math.random() * 120;
+      launchShell(undefined, 0.75 + Math.random() * 0.25);
+      nextAutoLaunch = frameCount + 100 + Math.random() * 120;
     } else if (phase === 'build') {
-      if (Math.random() < 0.3) {
-        launchSalvo(2, 0.9);
-        nextAutoLaunch = frameCount + 60 + Math.random() * 80;
+      if (Math.random() < 0.25 && shells.length <= 2) {
+        launchSalvo(2, 0.85);
+        nextAutoLaunch = frameCount + 80 + Math.random() * 90;
       } else {
-        launchShell(undefined, 0.85 + Math.random() * 0.35);
-        nextAutoLaunch = frameCount + 45 + Math.random() * 65;
+        launchShell(undefined, 0.85 + Math.random() * 0.3);
+        nextAutoLaunch = frameCount + 60 + Math.random() * 70;
       }
     } else if (phase === 'finale') {
-      launchSalvo(2 + Math.floor(Math.random() * 3), 1.15 + Math.random() * 0.35);
-      nextAutoLaunch = frameCount + 24 + Math.random() * 28;
+      launchSalvo(2 + Math.floor(Math.random() * 2), 1.05 + Math.random() * 0.25);
+      nextAutoLaunch = frameCount + 35 + Math.random() * 35;
     } else if (phase === 'rest') {
-      if (Math.random() < 0.5) {
-        launchShell(undefined, 0.6 + Math.random() * 0.2);
+      if (Math.random() < 0.4) {
+        launchShell(undefined, 0.65 + Math.random() * 0.2);
       }
-      nextAutoLaunch = frameCount + 220 + Math.random() * 220;
+      nextAutoLaunch = frameCount + 240 + Math.random() * 200;
     }
   }
 
   function drawSky() {
     ctx.globalCompositeOperation = 'source-over';
-    ctx.fillStyle = 'rgba(10, 10, 10, 0.24)';
+    ctx.fillStyle = 'rgba(10, 10, 10, 0.26)';
     ctx.fillRect(0, 0, W, H);
 
     ctx.globalCompositeOperation = 'lighter';
@@ -1947,13 +2014,14 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
       s.phase += s.speed;
       const tw = 0.5 + Math.sin(s.phase) * 0.5;
       ctx.beginPath();
-      ctx.fillStyle = 'rgba(255,255,255,' + (0.15 + tw * 0.5) + ')';
+      ctx.fillStyle = 'rgba(255,255,255,' + (0.12 + tw * 0.45) + ')';
       ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
       ctx.fill();
     }
   }
 
   function frame() {
+    if (!isRunning) return;
     frameCount++;
     drawSky();
 
@@ -1988,31 +2056,36 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
     // flashes
     for (let i = flashes.length - 1; i >= 0; i--) {
       const f = flashes[i];
-      f.life -= 0.06;
+      f.life -= 0.08;
       if (f.life <= 0) { flashes.splice(i, 1); continue; }
-      const r = (60 * (1 - f.life) + 10) * (f.scale || 1);
-      const grad = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, r);
-      grad.addColorStop(0, 'rgba(255,255,255,' + (f.life * 0.35) + ')');
-      grad.addColorStop(1, 'rgba(255,255,255,0)');
-      ctx.fillStyle = grad;
+      const r = (45 * (1 - f.life) + 8) * (f.scale || 1);
+      ctx.fillStyle = 'rgba(255,250,230,' + (f.life * 0.22) + ')';
       ctx.beginPath();
       ctx.arc(f.x, f.y, r, 0, Math.PI * 2);
       ctx.fill();
     }
 
     directorTick();
-    requestAnimationFrame(frame);
+    rafId = requestAnimationFrame(frame);
   }
 
-  // initial launch
-  setTimeout(() => launchShell(W * 0.5), 300);
-  setTimeout(() => launchShell(W * 0.32), 1100);
-  setTimeout(() => launchShell(W * 0.68), 1800);
+  // initial launches
+  setTimeout(() => { if (isRunning) launchShell(W * 0.5); }, 300);
+  setTimeout(() => { if (isRunning) launchShell(W * 0.35); }, 1300);
 
-  requestAnimationFrame(frame);
+  rafId = requestAnimationFrame(frame);
 
   window.__bigFireworks = function (count) {
-    launchSalvo(count || 5, 1.25);
+    if (isRunning) launchSalvo(Math.min(count || 4, MAX_ACTIVE_SHELLS), 1.15);
+  };
+
+  window.__stopIntroFireworks = function () {
+    isRunning = false;
+    if (rafId) cancelAnimationFrame(rafId);
+    sparks = [];
+    shells = [];
+    smokePuffs = [];
+    flashes = [];
   };
 })();
 </script>
