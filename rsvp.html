@@ -899,6 +899,38 @@ select:-webkit-autofill {
   window.handleSubmit = function (e) {
     e.preventDefault();
     if (isSubmitting) return;
+    // === Rule 1: main guest must be on list ===
+    // If link has no id (guest_...) -> not on list (no tailored message) -> block
+    // If link has id + invited name, entered name must match invited name (blocks friend sharing link)
+    var _isTempId = !guestId || guestId.indexOf('guest_') === 0;
+    if (_isTempId) {
+      showError('Not on guest list', 'This invitation link is personal. Please use your own link or contact Charles & Leticia for your invitation.');
+      var _m2 = document.getElementById('notOnListModal'); if (_m2) _m2.classList.remove('hidden');
+      return;
+    }
+    var _enteredSingle = (val('name') + ' ' + val('lastName')).trim().toLowerCase();
+    var _invitedSingle = (guestName || '').trim().toLowerCase();
+    // For single mode, if invited name exists and entered differs -> friend sharing -> block
+    if (!isCouple && _invitedSingle && _enteredSingle && _enteredSingle !== _invitedSingle) {
+      // Allow if entered is prefix of invited or vice versa? No, strict: must match invited
+      showError('Not on guest list', 'This invitation link is personal. Please use your own link or contact Charles & Leticia for your invitation.');
+      var _m3 = document.getElementById('notOnListModal'); if (_m3) _m3.classList.remove('hidden');
+      return;
+    }
+    // For couple, at least one of the two must match invited names (guestName + spouseName)
+    if (isCouple) {
+      var _enteredA = (val('nameA') + ' ' + val('lastNameA')).trim().toLowerCase();
+      var _enteredB = (val('nameB') + ' ' + val('lastNameB')).trim().toLowerCase();
+      var _invA = (guestName || '').trim().toLowerCase();
+      var _invB = (spouseName || '').trim().toLowerCase();
+      var _matchA = _invA && (_enteredA === _invA || _enteredB === _invA);
+      var _matchB = !_invB || _invB === '' || (_enteredA === _invB || _enteredB === _invB);
+      if (!(_matchA && _matchB)) {
+        showError('Not on guest list', 'This couple invitation is personal. Please use your own link.');
+        var _m4 = document.getElementById('notOnListModal'); if (_m4) _m4.classList.remove('hidden');
+        return;
+      }
+    }
 
     var confirmEl = document.getElementById('confirmCheck');
     if (confirmEl) confirmEl.checked = true;
@@ -960,7 +992,12 @@ select:-webkit-autofill {
 
       var d = loadAll();
       if (!d[guestId]) d[guestId] = [];
-      d[guestId].push.apply(d[guestId], records);
+      // Couple update: if record with same id exists, update, else push
+      records.forEach(function(rec){
+        var _cIdx = -1;
+        for (var _ci=0; _ci<d[guestId].length; _ci++) if (d[guestId][_ci].id === rec.id) { _cIdx=_ci; break; }
+        if (_cIdx !== -1) d[guestId][_cIdx]=rec; else d[guestId].push(rec);
+      });
       saveAll(d);
 
       postRsvp({
@@ -999,6 +1036,15 @@ select:-webkit-autofill {
       guests = isPlus ? 2 : singleGuests;
       // keep plusNames for backend display
 
+      // Rule 2: same name updates instead of duplicates
+      var _allCheck = loadAll();
+      var _dupIdx = -1;
+      if (_allCheck[guestId]) {
+        for (var _di=0; _di<_allCheck[guestId].length; _di++) {
+          var _dr = _allCheck[guestId][_di];
+          if ((_dr.name||'').toLowerCase() === name.toLowerCase() && (_dr.lastName||'').toLowerCase() === lastName.toLowerCase()) { _dupIdx = _di; break; }
+        }
+      }
       var record = {
         id: guestId, name: name, lastName: lastName, phone: phone,
         attendance: attendance, guests: singleGuests, plusNames: plusNames,
@@ -1021,7 +1067,16 @@ select:-webkit-autofill {
       var d = loadAll();
       if (!d[guestId]) d[guestId] = [];
       // push both you + plus-one so local count = 2 when plus
-      d[guestId].push.apply(d[guestId], records);
+      // Rule 2: update if same name exists, else push (handles plusOne as well)
+      records.forEach(function(rec){
+        var _sIdx = -1;
+        for (var _si=0; _si<d[guestId].length; _si++) {
+          var _sr = d[guestId][_si];
+          // match by id or by name/lastName for plusOne case
+          if (_sr.id === rec.id || ((_sr.name||'').toLowerCase() === (rec.name||'').toLowerCase() && (_sr.lastName||'').toLowerCase() === (rec.lastName||'').toLowerCase())) { _sIdx=_si; break; }
+        }
+        if (_sIdx !== -1) d[guestId][_sIdx]=rec; else d[guestId].push(rec);
+      });
       saveAll(d);
 
       postRsvp({
