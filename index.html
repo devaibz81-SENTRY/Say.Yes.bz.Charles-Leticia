@@ -2433,7 +2433,7 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
   var currentProgress = 0;
   var accumulated = 0;
   var velocity = 0;
-  var maxScroll = 1800;
+  var maxScroll = 3200;
   var frameCount = 127;
   var isRevealing = false;
   var rafId = null;
@@ -2535,7 +2535,7 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
   function tick() {
     var d = targetProgress - currentProgress;
     if (Math.abs(d) < 0.0006) { currentProgress = targetProgress; render(currentProgress); rafId = null; return; }
-    currentProgress += d * 0.13;
+    currentProgress += d * 0.07;
     render(currentProgress);
     rafId = requestAnimationFrame(tick);
   }
@@ -2588,8 +2588,8 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
   var momentumRaf = null;
   function applyVelocity() {
     if (state !== 'scrolling') { velocity = 0; return; }
-    if (Math.abs(velocity) < 0.08) { velocity = 0; momentumRaf = null; return; }
-    velocity *= 0.92;
+    if (Math.abs(velocity) < 0.05) { velocity = 0; momentumRaf = null; return; }
+    velocity *= 0.95;
     accumulated += velocity;
     accumulated = Math.max(0, Math.min(maxScroll, accumulated));
     setProgress(accumulated / maxScroll);
@@ -2597,7 +2597,7 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
   }
   function addVelocity(delta) {
     velocity += delta;
-    velocity = Math.max(-80, Math.min(80, velocity));
+    velocity = Math.max(-60, Math.min(60, velocity));
     if (!momentumRaf) momentumRaf = requestAnimationFrame(applyVelocity);
   }
 
@@ -2605,10 +2605,10 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
     if (state !== 'scrolling') return;
     e.preventDefault();
     var delta = e.deltaY;
-    if (Math.abs(delta) < 4) delta *= 3;
-    // fast swipe vs slow scroll both work — delta scales naturally
-    addVelocity(delta * 0.55);
-    accumulated += delta * 0.45;
+    if (Math.abs(delta) < 4) delta *= 2.2;
+    // slower, smoother — 3 scrolls to complete
+    addVelocity(delta * 0.32);
+    accumulated += delta * 0.28;
     accumulated = Math.max(0, Math.min(maxScroll, accumulated));
     setProgress(accumulated / maxScroll);
   }
@@ -2627,30 +2627,29 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
     lastTouchY = curY;
     if (Math.abs(delta) < 1) return;
     e.preventDefault();
-    touchVelocity = delta * 1.1;
-    addVelocity(touchVelocity * 0.9);
-    accumulated += delta * 1.15;
+    touchVelocity = delta * 0.75;
+    addVelocity(touchVelocity * 0.55);
+    accumulated += delta * 0.75;
     accumulated = Math.max(0, Math.min(maxScroll, accumulated));
     setProgress(accumulated / maxScroll);
   }
   function onTouchEnd(e) {
     if (state !== 'scrolling') return;
-    // fling with remaining touch velocity
-    if (Math.abs(touchVelocity) > 2) addVelocity(touchVelocity * 1.6);
+    if (Math.abs(touchVelocity) > 2) addVelocity(touchVelocity * 1.2);
   }
 
   function onKey(e) {
     if (state !== 'scrolling') return;
     if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
       e.preventDefault();
-      addVelocity(22);
-      accumulated += 180;
+      addVelocity(14);
+      accumulated += 110;
       accumulated = Math.min(maxScroll, accumulated);
       setProgress(accumulated / maxScroll);
     } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
       e.preventDefault();
-      addVelocity(-22);
-      accumulated -= 180;
+      addVelocity(-14);
+      accumulated -= 110;
       accumulated = Math.max(0, accumulated);
       setProgress(accumulated / maxScroll);
     } else if (e.key === 'Enter') {
