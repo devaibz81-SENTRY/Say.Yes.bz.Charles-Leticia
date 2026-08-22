@@ -44,7 +44,20 @@ input[type=number]{-moz-appearance:textfield}
 </style>
 </head>
 <body class="bg-background font-body-md text-on-background min-h-screen relative overflow-x-hidden">
-<div class="fixed inset-0 satin-gradient pointer-events-none"></div>
+<!-- Dark cinematic couple photo background -->
+<div class="fixed inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
+  <img src="../galery%20(3).jpeg" alt="" class="w-full h-full object-cover object-center scale-105" style="filter: brightness(0.18) saturate(0.5) blur(1px);"/>
+  <div class="absolute inset-0 bg-gradient-to-b from-[#050505]/90 via-[#050505]/70 to-[#050505]/95"></div>
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 80% 60% at 50% 50%, transparent 20%, rgba(5,4,2,0.85) 100%);"></div>
+</div>
+<!-- Floral corner accents -->
+<div class="fixed top-[-2%] right-[-3%] w-[clamp(120px,22vw,280px)] h-[clamp(120px,22vw,280px)] pointer-events-none z-10 opacity-10" aria-hidden="true">
+  <img src="../Element%20(1).png" alt="" class="w-full h-full object-contain"/>
+</div>
+<div class="fixed bottom-[-2%] left-[-3%] w-[clamp(100px,18vw,240px)] h-[clamp(100px,18vw,240px)] pointer-events-none z-10 opacity-10" aria-hidden="true">
+  <img src="../Element%20(5).png" alt="" class="w-full h-full object-contain"/>
+</div>
+<div class="fixed inset-0 satin-gradient pointer-events-none opacity-40 z-0"></div>
 <!-- Header -->
 <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-white/[0.08] backdrop-blur-2xl backdrop-saturate-150 border-b border-gold/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.6)]">
 <div class="flex items-center gap-2">
@@ -56,7 +69,7 @@ input[type=number]{-moz-appearance:textfield}
 <div class="font-serif italic text-xl text-gold">Charles &amp; Leticia</div>
 </header>
 
-<main class="pt-28 pb-32 px-[2rem] flex justify-center items-center min-h-screen relative">
+<main class="pt-28 pb-32 px-[2rem] flex justify-center items-center min-h-screen relative z-20">
 <div class="max-w-[600px] w-full">
 <section class="glass-panel rounded-[2rem] p-8 md:p-14 shadow-[0_20px_60px_rgba(0,0,0,0.6)] overflow-hidden relative border-gold/20">
 <div class="sparkle-bg absolute inset-0 pointer-events-none"></div>
