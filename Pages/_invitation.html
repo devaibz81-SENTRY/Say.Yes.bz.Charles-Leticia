@@ -163,7 +163,7 @@
   height: clamp(340px, 44vw, 560px);
   perspective: 1200px;
 }
-.fan-card {
+.memory-card {
   position: absolute;
   width: clamp(112px, 13vw, 232px);
   aspect-ratio: 4 / 5;
@@ -174,8 +174,16 @@
   background: #1a1a1a;
   will-change: transform;
 }
-.fan-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.fan-card-mat {
+.memory-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.memories-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;margin-top:8px}
+.memory-card{position:relative;aspect-ratio:4/5;border-radius:18px;overflow:hidden;border:1px solid rgba(212,175,55,0.18);box-shadow:0 10px 30px rgba(0,0,0,0.45);background:#1a1a1a;will-change:transform;transition:transform .35s ease,box-shadow .35s ease}
+.memory-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,0.55)}
+.memory-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+.memory-card:hover img{transform:scale(1.04)}
+.memory-card-mat{position:absolute;inset:7px;border-radius:12px;border:1px solid rgba(255,255,255,0.35);pointer-events:none;box-shadow:inset 0 0 0 1px rgba(212,175,55,0.12)}
+@media(max-width:1024px){.memories-grid{grid-template-columns:repeat(3,1fr);gap:12px}}
+@media(max-width:640px){.memories-grid{grid-template-columns:repeat(2,1fr);gap:10px}.memory-card:nth-child(5){grid-column:1 / -1;max-width:50%;justify-self:center}}
+.memory-card-mat {
   position: absolute;
   inset: 7px;
   border-radius: 18px;
@@ -617,18 +625,20 @@ section[id] { scroll-margin-top: 5rem; }
 <!-- Gallery Section — 5-card fan with hearts (synced from root) -->
 <section id="gallery" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding py-section-gap relative">
 <div class="text-center mb-16">
+<span class="font-label-sm label-premium text-gold/60 uppercase tracking-[0.3em] block mb-2">Memories</span>
 <h2 class="font-headline-lg text-gold mb-4 italic">Our Moments</h2>
 <div class="w-24 h-[1px] bg-gold mx-auto"></div>
 <p class="font-body-md text-on-surface-variant max-w-md mx-auto mt-6">A glimpse of the laughter, love and light that brought us here.</p>
 <p class="font-label-sm text-gold/60 uppercase tracking-wider mt-2">Tap any photo — hearts for the couple</p>
 </div>
 <div id="galleryHearts" class="absolute inset-0 pointer-events-none z-[30]" aria-hidden="true" style="top:140px"></div>
-<div class="fan-layout">
-<div class="fan-card rv-left cursor-pointer touch-manipulation select-none active:scale-[0.98]" style="transition-delay:.00s" role="button" tabindex="0" aria-label="Tap for hearts"><img src="../galery%20(1).jpeg" alt="Charles and Leticia moment"/><div class="fan-card-mat"></div></div>
-<div class="fan-card rv-right cursor-pointer touch-manipulation select-none active:scale-[0.98]" style="transition-delay:.08s" role="button" tabindex="0" aria-label="Tap for hearts"><img src="../galery%20(2).jpeg" alt="Charles and Leticia moment"/><div class="fan-card-mat"></div></div>
-<div class="fan-card rv-left cursor-pointer touch-manipulation select-none active:scale-[0.98]" style="transition-delay:.16s" role="button" tabindex="0" aria-label="Tap for hearts"><img src="../galery%20(4).jpeg" alt="Charles and Leticia moment" class="scale-x-[-1]" style="object-position:center 38%;"/><div class="fan-card-mat"></div></div>
-<div class="fan-card rv-right cursor-pointer touch-manipulation select-none active:scale-[0.98]" style="transition-delay:.24s" role="button" tabindex="0" aria-label="Tap for hearts"><img src="../galery%20(5).jpeg" alt="Charles and Leticia moment"/><div class="fan-card-mat"></div></div>
-<div class="fan-card rv-left cursor-pointer touch-manipulation select-none active:scale-[0.98]" style="transition-delay:.32s" role="button" tabindex="0" aria-label="Tap for hearts"><img src="../galery%20(3).jpeg" alt="Charles and Leticia moment"/><div class="fan-card-mat"></div></div>
+<div id="galleryHeartsGrid" class="pointer-events-none" aria-hidden="true" style="position:relative;height:0"></div>
+    <div class="memories-grid">
+<div class="memory-card cursor-pointer touch-manipulation select-none active:scale-[0.98]" style="transition-delay:.00s" role="button" tabindex="0" aria-label="Tap for hearts"><img src="../galery%20(1).jpeg" alt="Charles and Leticia moment"/><div class="memory-card-mat"></div></div>
+<div class="memory-card cursor-pointer touch-manipulation select-none active:scale-[0.98]" style="transition-delay:.08s" role="button" tabindex="0" aria-label="Tap for hearts"><img src="../galery%20(2).jpeg" alt="Charles and Leticia moment"/><div class="memory-card-mat"></div></div>
+<div class="memory-card cursor-pointer touch-manipulation select-none active:scale-[0.98]" style="transition-delay:.16s" role="button" tabindex="0" aria-label="Tap for hearts"><img src="../galery%20(4).jpeg" alt="Charles and Leticia moment" class="scale-x-[-1]" style="object-position:center 38%;"/><div class="memory-card-mat"></div></div>
+<div class="memory-card cursor-pointer touch-manipulation select-none active:scale-[0.98]" style="transition-delay:.24s" role="button" tabindex="0" aria-label="Tap for hearts"><img src="../galery%20(5).jpeg" alt="Charles and Leticia moment"/><div class="memory-card-mat"></div></div>
+<div class="memory-card cursor-pointer touch-manipulation select-none active:scale-[0.98]" style="transition-delay:.32s" role="button" tabindex="0" aria-label="Tap for hearts"><img src="../galery%20(3).jpeg" alt="Charles and Leticia moment"/><div class="memory-card-mat"></div></div>
 </div>
 <div class="mt-10 flex flex-col items-center gap-2 text-center">
 <p class="font-script-accent text-script-accent text-gold-gradient italic">See you at midnight</p>
@@ -1094,7 +1104,7 @@ function fallbackCopy(text) {
 
   var container = document.querySelector('.fan-layout');
   if (!container) return;
-  var cards = Array.from(container.querySelectorAll('.fan-card'));
+  var cards = Array.from(container.querySelectorAll('.memory-card'));
   var total = cards.length;
   if (!total) return;
   var centerSlot = total >> 1;
