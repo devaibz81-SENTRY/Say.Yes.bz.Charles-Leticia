@@ -2490,17 +2490,18 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
 
   function render(p) {
     progress = p;
+    var center = document.querySelector('#introScreen .center-reveal');
     if (firstImg) {
-      // photo visible for ~2.5s equivalent — keep for first 18% of scroll, then crossfade to gif
       var fOp = progress < 0.18 ? (1 - progress / 0.18) : 0;
       firstImg.style.opacity = String(fOp);
       firstImg.style.display = progress < 0.18 ? 'block' : 'none';
     }
     if (seqImg) {
-      var showSeq = progress > 0.06 && progress < 0.96;
+      var showSeq = progress > 0.06 && progress < 0.94;
       if (showSeq) {
         seqImg.classList.remove('hidden');
         seqImg.style.display = 'block';
+        seqImg.style.transform = '';
         var frame = Math.floor(progress * (frameCount - 1)) + 1;
         if (frame < 1) frame = 1;
         if (frame > frameCount) frame = frameCount;
@@ -2509,13 +2510,37 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
         preloadAround(frame);
       } else {
         seqImg.style.display = 'none';
+        seqImg.style.transform = '';
       }
     }
     if (lastImg) {
-      var lastOp = progress > 0.92 ? (progress - 0.92) / 0.08 : 0;
-      lastImg.style.opacity = String(Math.max(0, Math.min(1, lastOp)));
-      lastImg.style.display = progress > 0.88 ? 'block' : 'none';
-      if (progress > 0.88) lastImg.classList.remove('opacity-0');
+      var showLast = progress >= 0.82;
+      if (showLast) {
+        lastImg.style.display = 'block';
+        lastImg.classList.remove('opacity-0');
+        if (progress < 0.94) {
+          var op = (progress - 0.82) / 0.12;
+          lastImg.style.opacity = String(Math.max(0, Math.min(1, op)));
+          lastImg.style.transform = '';
+          if (center) center.style.transform = '';
+        } else if (progress < 0.985) {
+          // hold last frame — don't disappear
+          lastImg.style.opacity = '1';
+          lastImg.style.transform = '';
+          if (center) center.style.transform = '';
+        } else {
+          // scroll it off — hold then translate up with scroll
+          var t = (progress - 0.985) / 0.015;
+          t = Math.max(0, Math.min(1, t));
+          lastImg.style.opacity = '1';
+          if (center) center.style.transform = 'translateY(' + (-t * 115) + 'vh) scale(' + (1 + t * 0.14) + ') rotate(' + (t * 2.5) + 'deg)';
+          else lastImg.style.transform = 'translateY(' + (-t * 115) + 'vh)';
+        }
+      } else {
+        lastImg.style.display = 'none';
+        lastImg.style.opacity = '0';
+        if (center) center.style.transform = '';
+      }
     }
     if (hintPill) {
       var hintOp = 1 - progress * 1.7;
@@ -2523,7 +2548,7 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
       hintPill.style.transform = 'translateY(' + (progress * 14) + 'px)';
       if (progress > 0.62) hintPill.style.pointerEvents = 'none';
     }
-    if (progress >= 0.985 && !isRevealing) {
+    if (progress >= 0.998 && !isRevealing) {
       beginReveal();
     }
   }
