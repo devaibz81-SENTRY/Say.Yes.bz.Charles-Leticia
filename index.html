@@ -1562,7 +1562,7 @@ section[id] { scroll-margin-top: 5rem; }
 })();
 </script>
 
-<!-- Save-the-Date card fireworks — blue & white, behind an opacity layer -->
+<!-- Save-the-Date card fireworks — white & gold, behind an opacity layer -->
 <script>
 (function () {
   var card = document.getElementById('saveDateCard');
@@ -1570,7 +1570,7 @@ section[id] { scroll-margin-top: 5rem; }
   if (!card || !canvas || !canvas.getContext) return;
   var ctx = canvas.getContext('2d');
 
-  var palette = ['#ffffff', '#f8fbff', '#eaf3ff', '#dbeafe', '#bfdbfe', '#93c5fd', '#60a5fa', '#e0f2fe'];
+  var palette = ['#ffffff', '#fffdf2', '#fff9e6', '#ffedb3', '#ffe066', '#ffd700', '#e6b422', '#fff2cc'];
 
   function rand(min, max) { return Math.random() * (max - min) + min; }
   function choice(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
@@ -1667,7 +1667,7 @@ section[id] { scroll-margin-top: 5rem; }
       for (var i = 0; i < n; i++) {
         var a = rand(0, Math.PI * 2);
         var s = rand(20, 55);
-        particles.push(new Spark(this.x, this.y, a, s, '#e0f2ff', { gravityMult: 1.3, dragMult: 1.4, size: rand(1, 1.6), maxLife: rand(0.25, 0.45) }));
+        particles.push(new Spark(this.x, this.y, a, s, '#fff6d9', { gravityMult: 1.3, dragMult: 1.4, size: rand(1, 1.6), maxLife: rand(0.25, 0.45) }));
       }
     }
   };
