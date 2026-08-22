@@ -392,14 +392,14 @@ select:-webkit-autofill {
 <span id="statusPill" class="att-status hidden"><span class="material-symbols-outlined text-base"></span><span class="att-status-text"></span></span>
 </div>
 </div>
-<!-- Easy plus-one — always available, impossible to mess up -->
-<div id="easyPlusOneField" class="hidden space-y-2 pt-2">
-<label class="chad-label" for="plusOneName">Plus one — add their full name yourself (optional)</label>
+<!-- Easy plus-one — always visible, partner + you in one go -->
+<div id="easyPlusOneField" class="space-y-2 pt-2">
+<label class="chad-label" for="plusOneName">Partner's name — your plus one (optional, add it yourself)</label>
 <div class="chad-field">
 <span class="material-symbols-outlined chad-ic">group_add</span>
-<input class="chad-input" id="plusOneName" placeholder="Full name of your plus one — leave blank if solo" type="text" autocomplete="name"/>
+<input class="chad-input" id="plusOneName" placeholder="Full name of your partner / plus one" type="text" autocomplete="name"/>
 </div>
-<p class="text-xs text-white/45">No extra link needed — just type their name and we'll save them with you.</p>
+<p class="text-xs text-white/45">Put your name above and your partner's name here — no extra link needed. We'll count you both.</p>
 </div>
 
 <!-- COUPLE MODE -->
@@ -806,21 +806,10 @@ select:-webkit-autofill {
   var coupleA = makeChoices({ group: 'attChoicesA', yes: 'att-yes-a', no: 'att-no-a', maybe: 'att-maybe-a', guestField: 'guestFieldA', pill: 'statusPillA' });
   var coupleB = makeChoices({ group: 'attChoicesB', yes: 'att-yes-b', no: 'att-no-b', maybe: 'att-maybe-b', guestField: 'guestFieldB', pill: 'statusPillB' });
 
-  // Easy plus-one: show when attending = yes (impossible to mess up)
+  // Easy plus-one: always visible — partner + you, impossible to mess up
   (function(){
     var plusWrap = document.getElementById('easyPlusOneField');
-    if (!plusWrap) return;
-    function syncPlus(){
-      var v = singleToggle.current();
-      var show = v === 'yes';
-      plusWrap.classList.toggle('hidden', !show);
-    }
-    // listen to all three radios
-    ['att-yes','att-no','att-maybe'].forEach(function(id){
-      var el = document.getElementById(id);
-      if (el) el.addEventListener('change', syncPlus);
-    });
-    syncPlus();
+    if (plusWrap) plusWrap.classList.remove('hidden');
   })();
 
   function stepGuests(id, d) {
@@ -994,18 +983,17 @@ select:-webkit-autofill {
       if (!attendance) { showError('Choose an option', 'Please tap Yes, No, or Ask Later.'); return; }
       var yes = attendance === 'yes';
       var isPlus = !!(yes && plusNames);
-      guests = isPlus ? 2 : (yes ? 1 : 0);
-      // plusNames for display / backend
-      if (isPlus) plusNames = plusNames;
-      else plusNames = '';
+      var singleGuests = yes ? 1 : 0;
+      guests = isPlus ? 2 : singleGuests;
+      // keep plusNames for backend display
 
       var record = {
         id: guestId, name: name, lastName: lastName, phone: phone,
-        attendance: attendance, guests: guests, plusNames: plusNames,
+        attendance: attendance, guests: singleGuests, plusNames: plusNames,
         song: song, message: message, at: new Date().toISOString()
       };
       records.push(record);
-      // also store plus-one as separate local record so headcount is correct
+      // plus-one as separate local record — 1 + 1 = 2, not 2 + 1 = 3
       if (isPlus) {
         var pParts = plusNames.split(/\s+/);
         var pFirst = pParts[0] || plusNames;
@@ -1020,7 +1008,8 @@ select:-webkit-autofill {
 
       var d = loadAll();
       if (!d[guestId]) d[guestId] = [];
-      d[guestId].push(record);
+      // push both you + plus-one so local count = 2 when plus
+      d[guestId].push.apply(d[guestId], records);
       saveAll(d);
 
       postRsvp({
@@ -1035,7 +1024,11 @@ select:-webkit-autofill {
         message: message
       }, function (err, result) {
         setSubmittingState(false);
-        showSuccess({ couple: false, name: name, attendance: attendance, guests: guests }, d[guestId].length);
+        if (isPlus) {
+          showSuccess({ couple: true, nameA: name, nameB: plusNames, attendance: attendance, guests: guests }, d[guestId].length);
+        } else {
+          showSuccess({ couple: false, name: name, attendance: attendance, guests: guests }, d[guestId].length);
+        }
       });
     }
   };
