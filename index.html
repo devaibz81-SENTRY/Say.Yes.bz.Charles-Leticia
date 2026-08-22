@@ -933,7 +933,7 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
 <div id="introScreen" class="fixed inset-0 z-[10000] flex items-center justify-center satin-gradient cursor-pointer select-none overflow-hidden">
 
 <!-- Couple photo backdrop — visible under white & gold fireworks -->
-<img src="../galery%20(4).jpeg" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover select-none pointer-events-none z-0" style="filter:brightness(0.48) saturate(0.68);"/>
+<img src="../galery%20(4).jpeg" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover select-none pointer-events-none z-0" style="filter:brightness(0.64) saturate(0.75);"/>
 <div class="absolute inset-0 pointer-events-none z-[1]" aria-hidden="true" style="background:radial-gradient(125% 95% at 50% 42%, transparent 45%, rgba(8,8,8,0.55) 100%);"></div>
 
 <div class="sparkle-bg absolute inset-0 pointer-events-none z-[1]"></div>
@@ -1710,8 +1710,8 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
       this.sat = opts.sat || (70 + Math.random() * 20);
       this.baseLight = opts.light || (52 + Math.random() * 14);
       this.life = 1;
-      this.decay = opts.decay || (0.014 + Math.random() * 0.014);
-      this.size = opts.size || (1.1 + Math.random() * 1.2);
+      this.decay = opts.decay || (0.018 + Math.random() * 0.016);
+      this.size = opts.size || (1.1 + Math.random() * 1.0);
       this.gravityMul = opts.gravityMul || 1;
       this.dragMul = opts.dragMul || 1;
       this.flicker = opts.flicker || false;
@@ -1786,19 +1786,19 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
   class Smoke {
     constructor(x, y) {
       this.x = x; this.y = y;
-      this.r = 3 + Math.random() * 3;
+      this.r = 2 + Math.random() * 2;
       this.life = 1;
-      this.decay = 0.015 + Math.random() * 0.015;
+      this.decay = 0.022 + Math.random() * 0.018;
     }
     step() {
-      this.y -= 0.15;
-      this.r += 0.08;
+      this.y -= 0.18;
+      this.r += 0.06;
       this.life -= this.decay;
     }
     get dead() { return this.life <= 0; }
     draw() {
       ctx.beginPath();
-      ctx.fillStyle = 'rgba(180,180,190,' + (this.life * 0.04) + ')';
+      ctx.fillStyle = 'rgba(180,180,190,' + (this.life * 0.018) + ')';
       ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
       ctx.fill();
     }
@@ -2090,7 +2090,7 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
 
   function drawSky() {
     ctx.globalCompositeOperation = 'source-over';
-    ctx.fillStyle = 'rgba(10, 10, 10, 0.08)';
+    ctx.fillStyle = 'rgba(10, 10, 10, 0.16)';
     ctx.fillRect(0, 0, W, H);
 
     ctx.globalCompositeOperation = 'lighter';
