@@ -691,9 +691,11 @@ select:-webkit-autofill {
   var optionalFields = document.getElementById('optionalFields');
 
   if (isEasy) {
-    if (lastNameField) lastNameField.classList.add('hidden');
-    if (optionalFields) optionalFields.classList.add('hidden');
-    document.getElementById('guestField').classList.add('hidden');
+    // Keep First + Last Name and attending choices always visible (user requirement)
+    // Null-guarded — guestField does not exist in this layout, so guard to avoid TypeError that broke RSVP
+    var _gf = document.getElementById('guestField');
+    if (_gf) _gf.classList.add('hidden');
+    // Note: lastNameField and optionalFields are intentionally NOT hidden — we need first/last + Yes/No/Ask Later hooked to backend
   }
 
   if (isCouple) {
@@ -1125,7 +1127,7 @@ select:-webkit-autofill {
     setSubmittingState(false);
     document.getElementById('rsvpForm').classList.remove('hidden');
     document.getElementById('success').classList.add('hidden');
-    ['name', 'lastName', 'nameA', 'lastNameA', 'nameB', 'lastNameB', 'phone', 'plusNames', 'song', 'message'].forEach(function (id) {
+    ['name', 'lastName', 'nameA', 'lastNameA', 'nameB', 'lastNameB', 'phone', 'plusOneName', 'plusNames', 'song', 'message'].forEach(function (id) {
       var el = document.getElementById(id);
       if (el) el.value = '';
     });

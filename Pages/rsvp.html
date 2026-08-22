@@ -335,9 +335,8 @@ input[type=number]{-moz-appearance:textfield}
   var optionalFields = document.getElementById('optionalFields');
 
   if (isEasy) {
-    if (lastNameField) lastNameField.classList.add('hidden');
-    if (optionalFields) optionalFields.classList.add('hidden');
-    document.getElementById('guestField').classList.add('hidden');
+    var _gf = document.getElementById('guestField');
+    if (_gf) _gf.classList.add('hidden');
   }
 
   if (isCouple) {
