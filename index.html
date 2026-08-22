@@ -894,7 +894,7 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
     linear-gradient(to bottom, rgba(10,10,10,.78) 0%, transparent 24%, transparent 74%, rgba(10,10,10,.88) 100%),
     linear-gradient(to right, rgba(10,10,10,.45) 0%, transparent 30%, transparent 70%, rgba(10,10,10,.45) 100%);
 }
-.cinematic-break.with-love .cb-photo img { object-position: center 38% !important; filter: brightness(0.36) saturate(0.62) !important; }
+.cinematic-break.with-love .cb-photo img { object-position: center 46% !important; filter: brightness(0.42) saturate(0.68) !important; }
 
 /* ---- Premium parallax — subtle crisp move, scale to hide edges ---- */
 .cb-photo, .ch-photo, .rsvp-bg-photo, .gal-photo-bg, .dc-photo-bg { overflow: hidden; }
@@ -1245,8 +1245,8 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
 <!-- ============================================================ -->
 <!-- SCROLL BREAK 3 — before RSVP                                -->
 <!-- ============================================================ -->
-<div class="cinematic-break with-love">
-  <div class="cb-photo"><img src="../galery%20(2).jpeg" alt="Charles and Leticia" style="object-position:center 38%"/></div>
+<div class="cinematic-break with-love" style="min-height: clamp(460px, 72vw, 740px);">
+  <div class="cb-photo"><img src="../galery%20(2).jpeg" alt="Charles and Leticia" style="object-position:center 46%"/></div>
   <div class="cb-vignette"></div>
   <div class="cb-content rv-up">
     <span class="font-label-sm label-premium text-gold/80 uppercase tracking-[0.3em] block mb-3">With love</span>
@@ -1445,16 +1445,16 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
     var tl = gsap.timeline({defaults:{ease:'power2.out'}});
     // 10-sec arc: photo ken-burns first (0-8s), visible from frame 0
     if (photoImg) tl.to(photoImg, {scale:1, duration:8.0, ease:'power1.out'}, 0);
-    // Join us — soft rise (1.4-2.3s)
-    if (h2) tl.to(h2, {opacity:1, y:0, duration:0.8}, 1.4);
-    // Charles & Leticia — word stagger spring — now BEFORE card (2.1-3.4s)
+    // Join us — soft rise (1.3-2.1s)
+    if (h2) tl.to(h2, {opacity:1, y:0, duration:0.8}, 1.3);
+    // Charles & Leticia — word stagger spring — BEFORE card (1.9-3.1s)
     if (h3) {
       var wrds2 = h3.querySelectorAll('.word-reveal');
-      if (wrds2.length) tl.to(wrds2, {opacity:1, y:0, rotation:0, duration:0.7, stagger:0.09, ease:'back.out(1.15)'}, 2.1);
-      else tl.to(h3, {opacity:1, y:0, scale:1, duration:0.9, ease:'back.out(1.1)'}, 2.1);
+      if (wrds2.length) tl.to(wrds2, {opacity:1, y:0, rotation:0, duration:0.7, stagger:0.09, ease:'back.out(1.15)'}, 1.9);
+      else tl.to(h3, {opacity:1, y:0, scale:1, duration:0.9, ease:'back.out(1.1)'}, 1.9);
     }
-    // Save-the-Date card — pop in after names (3.9-5.1s)
-    if (card) tl.to(card, {opacity:1, y:0, scale:1, duration:1.0, ease:'back.out(1.2)'}, 3.9);
+    // Save-the-Date card — pop in after names (3.6-4.8s)
+    if (card) tl.to(card, {opacity:1, y:0, scale:1, duration:1.0, ease:'back.out(1.2)'}, 3.6);
     // Countdown — gentle reveal after card (5.6-6.8s)
     if (countdown) tl.to(countdown, {opacity:1, y:0, duration:0.9}, 5.6);
     tl.call(function(){
@@ -2445,13 +2445,13 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
     return 'intro_frames/frame_' + s + '.webp';
   }
 
-  // stagger names in first, then gif — photo visible ~2-3s
+  // stagger names in first, then gif — names BEFORE card, photo holds
   function animateNames() {
     var names = document.querySelector('#introScreen .font-script-accent');
     var hintEl = hintPill;
     if (names && typeof gsap !== 'undefined') {
       gsap.set(names, {opacity:0, y:14});
-      gsap.to(names, {opacity:1, y:0, duration:0.9, delay:0.35, ease:'power2.out'});
+      gsap.to(names, {opacity:1, y:0, duration:0.85, delay:0.08, ease:'power2.out'});
     } else if (names) {
       names.style.opacity = '1';
     }
