@@ -589,8 +589,8 @@ section[id] { scroll-margin-top: 5rem; }
 <canvas id="fwCanvas" class="absolute inset-0" aria-hidden="true"></canvas>
 
 <!-- Ornament text -->
-<div class="absolute top-10 left-0 right-0 text-center pointer-events-none">
-<span class="font-script-accent text-script-accent text-gold-gradient italic">Charles &amp; Leticia</span>
+<div class="absolute top-6 sm:top-8 left-0 right-0 text-center pointer-events-none z-20 px-4">
+<span class="font-script-accent text-[clamp(46px,9.5vw,90px)] text-gold-gradient italic leading-none drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">Charles &amp; Leticia</span>
 </div>
 
 <!-- Orbit elements -->
@@ -602,16 +602,16 @@ section[id] { scroll-margin-top: 5rem; }
 
 <!-- Center block -->
 <div class="relative z-10 flex flex-col items-center center-reveal">
-<div class="relative" style="width:min(117vw,750px);height:min(87vh,750px);">
+<div class="relative" style="width:min(115vw,720px);height:min(72vh,620px);">
 <img id="firstImg" src="../intro-first.png" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-500"/>
 <img id="gifImg" src="" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-700 opacity-0"/>
 <img id="lastImg" src="../intro-last.png" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-500 opacity-0"/>
 </div>
-<div id="hintPill" class="hidden mt-6 hint-pulse inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-gold/40" style="background:rgba(18,18,18,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);">
-<span class="material-symbols-outlined text-gold text-lg" data-icon="touch_app">touch_app</span>
-<span id="hintText" class="font-label-sm text-gold-light uppercase tracking-[0.25em]">Tap to Begin</span>
+<div id="hintPill" class="hidden -mt-6 sm:-mt-10 z-20 hint-pulse inline-flex items-center gap-2.5 px-6 py-3 rounded-full border border-gold/50 shadow-[0_8px_32px_rgba(0,0,0,0.75)]" style="background:rgba(12,12,18,.8);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);">
+<span class="material-symbols-outlined text-gold text-xl" data-icon="touch_app">touch_app</span>
+<span id="hintText" class="font-label-sm text-gold-light uppercase tracking-[0.25em] font-semibold text-xs sm:text-sm">Tap to Begin</span>
 </div>
-<div id="loaderCard" class="mt-6 flex flex-col items-center gap-3 px-6 py-4 rounded-2xl border border-gold/40 glass-panel shadow-[0_10px_30px_rgba(0,0,0,0.5)] min-w-[260px]">
+<div id="loaderCard" class="mt-2 flex flex-col items-center gap-3 px-6 py-4 rounded-2xl border border-gold/40 glass-panel shadow-[0_10px_30px_rgba(0,0,0,0.5)] min-w-[260px]">
 <div class="flex items-center gap-2.5">
 <span class="material-symbols-outlined text-gold text-xl animate-spin" data-icon="auto_awesome">auto_awesome</span>
 <span id="loadText" class="font-label-sm text-gold-light uppercase tracking-[0.2em]">Loading your invitation…</span>
@@ -625,30 +625,9 @@ section[id] { scroll-margin-top: 5rem; }
 </div>
 <!-- =================== END INTRO EXPERIENCE =================== -->
 
-<!-- Background Gold Elements -->
-<div class="fixed inset-0 -z-20 pointer-events-none overflow-hidden" aria-hidden="true">
-<div class="absolute -top-32 -right-32 w-[45vw] h-[45vw] min-w-72 min-h-72 opacity-10 float-slow">
-<img class="w-full h-full object-contain" src="../Element%20(1).png" alt=""/>
-</div>
-<div class="absolute top-1/3 -left-40 w-[40vw] h-[40vw] min-w-64 min-h-64 opacity-10 float-slower">
-<img class="w-full h-full object-contain" src="../Element%20(2).png" alt=""/>
-</div>
-<div class="absolute -bottom-24 left-1/4 w-[35vw] h-[35vw] min-w-56 min-h-56 opacity-10 float-slow">
-<img class="w-full h-full object-contain" src="../Element%20(3).png" alt=""/>
-</div>
-<div class="absolute top-2/3 -right-24 w-[30vw] h-[30vw] min-w-48 min-h-48 opacity-10 float-slower">
-<img class="w-full h-full object-contain" src="../Element%20(6).png" alt=""/>
-</div>
-</div>
 <main class="relative min-h-screen overflow-hidden">
-<!-- Background Silk Texture & Floral Elements -->
+<!-- Background Silk Texture -->
 <div class="absolute inset-0 satin-gradient -z-10"></div>
-<div class="absolute -top-24 -left-24 w-96 h-96 opacity-10 pointer-events-none rotate-12">
-<img class="w-full h-full object-contain" alt="Decorative gold ornament" src="../Element%20(1).png"/>
-</div>
-<div class="absolute -bottom-24 -right-24 w-[500px] h-[500px] opacity-10 pointer-events-none -rotate-12">
-<img class="w-full h-full object-contain" alt="Decorative gold ornament" src="../Element%20(5).png"/>
-</div>
 <!-- Hero Section with Photo Background -->
 <section class="relative min-h-[100svh] lg:h-[100vh] flex flex-col items-center justify-center overflow-hidden py-12 lg:py-14">
 <!-- Background Photo with Overlay and Heart clicker capability -->
@@ -1014,282 +993,571 @@ section[id] { scroll-margin-top: 5rem; }
 })();
 </script>
 
-<!-- Fireworks backdrop behind the intro GIF -->
+<!-- Reactive Physics Fireworks backdrop behind intro -->
 <script>
 (function () {
-  var glowWash = document.getElementById('glowWash');
-  var canvas = document.getElementById('fwCanvas');
+  const canvas = document.getElementById('fwCanvas');
   if (!canvas || !canvas.getContext) return;
-  var ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext('2d');
+  let W, H, DPR;
 
-  var palette = ['#e8c27a', '#fff3d0', '#ff9d6c', '#bfe3ff', '#f4e3c1', '#ffd9a0'];
-
-  function rand(min, max) { return Math.random() * (max - min) + min; }
-  function choice(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
-
-  var W, H, DPR;
   function resize() {
     DPR = Math.min(window.devicePixelRatio || 1, 2);
-    W = canvas.clientWidth;
-    H = canvas.clientHeight;
+    W = window.innerWidth;
+    H = window.innerHeight;
     canvas.width = W * DPR;
     canvas.height = H * DPR;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
   }
-  window.addEventListener('resize', resize);
   resize();
+  window.addEventListener('resize', resize);
 
-  var GRAVITY = 55;
-  var DRAG = 0.985;
-  function wind() { return Math.sin(Date.now() / 4000) * 4; }
+  // ---------- physical constants ----------
+  const GRAVITY = 0.055;          // downward acceleration, px/frame^2
+  const AIR_DRAG = 0.988;         // velocity retained per frame
+  const WIND = 0.006;             // gentle horizontal drift
 
-  var rockets = [];
-  var particles = [];
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function pulseGlow(color) {
-    if (!glowWash) return;
-    glowWash.style.background = 'radial-gradient(ellipse at 50% 70%, ' + color + '26 0%, transparent 60%)';
-    glowWash.style.opacity = '1';
-    setTimeout(function () { glowWash.style.opacity = '0'; }, 420);
+  // ---------- background stars ----------
+  const stars = [];
+  for (let i = 0; i < 180; i++) {
+    stars.push({
+      x: Math.random() * W,
+      y: Math.random() * H * 0.75,
+      r: Math.random() * 1.2 + 0.2,
+      phase: Math.random() * Math.PI * 2,
+      speed: 0.005 + Math.random() * 0.01
+    });
   }
 
-  function Rocket(big) {
-    this.big = !!big;
-    this.x = rand(W * 0.12, W * 0.88);
-    this.y = H;
-    this.targetY = rand(H * 0.08, H * 0.58);
-    var dist = this.y - this.targetY;
-    this.vy = -Math.sqrt(2 * GRAVITY * dist) * rand(1.0, 1.08);
-    this.vx = rand(-6, 6);
-    this.color = choice(palette);
-    var types = ['peony', 'peony', 'willow', 'ring', 'peony'];
-    this.type = types[Math.floor(Math.random() * types.length)];
-    this.trail = [];
-    this.dead = false;
+  // ---------- palettes ----------
+  const PALETTES = [
+    [45, 38],    // gold -> amber
+    [200, 190],  // ice blue -> cyan
+    [340, 320],  // rose -> magenta
+    [150, 140],  // emerald -> jade
+    [22, 10],    // ember orange -> red
+    [270, 250],  // violet -> indigo
+    [0, 0]       // pure white
+  ];
+
+  function hsl(h, s, l, a) {
+    return 'hsla(' + h + ', ' + s + '%, ' + l + '%, ' + a + ')';
   }
-  Rocket.prototype.step = function (dt) {
-    this.trail.push({ x: this.x, y: this.y });
-    if (this.trail.length > 14) this.trail.shift();
-    this.vy += GRAVITY * dt * 0.9;
-    this.x += this.vx * dt;
-    this.y += this.vy * dt;
-    if (this.vy >= -6 || this.y <= this.targetY) { this.explode(); this.dead = true; }
-  };
-  Rocket.prototype.draw = function () {
-    ctx.lineCap = 'round';
-    for (var i = 0; i < this.trail.length; i++) {
-      var p = this.trail[i];
-      var a = i / this.trail.length;
+
+  // ---------- particle pools ----------
+  let sparks = [];
+  let smokePuffs = [];
+  let flashes = [];
+  let shells = [];
+
+  class Spark {
+    constructor(x, y, angle, speed, hue, opts = {}) {
+      this.x = x; this.y = y;
+      this.vx = Math.cos(angle) * speed;
+      this.vy = Math.sin(angle) * speed;
+      this.hue = hue;
+      this.sat = opts.sat ?? (65 + Math.random() * 25);
+      this.baseLight = opts.light ?? (48 + Math.random() * 16);
+      this.life = 1;
+      this.decay = opts.decay ?? (0.010 + Math.random() * 0.012);
+      this.size = opts.size ?? (1.1 + Math.random() * 1.6);
+      this.gravityMul = opts.gravityMul ?? 1;
+      this.dragMul = opts.dragMul ?? 1;
+      this.flicker = opts.flicker ?? false;
+      this.crackle = opts.crackle ?? false;
+      this.crackleAt = this.crackle ? (0.15 + Math.random() * 0.35) : -1;
+      this.hasCrackled = false;
+      this.trail = [];
+      this.trailLen = opts.trailLen ?? 4;
+      this.white = opts.white ?? false;
+      this.hotSpan = 0.06 + Math.random() * 0.06;
+      this.px = x; this.py = y;
+    }
+    step() {
+      this.px = this.x; this.py = this.y;
+      this.trail.push({ x: this.x, y: this.y });
+      if (this.trail.length > this.trailLen) this.trail.shift();
+
+      this.vx *= (AIR_DRAG * this.dragMul);
+      this.vy *= (AIR_DRAG * this.dragMul);
+      this.vy += GRAVITY * this.gravityMul;
+      this.vx += WIND;
+
+      this.x += this.vx;
+      this.y += this.vy;
+      this.life -= this.decay;
+
+      if (this.crackle && !this.hasCrackled && this.life < (1 - this.crackleAt)) {
+        this.hasCrackled = true;
+        return 'crackle';
+      }
+      return null;
+    }
+    get dead() { return this.life <= 0; }
+
+    thermal(ageFrac) {
+      if (this.white) {
+        const dying = Math.max(0, ageFrac - 0.7) / 0.3;
+        return { h: 40, s: 10 + dying * 20, l: 92 - dying * 35 };
+      }
+      if (ageFrac < this.hotSpan) {
+        const t = ageFrac / this.hotSpan;
+        return {
+          h: this.hue,
+          s: this.sat * (0.15 + t * 0.85),
+          l: 96 - t * (96 - this.baseLight)
+        };
+      }
+      const deathStart = 0.72;
+      if (ageFrac > deathStart) {
+        const t = Math.min(1, (ageFrac - deathStart) / (1 - deathStart));
+        const h = this.hue + (18 - this.hue) * t * 0.6;
+        const l = this.baseLight - t * (this.baseLight - 14);
+        const s = Math.min(100, this.sat + t * 15);
+        return { h, s, l };
+      }
+      return { h: this.hue, s: this.sat, l: this.baseLight };
+    }
+
+    draw() {
+      const a = Math.max(this.life, 0);
+      if (a <= 0) return;
+      const ageFrac = 1 - this.life;
+      const flick = this.flicker ? (0.55 + Math.random() * 0.45) : 1;
+      const c = this.thermal(ageFrac);
+
+      if (this.trail.length > 1) {
+        ctx.lineCap = 'round';
+        for (let i = 1; i < this.trail.length; i++) {
+          const p0 = this.trail[i - 1];
+          const p1 = this.trail[i];
+          const tAlpha = (i / this.trail.length) * a * 0.65 * flick;
+          if (tAlpha <= 0.01) continue;
+          ctx.strokeStyle = hsl(c.h, c.s, c.l, tAlpha);
+          ctx.lineWidth = this.size * (0.35 + (i / this.trail.length) * 0.35);
+          ctx.beginPath();
+          ctx.moveTo(p0.x, p0.y);
+          ctx.lineTo(p1.x, p1.y);
+          ctx.stroke();
+        }
+        const last = this.trail[this.trail.length - 1];
+        ctx.strokeStyle = hsl(c.h, c.s, c.l, a * 0.7 * flick);
+        ctx.lineWidth = this.size * 0.55;
+        ctx.beginPath();
+        ctx.moveTo(last.x, last.y);
+        ctx.lineTo(this.x, this.y);
+        ctx.stroke();
+      }
+
+      const r = this.size * (0.7 + a * 0.5);
+      const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, r * 2.2);
+      grad.addColorStop(0, hsl(c.h, c.s, Math.min(c.l + 22, 99), a * flick));
+      grad.addColorStop(0.5, hsl(c.h, c.s, c.l, a * 0.4 * flick));
+      grad.addColorStop(1, hsl(c.h, c.s, c.l, 0));
+      ctx.fillStyle = grad;
       ctx.beginPath();
-      ctx.fillStyle = this.color;
-      ctx.globalAlpha = a * 0.8;
-      ctx.arc(p.x, p.y, 1.6 * a + 0.4, 0, Math.PI * 2);
+      ctx.arc(this.x, this.y, r * 2.2, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.fillStyle = hsl(c.h, c.s * 0.6, Math.min(c.l + 18, 99), a * flick);
+      ctx.arc(this.x, this.y, r * 0.45, 0, Math.PI * 2);
       ctx.fill();
     }
-    ctx.globalAlpha = 1;
-  };
-  Rocket.prototype.explode = function () {
-    pulseGlow(this.color);
-    if (this.big) {
-      spawnBigFlash(this.x, this.y, this.color);
-      spawnBigBurst(this.x, this.y, this.color);
-    } else {
-      spawnFlash(this.x, this.y, this.color);
-      spawnBurst(this.x, this.y, this.color, this.type);
+  }
+
+  class Smoke {
+    constructor(x, y) {
+      this.x = x; this.y = y;
+      this.vx = (Math.random() - 0.5) * 0.3;
+      this.vy = -0.15 - Math.random() * 0.15;
+      this.r = 3 + Math.random() * 5;
+      this.life = 1;
+      this.decay = 0.006 + Math.random() * 0.006;
     }
-  };
-
-  function spawnFlash(x, y, color) {
-    particles.push({ x: x, y: y, vx: 0, vy: 0, life: 0, maxLife: 0.18, size: 26, color: color, flash: true });
-  }
-
-  function spawnBigFlash(x, y, color) {
-    particles.push({ x: x, y: y, vx: 0, vy: 0, life: 0, maxLife: 0.26, size: 46, color: color, flash: true });
-  }
-
-  function Spark(x, y, angle, speed, color, opts) {
-    opts = opts || {};
-    this.x = x; this.y = y;
-    this.vx = Math.cos(angle) * speed;
-    this.vy = Math.sin(angle) * speed;
-    this.color = color;
-    this.gravityMult = opts.gravityMult || 1;
-    this.dragMult = opts.dragMult || 1;
-    this.size = opts.size || rand(1.6, 2.6);
-    this.life = 0;
-    this.maxLife = opts.maxLife || rand(1.2, 1.8);
-    this.crackle = !!opts.crackle;
-    this.crackled = false;
-    this.spiral = opts.spiral || 0;
-    this.hue = opts.hue === undefined ? null : opts.hue;
-    this.hueSpeed = opts.hueSpeed || 70;
-    this.dead = false;
-  }
-  Spark.prototype.step = function (dt) {
-    this.life += dt;
-    if (this.life >= this.maxLife) { this.dead = true; return; }
-    if (this.spiral) {
-      var c = Math.cos(this.spiral * dt), s = Math.sin(this.spiral * dt);
-      var nvx = this.vx * c - this.vy * s;
-      var nvy = this.vx * s + this.vy * c;
-      this.vx = nvx; this.vy = nvy;
+    step() {
+      this.x += this.vx; this.y += this.vy;
+      this.vx += WIND * 0.3;
+      this.r += 0.12;
+      this.life -= this.decay;
     }
-    var drag = Math.pow(DRAG, this.dragMult);
-    this.vx = this.vx * drag + wind() * dt;
-    this.vy = this.vy * drag + GRAVITY * this.gravityMult * dt;
-    this.x += this.vx * dt;
-    this.y += this.vy * dt;
-    if (this.crackle && !this.crackled && this.life > this.maxLife * 0.55 && Math.random() < 0.045) {
-      this.crackled = true;
-      var n = Math.floor(rand(3, 6));
-      for (var i = 0; i < n; i++) {
-        var a = rand(0, Math.PI * 2);
-        var s = rand(20, 55);
-        particles.push(new Spark(this.x, this.y, a, s, '#fff3d0', { gravityMult: 1.3, dragMult: 1.4, size: rand(1, 1.6), maxLife: rand(0.25, 0.45) }));
+    get dead() { return this.life <= 0; }
+    draw() {
+      ctx.beginPath();
+      ctx.fillStyle = 'rgba(180,180,190,' + (this.life * 0.06) + ')';
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  class Shell {
+    constructor(x, targetY, hueSeed, scale = 1) {
+      this.x = x;
+      this.startX = x;
+      this.y = H + 10;
+      const dist = (H + 10 - targetY);
+      this.vy = -Math.sqrt(2 * GRAVITY * dist) * 1.02;
+      this.vx = (Math.random() - 0.5) * 0.6;
+      this.targetY = targetY;
+      this.hueSeed = hueSeed;
+      this.scale = scale;
+      this.trail = [];
+      this.dead = false;
+    }
+    step() {
+      this.trail.push({ x: this.x, y: this.y });
+      if (this.trail.length > 10) this.trail.shift();
+
+      this.vy += GRAVITY * 0.9;
+      this.vx *= 0.995;
+      this.x += this.vx;
+      this.y += this.vy;
+
+      if (Math.random() < 0.7) {
+        smokePuffs.push(new Smoke(this.x + (Math.random() - 0.5) * 2, this.y + 4));
+      }
+
+      if (this.vy >= -0.5 || this.y <= this.targetY) {
+        this.explode();
+        this.dead = true;
       }
     }
-  };
-  Spark.prototype.currentColor = function () {
-    if (this.hue === null) return this.color;
-    var h = (this.hue + this.life * this.hueSpeed) % 360;
-    return 'hsl(' + h + ', 88%, 66%)';
-  };
-  Spark.prototype.draw = function () {
-    var t = this.life / this.maxLife;
-    var alpha = t < 0.08 ? t / 0.08 : 1 - Math.pow((t - 0.08) / 0.92, 1.4);
-    if (alpha <= 0) return;
-    ctx.globalAlpha = Math.max(0, alpha);
-    ctx.beginPath();
-    ctx.fillStyle = this.currentColor();
-    var sz = this.size * (1 - t * 0.4);
-    ctx.arc(this.x, this.y, Math.max(0.3, sz), 0, Math.PI * 2);
-    ctx.fill();
-    ctx.globalAlpha = 1;
-  };
-
-  function spawnBurst(x, y, color, type) {
-    var secondColor = Math.random() > 0.55 ? choice(palette) : color;
-    var count, speedMin, speedMax, gravityMult, dragMult, maxLife, crackleChance;
-    if (type === 'willow') {
-      count = Math.floor(rand(24, 34)); speedMin = 50; speedMax = 85;
-      gravityMult = 1.5; dragMult = 0.7; maxLife = rand(2.2, 2.8); crackleChance = 0;
-    } else if (type === 'ring') {
-      count = Math.floor(rand(26, 32)); speedMin = 95; speedMax = 110;
-      gravityMult = 0.9; dragMult = 1.1; maxLife = rand(1.3, 1.6); crackleChance = 0.2;
-    } else {
-      count = Math.floor(rand(30, 42)); speedMin = 55; speedMax = 125;
-      gravityMult = 1; dragMult = 1; maxLife = rand(1.3, 1.8); crackleChance = 0.22;
-    }
-    for (var j = 0; j < count; j++) {
-      var ang = type === 'ring' ? (Math.PI * 2 * j) / count + rand(-0.02, 0.02) : rand(0, Math.PI * 2);
-      var spd = rand(speedMin, speedMax);
-      var c = j % 3 === 0 ? secondColor : color;
-      particles.push(new Spark(x, y, ang, spd, c, {
-        gravityMult: gravityMult, dragMult: dragMult, maxLife: maxLife * rand(0.85, 1.05),
-        crackle: Math.random() < crackleChance,
-        size: type === 'willow' ? rand(1.2, 1.8) : rand(1.6, 2.6)
-      }));
-    }
-  }
-
-  function launchFirework() { rockets.push(new Rocket()); }
-
-  function spawnBigBurst(x, y, color) {
-    var secondColor = Math.random() > 0.45 ? choice(palette) : color;
-    var count = Math.floor(rand(80, 120));
-    for (var j = 0; j < count; j++) {
-      var ang = rand(0, Math.PI * 2);
-      var spd = rand(60, 170);
-      var c = j % 3 === 0 ? secondColor : color;
-      particles.push(new Spark(x, y, ang, spd, c, {
-        gravityMult: rand(0.85, 1.05),
-        dragMult: rand(0.95, 1.05),
-        maxLife: rand(1.8, 2.6),
-        crackle: Math.random() < 0.4,
-        size: rand(2.4, 3.8)
-      }));
-    }
-    spawnRingBurst(x, y, color);
-  }
-
-  function spawnRingBurst(x, y, color) {
-    var n = Math.floor(rand(26, 34));
-    for (var j = 0; j < n; j++) {
-      var ang = (Math.PI * 2 * j) / n;
-      particles.push(new Spark(x, y, ang, 130, '#fff3d0', {
-        gravityMult: 0.85, dragMult: 1.05, maxLife: rand(1.2, 1.6),
-        crackle: Math.random() < 0.3, size: rand(2, 3)
-      }));
-    }
-  }
-
-  function scheduleNext() {
-    launchFirework();
-    if (Math.random() > 0.85) setTimeout(launchFirework, rand(200, 400));
-    setTimeout(scheduleNext, rand(1400, 2600));
-  }
-
-  var lastT = performance.now();
-  function tick(now) {
-    if (!canvas.isConnected) return;
-    var dt = Math.min((now - lastT) / 1000, 0.05);
-    lastT = now;
-    ctx.globalCompositeOperation = 'source-over';
-    ctx.clearRect(0, 0, W, H);
-    ctx.globalCompositeOperation = 'lighter';
-    var i;
-    for (i = rockets.length - 1; i >= 0; i--) {
-      var r = rockets[i];
-      r.step(dt);
-      r.draw();
-      if (r.dead) rockets.splice(i, 1);
-    }
-    for (i = particles.length - 1; i >= 0; i--) {
-      var p = particles[i];
-      if (p.flash) {
-        p.life += dt;
-        var t = p.life / p.maxLife;
-        if (t >= 1) { particles.splice(i, 1); continue; }
-        ctx.globalAlpha = 1 - t;
-        var grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * (0.3 + t));
-        grad.addColorStop(0, '#fff');
-        grad.addColorStop(0.4, p.color);
-        grad.addColorStop(1, 'transparent');
-        ctx.fillStyle = grad;
+    draw() {
+      for (let i = 0; i < this.trail.length; i++) {
+        const t = this.trail[i];
+        const a = (i / this.trail.length) * 0.85;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size * (0.3 + t), 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 235, 200, ' + a + ')';
+        ctx.arc(t.x, t.y, 1.6, 0, Math.PI * 2);
         ctx.fill();
-        ctx.globalAlpha = 1;
-        continue;
       }
-      p.step(dt);
-      p.draw();
-      if (p.dead) particles.splice(i, 1);
+      const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, 8);
+      g.addColorStop(0, 'rgba(255,250,230,0.9)');
+      g.addColorStop(1, 'rgba(255,250,230,0)');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, 8, 0, Math.PI * 2);
+      ctx.fill();
     }
-    ctx.globalCompositeOperation = 'source-over';
-    requestAnimationFrame(tick);
+    explode() {
+      const type = Math.random();
+      const s = this.scale;
+      const mom = { x: this.vx, y: this.vy };
+      if (type < 0.32) burstPeony(this.x, this.y, this.hueSeed, s, mom);
+      else if (type < 0.55) burstWillow(this.x, this.y, this.hueSeed, s, mom);
+      else if (type < 0.75) burstChrysanthemum(this.x, this.y, this.hueSeed, s, mom);
+      else if (type < 0.9) burstCrackle(this.x, this.y, this.hueSeed, s, mom);
+      else burstRing(this.x, this.y, this.hueSeed, s, mom);
+
+      const smokeCount = Math.round(5 * s);
+      for (let i = 0; i < smokeCount; i++) smokePuffs.push(new Smoke(this.x, this.y));
+      flashAt(this.x, this.y, s);
+    }
   }
 
-  if (reduceMotion) {
-    ctx.clearRect(0, 0, W, H);
-  } else {
-    requestAnimationFrame(tick);
-    launchFirework();
-    setTimeout(launchFirework, 900);
-    setTimeout(scheduleNext, 2000);
+  function flashAt(x, y, scale = 1) {
+    flashes.push({ x, y, life: 1, scale });
   }
+
+  function pickHue(seed) {
+    if (seed === -1) return null;
+    return seed + (Math.random() * 8 - 4);
+  }
+
+  function burstPeony(x, y, hueSeed, scale = 1, mom = { x: 0, y: 0 }) {
+    const white = hueSeed === -1;
+    const count = Math.floor((90 + Math.random() * 40) * scale);
+    const speedBase = (3.2 + Math.random() * 1.4) * (0.85 + scale * 0.25);
+    for (let i = 0; i < count; i++) {
+      if (Math.random() < 0.04) continue;
+      const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.4;
+      const speed = speedBase * (0.7 + Math.random() * 0.6);
+      const sp = new Spark(x, y, angle, speed, white ? 0 : pickHue(hueSeed), {
+        decay: 0.009 + Math.random() * 0.008,
+        size: 1.3 + Math.random() * 1.3,
+        trailLen: 5,
+        white
+      });
+      sp.vx += mom.x * 0.22; sp.vy += mom.y * 0.22;
+      sparks.push(sp);
+    }
+  }
+
+  function burstChrysanthemum(x, y, hueSeed, scale = 1, mom = { x: 0, y: 0 }) {
+    const white = hueSeed === -1;
+    const count = Math.floor((130 + Math.random() * 40) * scale);
+    const speedBase = (3.6 + Math.random() * 1.2) * (0.85 + scale * 0.25);
+    for (let i = 0; i < count; i++) {
+      if (Math.random() < 0.03) continue;
+      const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.3;
+      const speed = speedBase * (0.8 + Math.random() * 0.4);
+      const sp = new Spark(x, y, angle, speed, white ? 0 : pickHue(hueSeed), {
+        decay: 0.007 + Math.random() * 0.006,
+        size: 1.0 + Math.random() * 1.0,
+        trailLen: 7,
+        flicker: true,
+        white
+      });
+      sp.vx += mom.x * 0.2; sp.vy += mom.y * 0.2;
+      sparks.push(sp);
+    }
+  }
+
+  function burstWillow(x, y, hueSeed, scale = 1, mom = { x: 0, y: 0 }) {
+    const white = hueSeed === -1;
+    const count = Math.floor((70 + Math.random() * 30) * scale);
+    const speedBase = (2.6 + Math.random() * 1.0) * (0.85 + scale * 0.25);
+    for (let i = 0; i < count; i++) {
+      if (Math.random() < 0.04) continue;
+      const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.45;
+      const speed = speedBase * (0.75 + Math.random() * 0.5);
+      const sp = new Spark(x, y, angle, speed, white ? 0 : pickHue(hueSeed), {
+        decay: 0.0035 + Math.random() * 0.003,
+        size: 1.0 + Math.random() * 0.8,
+        trailLen: 14,
+        gravityMul: 1.6,
+        dragMul: 0.998,
+        white
+      });
+      sp.vx += mom.x * 0.18; sp.vy += mom.y * 0.18;
+      sparks.push(sp);
+    }
+  }
+
+  function burstCrackle(x, y, hueSeed, scale = 1, mom = { x: 0, y: 0 }) {
+    const white = hueSeed === -1;
+    const count = Math.floor((60 + Math.random() * 25) * scale);
+    const speedBase = (3.0 + Math.random() * 1.2) * (0.85 + scale * 0.25);
+    for (let i = 0; i < count; i++) {
+      if (Math.random() < 0.04) continue;
+      const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.5;
+      const speed = speedBase * (0.65 + Math.random() * 0.6);
+      const sp = new Spark(x, y, angle, speed, white ? 0 : pickHue(hueSeed), {
+        decay: 0.011 + Math.random() * 0.01,
+        size: 1.2 + Math.random() * 1.0,
+        trailLen: 4,
+        crackle: true,
+        white
+      });
+      sp.vx += mom.x * 0.2; sp.vy += mom.y * 0.2;
+      sparks.push(sp);
+    }
+  }
+
+  function burstRing(x, y, hueSeed, scale = 1, mom = { x: 0, y: 0 }) {
+    const white = hueSeed === -1;
+    const count = Math.floor(100 * scale);
+    const speedBase = 3.4 * (0.85 + scale * 0.25);
+    for (let i = 0; i < count; i++) {
+      const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.06;
+      const speed = speedBase * (0.94 + Math.random() * 0.08);
+      const sp = new Spark(x, y, angle, speed, white ? 0 : pickHue(hueSeed), {
+        decay: 0.008 + Math.random() * 0.005,
+        size: 1.2 + Math.random() * 1.0,
+        trailLen: 6,
+        gravityMul: 0.7,
+        white
+      });
+      sp.vx += mom.x * 0.15; sp.vy += mom.y * 0.15;
+      sparks.push(sp);
+    }
+  }
+
+  function spawnCrackleBurst(x, y) {
+    const count = 6 + Math.floor(Math.random() * 6);
+    for (let i = 0; i < count; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 0.6 + Math.random() * 1.4;
+      sparks.push(new Spark(x, y, angle, speed, 0, {
+        decay: 0.03 + Math.random() * 0.02,
+        size: 0.8 + Math.random() * 0.6,
+        trailLen: 2,
+        white: true
+      }));
+    }
+  }
+
+  let recentX = [];
+  function pickLaunchX() {
+    const margin = W * 0.1;
+    for (let attempt = 0; attempt < 6; attempt++) {
+      const x = margin + Math.random() * (W - margin * 2);
+      const tooClose = recentX.some(rx => Math.abs(rx - x) < W * 0.16);
+      if (!tooClose) {
+        recentX.push(x);
+        if (recentX.length > 4) recentX.shift();
+        return x;
+      }
+    }
+    const x = margin + Math.random() * (W - margin * 2);
+    recentX.push(x);
+    if (recentX.length > 4) recentX.shift();
+    return x;
+  }
+
+  function launchShell(x, scale = 1) {
+    const px = x !== undefined ? x : pickLaunchX();
+    const heightBias = Math.min(scale, 1.5) * 0.06;
+    const targetY = H * (0.14 + heightBias + Math.random() * 0.28);
+    const useWhite = Math.random() < 0.12;
+    const hueSeed = useWhite ? -1 : PALETTES[Math.floor(Math.random() * (PALETTES.length - 1))][Math.random() < 0.5 ? 0 : 1];
+    shells.push(new Shell(px, targetY, hueSeed, scale));
+  }
+
+  function launchSalvo(count, scaleBase = 1.1) {
+    const lanes = Math.min(count, 4);
+    const laneWidth = W / (lanes + 1);
+    for (let i = 0; i < count; i++) {
+      const lane = i % lanes;
+      const jitter = (Math.random() - 0.5) * laneWidth * 0.5;
+      const x = laneWidth * (lane + 1) + jitter;
+      setTimeout(() => {
+        launchShell(x, scaleBase * (0.85 + Math.random() * 0.3));
+      }, i * (70 + Math.random() * 60));
+    }
+  }
+
+  // Interactive Click & Touch
+  const introEl = document.getElementById('introScreen');
+  const targetForClick = introEl || canvas;
+  targetForClick.addEventListener('click', (e) => {
+    launchShell(e.clientX, 1.0 + Math.random() * 0.25);
+  });
+  targetForClick.addEventListener('touchstart', (e) => {
+    if (e.touches && e.touches[0]) launchShell(e.touches[0].clientX, 1.0 + Math.random() * 0.25);
+  }, { passive: true });
+
+  let frameCount = 0;
+  const PHASES = ['calm', 'build', 'finale', 'rest'];
+  let phaseIndex = 0;
+  let phaseEndFrame = 0;
+  let nextAutoLaunch = 20;
+
+  function enterPhase(phase) {
+    const durations = {
+      calm:   [400, 750],
+      build:  [500, 850],
+      finale: [220, 360],
+      rest:   [600, 950]
+    };
+    const [lo, hi] = durations[phase];
+    phaseEndFrame = frameCount + lo + Math.random() * (hi - lo);
+  }
+  enterPhase(PHASES[phaseIndex]);
+
+  function directorTick() {
+    if (frameCount < phaseEndFrame) {
+      if (sparks.length < 900) scheduleWithinPhase();
+    } else {
+      phaseIndex = (phaseIndex + 1) % PHASES.length;
+      enterPhase(PHASES[phaseIndex]);
+    }
+  }
+
+  function scheduleWithinPhase() {
+    if (frameCount < nextAutoLaunch) return;
+    const phase = PHASES[phaseIndex];
+
+    if (phase === 'calm') {
+      launchShell(undefined, 0.7 + Math.random() * 0.3);
+      nextAutoLaunch = frameCount + 80 + Math.random() * 120;
+    } else if (phase === 'build') {
+      if (Math.random() < 0.3) {
+        launchSalvo(2, 0.9);
+        nextAutoLaunch = frameCount + 60 + Math.random() * 80;
+      } else {
+        launchShell(undefined, 0.85 + Math.random() * 0.35);
+        nextAutoLaunch = frameCount + 45 + Math.random() * 65;
+      }
+    } else if (phase === 'finale') {
+      launchSalvo(2 + Math.floor(Math.random() * 3), 1.15 + Math.random() * 0.35);
+      nextAutoLaunch = frameCount + 24 + Math.random() * 28;
+    } else if (phase === 'rest') {
+      if (Math.random() < 0.5) {
+        launchShell(undefined, 0.6 + Math.random() * 0.2);
+      }
+      nextAutoLaunch = frameCount + 220 + Math.random() * 220;
+    }
+  }
+
+  function drawSky() {
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = 'rgba(3, 5, 12, 0.24)';
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.globalCompositeOperation = 'lighter';
+    for (const s of stars) {
+      s.phase += s.speed;
+      const tw = 0.5 + Math.sin(s.phase) * 0.5;
+      ctx.beginPath();
+      ctx.fillStyle = 'rgba(255,255,255,' + (0.15 + tw * 0.5) + ')';
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  function frame() {
+    frameCount++;
+    drawSky();
+
+    // smoke
+    ctx.globalCompositeOperation = 'source-over';
+    for (let i = smokePuffs.length - 1; i >= 0; i--) {
+      const p = smokePuffs[i];
+      p.step();
+      p.draw();
+      if (p.dead) smokePuffs.splice(i, 1);
+    }
+
+    ctx.globalCompositeOperation = 'lighter';
+
+    // shells
+    for (let i = shells.length - 1; i >= 0; i--) {
+      const sh = shells[i];
+      sh.step();
+      sh.draw();
+      if (sh.dead) shells.splice(i, 1);
+    }
+
+    // sparks
+    for (let i = sparks.length - 1; i >= 0; i--) {
+      const sp = sparks[i];
+      const evt = sp.step();
+      if (evt === 'crackle') spawnCrackleBurst(sp.x, sp.y);
+      sp.draw();
+      if (sp.dead) sparks.splice(i, 1);
+    }
+
+    // flashes
+    for (let i = flashes.length - 1; i >= 0; i--) {
+      const f = flashes[i];
+      f.life -= 0.06;
+      if (f.life <= 0) { flashes.splice(i, 1); continue; }
+      const r = (60 * (1 - f.life) + 10) * (f.scale || 1);
+      const grad = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, r);
+      grad.addColorStop(0, 'rgba(255,255,255,' + (f.life * 0.35) + ')');
+      grad.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    directorTick();
+    requestAnimationFrame(frame);
+  }
+
+  // initial launch
+  setTimeout(() => launchShell(W * 0.5), 300);
+  setTimeout(() => launchShell(W * 0.32), 1100);
+  setTimeout(() => launchShell(W * 0.68), 1800);
+
+  requestAnimationFrame(frame);
 
   window.__bigFireworks = function (count) {
-    count = count || 5;
-    for (var i = 0; i < count; i++) {
-      (function (i) {
-        setTimeout(function () {
-          if (!canvas.isConnected) return;
-          rockets.push(new Rocket(true));
-        }, i * 160);
-      })(i);
-    }
+    launchSalvo(count || 5, 1.25);
   };
 })();
 </script>
