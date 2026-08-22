@@ -2403,10 +2403,13 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
 
   var state = 'scrolling';
   var progress = 0;
+  var targetProgress = 0;
+  var currentProgress = 0;
   var accumulated = 0;
-  var maxScroll = 1400;
+  var maxScroll = 1800;
   var frameCount = 127;
   var isRevealing = false;
+  var rafId = null;
 
   function frameSrc(n) {
     var s = String(n);
@@ -2414,29 +2417,43 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
     return 'intro_frames/frame_' + s + '.webp';
   }
 
-  // preload neighbouring frames for smooth scrub
+  // warm cache all frames in background for butter-smooth scrub
+  function warmCache() {
+    if (window.__frameCacheWarmed) return;
+    window.__frameCacheWarmed = true;
+    window.__frameCache = window.__frameCache || {};
+    for (var i = 1; i <= frameCount; i++) {
+      var src = frameSrc(i);
+      if (window.__frameCache[src]) continue;
+      var im = new Image();
+      im.decoding = 'async';
+      im.src = src;
+      window.__frameCache[src] = im;
+    }
+  }
   function preloadAround(idx) {
-    for (var d = -2; d <= 2; d++) {
+    for (var d = -3; d <= 3; d++) {
       var n = idx + d;
       if (n < 1 || n > frameCount) continue;
       var src = frameSrc(n);
       if (!window.__frameCache) window.__frameCache = {};
       if (window.__frameCache[src]) continue;
       var im = new Image();
+      im.decoding = 'async';
       im.src = src;
       window.__frameCache[src] = im;
     }
   }
 
-  function setProgress(p) {
-    progress = Math.max(0, Math.min(1, p));
+  function render(p) {
+    progress = p;
     if (firstImg) {
       var fOp = progress < 0.08 ? (1 - progress / 0.08) : 0;
       firstImg.style.opacity = String(fOp);
       firstImg.style.display = progress < 0.08 ? 'block' : 'none';
     }
     if (seqImg) {
-      var showSeq = progress > 0.02 && progress < 0.94;
+      var showSeq = progress > 0.015 && progress < 0.96;
       if (showSeq) {
         seqImg.classList.remove('hidden');
         seqImg.style.display = 'block';
@@ -2465,6 +2482,18 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
     if (progress >= 0.985 && !isRevealing) {
       beginReveal();
     }
+  }
+
+  function setProgress(p) {
+    targetProgress = Math.max(0, Math.min(1, p));
+    if (!rafId) rafId = requestAnimationFrame(tick);
+  }
+  function tick() {
+    var d = targetProgress - currentProgress;
+    if (Math.abs(d) < 0.0006) { currentProgress = targetProgress; render(currentProgress); rafId = null; return; }
+    currentProgress += d * 0.13;
+    render(currentProgress);
+    rafId = requestAnimationFrame(tick);
   }
 
   function beginReveal() {
@@ -2574,8 +2603,14 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
   if (lastImg) { lastImg.style.display = 'none'; lastImg.style.opacity = '0'; }
   if (seqImg) {
     seqImg.src = frameSrc(1);
-    for (var i = 1; i <= 12; i++) { var im = new Image(); im.src = frameSrc(i); }
+    seqImg.decoding = 'async';
+    // warm all 127 webp frames in idle for butter-smooth scrub
+    warmCache();
+    // also kick off first 12 explicitly for instant first scroll
+    for (var i = 2; i <= 12; i++) { var im2 = new Image(); im2.src = frameSrc(i); }
     setProgress(0);
+    // ensure first render happens even before RAF
+    render(0);
   } else {
     setProgress(0);
   }
