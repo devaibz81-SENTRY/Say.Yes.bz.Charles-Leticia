@@ -1443,26 +1443,25 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
     if (countdown) gsap.set(countdown, {opacity:0, y:18});
     els.forEach(function(el){ el.classList.remove('hd-anim'); el.style.transitionDelay=''; });
     var tl = gsap.timeline({defaults:{ease:'power2.out'}});
-    // 10-sec arc: photo ken-burns first (0-8s), visible from frame 0
-    if (photoImg) tl.to(photoImg, {scale:1, duration:8.0, ease:'power1.out'}, 0);
-    // Join us — soft rise (1.3-2.1s)
-    if (h2) tl.to(h2, {opacity:1, y:0, duration:0.8}, 1.3);
-    // Charles & Leticia — word stagger spring — BEFORE card (1.9-3.1s)
+    // FAST arc: photo ken-burns (0-2.2s), visible from frame 0
+    if (photoImg) tl.to(photoImg, {scale:1, duration:2.2, ease:'power1.out'}, 0);
+    // Join us — soft rise (0.25-0.85s)
+    if (h2) tl.to(h2, {opacity:1, y:0, duration:0.55}, 0.25);
+    // Charles & Leticia — FAST word stagger — BEFORE card (0.65-1.25s)
     if (h3) {
       var wrds2 = h3.querySelectorAll('.word-reveal');
-      if (wrds2.length) tl.to(wrds2, {opacity:1, y:0, rotation:0, duration:0.7, stagger:0.09, ease:'back.out(1.15)'}, 1.9);
-      else tl.to(h3, {opacity:1, y:0, scale:1, duration:0.9, ease:'back.out(1.1)'}, 1.9);
+      if (wrds2.length) tl.to(wrds2, {opacity:1, y:0, rotation:0, duration:0.5, stagger:0.07, ease:'back.out(1.2)'}, 0.65);
+      else tl.to(h3, {opacity:1, y:0, scale:1, duration:0.6, ease:'back.out(1.15)'}, 0.65);
     }
-    // Save-the-Date card — pop in after names (3.6-4.8s)
-    if (card) tl.to(card, {opacity:1, y:0, scale:1, duration:1.0, ease:'back.out(1.2)'}, 3.6);
-    // Countdown — gentle reveal after card (5.6-6.8s)
-    if (countdown) tl.to(countdown, {opacity:1, y:0, duration:0.9}, 5.6);
+    // Save-the-Date card — pop in after names (1.35-2.05s)
+    if (card) tl.to(card, {opacity:1, y:0, scale:1, duration:0.7, ease:'back.out(1.25)'}, 1.35);
+    // Countdown — quick reveal after card (2.05-2.65s)
+    if (countdown) tl.to(countdown, {opacity:1, y:0, duration:0.6}, 2.05);
     tl.call(function(){
       try{ sessionStorage.setItem('heroIntroDone','1'); }catch(e){}
       els.forEach(function(el){ el.classList.add('hd-anim'); });
-      // ensure word reveals stay visible for later scroll
       if (h3) h3.querySelectorAll('.word-reveal').forEach(function(w){ w.classList.add('rv-in'); });
-    }, null, 10);
+    }, null, 3.0);
   }
   function setupReveal() {
     document.querySelectorAll('.rv-g').forEach(function (g) {
