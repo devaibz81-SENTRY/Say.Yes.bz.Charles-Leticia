@@ -14,10 +14,10 @@
 .font-corinthia { font-family: 'Corinthia', handwriting !important; font-weight: 700; }
 /* Use Corinthia for all script accents (was Great Vibes) */
 .font-script-accent { font-family: 'Corinthia', handwriting !important; font-weight: 700; }
-/* Monte Carlo — main hero font */
+/* Monte Carlo — available as .font-monte-carlo (hero now uses below-photo fonts) */
 .font-monte-carlo { font-family: 'Monte Carlo', cursive !important; font-weight: 400; }
-#heroHead h2, #heroNames { font-family: 'Monte Carlo', cursive !important; font-weight: 400; letter-spacing: 0.02em; }
-#heroNames .text-gold { font-family: 'Monte Carlo', cursive !important; }
+#heroHead h2, #heroNames { font-family: 'Corinthia', handwriting !important; font-weight: 700; letter-spacing: 0.015em; }
+#heroNames .text-gold { font-family: 'Corinthia', handwriting !important; }
 /* hero 10-sec intro — photo first, driven by GSAP; keep photo visible under overlay */
 #mainPhotoCard { will-change: opacity; }
 #mainPhotoCard img { will-change: transform; }
@@ -213,13 +213,15 @@
 .bento-body    { color: #4A3F32 !important; font-weight: 300; }
 .bento-accent  { color: #A8862B !important; }
 
-/* ---- 4. Velvet hero overlay — lightened so photo + fireworks show ---- */
+/* ---- 4. Velvet hero overlay — bottom ramp for white text ---- */
 .hero-overlay-velvet {
   background: linear-gradient(
     to bottom,
-    rgba(18,10,2,0.18) 0%,
-    rgba(13,7,0,0.10) 45%,
-    rgba(8,4,0,0.38) 100%
+    rgba(10,5,0,0.10) 0%,
+    rgba(8,4,0,0.06) 42%,
+    rgba(8,4,0,0.18) 62%,
+    rgba(8,4,0,0.58) 78%,
+    rgba(8,4,0,0.90) 100%
   );
 }
 
@@ -796,11 +798,11 @@ section[id] { scroll-margin-top: 5rem; }
 }
 .light-section::before { display: none !important; }
 
-/* ---- Hero vignette upgrade — lightened so image & fireworks show ---- */
+/* ---- Hero vignette — darker bottom ramp for white bottom text ---- */
 .hero-overlay-velvet {
   background:
-    radial-gradient(ellipse 90% 70% at 50% 50%, transparent 45%, rgba(5,3,1,.32) 100%),
-    linear-gradient(to bottom, rgba(10,5,0,.18) 0%, rgba(8,4,0,.08) 45%, rgba(8,4,0,.38) 100%) !important;
+    radial-gradient(ellipse 90% 70% at 50% 50%, transparent 48%, rgba(5,3,1,.26) 100%),
+    linear-gradient(to bottom, rgba(10,5,0,.10) 0%, rgba(8,4,0,.06) 42%, rgba(8,4,0,.18) 62%, rgba(8,4,0,.58) 78%, rgba(8,4,0,.90) 100%) !important;
 }
 
 /* Intro photo must show under fireworks — lighten intro bg */
@@ -953,7 +955,7 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
 <div class="relative z-10 flex flex-col items-center center-reveal">
 <div class="relative" style="width:min(115vw,720px);height:min(72vh,620px);">
 <img id="firstImg" src="../intro-first.png" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-500"/>
-<video id="introVideo" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none hidden" playsinline muted preload="auto" poster="../intro-first.png"><source src="../intro-once.mp4" type="video/mp4"/><source src="../intro-once.webm" type="video/webm"/></video>
+<img id="seqImg" src="intro_frames/frame_001.webp" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none hidden"/>
 <img id="gifImg" src="" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-700 opacity-0 hidden"/>
 <img id="lastImg" src="../intro-last.png" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-500 opacity-0"/>
 </div>
@@ -2387,7 +2389,7 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
 (function () {
   var intro = document.getElementById('introScreen');
   var firstImg = document.getElementById('firstImg');
-  var video = document.getElementById('introVideo');
+  var seqImg = document.getElementById('seqImg');
   var gifImg = document.getElementById('gifImg');
   var lastImg = document.getElementById('lastImg');
   var hintPill = document.getElementById('hintPill');
@@ -2403,8 +2405,28 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
   var progress = 0;
   var accumulated = 0;
   var maxScroll = 1400;
-  var videoReady = false;
+  var frameCount = 127;
   var isRevealing = false;
+
+  function frameSrc(n) {
+    var s = String(n);
+    while (s.length < 3) s = '0' + s;
+    return 'intro_frames/frame_' + s + '.webp';
+  }
+
+  // preload neighbouring frames for smooth scrub
+  function preloadAround(idx) {
+    for (var d = -2; d <= 2; d++) {
+      var n = idx + d;
+      if (n < 1 || n > frameCount) continue;
+      var src = frameSrc(n);
+      if (!window.__frameCache) window.__frameCache = {};
+      if (window.__frameCache[src]) continue;
+      var im = new Image();
+      im.src = src;
+      window.__frameCache[src] = im;
+    }
+  }
 
   function setProgress(p) {
     progress = Math.max(0, Math.min(1, p));
@@ -2413,16 +2435,19 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
       firstImg.style.opacity = String(fOp);
       firstImg.style.display = progress < 0.08 ? 'block' : 'none';
     }
-    if (video) {
-      var showVideo = progress > 0.02 && progress < 0.92;
-      if (showVideo) {
-        video.classList.remove('hidden');
-        video.style.display = 'block';
+    if (seqImg) {
+      var showSeq = progress > 0.02 && progress < 0.94;
+      if (showSeq) {
+        seqImg.classList.remove('hidden');
+        seqImg.style.display = 'block';
+        var frame = Math.floor(progress * (frameCount - 1)) + 1;
+        if (frame < 1) frame = 1;
+        if (frame > frameCount) frame = frameCount;
+        var src = frameSrc(frame);
+        if (seqImg.getAttribute('src') !== src) seqImg.src = src;
+        preloadAround(frame);
       } else {
-        video.style.display = 'none';
-      }
-      if (videoReady && video.duration) {
-        try { video.currentTime = Math.max(0, Math.min(video.duration - 0.06, progress * video.duration)); } catch (e) {}
+        seqImg.style.display = 'none';
       }
     }
     if (lastImg) {
@@ -2446,7 +2471,7 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
     if (isRevealing) return;
     isRevealing = true;
     state = 'revealing';
-    if (video) { try { video.pause(); } catch (e) {} video.style.display = 'none'; }
+    if (seqImg) seqImg.style.display = 'none';
     if (firstImg) firstImg.style.display = 'none';
     if (gifImg) gifImg.style.display = 'none';
     if (lastImg) {
@@ -2547,13 +2572,10 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
   if (hint) hint.textContent = 'Scroll to Start the Celebration';
   if (firstImg) { firstImg.style.display = 'block'; firstImg.style.opacity = '1'; }
   if (lastImg) { lastImg.style.display = 'none'; lastImg.style.opacity = '0'; }
-  if (video) {
-    video.muted = true;
-    video.playsInline = true;
-    try { video.load(); } catch (e) {}
-    video.addEventListener('loadedmetadata', function () { videoReady = true; setProgress(0); });
-    video.addEventListener('canplay', function () { videoReady = true; });
-    setTimeout(function () { videoReady = videoReady || !!video.duration; setProgress(0); }, 900);
+  if (seqImg) {
+    seqImg.src = frameSrc(1);
+    for (var i = 1; i <= 12; i++) { var im = new Image(); im.src = frameSrc(i); }
+    setProgress(0);
   } else {
     setProgress(0);
   }
