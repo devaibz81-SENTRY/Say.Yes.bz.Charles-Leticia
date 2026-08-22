@@ -794,9 +794,85 @@ section[id] { scroll-margin-top: 5rem; }
   50% { transform: translateY(-14px) rotate(4deg); }
 }
 
+/* ---- FIX: hurtful white hover — keep dark cards dark, light cards subtle ---- */
+.bento-card:hover {
+  background: #FFFEF9 !important;
+  border-color: rgba(212,175,55,.32) !important;
+  box-shadow: 0 10px 36px rgba(168,134,43,.10) !important;
+  transform: translateY(-2px);
+}
+.bento-card.bento-card-dark:hover {
+  background: rgba(18,14,10,.86) !important;
+  border-color: rgba(212,175,55,.38) !important;
+  box-shadow: 0 18px 60px rgba(0,0,0,.60), inset 0 1px 0 rgba(255,255,255,.06) !important;
+  transform: translateY(-3px) scale(1.005);
+}
+.bento-card.bento-card-dark:hover .bento-heading { color: #FFF8E6 !important; }
+.bento-card.bento-card-dark:hover .bento-body { color: rgba(245,240,232,.78) !important; }
+.bento-card.bento-card-dark:hover .bento-accent { color: #F5D76E !important; }
+/* map card overlay — keep subtle dark, not brightening to white */
+a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,.08) !important; }
+
+/* ---- FIX: celebration section — white paper bg, keep cards black ---- */
+.celebration-section {
+  background: #FFFBF5 !important;
+  background-color: #FBF8F3 !important;
+}
+.celebration-section .cel-photo-bg,
+.celebration-section .cel-fade { display: none !important; }
+.celebration-section > .inner .dark-section-heading { color: #1C1406 !important; }
+.celebration-section > .inner .dark-section-body { color: #4A3F32 !important; line-height: 1.6; }
+.celebration-section > .inner .dark-section-subheading { color: #6B5A3A !important; }
+.celebration-section .text-gold\/70,
+.celebration-section span[class*="text-gold"] { color: #A8862B !important; }
+/* keep bento-dark cards crisp on the new light bg */
+.celebration-section .bento-card-dark {
+  background: rgba(12,10,8,.92) !important;
+  box-shadow: 0 12px 50px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.06) !important;
+}
+
+/* ---- Remotion-inspired polish: spring reveals, word stagger, card lift ---- */
+.rv, .rv-left, .rv-right, .rv-up {
+  will-change: transform, opacity;
+}
+.rv-left  { transform: translateX(-82px); }
+.rv-right { transform: translateX(82px); }
+.rv-up    { transform: translateY(36px); }
+.rv-left.rv-in, .rv-right.rv-in, .rv-up.rv-in { transform: none; }
+.rv-scale { opacity: 0; transform: scale(.96) translateY(14px); transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
+.rv-scale.rv-in { opacity: 1; transform: scale(1) translateY(0); }
+.rv-blur { opacity: 0; filter: blur(10px); transform: translateY(12px); transition: opacity .85s cubic-bezier(.22,1,.36,1), transform .85s cubic-bezier(.22,1,.36,1), filter .85s ease; }
+.rv-blur.rv-in { opacity: 1; filter: blur(0); transform: translateY(0); }
+.word-reveal-wrap { overflow: hidden; }
+.word-reveal {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(110%) rotate(0.4deg);
+  transition: transform .7s cubic-bezier(.16,1,.3,1), opacity .55s ease;
+}
+.word-reveal.rv-in { opacity: 1; transform: translateY(0) rotate(0); }
+/* headings that get word-split should not also fly as a block — let words drive */
+[data-wrapped].rv-up, [data-wrapped].rv-left, [data-wrapped].rv-right { opacity: 1 !important; transform: none !important; }
+/* card hover: Remotion spring-ish lift + gold glow, no color inversion */
+.bento-card-dark,
+.bento-card {
+  transition: transform .45s cubic-bezier(.16,1,.3,1), box-shadow .45s ease, border-color .35s ease, background .35s ease !important;
+}
+.bento-card-dark:hover { transform: translateY(-4px) scale(1.007); }
+.bento-card:hover { transform: translateY(-3px); }
+
+/* cinematic break: lower vignette so heads breathe */
+.cinematic-break.with-love .cb-vignette {
+  background:
+    linear-gradient(to bottom, rgba(10,10,10,.78) 0%, transparent 24%, transparent 74%, rgba(10,10,10,.88) 100%),
+    linear-gradient(to right, rgba(10,10,10,.45) 0%, transparent 30%, transparent 70%, rgba(10,10,10,.45) 100%);
+}
+.cinematic-break.with-love .cb-photo img { object-position: center 38% !important; filter: brightness(0.36) saturate(0.62) !important; }
+
 @media (prefers-reduced-motion: reduce) {
   .rv-left, .rv-right, .rv-up { opacity: 1 !important; transform: none !important; transition: none !important; }
   .word-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .rv-scale, .rv-blur { opacity: 1 !important; transform: none !important; filter: none !important; }
 }
 </style>
 </head>
@@ -1046,12 +1122,10 @@ section[id] { scroll-margin-top: 5rem; }
         <span class="font-label-sm label-premium bento-accent uppercase tracking-[0.25em] block mb-4">Dress Code</span>
         <h2 class="font-script-accent text-[40px] sm:text-[46px] text-gold-gradient italic mb-5">Guest Attire Palette</h2>
         <p class="font-body-lg bento-body max-w-[52ch] mx-auto mb-8">Celebrate the night in our warm and rich color palette: Brown, Dark Green, Blue, Burgundy, Maroon, Black, and Shimmer. We invite men and women to wear these rich, elegant, and timeless colors to ring in the new year together.</p>
-        <div class="flex flex-wrap justify-center gap-4">
-          <button onclick="openDressCode()" class="inline-flex items-center gap-2 bg-gradient-to-r from-gold-light to-gold-dark text-ink font-label-sm label-premium uppercase px-8 py-4 rounded-full border border-gold/40 shadow-[0_10px_30px_rgba(212,175,55,0.25)] hover:shadow-[0_10px_40px_rgba(212,175,55,0.45)] transition-all active:scale-95">
-            <span class="material-symbols-outlined text-lg" data-icon="fullscreen">fullscreen</span> View Full Guide
-          </button>
-          <a href="../dress-code%20(right).png" download="Dress-Code.png" class="inline-flex items-center gap-2 border border-gold/30 bento-accent font-label-sm label-premium uppercase px-8 py-4 rounded-full hover:bg-gold/10 transition-colors no-underline">
-            <span class="material-symbols-outlined text-lg" data-icon="download">download</span> Download
+        <div class="flex flex-wrap justify-center gap-3">
+          <p class="w-full text-center font-label-sm text-gold/60 uppercase tracking-wider mb-1">Tap the image to enlarge</p>
+          <a href="../dress-code%20(right).png" download="Dress-Code.png" class="inline-flex items-center gap-2 border border-gold/30 bento-accent font-label-sm label-premium uppercase px-8 py-4 rounded-full hover:bg-gold/10 hover:border-gold/50 transition-all no-underline">
+            <span class="material-symbols-outlined text-lg" data-icon="download">download</span> Download Guide
           </a>
         </div>
       </div>
@@ -1100,8 +1174,8 @@ section[id] { scroll-margin-top: 5rem; }
 <!-- ============================================================ -->
 <!-- SCROLL BREAK 3 — before RSVP                                -->
 <!-- ============================================================ -->
-<div class="cinematic-break">
-  <div class="cb-photo"><img src="../galery%20(2).jpeg" alt="Charles and Leticia" style="object-position:center 25%"/></div>
+<div class="cinematic-break with-love">
+  <div class="cb-photo"><img src="../galery%20(2).jpeg" alt="Charles and Leticia" style="object-position:center 38%"/></div>
   <div class="cb-vignette"></div>
   <div class="cb-content rv-up">
     <span class="font-label-sm label-premium text-gold/80 uppercase tracking-[0.3em] block mb-3">With love</span>
@@ -1285,6 +1359,86 @@ section[id] { scroll-margin-top: 5rem; }
   setTimeout(function () {
     if (!document.querySelector('#heroHead .hd-fade.hd-anim')) animateHero();
   }, 2500);
+})();
+</script>
+
+<!-- Remotion-inspired: consistent word-by-word heading reveals + stronger side fly-ins -->
+<script>
+(function () {
+  // Skip if reduced motion
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+
+  // 1) Enhance side fly-ins: make distance + spring more pronounced (85px, spring bezier already in CSS)
+  // Add stagger to bento grid if missing
+  document.querySelectorAll('.celebration-section .grid > div, .gift-section .bento-card, #dresscode').forEach(function (el, i) {
+    if (!el.style.transitionDelay) el.style.transitionDelay = (i * 90) + 'ms';
+  });
+
+  // 2) Word-split for every main heading / script line — single consistent style (Remotion spring)
+  var SELECTOR = [
+    '#details h2',                           // The Celebration
+    '.celebration-section h3',               // Our Journey, Ceremony, Reception
+    '.cinematic-break .cb-content p.font-script-accent', // Dress to Celebrate + With love quote
+    '.cinematic-break .cb-content span.font-label-sm',   // Style / With love labels
+    '.dresscode-section h2',                 // Guest Attire Palette
+    '#gallery h2',                           // Our Moments
+    '.rsvp-photo-section h2',                // RSVP
+    '.gift-section h2',                      // Honeymoon Fund
+    '.closing-hero .ch-content p.font-script-accent' // Charles & Leticia closing
+  ].join(',');
+
+  function wrapWords(el) {
+    if (el.dataset.wrapped) return;
+    // Preserve <br> as forced breaks
+    var html = el.innerHTML;
+    // Split on <br> first
+    var parts = html.split(/<br\s*\/?>/i);
+    var wrapped = parts.map(function (part) {
+      var words = part.trim().split(/\s+/).filter(Boolean);
+      return words.map(function (w, i) {
+        return '<span class="word-reveal-wrap"><span class="word-reveal" style="transition-delay:' + (i * 45) + 'ms">' + w + '</span></span>';
+      }).join(' ');
+    }).join('<br/>');
+    el.innerHTML = wrapped;
+    el.dataset.wrapped = '1';
+    // Observe each word
+    var wordsEls = el.querySelectorAll('.word-reveal');
+    if (!wordsEls.length) return;
+    if (!('IntersectionObserver' in window)) {
+      wordsEls.forEach(function (w) { w.classList.add('rv-in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          // Stagger inside the heading with Remotion-like spring sequence
+          var parent = en.target.closest('[data-wrapped]') || el;
+          var all = parent.querySelectorAll('.word-reveal');
+          all.forEach(function (w, idx) {
+            setTimeout(function () { w.classList.add('rv-in'); }, idx * 45);
+          });
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    // Observe the heading itself; when it enters, trigger all words
+    io.observe(el);
+  }
+
+  function init() {
+    document.querySelectorAll(SELECTOR).forEach(function (h) {
+      // Only wrap if text is not already wrapped and has visible text
+      if (h.textContent.trim().length > 1) wrapWords(h);
+    });
+    // Also ensure .rv-up headings that are not in selector (e.g., RSVP pull) get same treatment
+    document.querySelectorAll('.rv-up:not([data-wrapped]) h2, .rv-up:not([data-wrapped]) .font-script-accent').forEach(function (h) {
+      if (h.textContent.trim().length > 2) wrapWords(h);
+    });
+  }
+
+  if (document.readyState !== 'loading') init();
+  else document.addEventListener('DOMContentLoaded', init);
 })();
 </script>
 
