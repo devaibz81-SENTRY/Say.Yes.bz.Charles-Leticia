@@ -323,9 +323,13 @@ select:-webkit-autofill {
 .voice-ring-fg{fill:none;stroke:#D4AF37;stroke-width:3.5;stroke-linecap:round;stroke-dasharray: 276.46;stroke-dashoffset: 276.46;transition:stroke-dashoffset .15s linear}
 .voice-ring-fg.rec{stroke:#F5D76E;filter:drop-shadow(0 0 10px rgba(245,215,110,.65))}
 .voice-ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
-.voice-mic-btn{width:92px;height:92px;border-radius:9999px;border:1px solid rgba(212,175,55,.38);background:radial-gradient(circle at 30% 28%,#FFF2B2 0%,#F5D76E 18%,#D4AF37 42%,#A8862B 72%,#7A5A12 100%);display:flex;align-items:center;justify-content:center;color:#0a0a0a;cursor:pointer;transition:transform .22s cubic-bezier(.16,1,.3,1),box-shadow .22s ease,opacity .2s ease;box-shadow:0 10px 28px rgba(212,175,55,.32),0 0 0 1px rgba(212,175,55,.18) inset,0 1px 0 rgba(255,255,255,.55) inset}
+.voice-mic-btn{position:relative;width:92px;height:92px;border-radius:9999px;border:1px solid rgba(212,175,55,.38);background:radial-gradient(circle at 30% 28%,#FFF2B2 0%,#F5D76E 18%,#D4AF37 42%,#A8862B 72%,#7A5A12 100%);display:flex;align-items:center;justify-content:center;color:#0a0a0a;cursor:pointer;transition:transform .22s cubic-bezier(.16,1,.3,1),box-shadow .22s ease,opacity .2s ease;box-shadow:0 10px 28px rgba(212,175,55,.32),0 0 0 1px rgba(212,175,55,.18) inset,0 1px 0 rgba(255,255,255,.55) inset;overflow:hidden}
+.voice-mic-btn::before{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 50% 20%,rgba(255,255,255,.45),transparent 62%);opacity:.9;pointer-events:none}
+.voice-mic-btn::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:1px solid rgba(212,175,55,.22);opacity:0;transform:scale(.92);transition:opacity .3s ease,transform .3s ease;pointer-events:none}
+.voice-mic-btn:hover::after{opacity:1;transform:scale(1)}
 .voice-mic-btn:hover{transform:scale(1.05);box-shadow:0 16px 40px rgba(212,175,55,.48),0 0 0 1px rgba(212,175,55,.22) inset,0 1px 0 rgba(255,255,255,.55) inset}
 .voice-mic-btn:active{transform:scale(.97)}
+.voice-mic-btn .mic-icon{position:relative;z-index:1;transition:transform .2s ease,opacity .2s ease}
 .voice-mic-btn:disabled{opacity:.42;cursor:not-allowed;transform:none;box-shadow:0 10px 28px rgba(212,175,55,.18)}
 .voice-mic-btn.rec{animation:voicePulse 1.15s ease-in-out infinite}
 @keyframes voicePulse{0%,100%{box-shadow:0 10px 28px rgba(212,175,55,.32),0 0 0 1px rgba(212,175,55,.18) inset,0 0 0 0 rgba(239,68,68,.42)}50%{box-shadow:0 16px 40px rgba(212,175,55,.48),0 0 0 1px rgba(212,175,55,.22) inset,0 0 0 16px rgba(239,68,68,0)}}
@@ -335,6 +339,9 @@ select:-webkit-autofill {
 .voice-bars{display:flex;align-items:center;justify-content:center;gap:3px;height:44px;padding:8px 0 4px}
 .voice-bars i{display:block;width:3.5px;min-height:4px;border-radius:9999px;background:linear-gradient(180deg,#F5D76E 0%,#D4AF37 55%,#A8862B 100%);opacity:.88;transition:height .09s ease,opacity .2s ease}
 .voice-bars.idle i{height:7px;opacity:.32}
+.voice-progress-track{height:5px;background:rgba(212,175,55,.13);border-radius:9999px;overflow:hidden;margin:6px 12px 4px;box-shadow:inset 0 1px 3px rgba(0,0,0,.4)}
+.voice-progress-fill{height:100%;width:0%;background:linear-gradient(90deg,#F5D76E 0%,#D4AF37 55%,#A8862B 100%);border-radius:9999px;transition:width .12s linear;box-shadow:0 0 8px rgba(212,175,55,.45)}
+.voice-progress-fill.rec{background:linear-gradient(90deg,#F87171 0%,#EF4444 100%);box-shadow:0 0 10px rgba(239,68,68,.6)}
 .voice-rec-dot{width:9px;height:9px;border-radius:50%;background:#EF4444;box-shadow:0 0 10px rgba(239,68,68,.9);animation:recBlink 1s ease-in-out infinite}
 @keyframes recBlink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.55;transform:scale(.85)}}
 .voice-pill{inline-size:fit-content;margin:0 auto;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:9999px;border:1px solid rgba(212,175,55,.28);background:rgba(212,175,55,.08);color:#F5D76E;font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:.64rem;letter-spacing:.12em;text-transform:uppercase}
@@ -613,7 +620,6 @@ select:-webkit-autofill {
 <div id="voiceNoteCard" class="success-pop chad-form text-left space-y-4">
   <div class="text-center pb-1">
     <p class="font-script-accent text-gold italic" style="font-size:1.35rem">Leave a voice note</p>
-    <p class="chad-label !mb-0" style="font-size:.64rem;opacity:.62;letter-spacing:.12em;text-transform:uppercase">Opus • 60 seconds • they’ll hear it after the celebration</p>
     <p id="voiceFromLine" class="chad-label !mb-0 hidden" style="font-size:.62rem;opacity:.9;margin-top:4px">From: <span id="voiceFromName" class="text-gold-light">Guest</span></p>
   </div>
 
@@ -636,7 +642,7 @@ select:-webkit-autofill {
         </svg>
         <div class="voice-ring-center">
           <button id="voiceRecordBtn" type="button" class="voice-mic-btn" aria-label="Record voice note">
-            <span class="material-symbols-outlined" style="font-size:28px">mic</span>
+            <span class="material-symbols-outlined mic-icon" style="font-size:32px">mic</span>
           </button>
           <div id="voiceTimer" class="voice-timer">0:00 / 1:00</div>
           <div id="voiceTimerSub" class="voice-timer sub hidden"><span class="voice-rec-dot inline-block align-middle" style="margin-right:6px"></span>Recording</div>
@@ -645,7 +651,8 @@ select:-webkit-autofill {
       <div id="voiceBars" class="voice-bars idle" aria-hidden="true">
         <i style="height:6px"></i><i style="height:10px"></i><i style="height:6px"></i><i style="height:14px"></i><i style="height:8px"></i><i style="height:18px"></i><i style="height:10px"></i><i style="height:22px"></i><i style="height:8px"></i><i style="height:14px"></i><i style="height:6px"></i><i style="height:10px"></i><i style="height:6px"></i><i style="height:12px"></i><i style="height:7px"></i><i style="height:16px"></i><i style="height:9px"></i><i style="height:6px"></i>
       </div>
-      <p id="voiceHint" class="chad-label text-center" style="font-size:.64rem;opacity:.55;letter-spacing:.10em;text-transform:uppercase">Tap the mic — 60 seconds max • speak from the heart</p>
+      <div class="voice-progress-track" aria-hidden="true"><div id="voiceProgressFill" class="voice-progress-fill"></div></div>
+      <p id="voiceProgressLabel" class="text-center font-label-sm" style="font-size:.62rem;letter-spacing:.10em;text-transform:uppercase;color:rgba(245,245,245,.45)">Tap the mic — 60s</p>
       <p id="voiceErr" class="hidden text-center font-label-sm" style="font-size:.68rem;color:#ff8a80;letter-spacing:.04em"></p>
     </div>
 
@@ -677,8 +684,6 @@ select:-webkit-autofill {
       <button id="voiceReplaceBtn" type="button" class="chad-btn w-full mt-1 flex items-center justify-center gap-2"><span class="material-symbols-outlined text-base">mic</span> Record a new one</button>
       <a href="voice-messages.html" class="inline-flex items-center gap-1.5 font-label-sm text-gold/80 hover:text-gold underline underline-offset-4" style="font-size:.66rem;letter-spacing:.08em">Hear all voice notes after Dec 31 →</a>
     </div>
-
-    <p class="text-center font-label-sm" style="font-size:.58rem;letter-spacing:.10em;text-transform:uppercase;color:rgba(255,255,255,.38)">Stored securely in Convex • Opus • not mp3 • max 1 min</p>
   </div>
 </div>
 
@@ -1356,7 +1361,8 @@ select:-webkit-autofill {
     timer: document.getElementById('voiceTimer'),
     timerSub: document.getElementById('voiceTimerSub'),
     bars: document.getElementById('voiceBars'),
-    hint: document.getElementById('voiceHint'),
+    progressFill: document.getElementById('voiceProgressFill'),
+    progressLabel: document.getElementById('voiceProgressLabel'),
     err: document.getElementById('voiceErr'),
     stopBtn: document.getElementById('voiceStopBtn'),
     rerecordBtn: document.getElementById('voiceRerecordBtn'),
@@ -1447,16 +1453,19 @@ select:-webkit-autofill {
   function voiceSetUiRecording(isRec) {
     voiceState.isRecording = isRec;
     if (voiceEls.recordBtn) {
-      voiceEls.recordBtn.disabled = isRec;
+      voiceEls.recordBtn.disabled = false;
       voiceEls.recordBtn.classList.toggle('rec', isRec);
-      var ic = voiceEls.recordBtn.querySelector('.material-symbols-outlined');
-      if (ic) ic.textContent = isRec ? 'graphic_eq' : 'mic';
+      voiceEls.recordBtn.setAttribute('aria-label', isRec ? 'Tap to stop recording' : 'Tap to record voice note');
+      var ic = voiceEls.recordBtn.querySelector('.mic-icon');
+      if (ic) { ic.textContent = isRec ? 'stop' : 'mic'; ic.style.fontVariationSettings = isRec ? "'FILL' 1" : "'FILL' 0"; }
     }
     if (voiceEls.timerSub) voiceEls.timerSub.classList.toggle('hidden', !isRec);
     if (voiceEls.ringFg) voiceEls.ringFg.classList.toggle('rec', isRec);
     if (voiceEls.bars) voiceEls.bars.classList.toggle('idle', !isRec);
-    if (voiceEls.stopBtn) voiceEls.stopBtn.classList.toggle('hidden', !isRec);
-    if (voiceEls.hint) voiceEls.hint.textContent = isRec ? 'Recording — speak clearly • tap Stop when you’re done' : 'Tap the mic — 60 seconds max • speak from the heart';
+    if (voiceEls.progressFill) voiceEls.progressFill.classList.toggle('rec', isRec);
+    if (voiceEls.progressLabel) voiceEls.progressLabel.textContent = isRec ? 'Recording — tap mic to stop' : 'Tap the mic — 60s';
+    // keep separate Stop button hidden — single mic does both (no hold needed)
+    if (voiceEls.stopBtn) voiceEls.stopBtn.classList.add('hidden');
     if (isRec) {
       voiceUpdateBarsFake();
     } else {
@@ -1468,7 +1477,10 @@ select:-webkit-autofill {
     var elapsed = (Date.now() - voiceState.startMs)/1000;
     if (elapsed > VOICE_MAX_SEC) elapsed = VOICE_MAX_SEC;
     if (voiceEls.timer) voiceEls.timer.textContent = voiceFmt(elapsed) + ' / 1:00';
-    voiceSetRing(elapsed / VOICE_MAX_SEC);
+    var pct = Math.max(0, Math.min(1, elapsed / VOICE_MAX_SEC));
+    voiceSetRing(pct);
+    if (voiceEls.progressFill) voiceEls.progressFill.style.width = (pct*100) + '%';
+    if (voiceEls.progressLabel && voiceState.isRecording) voiceEls.progressLabel.textContent = 'Recording — ' + voiceFmt(elapsed) + ' / 1:00 — tap to stop';
     if (elapsed >= VOICE_MAX_SEC) {
       voiceStopRecording();
     }
@@ -1513,28 +1525,33 @@ select:-webkit-autofill {
     if (voiceEls.previewWrap) voiceEls.previewWrap.classList.remove('hidden');
     if (voiceEls.rerecordBtn) voiceEls.rerecordBtn.classList.remove('hidden');
     if (voiceEls.sendBtn) voiceEls.sendBtn.classList.remove('hidden');
-    if (voiceEls.recordBtn) voiceEls.recordBtn.disabled = true;
+    if (voiceEls.recordBtn) { voiceEls.recordBtn.disabled = true; var ic2=voiceEls.recordBtn.querySelector('.mic-icon'); if(ic2){ic2.textContent='mic';} }
+    if (voiceEls.progressFill) { voiceEls.progressFill.style.width = (Math.max(0,Math.min(1, voiceState.durationSec/VOICE_MAX_SEC))*100)+'%'; voiceEls.progressFill.classList.remove('rec'); }
+    if (voiceEls.progressLabel) voiceEls.progressLabel.textContent = 'Preview — ' + voiceFmt(voiceState.durationSec) + ' — tap Send';
     voiceHideErr();
   }
   function voiceHidePreview() {
     if (voiceEls.previewWrap) voiceEls.previewWrap.classList.add('hidden');
     if (voiceEls.rerecordBtn) voiceEls.rerecordBtn.classList.add('hidden');
     if (voiceEls.sendBtn) voiceEls.sendBtn.classList.add('hidden');
-    if (voiceEls.recordBtn) voiceEls.recordBtn.disabled = false;
+    if (voiceEls.recordBtn) { voiceEls.recordBtn.disabled = false; var ic3=voiceEls.recordBtn.querySelector('.mic-icon'); if(ic3){ic3.textContent='mic';} }
     voiceCleanupPreview();
     voiceState.blob = null;
     voiceState.durationSec = 0;
     voiceState.mime = voicePickMime() || voiceState.mime;
     if (voiceEls.timer) voiceEls.timer.textContent = '0:00 / 1:00';
     voiceSetRing(0);
+    if (voiceEls.progressFill) { voiceEls.progressFill.style.width = '0%'; voiceEls.progressFill.classList.remove('rec'); }
+    if (voiceEls.progressLabel) voiceEls.progressLabel.textContent = 'Tap the mic — 60s';
     voiceResetBarsIdle();
   }
   function voiceEnterSent(nameForSent) {
     if (voiceEls.core) voiceEls.core.classList.add('hidden');
-    // keep card visible but show sent
     if (voiceEls.sent) voiceEls.sent.classList.remove('hidden');
     if (voiceEls.sentName) voiceEls.sentName.textContent = nameForSent || 'you';
     if (voiceEls.recordBtn) voiceEls.recordBtn.disabled = true;
+    if (voiceEls.progressFill) { voiceEls.progressFill.style.width = '100%'; voiceEls.progressFill.classList.remove('rec'); }
+    if (voiceEls.progressLabel) voiceEls.progressLabel.textContent = 'Sent — 60s max';
     try { localStorage.setItem('cl_voice_sent_'+guestId, String(Date.now())); } catch(e){}
   }
   function voiceExitSent() {
@@ -1542,18 +1559,25 @@ select:-webkit-autofill {
     if (voiceEls.core) voiceEls.core.classList.remove('hidden');
     voiceHidePreview();
     voiceSetRing(0);
+    if (voiceEls.progressFill) { voiceEls.progressFill.style.width = '0%'; voiceEls.progressFill.classList.remove('rec'); }
+    if (voiceEls.progressLabel) voiceEls.progressLabel.textContent = 'Tap the mic — 60s';
     if (voiceEls.timer) voiceEls.timer.textContent = '0:00 / 1:00';
-    if (voiceEls.recordBtn) voiceEls.recordBtn.disabled = false;
+    if (voiceEls.recordBtn) { voiceEls.recordBtn.disabled = false; var ic4=voiceEls.recordBtn.querySelector('.mic-icon'); if(ic4){ic4.textContent='mic';} }
     voiceHideErr();
   }
   function voiceBindOnce() {
     if (voiceEls.recordBtn && !voiceEls.recordBtn._bound) {
       voiceEls.recordBtn._bound = true;
-      voiceEls.recordBtn.addEventListener('click', voiceStartRecording);
+      voiceEls.recordBtn.addEventListener('click', function(){
+        if (voiceState.isRecording) voiceStopRecording();
+        else voiceStartRecording();
+      });
     }
+    // separate Stop button kept hidden — hero mic does both (no hold)
     if (voiceEls.stopBtn && !voiceEls.stopBtn._bound) {
       voiceEls.stopBtn._bound = true;
       voiceEls.stopBtn.addEventListener('click', voiceStopRecording);
+      voiceEls.stopBtn.classList.add('hidden');
     }
     if (voiceEls.rerecordBtn && !voiceEls.rerecordBtn._bound) {
       voiceEls.rerecordBtn._bound = true;
