@@ -314,29 +314,40 @@ select:-webkit-autofill {
   75% { transform: translateX(6px); }
 }
 
-/* === VOICE NOTE — post-RSVP Opus recorder === */
-.voice-card .voice-ring-wrap{position:relative;width:88px;height:88px;margin:0 auto}
+/* === VOICE NOTE — post-RSVP Opus recorder (luxury hero) === */
+.voice-card{position:relative}
+.voice-card .voice-ring-wrap{position:relative;width:132px;height:132px;margin:0 auto}
+.voice-ring-wrap::before{content:"";position:absolute;inset:-18px;border-radius:50%;background:radial-gradient(circle,rgba(212,175,55,.20) 0%,rgba(212,175,55,.06) 42%,transparent 72%);opacity:.95;pointer-events:none;filter:blur(10px)}
 .voice-ring-wrap svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
-.voice-ring-bg{fill:none;stroke:rgba(212,175,55,.18);stroke-width:6}
-.voice-ring-fg{fill:none;stroke:#D4AF37;stroke-width:6;stroke-linecap:round;stroke-dasharray: 276.46;stroke-dashoffset: 276.46;transition:stroke-dashoffset .15s linear}
-.voice-ring-fg.rec{stroke:#F5D76E;filter:drop-shadow(0 0 8px rgba(245,215,110,.55))}
-.voice-ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
-.voice-mic-btn{width:56px;height:56px;border-radius:9999px;border:1px solid rgba(212,175,55,.35);background:radial-gradient(circle at 30% 30%,#F5D76E 0%,#D4AF37 55%,#A8862B 100%);display:flex;align-items:center;justify-content:center;color:#0a0a0a;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease,opacity .2s ease;box-shadow:0 8px 24px rgba(212,175,55,.35)}
-.voice-mic-btn:hover{transform:scale(1.04);box-shadow:0 12px 32px rgba(212,175,55,.5)}
-.voice-mic-btn:active{transform:scale(.96)}
-.voice-mic-btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
-.voice-mic-btn.rec{animation:voicePulse 1.1s ease-in-out infinite}
-@keyframes voicePulse{0%,100%{box-shadow:0 8px 24px rgba(212,175,55,.35),0 0 0 0 rgba(239,68,68,.45)}50%{box-shadow:0 12px 32px rgba(212,175,55,.5),0 0 0 10px rgba(239,68,68,0)}}
-.voice-timer{font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:.82rem;font-weight:600;letter-spacing:.06em;color:#F5D76E;tabular-nums}
-.voice-timer.sub{font-size:.62rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,245,245,.55)}
-.voice-bars{display:flex;align-items:center;justify-content:center;gap:3px;height:42px;padding:6px 0}
-.voice-bars i{display:block;width:3px;min-height:4px;border-radius:9999px;background:linear-gradient(180deg,#F5D76E 0%,#D4AF37 55%,#A8862B 100%);opacity:.9;transition:height .09s ease,opacity .2s ease}
-.voice-bars.idle i{height:6px;opacity:.35}
+.voice-ring-bg{fill:none;stroke:rgba(212,175,55,.13);stroke-width:3.5}
+.voice-ring-fg{fill:none;stroke:#D4AF37;stroke-width:3.5;stroke-linecap:round;stroke-dasharray: 276.46;stroke-dashoffset: 276.46;transition:stroke-dashoffset .15s linear}
+.voice-ring-fg.rec{stroke:#F5D76E;filter:drop-shadow(0 0 10px rgba(245,215,110,.65))}
+.voice-ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.voice-mic-btn{width:92px;height:92px;border-radius:9999px;border:1px solid rgba(212,175,55,.38);background:radial-gradient(circle at 30% 28%,#FFF2B2 0%,#F5D76E 18%,#D4AF37 42%,#A8862B 72%,#7A5A12 100%);display:flex;align-items:center;justify-content:center;color:#0a0a0a;cursor:pointer;transition:transform .22s cubic-bezier(.16,1,.3,1),box-shadow .22s ease,opacity .2s ease;box-shadow:0 10px 28px rgba(212,175,55,.32),0 0 0 1px rgba(212,175,55,.18) inset,0 1px 0 rgba(255,255,255,.55) inset}
+.voice-mic-btn:hover{transform:scale(1.05);box-shadow:0 16px 40px rgba(212,175,55,.48),0 0 0 1px rgba(212,175,55,.22) inset,0 1px 0 rgba(255,255,255,.55) inset}
+.voice-mic-btn:active{transform:scale(.97)}
+.voice-mic-btn:disabled{opacity:.42;cursor:not-allowed;transform:none;box-shadow:0 10px 28px rgba(212,175,55,.18)}
+.voice-mic-btn.rec{animation:voicePulse 1.15s ease-in-out infinite}
+@keyframes voicePulse{0%,100%{box-shadow:0 10px 28px rgba(212,175,55,.32),0 0 0 1px rgba(212,175,55,.18) inset,0 0 0 0 rgba(239,68,68,.42)}50%{box-shadow:0 16px 40px rgba(212,175,55,.48),0 0 0 1px rgba(212,175,55,.22) inset,0 0 0 16px rgba(239,68,68,0)}}
+.voice-hero-label{font-family:'Great Vibes',cursive;font-size:1.02rem;color:rgba(245,215,110,.9);letter-spacing:.02em}
+.voice-timer{font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:.86rem;font-weight:700;letter-spacing:.06em;color:#F5D76E;tabular-nums;text-shadow:0 1px 10px rgba(212,175,55,.25)}
+.voice-timer.sub{font-size:.60rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,245,245,.62);display:inline-flex;align-items:center;gap:6px}
+.voice-bars{display:flex;align-items:center;justify-content:center;gap:3px;height:44px;padding:8px 0 4px}
+.voice-bars i{display:block;width:3.5px;min-height:4px;border-radius:9999px;background:linear-gradient(180deg,#F5D76E 0%,#D4AF37 55%,#A8862B 100%);opacity:.88;transition:height .09s ease,opacity .2s ease}
+.voice-bars.idle i{height:7px;opacity:.32}
 .voice-rec-dot{width:9px;height:9px;border-radius:50%;background:#EF4444;box-shadow:0 0 10px rgba(239,68,68,.9);animation:recBlink 1s ease-in-out infinite}
 @keyframes recBlink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.55;transform:scale(.85)}}
 .voice-pill{inline-size:fit-content;margin:0 auto;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:9999px;border:1px solid rgba(212,175,55,.28);background:rgba(212,175,55,.08);color:#F5D76E;font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:.64rem;letter-spacing:.12em;text-transform:uppercase}
 .voice-audio{width:100%;height:38px;border-radius:9999px}
 .voice-audio::-webkit-media-controls-panel{background:#252525}
+/* success stack: voice hero first, then song, then calendar */
+#success{display:flex;flex-direction:column;gap:1.25rem}
+#success > .success-pop{width:100%}
+#voiceNoteCard{order:1}
+#postRsvpLove{order:2}
+#toggleWrittenWrap{order:3}
+#sucCalendarBlock{order:4}
+#success .success-pop.flex.flex-col.gap-3{order:5}
 </style>
 </head>
 <body class="bg-background font-body-md text-on-background min-h-screen relative overflow-x-hidden">
@@ -567,11 +578,11 @@ select:-webkit-autofill {
 <p id="sucSummary" class="hidden"></p>
 <p id="sucTotal" class="success-pop font-label-sm text-on-surface-variant uppercase tracking-[0.15em]"></p>
 
-<!-- Post-RSVP: sweet & funny love note — offered AFTER the yes (as requested) -->
+<!-- Post-RSVP: song request — always open (voices are the hero, but DJ needs hits) -->
 <div id="postRsvpLove" class="success-pop chad-form text-left space-y-3 mt-1">
 <div class="text-center pb-1">
-<p class="font-script-accent text-gold italic" style="font-size:1.25rem">Leave a little love</p>
-<p class="chad-label !mb-0" style="font-size:.66rem;opacity:.6;letter-spacing:.12em;text-transform:uppercase">Your song & note — make them smile</p>
+<p class="font-script-accent text-gold italic" style="font-size:1.25rem">Song for the DJ?</p>
+<p class="chad-label !mb-0" style="font-size:.66rem;opacity:.6;letter-spacing:.12em;text-transform:uppercase">Open — drop your anthem, we’ll queue it</p>
 </div>
 <div>
 <label class="chad-label" for="postSong">Song request</label>
@@ -580,6 +591,11 @@ select:-webkit-autofill {
 <input class="chad-input" id="postSong" type="text" placeholder="e.g. Ojitos Lindos, your all-night anthem…"/>
 </div>
 </div>
+<button onclick="savePostLove()" id="postLoveBtn" type="button" class="chad-btn chad-btn-gold w-full flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-base">queue_music</span> Send song
+</button>
+<p id="postLoveOk" class="hidden text-center text-emerald-400 font-label-sm" style="font-size:.68rem;letter-spacing:.08em">Song sent — DJ’s got it 💛</p>
+<div id="writtenExtra" class="hidden space-y-3 pt-3 border-t border-gold/15">
 <div>
 <label class="chad-label" for="postMessage" style="color:rgba(245,215,110,.9)">Whisper to the couple <span style="opacity:.5">— leave a little love</span></label>
 <div class="chad-field chad-field-textarea">
@@ -587,10 +603,10 @@ select:-webkit-autofill {
 <textarea class="chad-input chad-area" id="postMessage" placeholder="A sweet or funny note for Charles & Leticia… make them smile" rows="2"></textarea>
 </div>
 </div>
-<button onclick="savePostLove()" id="postLoveBtn" type="button" class="chad-btn chad-btn-gold w-full flex items-center justify-center gap-2">
-<span class="material-symbols-outlined text-base">send</span> Send my love
+<button onclick="savePostLove()" type="button" class="chad-btn w-full flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-base">send</span> Send my note
 </button>
-<p id="postLoveOk" class="hidden text-center text-emerald-400 font-label-sm" style="font-size:.68rem;letter-spacing:.08em">Sent — they’ll feel it 💛</p>
+</div>
 </div>
 
 <!-- VOICE NOTE — post-RSVP Opus gift (Convex File Storage, 60s) -->
@@ -664,6 +680,10 @@ select:-webkit-autofill {
 
     <p class="text-center font-label-sm" style="font-size:.58rem;letter-spacing:.10em;text-transform:uppercase;color:rgba(255,255,255,.38)">Stored securely in Convex • Opus • not mp3 • max 1 min</p>
   </div>
+</div>
+
+<div id="toggleWrittenWrap" class="text-center success-pop" style="order:3">
+  <button id="toggleWrittenBtn" type="button" class="font-label-sm text-gold/60 hover:text-gold underline underline-offset-4 py-2" style="font-size:.68rem;letter-spacing:.08em">Prefer to write a note instead? →</button>
 </div>
 
 <div id="sucCalendarBlock" class="success-pop bg-white/5 border border-gold/30 rounded-2xl p-5 text-center space-y-3">
@@ -1720,6 +1740,18 @@ select:-webkit-autofill {
         voiceShowErr(err && err.message ? err.message : 'Could not send — check your connection and try again.');
       });
   }
+  // Toggle written extra (song stays open, message is optional)
+  (function(){
+    var tBtn = document.getElementById('toggleWrittenBtn');
+    var extra = document.getElementById('writtenExtra');
+    if (tBtn && extra) {
+      tBtn.addEventListener('click', function(){
+        extra.classList.toggle('hidden');
+        tBtn.textContent = extra.classList.contains('hidden') ? 'Prefer to write a note instead? →' : 'Hide writing — back to voice →';
+        if (!extra.classList.contains('hidden')) { var ta=document.getElementById('postMessage'); if(ta) ta.focus(); }
+      });
+    }
+  })();
   // expose for showSuccess hook and debugging
   window._voiceInitCard = voiceInitCard;
   window._voiceStart = voiceStartRecording;
@@ -1760,6 +1792,10 @@ select:-webkit-autofill {
       voiceStopTracks();
       if (voiceEls.recordBtn) { voiceEls.recordBtn.disabled = false; voiceEls.recordBtn.classList.remove('rec'); }
       if (voiceEls.previewAudio) { try { voiceEls.previewAudio.pause(); } catch(e){} }
+      var we2 = document.getElementById('writtenExtra');
+      if (we2) we2.classList.add('hidden');
+      var tb2 = document.getElementById('toggleWrittenBtn');
+      if (tb2) tb2.textContent = 'Prefer to write a note instead? →';
     } catch(e){}
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
