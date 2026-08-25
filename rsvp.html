@@ -313,6 +313,30 @@ select:-webkit-autofill {
   25% { transform: translateX(-6px); }
   75% { transform: translateX(6px); }
 }
+
+/* === VOICE NOTE — post-RSVP Opus recorder === */
+.voice-card .voice-ring-wrap{position:relative;width:88px;height:88px;margin:0 auto}
+.voice-ring-wrap svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.voice-ring-bg{fill:none;stroke:rgba(212,175,55,.18);stroke-width:6}
+.voice-ring-fg{fill:none;stroke:#D4AF37;stroke-width:6;stroke-linecap:round;stroke-dasharray: 276.46;stroke-dashoffset: 276.46;transition:stroke-dashoffset .15s linear}
+.voice-ring-fg.rec{stroke:#F5D76E;filter:drop-shadow(0 0 8px rgba(245,215,110,.55))}
+.voice-ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.voice-mic-btn{width:56px;height:56px;border-radius:9999px;border:1px solid rgba(212,175,55,.35);background:radial-gradient(circle at 30% 30%,#F5D76E 0%,#D4AF37 55%,#A8862B 100%);display:flex;align-items:center;justify-content:center;color:#0a0a0a;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease,opacity .2s ease;box-shadow:0 8px 24px rgba(212,175,55,.35)}
+.voice-mic-btn:hover{transform:scale(1.04);box-shadow:0 12px 32px rgba(212,175,55,.5)}
+.voice-mic-btn:active{transform:scale(.96)}
+.voice-mic-btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.voice-mic-btn.rec{animation:voicePulse 1.1s ease-in-out infinite}
+@keyframes voicePulse{0%,100%{box-shadow:0 8px 24px rgba(212,175,55,.35),0 0 0 0 rgba(239,68,68,.45)}50%{box-shadow:0 12px 32px rgba(212,175,55,.5),0 0 0 10px rgba(239,68,68,0)}}
+.voice-timer{font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:.82rem;font-weight:600;letter-spacing:.06em;color:#F5D76E;tabular-nums}
+.voice-timer.sub{font-size:.62rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,245,245,.55)}
+.voice-bars{display:flex;align-items:center;justify-content:center;gap:3px;height:42px;padding:6px 0}
+.voice-bars i{display:block;width:3px;min-height:4px;border-radius:9999px;background:linear-gradient(180deg,#F5D76E 0%,#D4AF37 55%,#A8862B 100%);opacity:.9;transition:height .09s ease,opacity .2s ease}
+.voice-bars.idle i{height:6px;opacity:.35}
+.voice-rec-dot{width:9px;height:9px;border-radius:50%;background:#EF4444;box-shadow:0 0 10px rgba(239,68,68,.9);animation:recBlink 1s ease-in-out infinite}
+@keyframes recBlink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.55;transform:scale(.85)}}
+.voice-pill{inline-size:fit-content;margin:0 auto;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:9999px;border:1px solid rgba(212,175,55,.28);background:rgba(212,175,55,.08);color:#F5D76E;font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:.64rem;letter-spacing:.12em;text-transform:uppercase}
+.voice-audio{width:100%;height:38px;border-radius:9999px}
+.voice-audio::-webkit-media-controls-panel{background:#252525}
 </style>
 </head>
 <body class="bg-background font-body-md text-on-background min-h-screen relative overflow-x-hidden">
@@ -567,6 +591,79 @@ select:-webkit-autofill {
 <span class="material-symbols-outlined text-base">send</span> Send my love
 </button>
 <p id="postLoveOk" class="hidden text-center text-emerald-400 font-label-sm" style="font-size:.68rem;letter-spacing:.08em">Sent — they’ll feel it 💛</p>
+</div>
+
+<!-- VOICE NOTE — post-RSVP Opus gift (Convex File Storage, 60s) -->
+<div id="voiceNoteCard" class="success-pop chad-form text-left space-y-4">
+  <div class="text-center pb-1">
+    <p class="font-script-accent text-gold italic" style="font-size:1.35rem">Leave a voice note</p>
+    <p class="chad-label !mb-0" style="font-size:.64rem;opacity:.62;letter-spacing:.12em;text-transform:uppercase">Opus • 60 seconds • they’ll hear it after the celebration</p>
+    <p id="voiceFromLine" class="chad-label !mb-0 hidden" style="font-size:.62rem;opacity:.9;margin-top:4px">From: <span id="voiceFromName" class="text-gold-light">Guest</span></p>
+  </div>
+
+  <!-- Unsupported (Opus only — Safari shows this) -->
+  <div id="voiceUnsupported" class="hidden rounded-2xl border border-amber-500/30 bg-amber-500/10 p-4 text-center space-y-2">
+    <div class="w-12 h-12 mx-auto rounded-full bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-300"><span class="material-symbols-outlined">mic_off</span></div>
+    <p class="font-label-sm text-amber-200" style="font-size:.72rem;letter-spacing:.08em">Voice notes need Opus — try Chrome or Edge</p>
+    <p class="font-body-md" style="font-size:.78rem;color:rgba(255,255,255,.72);line-height:1.5">This iPhone browser doesn’t record Opus yet. Open this page in <strong style="color:#F5D76E">Chrome</strong> and your note will work — or leave a written note above and we’ll treasure it just the same.</p>
+    <a href="#postMessage" onclick="document.getElementById('postMessage')&&document.getElementById('postMessage').focus()" class="inline-flex items-center gap-1.5 text-amber-300 font-label-sm underline underline-offset-4" style="font-size:.70rem;letter-spacing:.06em">Write a note instead →</a>
+  </div>
+
+  <!-- Recorder core -->
+  <div id="voiceCore" class="space-y-3">
+    <!-- Ring + timer -->
+    <div class="flex flex-col items-center gap-2 py-1">
+      <div class="voice-ring-wrap">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <circle class="voice-ring-bg" cx="50" cy="50" r="44"></circle>
+          <circle id="voiceRingFg" class="voice-ring-fg" cx="50" cy="50" r="44"></circle>
+        </svg>
+        <div class="voice-ring-center">
+          <button id="voiceRecordBtn" type="button" class="voice-mic-btn" aria-label="Record voice note">
+            <span class="material-symbols-outlined" style="font-size:28px">mic</span>
+          </button>
+          <div id="voiceTimer" class="voice-timer">0:00 / 1:00</div>
+          <div id="voiceTimerSub" class="voice-timer sub hidden"><span class="voice-rec-dot inline-block align-middle" style="margin-right:6px"></span>Recording</div>
+        </div>
+      </div>
+      <div id="voiceBars" class="voice-bars idle" aria-hidden="true">
+        <i style="height:6px"></i><i style="height:10px"></i><i style="height:6px"></i><i style="height:14px"></i><i style="height:8px"></i><i style="height:18px"></i><i style="height:10px"></i><i style="height:22px"></i><i style="height:8px"></i><i style="height:14px"></i><i style="height:6px"></i><i style="height:10px"></i><i style="height:6px"></i><i style="height:12px"></i><i style="height:7px"></i><i style="height:16px"></i><i style="height:9px"></i><i style="height:6px"></i>
+      </div>
+      <p id="voiceHint" class="chad-label text-center" style="font-size:.64rem;opacity:.55;letter-spacing:.10em;text-transform:uppercase">Tap the mic — 60 seconds max • speak from the heart</p>
+      <p id="voiceErr" class="hidden text-center font-label-sm" style="font-size:.68rem;color:#ff8a80;letter-spacing:.04em"></p>
+    </div>
+
+    <!-- Controls: Stop / Preview / Re-record / Send -->
+    <div id="voiceControls" class="grid grid-cols-2 gap-2">
+      <button id="voiceStopBtn" type="button" class="hidden chad-btn w-full flex items-center justify-center gap-2" style="background:#1a1a1a;border:1px solid rgba(239,68,68,.35)"><span class="material-symbols-outlined text-base" style="color:#F87171">stop_circle</span> Stop</button>
+      <button id="voiceRerecordBtn" type="button" class="hidden chad-btn w-full flex items-center justify-center gap-2"><span class="material-symbols-outlined text-base">refresh</span> Re-record</button>
+      <button id="voiceSendBtn" type="button" class="hidden chad-btn chad-btn-gold w-full flex items-center justify-center gap-2"><span class="material-symbols-outlined text-base">send</span> Send my voice</button>
+      <button id="voiceStopOnlySpacer" type="button" class="hidden chad-btn" style="visibility:hidden" aria-hidden="true"></button>
+    </div>
+
+    <!-- Preview player -->
+    <div id="voicePreviewWrap" class="hidden space-y-3 pt-1">
+      <div class="rounded-2xl border border-gold/20 bg-black/30 p-3">
+        <div class="flex items-center justify-between gap-3 mb-2">
+          <span class="inline-flex items-center gap-1.5 font-label-sm text-gold/80" style="font-size:.64rem;letter-spacing:.12em;text-transform:uppercase"><span class="material-symbols-outlined text-sm">graphic_eq</span> Preview</span>
+          <span id="voicePreviewDur" class="font-label-sm text-white/70" style="font-size:.64rem;letter-spacing:.06em">0:00</span>
+        </div>
+        <audio id="voicePreviewAudio" class="voice-audio w-full" controls preload="metadata"></audio>
+        <p class="chad-label text-center !mb-0" style="font-size:.60rem;opacity:.5;margin-top:6px">Listen back — if you love it, send it. It stays private until after New Year’s.</p>
+      </div>
+    </div>
+
+    <!-- Sent state -->
+    <div id="voiceSent" class="hidden rounded-2xl border border-emerald-500/25 bg-emerald-500/10 p-4 text-center space-y-2">
+      <div class="w-12 h-12 mx-auto rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-300"><span class="material-symbols-outlined">check_circle</span></div>
+      <p class="font-label-sm text-emerald-200" style="font-size:.72rem;letter-spacing:.08em">Voice note sent — they’ll hear it after the celebration 💛</p>
+      <p class="font-body-md" style="font-size:.74rem;color:rgba(255,255,255,.68)">From: <span id="voiceSentName" class="text-gold-light">you</span> • one note per guest — you can re-record to replace it before the wedding.</p>
+      <button id="voiceReplaceBtn" type="button" class="chad-btn w-full mt-1 flex items-center justify-center gap-2"><span class="material-symbols-outlined text-base">mic</span> Record a new one</button>
+      <a href="voice-messages.html" class="inline-flex items-center gap-1.5 font-label-sm text-gold/80 hover:text-gold underline underline-offset-4" style="font-size:.66rem;letter-spacing:.08em">Hear all voice notes after Dec 31 →</a>
+    </div>
+
+    <p class="text-center font-label-sm" style="font-size:.58rem;letter-spacing:.10em;text-transform:uppercase;color:rgba(255,255,255,.38)">Stored securely in Convex • Opus • not mp3 • max 1 min</p>
+  </div>
 </div>
 
 <div id="sucCalendarBlock" class="success-pop bg-white/5 border border-gold/30 rounded-2xl p-5 text-center space-y-3">
@@ -1177,6 +1274,10 @@ select:-webkit-autofill {
       : 'Your RSVP has been received';
     updateTotals();
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    try {
+      var __voiceName = info.couple ? (info.nameA || guestName || 'Guest') : (info.name || guestName || 'Guest');
+      if (typeof window._voiceInitCard === 'function') window._voiceInitCard(__voiceName);
+    } catch(e){}
   }
 
   function fetchPriorStatus() {
@@ -1219,6 +1320,411 @@ select:-webkit-autofill {
     });
   };
 
+  /* ==========================================================
+     VOICE NOTE — Opus → Convex File Storage, 60s max (Opus only)
+     ========================================================== */
+  var VOICE_MAX_SEC = 60;
+  var WEDDING_ISO_VOICE = '2026-12-31T18:00:00-06:00';
+  var voiceEls = {
+    card: document.getElementById('voiceNoteCard'),
+    fromLine: document.getElementById('voiceFromLine'),
+    fromName: document.getElementById('voiceFromName'),
+    unsupported: document.getElementById('voiceUnsupported'),
+    core: document.getElementById('voiceCore'),
+    ringFg: document.getElementById('voiceRingFg'),
+    recordBtn: document.getElementById('voiceRecordBtn'),
+    timer: document.getElementById('voiceTimer'),
+    timerSub: document.getElementById('voiceTimerSub'),
+    bars: document.getElementById('voiceBars'),
+    hint: document.getElementById('voiceHint'),
+    err: document.getElementById('voiceErr'),
+    stopBtn: document.getElementById('voiceStopBtn'),
+    rerecordBtn: document.getElementById('voiceRerecordBtn'),
+    sendBtn: document.getElementById('voiceSendBtn'),
+    previewWrap: document.getElementById('voicePreviewWrap'),
+    previewAudio: document.getElementById('voicePreviewAudio'),
+    previewDur: document.getElementById('voicePreviewDur'),
+    sent: document.getElementById('voiceSent'),
+    sentName: document.getElementById('voiceSentName'),
+    replaceBtn: document.getElementById('voiceReplaceBtn')
+  };
+  var voiceState = {
+    stream: null,
+    recorder: null,
+    chunks: [],
+    mime: '',
+    blob: null,
+    durationSec: 0,
+    startMs: 0,
+    timerId: null,
+    animId: null,
+    ctx: null,
+    analyser: null,
+    isRecording: false,
+    isSupported: false,
+    sentOnce: false
+  };
+
+  function voicePickMime() {
+    var prefs = ['audio/webm;codecs=opus','audio/ogg;codecs=opus','audio/webm'];
+    if (typeof MediaRecorder === 'undefined' || !MediaRecorder.isTypeSupported) return '';
+    for (var i=0;i<prefs.length;i++) { try { if (MediaRecorder.isTypeSupported(prefs[i])) return prefs[i]; } catch(e){} }
+    return '';
+  }
+  function voiceFmt(sec) {
+    sec = Math.max(0, Math.floor(sec));
+    var m = Math.floor(sec/60), s = sec%60;
+    return m + ':' + (s<10?'0'+s:s);
+  }
+  function voiceSetRing(p) {
+    var el = voiceEls.ringFg;
+    if (!el) return;
+    var circ = 2 * Math.PI * 44; // r=44
+    var off = circ * (1 - Math.max(0, Math.min(1, p)));
+    el.style.strokeDasharray = circ;
+    el.style.strokeDashoffset = off;
+  }
+  function voiceShowErr(msg) {
+    if (!voiceEls.err) return;
+    voiceEls.err.textContent = msg;
+    voiceEls.err.classList.remove('hidden');
+    setTimeout(function(){ voiceEls.err.classList.add('hidden'); }, 4200);
+  }
+  function voiceHideErr(){ if(voiceEls.err) voiceEls.err.classList.add('hidden'); }
+  function voiceUpdateBarsFake() {
+    if (!voiceEls.bars) return;
+    var bars = voiceEls.bars.querySelectorAll('i');
+    if (voiceState.isRecording && voiceState.analyser) {
+      var data = new Uint8Array(voiceState.analyser.frequencyBinCount);
+      voiceState.analyser.getByteFrequencyData(data);
+      for (var i=0;i<bars.length;i++) {
+        var idx = Math.floor(i * data.length / bars.length);
+        var v = data[idx] || 0;
+        var h = 6 + (v / 255) * 28;
+        if (i%3===0) h *= 0.7;
+        bars[i].style.height = Math.round(h) + 'px';
+        bars[i].style.opacity = 0.7 + (v/255)*0.3;
+      }
+    } else if (voiceState.isRecording) {
+      for (var j=0;j<bars.length;j++) {
+        var rnd = 6 + Math.random()*18 + Math.sin(Date.now()/120 + j)*6;
+        bars[j].style.height = Math.round(rnd)+'px';
+      }
+    } else {
+      var idleH = [6,10,6,14,8,18,10,22,8,14,6,10,6,12,7,16,9,6];
+      for (var k=0;k<bars.length;k++) bars[k].style.height = (idleH[k%idleH.length]||8)+'px';
+      for (var k2=0;k2<bars.length;k2++) bars[k2].style.opacity = 0.55;
+    }
+    if (voiceState.isRecording) {
+      voiceState.animId = requestAnimationFrame(voiceUpdateBarsFake);
+    }
+  }
+  function voiceResetBarsIdle(){
+    if (!voiceEls.bars) return;
+    voiceEls.bars.classList.add('idle');
+    voiceUpdateBarsFake();
+  }
+  function voiceSetUiRecording(isRec) {
+    voiceState.isRecording = isRec;
+    if (voiceEls.recordBtn) {
+      voiceEls.recordBtn.disabled = isRec;
+      voiceEls.recordBtn.classList.toggle('rec', isRec);
+      var ic = voiceEls.recordBtn.querySelector('.material-symbols-outlined');
+      if (ic) ic.textContent = isRec ? 'graphic_eq' : 'mic';
+    }
+    if (voiceEls.timerSub) voiceEls.timerSub.classList.toggle('hidden', !isRec);
+    if (voiceEls.ringFg) voiceEls.ringFg.classList.toggle('rec', isRec);
+    if (voiceEls.bars) voiceEls.bars.classList.toggle('idle', !isRec);
+    if (voiceEls.stopBtn) voiceEls.stopBtn.classList.toggle('hidden', !isRec);
+    if (voiceEls.hint) voiceEls.hint.textContent = isRec ? 'Recording — speak clearly • tap Stop when you’re done' : 'Tap the mic — 60 seconds max • speak from the heart';
+    if (isRec) {
+      voiceUpdateBarsFake();
+    } else {
+      if (voiceState.animId) { cancelAnimationFrame(voiceState.animId); voiceState.animId=null; }
+      voiceResetBarsIdle();
+    }
+  }
+  function voiceTick() {
+    var elapsed = (Date.now() - voiceState.startMs)/1000;
+    if (elapsed > VOICE_MAX_SEC) elapsed = VOICE_MAX_SEC;
+    if (voiceEls.timer) voiceEls.timer.textContent = voiceFmt(elapsed) + ' / 1:00';
+    voiceSetRing(elapsed / VOICE_MAX_SEC);
+    if (elapsed >= VOICE_MAX_SEC) {
+      voiceStopRecording();
+    }
+  }
+  function voiceStopTracks() {
+    if (voiceState.stream) {
+      try { voiceState.stream.getTracks().forEach(function(t){ t.stop(); }); } catch(e){}
+      voiceState.stream = null;
+    }
+    if (voiceState.ctx) {
+      try { voiceState.ctx.close(); } catch(e){}
+      voiceState.ctx = null; voiceState.analyser = null;
+    }
+  }
+  function voiceStopRecording() {
+    if (!voiceState.isRecording) return;
+    voiceState.isRecording = false;
+    if (voiceState.timerId) { clearInterval(voiceState.timerId); voiceState.timerId=null; }
+    if (voiceState.animId) { cancelAnimationFrame(voiceState.animId); voiceState.animId=null; }
+    try { if (voiceState.recorder && voiceState.recorder.state !== 'inactive') voiceState.recorder.stop(); } catch(e){}
+    voiceSetUiRecording(false);
+  }
+  function voiceCleanupPreview() {
+    if (voiceEls.previewAudio) {
+      try { voiceEls.previewAudio.pause(); } catch(e){}
+      if (voiceEls.previewAudio.src) {
+        try { URL.revokeObjectURL(voiceEls.previewAudio.src); } catch(e){}
+        voiceEls.previewAudio.removeAttribute('src');
+        voiceEls.previewAudio.load();
+      }
+    }
+    if (voiceState.blob) {
+      // keep blob for send until re-record
+    }
+  }
+  function voiceShowPreview() {
+    if (!voiceState.blob || !voiceEls.previewAudio) return;
+    var url = URL.createObjectURL(voiceState.blob);
+    voiceEls.previewAudio.src = url;
+    voiceEls.previewAudio.load();
+    if (voiceEls.previewDur) voiceEls.previewDur.textContent = voiceFmt(voiceState.durationSec);
+    if (voiceEls.previewWrap) voiceEls.previewWrap.classList.remove('hidden');
+    if (voiceEls.rerecordBtn) voiceEls.rerecordBtn.classList.remove('hidden');
+    if (voiceEls.sendBtn) voiceEls.sendBtn.classList.remove('hidden');
+    if (voiceEls.recordBtn) voiceEls.recordBtn.disabled = true;
+    voiceHideErr();
+  }
+  function voiceHidePreview() {
+    if (voiceEls.previewWrap) voiceEls.previewWrap.classList.add('hidden');
+    if (voiceEls.rerecordBtn) voiceEls.rerecordBtn.classList.add('hidden');
+    if (voiceEls.sendBtn) voiceEls.sendBtn.classList.add('hidden');
+    if (voiceEls.recordBtn) voiceEls.recordBtn.disabled = false;
+    voiceCleanupPreview();
+    voiceState.blob = null;
+    voiceState.durationSec = 0;
+    voiceState.mime = voicePickMime() || voiceState.mime;
+    if (voiceEls.timer) voiceEls.timer.textContent = '0:00 / 1:00';
+    voiceSetRing(0);
+    voiceResetBarsIdle();
+  }
+  function voiceEnterSent(nameForSent) {
+    if (voiceEls.core) voiceEls.core.classList.add('hidden');
+    // keep card visible but show sent
+    if (voiceEls.sent) voiceEls.sent.classList.remove('hidden');
+    if (voiceEls.sentName) voiceEls.sentName.textContent = nameForSent || 'you';
+    if (voiceEls.recordBtn) voiceEls.recordBtn.disabled = true;
+    try { localStorage.setItem('cl_voice_sent_'+guestId, String(Date.now())); } catch(e){}
+  }
+  function voiceExitSent() {
+    if (voiceEls.sent) voiceEls.sent.classList.add('hidden');
+    if (voiceEls.core) voiceEls.core.classList.remove('hidden');
+    voiceHidePreview();
+    voiceSetRing(0);
+    if (voiceEls.timer) voiceEls.timer.textContent = '0:00 / 1:00';
+    if (voiceEls.recordBtn) voiceEls.recordBtn.disabled = false;
+    voiceHideErr();
+  }
+  function voiceBindOnce() {
+    if (voiceEls.recordBtn && !voiceEls.recordBtn._bound) {
+      voiceEls.recordBtn._bound = true;
+      voiceEls.recordBtn.addEventListener('click', voiceStartRecording);
+    }
+    if (voiceEls.stopBtn && !voiceEls.stopBtn._bound) {
+      voiceEls.stopBtn._bound = true;
+      voiceEls.stopBtn.addEventListener('click', voiceStopRecording);
+    }
+    if (voiceEls.rerecordBtn && !voiceEls.rerecordBtn._bound) {
+      voiceEls.rerecordBtn._bound = true;
+      voiceEls.rerecordBtn.addEventListener('click', function(){ voiceHidePreview(); voiceHideErr(); });
+    }
+    if (voiceEls.replaceBtn && !voiceEls.replaceBtn._bound) {
+      voiceEls.replaceBtn._bound = true;
+      voiceEls.replaceBtn.addEventListener('click', function(){ voiceExitSent(); });
+    }
+    if (voiceEls.sendBtn && !voiceEls.sendBtn._bound) {
+      voiceEls.sendBtn._bound = true;
+      voiceEls.sendBtn.addEventListener('click', voiceSend);
+    }
+  }
+  function voiceInitCard(triggerName) {
+    var card = voiceEls.card;
+    if (!card) return;
+    var from = triggerName || guestName || (document.getElementById('name')?document.getElementById('name').value.trim():'') || (document.getElementById('nameA')?document.getElementById('nameA').value.trim():'') || 'Guest';
+    if (voiceEls.fromName) voiceEls.fromName.textContent = from;
+    if (voiceEls.fromLine) voiceEls.fromLine.classList.remove('hidden');
+    // check support
+    var mime = voicePickMime();
+    voiceState.mime = mime;
+    voiceState.isSupported = !!mime;
+    if (!mime) {
+      if (voiceEls.unsupported) voiceEls.unsupported.classList.remove('hidden');
+      if (voiceEls.core) voiceEls.core.classList.add('hidden');
+      return;
+    }
+    if (voiceEls.unsupported) voiceEls.unsupported.classList.add('hidden');
+    if (voiceEls.core) voiceEls.core.classList.remove('hidden');
+    // check if already sent
+    try {
+      var already = localStorage.getItem('cl_voice_sent_'+guestId);
+      // also check server if we want (silent)
+      fetch(CONVEX_HTTP_URL + '/api/voice/mine?guestId=' + encodeURIComponent(guestId))
+        .then(function(r){ return r.json().catch(function(){return null}); })
+        .then(function(data){
+          if (data && data.storageId) {
+            voiceState.sentOnce = true;
+            voiceEnterSent(from);
+          }
+        }).catch(function(){});
+      if (already && !voiceState.sentOnce) {
+        // don't auto-show sent until confirmed, but hint
+      }
+    } catch(e){}
+    voiceSetRing(0);
+    voiceResetBarsIdle();
+    voiceBindOnce();
+    if (voiceEls.timer) voiceEls.timer.textContent = '0:00 / 1:00';
+  }
+  function voiceStartRecording() {
+    voiceHideErr();
+    var mime = voicePickMime();
+    if (!mime) {
+      voiceShowErr('Voice notes need Opus — please open in Chrome or Edge.');
+      if (voiceEls.unsupported) voiceEls.unsupported.classList.remove('hidden');
+      if (voiceEls.core) voiceEls.core.classList.add('hidden');
+      return;
+    }
+    voiceState.mime = mime;
+    voiceHidePreview();
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      voiceShowErr('Microphone not available in this browser.');
+      return;
+    }
+    // guard: already recording?
+    if (voiceState.isRecording) return;
+    navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1, noiseSuppression: true, echoCancellation: true, autoGainControl: true } })
+      .then(function(stream){
+        voiceState.stream = stream;
+        // analyser for bars
+        try {
+          var AC = window.AudioContext || window.webkitAudioContext;
+          if (AC) {
+            voiceState.ctx = new AC();
+            var src = voiceState.ctx.createMediaStreamSource(stream);
+            voiceState.analyser = voiceState.ctx.createAnalyser();
+            voiceState.analyser.fftSize = 256;
+            voiceState.analyser.smoothingTimeConstant = 0.75;
+            src.connect(voiceState.analyser);
+          }
+        } catch(e){ voiceState.ctx=null; voiceState.analyser=null; }
+        voiceState.chunks = [];
+        var rec;
+        try { rec = new MediaRecorder(stream, { mimeType: mime }); }
+        catch(e){ try { rec = new MediaRecorder(stream); voiceState.mime = rec.mimeType || mime; } catch(e2){ voiceShowErr('Could not start recorder — try Chrome.'); voiceStopTracks(); return; } }
+        voiceState.recorder = rec;
+        rec.ondataavailable = function(ev){ if (ev.data && ev.data.size>0) voiceState.chunks.push(ev.data); };
+        rec.onstop = function(){
+          var elapsed = (Date.now() - voiceState.startMs)/1000;
+          var dur = Math.min(VOICE_MAX_SEC, Math.max(1, Math.round(elapsed)));
+          voiceState.durationSec = dur;
+          var blobType = voiceState.mime || mime;
+          var blob = new Blob(voiceState.chunks, { type: blobType });
+          voiceStopTracks();
+          if (blob.size < 800) {
+            voiceShowErr('That was too short — hold the mic and try again.');
+            voiceHidePreview();
+            return;
+          }
+          if (blob.size > 2 * 1024 * 1024) {
+            voiceShowErr('That note is a bit large — try a shorter one (max 1 min).');
+            return;
+          }
+          voiceState.blob = blob;
+          voiceShowPreview();
+          if (voiceState.timerId) { clearInterval(voiceState.timerId); voiceState.timerId=null; }
+          if (voiceState.animId) { cancelAnimationFrame(voiceState.animId); voiceState.animId=null; }
+        };
+        rec.onerror = function(){ voiceShowErr('Recording error — please try again.'); voiceSetUiRecording(false); voiceStopTracks(); };
+        try { rec.start(100); } catch(e){ voiceShowErr('Could not start — please allow microphone.'); voiceStopTracks(); return; }
+        voiceState.startMs = Date.now();
+        voiceSetUiRecording(true);
+        voiceState.timerId = setInterval(voiceTick, 120);
+        voiceTick();
+      })
+      .catch(function(err){
+        var msg = 'Microphone blocked — please allow access and tap again.';
+        if (err && err.name === 'NotAllowedError') msg = 'Microphone permission denied — allow it in your browser settings, then tap again.';
+        else if (err && err.name === 'NotFoundError') msg = 'No microphone found on this device.';
+        voiceShowErr(msg);
+        voiceSetUiRecording(false);
+      });
+  }
+  function voiceSend() {
+    if (!voiceState.blob) { voiceShowErr('Record something first — tap the mic.'); return; }
+    var dur = voiceState.durationSec || VOICE_MAX_SEC;
+    if (dur < 1 || dur > 62) { voiceShowErr('Please record 1–60 seconds.'); return; }
+    var btn = voiceEls.sendBtn;
+    if (btn) { btn.disabled = true; btn.innerHTML = '<span class="material-symbols-outlined text-base animate-spin">progress_activity</span> Sending…'; }
+    var mimeToSend = voiceState.blob.type || voiceState.mime || 'audio/webm;codecs=opus';
+    // Opus-only guard
+    var low = mimeToSend.toLowerCase();
+    if (!(low.startsWith('audio/webm') || low.startsWith('audio/ogg'))) {
+      voiceShowErr('Please record as Opus — try Chrome.');
+      if (btn) { btn.disabled=false; btn.innerHTML = '<span class="material-symbols-outlined text-base">send</span> Send my voice'; }
+      return;
+    }
+    var guestDisplayName = (voiceEls.fromName ? voiceEls.fromName.textContent : '') || guestName || 'Guest';
+    var lastNameVal = '';
+    try {
+      var lnEl = document.getElementById('lastName');
+      if (lnEl && lnEl.value) lastNameVal = lnEl.value.trim();
+      else {
+        var lnA = document.getElementById('lastNameA');
+        if (lnA && lnA.value) lastNameVal = lnA.value.trim();
+      }
+    } catch(e){}
+    // 1) get upload url
+    fetch(CONVEX_HTTP_URL + '/api/voice/upload-url', { method: 'POST' })
+      .then(function(r){ return r.json().catch(function(){return {};}).then(function(j){ if(!r.ok) throw new Error(j.error||'Could not get upload URL'); return j; }); })
+      .then(function(j){
+        var uploadUrl = j.uploadUrl;
+        if (!uploadUrl) throw new Error('No upload URL');
+        return fetch(uploadUrl, { method: 'POST', headers: { 'Content-Type': mimeToSend }, body: voiceState.blob })
+          .then(function(res){
+            return res.json().catch(function(){return {};}).then(function(j2){
+              if (!res.ok) throw new Error(j2.error||'Upload failed');
+              return j2.storageId || j2.storage_id || j2.id;
+            });
+          });
+      })
+      .then(function(storageId){
+        if (!storageId) throw new Error('Upload failed — no file saved');
+        return fetch(CONVEX_HTTP_URL + '/api/voice/save', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ guestId: guestId, guestName: guestDisplayName, lastName: lastNameVal || undefined, storageId: storageId, mimeType: mimeToSend, durationSec: dur })
+        }).then(function(r){ return r.json().catch(function(){return {};}).then(function(j){ if(!r.ok) throw new Error(j.error||'Could not save'); return j; }); });
+      })
+      .then(function(){
+        if (btn) { btn.disabled=false; btn.innerHTML = '<span class="material-symbols-outlined text-base">send</span> Send my voice'; }
+        // success — show sent, keep blob until re-record
+        voiceEnterSent(guestDisplayName);
+        voiceHideErr();
+        // revoke preview url but keep blob for potential re-send? no need
+        // clean preview audio
+        try { if (voiceEls.previewAudio && voiceEls.previewAudio.src) URL.revokeObjectURL(voiceEls.previewAudio.src); } catch(e){}
+      })
+      .catch(function(err){
+        if (btn) { btn.disabled=false; btn.innerHTML = '<span class="material-symbols-outlined text-base">send</span> Send my voice'; }
+        voiceShowErr(err && err.message ? err.message : 'Could not send — check your connection and try again.');
+      });
+  }
+  // expose for showSuccess hook and debugging
+  window._voiceInitCard = voiceInitCard;
+  window._voiceStart = voiceStartRecording;
+  window._voiceSend = voiceSend;
+
   window.resetForAnother = function () {
     setSubmittingState(false);
     document.getElementById('rsvpForm').classList.remove('hidden');
@@ -1237,6 +1743,24 @@ select:-webkit-autofill {
     });
     window.hideError();
     document.getElementById('greeting').classList.add('hidden');
+    // reset voice note state for next guest
+    try {
+      if (voiceEls.sent) voiceEls.sent.classList.add('hidden');
+      if (voiceEls.core) voiceEls.core.classList.remove('hidden');
+      if (voiceEls.unsupported) voiceEls.unsupported.classList.add('hidden');
+      voiceHidePreview();
+      voiceHideErr();
+      voiceSetRing(0);
+      if (voiceEls.timer) voiceEls.timer.textContent = '0:00 / 1:00';
+      if (voiceEls.timerSub) voiceEls.timerSub.classList.add('hidden');
+      voiceState.sentOnce = false;
+      voiceState.blob = null;
+      voiceState.durationSec = 0;
+      voiceState.chunks = [];
+      voiceStopTracks();
+      if (voiceEls.recordBtn) { voiceEls.recordBtn.disabled = false; voiceEls.recordBtn.classList.remove('rec'); }
+      if (voiceEls.previewAudio) { try { voiceEls.previewAudio.pause(); } catch(e){} }
+    } catch(e){}
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 

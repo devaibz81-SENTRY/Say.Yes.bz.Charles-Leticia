@@ -436,3 +436,110 @@ export const countAttending = internalQuery({
   },
 });
 
+// ---------- voice notes (Opus/WebM, Convex storage, 60s max) ----------
+
+export const saveVoiceNote = internalMutation({
+  args: {
+    guestId: v.string(),
+    guestName: v.string(),
+    storageId: v.id("_storage"),
+    mimeType: v.string(),
+    durationSec: v.number(),
+    lastName: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    const mime = (args.mimeType || "").toLowerCase();
+    const allowed = [
+      "audio/webm;codecs=opus",
+      "audio/webm",
+      "audio/ogg;codecs=opus",
+      "audio/ogg",
+    ];
+    const isAllowed = allowed.some((a) => mime === a || mime.startsWith(a.split(";")[0]));
+    if (!isAllowed) throw new Error("Unsupported audio type — Opus/WebM only");
+    const dur = Math.round(args.durationSec);
+    if (dur < 1 || dur > 62) throw new Error("Duration must be 1..60 seconds");
+
+    const existing = await ctx.db
+      .query("voice_notes")
+      .withIndex("by_guestId", (q) => q.eq("guestId", args.guestId))
+      .first();
+
+    if (existing) {
+      try {
+        await ctx.storage.delete(existing.storageId);
+      } catch {}
+      await ctx.db.patch(existing._id, {
+        guestName: args.guestName.trim() || "Guest",
+        storageId: args.storageId,
+        mimeType: args.mimeType,
+        durationSec: dur,
+        createdAt: Date.now(),
+        lastName: args.lastName,
+      });
+      return { id: existing._id, updated: true };
+    }
+
+    const id = await ctx.db.insert("voice_notes", {
+      guestId: args.guestId,
+      guestName: args.guestName.trim() || "Guest",
+      storageId: args.storageId,
+      mimeType: args.mimeType,
+      durationSec: dur,
+      createdAt: Date.now(),
+      lastName: args.lastName,
+    });
+    return { id, updated: false };
+  },
+});
+
+export const listVoiceNotes = internalQuery({
+  args: {},
+  handler: async (ctx) => {
+    const notes = await ctx.db
+      .query("voice_notes")
+      .withIndex("by_createdAt")
+      .order("desc")
+      .collect();
+    const withUrls = await Promise.all(
+      notes.map(async (n) => {
+        let audioUrl: string | null = null;
+        try {
+          audioUrl = await ctx.storage.getUrl(n.storageId);
+        } catch {
+          audioUrl = null;
+        }
+        return {
+          id: n._id,
+          guestId: n.guestId,
+          guestName: n.guestName,
+          lastName: n.lastName || null,
+          mimeType: n.mimeType,
+          durationSec: n.durationSec,
+          createdAt: n.createdAt,
+          audioUrl,
+        };
+      })
+    );
+    return withUrls.filter((n) => !!n.audioUrl);
+  },
+});
+
+export const getVoiceNoteByGuestId = internalQuery({
+  args: { guestId: v.string() },
+  handler: async (ctx, { guestId }) => {
+    const note = await ctx.db
+      .query("voice_notes")
+      .withIndex("by_guestId", (q) => q.eq("guestId", guestId))
+      .first();
+    if (!note) return null;
+    let audioUrl: string | null = null;
+    try {
+      audioUrl = await ctx.storage.getUrl(note.storageId);
+    } catch {
+      audioUrl = null;
+    }
+    return { ...note, audioUrl };
+  },
+});
+
