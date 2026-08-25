@@ -70,53 +70,39 @@ input[type=number]{-moz-appearance:textfield}
 /* === CHAD COMPACT — ULTRA COMPACT V2 === */
 /* RSVP title */
 h1 { font-size: clamp(1.65rem, 4.2vw, 2.4rem) !important; font-weight: 800 !important; letter-spacing: -0.02em !important; line-height:1.1 !important; }
-
 /* Script accent */
 .font-script-accent.italic { font-size: clamp(1.15rem, 2.8vw, 1.55rem) !important; }
-
 /* Bolder form labels */
 label { font-weight: 600 !important; }
 label.chad-label { font-size: 0.70rem !important; }
-
 /* Attendance section label */
 .att-choices ~ p, p:has(+ .att-choices) { font-size: 0.68rem !important; font-weight: 600 !important; letter-spacing: 0.16em !important; }
-
 /* Attendance row — compact */
 .att-choice { padding: 0.45rem 0.3rem 0.35rem !important; }
 .att-choice .att-ic { font-size: 20px !important; }
 .att-choice .att-lbl { font-size: 10px !important; font-weight: 600 !important; letter-spacing: 0.13em !important; }
 .att-choice .att-sub { font-size: 8px !important; }
-
 /* Submit button */
 button[type=submit] { padding: 0.9rem 2.2rem !important; font-size: 0.72rem !important; font-weight: 700 !important; letter-spacing: 0.24em !important; box-shadow: 0 10px 30px rgba(212,175,55,0.28) !important; }
 button[type=submit]:hover { box-shadow: 0 14px 38px rgba(212,175,55,0.42) !important; transform: translateY(-1px); }
-
 /* Gold divider */
 .w-16.h-\[1px\] { height: 1.5px !important; width: 3.5rem !important; opacity: 0.7 !important; }
-
 /* Header title */
 .font-serif.italic.text-xl { font-size: 1.05rem !important; font-weight: 600 !important; }
-
 /* Guest counter stepper buttons */
 .w-12.h-12 { width: 2.5rem !important; height: 2.5rem !important; font-size: 1.2rem !important; }
-
 /* Deadline notice */
 .mt-6.font-label-sm.text-on-surface-variant.italic { font-size: 0.72rem !important; font-weight: 500 !important; letter-spacing: 0.1em !important; color: rgba(212,175,55,0.65) !important; }
-
 /* Section dividers */
 .flex.items-center.gap-3 .font-label-sm.text-gold { font-size: 0.68rem !important; font-weight: 600 !important; }
-
 /* "Please reply" text */
 .pt-8.text-center p { opacity: 0.75 !important; }
-
 /* Success heading */
 #success h2 { font-size: clamp(1.8rem, 4.5vw, 2.6rem) !important; }
 #success .w-20.h-20 { width: 4.5rem !important; height: 4.5rem !important; }
 #success .text-4xl { font-size: 2rem !important; }
-
 /* Input text */
 .text-headline-md { font-size: 1.05rem !important; }
-
 /* "Will you be attending" prompt */
 .font-label-sm.text-on-surface-variant.tracking-\[0\.2em\].uppercase.text-center {
   font-size: 0.75rem !important;
@@ -124,7 +110,6 @@ button[type=submit]:hover { box-shadow: 0 14px 38px rgba(212,175,55,0.42) !impor
   color: rgba(245,245,245,0.85) !important;
   letter-spacing: 0.18em !important;
 }
-
 /* Mobile first: tighter spacing */
 @media (max-width: 640px) {
   .space-y-8 { margin-top: 1.25rem; }
@@ -134,7 +119,6 @@ button[type=submit]:hover { box-shadow: 0 14px 38px rgba(212,175,55,0.42) !impor
   .mt-6 { margin-top: 1rem; }
   input.py-3, textarea.py-3 { padding-top: 0.6rem; padding-bottom: 0.6rem; }
 }
-
 /* === UIVERSE-STYLE CHAD FORM — ULTRA COMPACT V3 (first principles) === */
 .chad-form{
   display:flex;flex-direction:column;gap:8px;
@@ -191,7 +175,6 @@ select:-webkit-autofill {
 .chad-btn:hover{background-color:#000;color:#fff}
 .chad-btn-gold{background:#D4AF37;color:#0a0a0a}
 .chad-btn-gold:hover{background:#F5D76E;color:#0a0a0a}
-
 /* === NEON CHECKBOX (adapted from Uiverse.io by 3HugaDa3) === */
 .checkbox-wrapper {
   --checkbox-size: 22px;
@@ -340,11 +323,9 @@ select:-webkit-autofill {
 </div>
 <div class="font-serif italic text-xl text-gold">Charles &amp; Leticia</div>
 </header>
-
 <main class="pt-16 pb-12 px-4 sm:px-[1rem] flex justify-center items-start sm:items-center min-h-screen relative z-20">
 <div class="max-w-[400px] w-full">
 <section class="relative">
-
 <!-- Heading — compact (visible on form, hidden on post-RSVP success) -->
 <div id="rsvpHeading" class="text-center mb-4 relative z-10">
 <span class="font-script-accent text-script-accent italic text-gold mb-1 block" style="font-size:1.55rem;">Kindly Respond</span>
@@ -355,7 +336,6 @@ select:-webkit-autofill {
 <span class="material-symbols-outlined text-gold text-sm" style="font-variation-settings:'FILL' 1">favorite</span>
 <span class="font-label-sm text-white/70 tracking-wide" style="font-size:.62rem;letter-spacing:.08em">We love your babies — but this is an <strong class="text-gold-light font-semibold">adults-only</strong> celebration</span>
 </div>
-
 <p id="totalLine" class="font-label-sm text-gold uppercase tracking-[0.2em] mt-3" style="font-size:.66rem;"></p>
 <p id="coupleNote" class="font-label-sm text-gold-light uppercase tracking-[0.2em] mt-1.5 hidden" style="font-size:.66rem;">RSVPing for the two of you</p>
 <div id="priorStatus" class="hidden mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-gold/40 bg-gold/10 font-label-sm text-gold uppercase tracking-[0.15em]" style="font-size:.66rem;">
@@ -363,7 +343,6 @@ select:-webkit-autofill {
 <span id="priorStatusText"></span>
 </div>
 </div>
-
 <!-- FORM -->
 <form id="rsvpForm" class="chad-form relative z-10" onsubmit="handleSubmit(event)">
 <!-- SINGLE MODE -->
@@ -411,8 +390,6 @@ select:-webkit-autofill {
 <span id="statusPill" class="att-status hidden"><span class="material-symbols-outlined text-base"></span><span class="att-status-text"></span></span>
 </div>
 </div>
-
-
 </div>
 <!-- COUPLE MODE -->
 <div id="coupleFields" class="hidden space-y-5">
@@ -531,7 +508,6 @@ select:-webkit-autofill {
 <p class="chad-deadline mt-2" style="font-size:.58rem;opacity:.45">Reply by <strong>Nov 1, 2026</strong></p>
 </div>
 </form>
-
 <!-- SUCCESS -->
 <div id="success" class="hidden text-center relative z-10 space-y-5">
 <h2 class="success-pop font-headline-xl text-white leading-tight">Thank You,<br/><span id="sucName" class="font-script-accent text-script-accent text-gold-gradient italic">Guest</span></h2>
@@ -542,7 +518,6 @@ select:-webkit-autofill {
 </div>
 <p id="sucSummary" class="hidden"></p>
 <p id="sucTotal" class="success-pop font-label-sm text-on-surface-variant uppercase tracking-[0.15em]"></p>
-
 <!-- Post-RSVP: sweet & funny love note — offered AFTER the yes (as requested) -->
 <div id="postRsvpLove" class="success-pop chad-form text-left space-y-3 mt-1">
 <div class="text-center pb-1">
@@ -568,7 +543,6 @@ select:-webkit-autofill {
 </button>
 <p id="postLoveOk" class="hidden text-center text-emerald-400 font-label-sm" style="font-size:.68rem;letter-spacing:.08em">Sent — they’ll feel it 💛</p>
 </div>
-
 <div id="sucCalendarBlock" class="success-pop bg-white/5 border border-gold/30 rounded-2xl p-5 text-center space-y-3">
   <div class="flex items-center justify-center gap-2 text-gold font-label-sm uppercase tracking-[0.2em]">
     <span class="material-symbols-outlined text-lg">event</span>
@@ -586,11 +560,7 @@ select:-webkit-autofill {
     </a>
   </div>
 </div>
-
 <div class="success-pop flex flex-col gap-3 pt-2 max-w-md mx-auto">
-<a id="songRequestBtn" href="music.html" class="hidden chad-btn chad-btn-gold w-full flex items-center justify-center gap-2 no-underline">
-  <span class="material-symbols-outlined text-xl">music_note</span> Make Song Request &amp; Vote
-</a>
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
   <button onclick="resetForAnother()" class="chad-btn w-full">
     RSVP for another guest
@@ -601,12 +571,10 @@ select:-webkit-autofill {
 </div>
 </div>
 </div>
-
 </section>
 <p class="text-center font-serif text-xs uppercase tracking-[0.2em] opacity-50 mt-10">Charles &amp; Leticia &bull; December 31, 2026 &bull; Belize City</p>
 </div>
 </main>
-
 <!-- Mobile bottom nav -->
 <nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-4 bg-white/[0.08] backdrop-blur-2xl backdrop-saturate-150 border-t border-gold/20 shadow-[0_-10px_40px_rgba(0,0,0,0.6)]">
 <a id="navHome" href="index.html" class="btn-feedback flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:text-gold transition-colors no-underline">
@@ -618,7 +586,6 @@ select:-webkit-autofill {
 <span class="font-serif text-[10px] uppercase tracking-widest text-gold">RSVP</span>
 </a>
 </nav>
-
 <!-- CHAD NOT ON GUEST LIST MODAL -->
 <div id="notOnListModal" class="hidden fixed inset-0 z-[150] flex items-center justify-center p-4 bg-black/85 backdrop-blur-xl">
   <div class="max-w-md w-full bg-[#12121a]/95 border-2 border-amber-500/40 rounded-2xl p-6 sm:p-8 shadow-[0_0_50px_rgba(212,175,55,0.2)] text-center space-y-5 relative overflow-hidden">
@@ -642,7 +609,6 @@ select:-webkit-autofill {
     </div>
   </div>
 </div>
-
 <!-- Error toast -->
 <div id="errToast" class="hidden fixed top-4 left-1/2 -translate-x-1/2 z-[100] w-[calc(100vw-2rem)] max-w-sm">
 <div class="error-alert flex items-center justify-between w-full h-14 rounded-lg bg-[#232531]/95 backdrop-blur px-3 border border-[#d65563]/30 shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
@@ -660,7 +626,6 @@ select:-webkit-autofill {
 </button>
 </div>
 </div>
-
 <script>
 (function () {
   var CONVEX_HTTP_URL = 'https://neat-bee-452.convex.site';
@@ -671,14 +636,10 @@ select:-webkit-autofill {
   var guestType = (params.get('type') || '').toLowerCase();
   var isEasy = params.get('easy') === '1';
   var isCouple = !isEasy && (guestType === 'couple' || !!spouseName);
-
   var STORAGE_KEY = 'cl_rsvps';
-
   function loadAll() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch (e) { return {}; } }
   function saveAll(d) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); } catch (e) {} }
-
   function responsesFor(id) { var d = loadAll(); return d[id] || []; }
-
   function totalAttending() {
     var d = loadAll(); var n = 0;
     Object.keys(d).forEach(function (k) {
@@ -686,20 +647,17 @@ select:-webkit-autofill {
     });
     return n;
   }
-
   function splitName(full) {
     var parts = (full || '').trim().split(/\s+/);
     if (!parts.length || !parts[0]) return { first: '', last: '' };
     return { first: parts[0], last: parts.slice(1).join(' ') };
   }
-
   // ---- Mode setup ----
   var singleFields = document.getElementById('singleFields');
   var coupleFields = document.getElementById('coupleFields');
   var coupleNote = document.getElementById('coupleNote');
   var lastNameField = document.getElementById('lastNameField');
   var optionalFields = document.getElementById('optionalFields');
-
   if (isEasy) {
     // Keep First + Last Name and attending choices always visible (user requirement)
     // Null-guarded — guestField does not exist in this layout, so guard to avoid TypeError that broke RSVP
@@ -707,7 +665,6 @@ select:-webkit-autofill {
     if (_gf) _gf.classList.add('hidden');
     // Note: lastNameField and optionalFields are intentionally NOT hidden — we need first/last + Yes/No/Ask Later hooked to backend
   }
-
   if (isCouple) {
     singleFields.classList.add('hidden');
     coupleFields.classList.remove('hidden');
@@ -719,7 +676,6 @@ select:-webkit-autofill {
     if (pB.first) document.getElementById('nameB').value = pB.first;
     if (pB.last) document.getElementById('lastNameB').value = pB.last;
   }
-
   // Pre-fill name from link
   var nameInput = document.getElementById('name');
   if (guestName) {
@@ -733,7 +689,6 @@ select:-webkit-autofill {
     greeting.classList.remove('hidden');
     greeting.querySelector('span').textContent = guestName;
   }
-
   // Carry params onto invitation links
   function withParams(path) {
     if (!params.toString()) return path;
@@ -742,7 +697,6 @@ select:-webkit-autofill {
   document.getElementById('backLink').href = withParams('index.html');
   document.getElementById('doneLink').href = withParams('index.html');
   document.getElementById('navHome').href = withParams('index.html');
-
   function updateTotals() {
     var line = document.getElementById('totalLine');
     var t = document.getElementById('sucTotal');
@@ -758,14 +712,12 @@ select:-webkit-autofill {
         setFromLocal();
       })
       .catch(function () { setFromLocal(); });
-
     function setFromLocal() {
       var n = totalAttending();
       if (line) line.textContent = n > 0 ? 'Guests confirmed so far: ' + n : '';
       if (t) t.textContent = 'Confirmed attending so far: ' + totalAttending();
     }
   }
-
   // ---- Status pill helpers ----
   function setPill(pill, value) {
     var el = pill;
@@ -789,7 +741,6 @@ select:-webkit-autofill {
       el.classList.add('hidden');
     }
   }
-
   function makeChoices(ids) {
     var radios = [ids.yes, ids.no, ids.maybe].map(function (id) {
       return document.getElementById(id);
@@ -797,7 +748,6 @@ select:-webkit-autofill {
     var guestField = document.getElementById(ids.guestField);
     var pill = document.getElementById(ids.pill);
     var cards = Array.prototype.slice.call(document.querySelectorAll('#' + ids.group + ' .att-choice'));
-
     function current() {
       for (var i = 0; i < radios.length; i++) if (radios[i].checked) return radios[i].value;
       return '';
@@ -813,24 +763,20 @@ select:-webkit-autofill {
     for (var i = 0; i < radios.length; i++) radios[i].addEventListener('change', sync);
     return { radios: radios, guestField: guestField, current: current, sync: sync };
   }
-
   var singleToggle = makeChoices({ group: 'attChoices', yes: 'att-yes', no: 'att-no', maybe: 'att-maybe', guestField: 'guestField', pill: 'statusPill' });
   var coupleA = makeChoices({ group: 'attChoicesA', yes: 'att-yes-a', no: 'att-no-a', maybe: 'att-maybe-a', guestField: 'guestFieldA', pill: 'statusPillA' });
   var coupleB = makeChoices({ group: 'attChoicesB', yes: 'att-yes-b', no: 'att-no-b', maybe: 'att-maybe-b', guestField: 'guestFieldB', pill: 'statusPillB' });
-
   // Easy plus-one: always visible — partner + you, impossible to mess up
   (function(){
     var plusWrap = document.getElementById('easyPlusOneField');
     if (plusWrap) plusWrap.classList.remove('hidden');
   })();
-
   function stepGuests(id, d) {
     var el = document.getElementById(id);
     var v = parseInt(el.value, 10) || 1;
     v = Math.min(8, Math.max(1, v + d));
     el.value = v;
   }
-
   var errTimer = null;
   window.hideError = function () {
     var t = document.getElementById('errToast');
@@ -854,9 +800,7 @@ select:-webkit-autofill {
     if (errTimer) clearTimeout(errTimer);
     errTimer = setTimeout(window.hideError, 5000);
   }
-
   function val(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
-
   var isSubmitting = false;
   function setSubmittingState(submitting) {
     isSubmitting = !!submitting;
@@ -867,11 +811,9 @@ select:-webkit-autofill {
     if (spinner) spinner.classList.toggle('hidden', !submitting);
     if (btnText) btnText.textContent = submitting ? 'Sealing your yes…' : 'Say Yes — With Love';
   }
-
   function postRsvp(payload, cb) {
     var controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
     var timeoutId = controller ? setTimeout(function () { controller.abort(); }, 9000) : null;
-
     fetch(CONVEX_HTTP_URL + '/api/rsvp', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -889,13 +831,11 @@ select:-webkit-autofill {
       cb(null, { ok: true, localSaved: true });
     });
   }
-
   function overallAttendance(a, b) {
     if (a === 'yes' || b === 'yes') return 'yes';
     if (a === 'maybe' || b === 'maybe') return 'maybe';
     return 'no';
   }
-
   window.handleSubmit = function (e) {
     e.preventDefault();
     if (isSubmitting) return;
@@ -931,16 +871,13 @@ select:-webkit-autofill {
         return;
       }
     }
-
     var confirmEl = document.getElementById('confirmCheck');
     if (confirmEl) confirmEl.checked = true;
-
     var phone = val('phone');
     var song = val('song');
     var message = val('message');
     var records = [];
     var guests = 0;
-
     if (isCouple) {
       var nameA = val('nameA');
       var lastNameA = val('lastNameA');
@@ -948,7 +885,6 @@ select:-webkit-autofill {
       var lastNameB = val('lastNameB');
       var attA = coupleA.current();
       var attB = coupleB.current();
-
       // Smart name splitting if full name entered in one field
       if (nameA && !lastNameA && nameA.indexOf(' ') > 0) {
         var partsA = nameA.split(/\s+/);
@@ -960,7 +896,6 @@ select:-webkit-autofill {
         nameB = partsB[0];
         lastNameB = partsB.slice(1).join(' ');
       }
-
       // Guest 2 is optional — can leave blank and RSVP for Guest 1 only, fill later
       var missing = [];
       if (!nameA) missing.push('guest 1 first name');
@@ -977,11 +912,9 @@ select:-webkit-autofill {
       if (!nameB) nameB = '';
       if (!nameA) nameA = 'Guest 1';
       if (!nameB) nameB = 'Guest 2';
-
       var countA = attA === 'yes' ? 1 : 0;
       var countB = attB === 'yes' ? 1 : 0;
       guests = countA + countB;
-
       records.push({
         id: guestId + ':A', name: nameA, lastName: lastNameA, phone: phone,
         attendance: attA, guests: countA, song: song, message: message, at: new Date().toISOString()
@@ -990,15 +923,11 @@ select:-webkit-autofill {
         id: guestId + ':B', name: nameB, lastName: lastNameB, phone: phone,
         attendance: attB, guests: countB, song: song, message: message, at: new Date().toISOString()
       });
-
       var attendingNames = [];
       if (attA === 'yes') attendingNames.push((nameA + ' ' + lastNameA).trim());
       if (attB === 'yes') attendingNames.push((nameB + ' ' + lastNameB).trim());
-
       var overall = overallAttendance(attA, attB);
-
       setSubmittingState(true);
-
       var d = loadAll();
       if (!d[guestId]) d[guestId] = [];
       // Couple update: if record with same id exists, update, else push
@@ -1008,7 +937,6 @@ select:-webkit-autofill {
         if (_cIdx !== -1) d[guestId][_cIdx]=rec; else d[guestId].push(rec);
       });
       saveAll(d);
-
       postRsvp({
         guestId: guestId,
         name: (nameA + ' ' + lastNameA).trim(),
@@ -1023,7 +951,6 @@ select:-webkit-autofill {
         setSubmittingState(false);
         showSuccess({ couple: true, nameA: nameA, nameB: nameB, attendance: overall, guests: guests }, records.length);
       });
-
     } else {
       var name = nameInput.value.trim();
       var lastName = val('lastName');
@@ -1036,7 +963,6 @@ select:-webkit-autofill {
       var attendance = singleToggle.current();
       var plusOneRaw = val('plusOneName');
       var plusNames = plusOneRaw ? plusOneRaw.trim() : '';
-
       if (!name) { showError('Missing information', 'Please add your name — first name is enough.'); return; }
       if (!lastName) { showError('Missing information', 'Please add your last name — required for main guest.'); return; }
       if (!attendance) { showError('Choose an option', 'Please tap Yes, No, or Ask Later.'); return; }
@@ -1045,7 +971,6 @@ select:-webkit-autofill {
       var singleGuests = yes ? 1 : 0;
       guests = isPlus ? 2 : singleGuests;
       // keep plusNames for backend display
-
       // Rule 2: same name updates instead of duplicates
       var _allCheck = loadAll();
       var _dupIdx = -1;
@@ -1071,9 +996,7 @@ select:-webkit-autofill {
           attendance: 'yes', guests: 1, plusNames: '', song: '', message: '', at: new Date().toISOString()
         });
       }
-
       setSubmittingState(true);
-
       var d = loadAll();
       if (!d[guestId]) d[guestId] = [];
       // push both you + plus-one so local count = 2 when plus
@@ -1088,7 +1011,6 @@ select:-webkit-autofill {
         if (_sIdx !== -1) d[guestId][_sIdx]=rec; else d[guestId].push(rec);
       });
       saveAll(d);
-
       postRsvp({
         guestId: guestId,
         name: (name + (lastName ? ' ' + lastName : '')).trim(),
@@ -1109,7 +1031,6 @@ select:-webkit-autofill {
       });
     }
   };
-
   function downloadIcs() {
     var icsData = [
       'BEGIN:VCALENDAR',
@@ -1139,7 +1060,6 @@ select:-webkit-autofill {
       'END:VEVENT',
       'END:VCALENDAR'
     ].join('\r\n');
-
     var blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
     var url = URL.createObjectURL(blob);
     var a = document.createElement('a');
@@ -1151,7 +1071,6 @@ select:-webkit-autofill {
     setTimeout(function () { URL.revokeObjectURL(url); }, 500);
   }
   window.downloadIcs = downloadIcs;
-
   function showSuccess(info, count) {
     document.getElementById('rsvpForm').classList.add('hidden');
     document.getElementById('success').classList.remove('hidden');
@@ -1159,7 +1078,6 @@ select:-webkit-autofill {
     document.getElementById('sucName').textContent = info.couple ? (info.nameA + ' & ' + info.nameB) : info.name;
     var summary = document.getElementById('sucSummary');
     var calBlock = document.getElementById('sucCalendarBlock');
-
     if (info.attendance === 'yes') {
       if (calBlock) calBlock.classList.remove('hidden');
       summary.textContent = info.couple
@@ -1178,7 +1096,6 @@ select:-webkit-autofill {
     updateTotals();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-
   function fetchPriorStatus() {
     if (!guestId || guestId.indexOf('guest_') === 0) return;
     fetch(CONVEX_HTTP_URL + '/api/rsvp/status?guestId=' + encodeURIComponent(guestId))
@@ -1198,7 +1115,6 @@ select:-webkit-autofill {
       })
       .catch(function () {});
   }
-
   window.savePostLove = function () {
     var song = (document.getElementById('postSong') ? document.getElementById('postSong').value.trim() : '');
     var msg = (document.getElementById('postMessage') ? document.getElementById('postMessage').value.trim() : '');
@@ -1218,7 +1134,6 @@ select:-webkit-autofill {
       } catch(e){}
     });
   };
-
   window.resetForAnother = function () {
     setSubmittingState(false);
     document.getElementById('rsvpForm').classList.remove('hidden');
@@ -1239,7 +1154,6 @@ select:-webkit-autofill {
     document.getElementById('greeting').classList.add('hidden');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
   // Preview: ?showSuccess=1 shows the post-RSVP page instantly
   if (params.get('showSuccess') === '1') {
     setTimeout(function(){ showSuccess({ couple: false, name: (guestName||'Elvis'), attendance: 'yes', guests: 1 }, 1); }, 120);
