@@ -6,7 +6,7 @@
 <title>Charles &amp; Leticia — The Invitation</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Great+Vibes&amp;family=Alex+Brush&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;family=Cinzel+Decorative:wght@400;700&amp;family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Great+Vibes&amp;family=Alex+Brush&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <style>
 /* Editorial theme — Cinzel/Playfair for headers, Great Vibes/Alex Brush for script */
@@ -91,14 +91,14 @@
                     "element-gap": "1rem"
             },
             "fontFamily": {
-                    "headline-lg": ["Cinzel", "Playfair Display", "Noto Serif", "serif"],
+                    "headline-lg": ["Cormorant Garamond", "Cinzel", "Playfair Display", "serif"],
                     "script-accent": ["Great Vibes", "Alex Brush", "cursive"],
-                    "headline-xl": ["Cinzel", "Playfair Display", "Noto Serif", "serif"],
-                    "headline-md": ["Cinzel", "Playfair Display", "Noto Serif", "serif"],
-                    "body-md": ["Be Vietnam Pro", "system-ui", "sans-serif"],
+                    "headline-xl": ["Cormorant Garamond", "Cinzel Decorative", "Cinzel", "serif"],
+                    "headline-md": ["Cormorant Garamond", "Cinzel", "serif"],
+                    "body-md": ["Cormorant Garamond", "Be Vietnam Pro", "serif"],
                     "label-sm": ["Be Vietnam Pro", "system-ui", "sans-serif"],
-                    "body-lg": ["Be Vietnam Pro", "system-ui", "sans-serif"],
-                    "serif": ["Cinzel", "Playfair Display", "Noto Serif", "Georgia", "serif"],
+                    "body-lg": ["Cormorant Garamond", "serif"],
+                    "serif": ["Cormorant Garamond", "Cinzel", "Playfair Display", "Georgia", "serif"],
                     "sans": ["Be Vietnam Pro", "system-ui", "sans-serif"]
             },
             "fontSize": {
@@ -944,9 +944,29 @@ body { background: #0a0a0a !important; color: var(--cream) !important; }
 .bento-accent { color: #c49948 !important; }
 /* hero — large curvy script + spaced serif light bronze */
 #heroHead h2 { font-family: 'Great Vibes','Alex Brush',cursive !important; font-size: clamp(26px, 4vw, 42px) !important; font-weight: 400 !important; letter-spacing: 0.02em !important; color: #fce4a0 !important; }
-#heroNames { font-family: 'Great Vibes','Alex Brush',cursive !important; font-weight: 400 !important; font-size: clamp(58px, 18vw, 118px) !important; line-height: 0.95 !important; }
+#heroNames { font-family: 'Great Vibes','Alex Brush',cursive !important; font-weight: 400 !important; font-size: clamp(58px, 18vw, 118px) !important; line-height: 1.08 !important; padding: 0.08em 0 !important; overflow: visible !important; }
 #heroNames .text-gold { color: #c49948 !important; }
-#countdown-block p { font-family: 'Cinzel','Playfair Display',serif !important; letter-spacing: 0.18em !important; color: rgba(252,228,160,0.85) !important; }
+#countdown-block p { font-family: 'Cormorant Garamond','Cinzel','Playfair Display',serif !important; letter-spacing: 0.18em !important; color: rgba(252,228,160,0.85) !important; }
+/* fix headings cropping — ensure no clip & luxe */
+h1, h2, h3, .font-headline-lg, .font-headline-xl, .font-headline-md, #heroNames, .font-script-accent, .bento-heading { overflow: visible !important; line-height: 1.18 !important; padding-top: 0.12em !important; padding-bottom: 0.12em !important; }
+.font-headline-xl { line-height: 1.22 !important; letter-spacing: -0.01em !important; }
+.font-headline-lg { line-height: 1.24 !important; }
+/* luxe main font — Cormorant Garamond + Cinzel Decorative for headings */
+body, .font-body-md, .font-body-lg, .bento-body, .dark-section-body { font-family: 'Cormorant Garamond','Playfair Display',serif !important; font-weight: 400 !important; letter-spacing: 0.01em !important; }
+.font-serif, .serif { font-family: 'Cormorant Garamond','Cinzel Decorative','Cinzel',serif !important; }
+.bento-heading, .dark-section-heading, .font-headline-lg, .font-headline-xl { font-family: 'Cormorant Garamond','Cinzel Decorative','Cinzel',serif !important; font-weight: 600 !important; letter-spacing: 0.02em !important; }
+/* stagger fade-up — remotion-style intro for all first-site text */
+.stagger { opacity: 0; transform: translateY(18px); animation: staggerUp 0.9s cubic-bezier(.22,1,.36,1) forwards; }
+.stagger:nth-child(1) { animation-delay: 0.06s; }
+.stagger:nth-child(2) { animation-delay: 0.16s; }
+.stagger:nth-child(3) { animation-delay: 0.26s; }
+.stagger:nth-child(4) { animation-delay: 0.36s; }
+@keyframes staggerUp { to { opacity:1; transform:none; } }
+.hero-stagger > * { opacity: 0; transform: translateY(14px); animation: staggerUp 0.85s cubic-bezier(.22,1,.36,1) forwards; }
+.hero-stagger > *:nth-child(1) { animation-delay: 0.08s; }
+.hero-stagger > *:nth-child(2) { animation-delay: 0.18s; }
+.hero-stagger > *:nth-child(3) { animation-delay: 0.28s; }
+.hero-stagger > *:nth-child(4) { animation-delay: 0.38s; }
 /* metallic RSVP plaque */
 .gold-rsvp-btn {
   display: inline-block;
@@ -1041,8 +1061,8 @@ body { background: #0a0a0a !important; color: var(--cream) !important; }
 </div>
 
 <div class="relative z-10 max-w-[1200px] w-full mx-auto px-5 sm:px-container-padding flex flex-col items-center flex-1 justify-center gap-6 lg:gap-8 my-auto">
-  <!-- Headline Block -->
-  <div class="space-y-3 text-center" id="heroHead">
+  <!-- Headline Block — luxe stagger -->
+  <div class="space-y-3 text-center hero-stagger" id="heroHead">
     <h2 class="hd-fade font-script-accent text-script-accent italic text-gold leading-[1.3] text-2xl sm:text-3xl lg:text-4xl">Join us for the wedding of</h2>
     <h3 id="heroNames" class="hd-fade font-script-accent text-white leading-[1.1] whitespace-nowrap text-center text-[clamp(54px,18vw,114px)] lg:text-[clamp(64px,8vw,112px)]">Charles <span class="text-gold">&amp;</span> Leticia</h3>
   </div>
@@ -1074,8 +1094,8 @@ body { background: #0a0a0a !important; color: var(--cream) !important; }
     </div>
   </div>
 
-  <!-- Countdown & Moved-down Inviting Note -->
-  <div class="hd-fade flex flex-col items-center gap-3 text-center" id="countdown-block">
+  <!-- Countdown & Inviting Note — stagger -->
+  <div class="hd-fade flex flex-col items-center gap-3 text-center hero-stagger" id="countdown-block">
     <div class="font-label-sm label-premium text-gold uppercase tracking-[0.25em]">Counting down to forever</div>
     <div class="countdown-pill">
       <div id="countdown" class="flex items-center justify-center gap-0"></div>
@@ -1091,13 +1111,13 @@ body { background: #0a0a0a !important; color: var(--cream) !important; }
 <!-- ============================================================ -->
 <!-- SCROLL BREAK 1 — cinematic chapter break after hero         -->
 <!-- ============================================================ -->
-<div class="cinematic-break" style="min-height: clamp(460px, 72vw, 740px);">
-  <div class="cb-photo"><img src="../galery%20(4).jpeg" alt="Charles and Leticia" style="object-position:center 32%; filter:brightness(0.42) saturate(0.72);"/></div>
+<div class="cinematic-break" style="min-height: clamp(460px, 72vw, 740px); overflow: visible;">
+  <div class="cb-photo" style="height: 130%; top: -15%; position: absolute; inset: -15% 0 -15% 0; overflow: hidden;"><img src="../galery%20(4).jpeg" alt="Charles and Leticia" style="width:100%; height:100%; object-fit:cover; object-position:center 38%; filter:brightness(0.42) saturate(0.72); transform: scale(1.12); transform-origin: center;"/></div>
   <div class="cb-vignette"></div>
-  <div class="cb-content rv-up">
-    <span class="font-label-sm label-premium text-gold/80 uppercase tracking-[0.3em] block mb-3">A love story — Belize City, 2026</span>
+  <div class="cb-content rv-up" style="padding: 2.5rem 1.5rem; overflow: visible;">
+    <span class="font-label-sm label-premium text-gold/80 uppercase tracking-[0.3em] block mb-3 stagger" style="overflow: visible; line-height: 1.4;">A love story — Belize City, 2026</span>
     <div class="cb-ornament"></div>
-    <p class="font-script-accent text-[clamp(28px,5vw,52px)] text-white/90 italic leading-snug">"To love and be loved<br/>is to feel the sun from both sides."</p>
+    <p class="font-script-accent text-white/90 italic leading-[1.35] stagger" style="font-size: clamp(28px,5vw,52px); font-family:'Great Vibes','Alex Brush',cursive; overflow: visible; padding: 0.2em 0; display: block;">"To love and be loved<br/>is to feel the sun from both sides."</p>
     <div class="cb-ornament"></div>
   </div>
 </div>
@@ -3201,6 +3221,24 @@ function toggleMusic() {
     card.addEventListener('keydown', function(e){
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); var r = card.getBoundingClientRect(); burstHearts(r.left + r.width/2, r.top + r.height/2); }
     });
+  });
+})();
+</script>
+<script>
+// remotion-style stagger fade-up for first-site text — luxe
+(function(){
+  var heroEls = document.querySelectorAll('#heroHead > *, #saveDateCard, #countdown-block > *');
+  heroEls.forEach(function(el,i){
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(18px)';
+    el.style.animation = 'staggerUp 0.9s cubic-bezier(.22,1,.36,1) forwards';
+    el.style.animationDelay = (0.08 + i*0.09) + 's';
+  });
+  // ensure all headings overflow visible (fix crop)
+  document.querySelectorAll('h1,h2,h3,.font-headline-lg,.font-headline-xl,.bento-heading,#heroNames').forEach(function(h){
+    h.style.overflow = 'visible';
+    h.style.paddingTop = '0.12em';
+    h.style.paddingBottom = '0.12em';
   });
 })();
 </script>
