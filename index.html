@@ -2969,11 +2969,19 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
     if (window.__bigFgFireworks) window.__bigFgFireworks(8);
     setTimeout(function() {
       if (window.__bigFgFireworks) window.__bigFgFireworks(10);
-    }, 200);
+    }, 280);
     setTimeout(function() {
       if (window.__bigFgFireworks) window.__bigFgFireworks(8);
-    }, 450);
-    setTimeout(exit, 650);
+    }, 600);
+    setTimeout(function() {
+      if (window.__bigFgFireworks) window.__bigFgFireworks(8);
+    }, 950);
+    setTimeout(function() {
+      if (window.__bigFgFireworks) window.__bigFgFireworks(6);
+    }, 1300);
+
+    // Give guests ~1.85 seconds to enjoy the full fireworks celebration before page transition
+    setTimeout(exit, 1850);
   }
 
   function exit() {
