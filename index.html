@@ -46,11 +46,19 @@
   font-style: normal;
   font-display: swap;
 }
-/* Butterline + Rapodhite + The Feeling + Brother Signature — elegant wedding from /wed cl */
-.font-corinthia, .font-script-accent { font-family: 'Brother Signature', 'The Feeling', cursive !important; font-weight: 400; }
-.font-monte-carlo { font-family: 'Brother Signature', cursive !important; font-weight: 400; }
-#heroHead h2, #heroNames { font-family: 'Brother Signature', 'The Feeling', cursive !important; font-weight: 400; letter-spacing: 0.02em; }
-#heroNames .text-gold { font-family: 'Brother Signature', cursive !important; }
+@font-face {
+  font-family: 'Wedding Party';
+  src: url('WeddingParty.ttf') format('truetype'),
+       url('WeddingParty.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+/* Wedding Party — bold celebration script from /wed cl */
+.font-corinthia, .font-script-accent { font-family: 'Wedding Party', 'Brother Signature', cursive !important; font-weight: 400; }
+.font-monte-carlo { font-family: 'Wedding Party', cursive !important; font-weight: 400; }
+#heroHead h2, #heroNames { font-family: 'Wedding Party', 'Brother Signature', cursive !important; font-weight: 400; letter-spacing: 0.02em; }
+#heroNames .text-gold { font-family: 'Wedding Party', cursive !important; }
 /* hero 10-sec intro — photo first, driven by GSAP; keep photo visible under overlay */
 #mainPhotoCard { will-change: opacity; }
 #mainPhotoCard img { will-change: transform; }
@@ -129,7 +137,7 @@
             },
             "fontFamily": {
                     "headline-lg": ["Rapodhite", "Playfair Display", "serif"],
-                    "script-accent": ["Brother Signature", "The Feeling", "cursive"],
+                    "script-accent": ["Wedding Party", "Brother Signature", "cursive"],
                     "headline-xl": ["Rapodhite", "Playfair Display", "serif"],
                     "headline-md": ["Rapodhite", "Playfair Display", "serif"],
                     "body-md": ["Rapodhite", "Playfair Display", "serif"],
@@ -980,8 +988,8 @@ body { background: #0a0a0a !important; color: var(--cream) !important; }
 .bento-body { color: rgba(255,248,230,0.72) !important; }
 .bento-accent { color: #c49948 !important; }
 /* hero — large curvy script + spaced serif light bronze */
-#heroHead h2 { font-family: 'Brother Signature', 'The Feeling', cursive !important; font-size: clamp(26px, 4vw, 42px) !important; font-weight: 400 !important; letter-spacing: 0.02em !important; color: #fce4a0 !important; }
-#heroNames { font-family: 'Brother Signature', 'The Feeling', cursive !important; font-weight: 400 !important; font-size: clamp(54px,16vw,112px) !important; line-height: 1.32 !important; padding: 0.22em 0 0.28em 0 !important; overflow: visible !important; display: inline-block !important; white-space: normal !important; word-break: keep-all !important; }
+#heroHead h2 { font-family: 'Wedding Party', 'Brother Signature', cursive !important; font-size: clamp(26px, 4vw, 42px) !important; font-weight: 400 !important; letter-spacing: 0.02em !important; color: #fce4a0 !important; }
+#heroNames { font-family: 'Wedding Party', 'Brother Signature', cursive !important; font-weight: 400 !important; font-size: clamp(54px,16vw,112px) !important; line-height: 1.32 !important; padding: 0.22em 0 0.28em 0 !important; overflow: visible !important; display: inline-block !important; white-space: normal !important; word-break: keep-all !important; }
 #heroNames .text-gold { color: #c49948 !important; }
 #countdown-block p { font-family: 'Cormorant Garamond','Cinzel','Playfair Display',serif !important; letter-spacing: 0.18em !important; color: rgba(252,228,160,0.85) !important; }
 /* fix headings cropping — ensure no clip & luxe */
@@ -1171,7 +1179,7 @@ body, .font-body-md, .font-body-lg, .bento-body, .dark-section-body { font-famil
   <div class="cb-content rv-up" style="padding: 2.8rem 1.5rem;">
     <span class="font-label-sm label-premium uppercase tracking-[0.3em] block mb-3" style="color: rgba(252,228,160,0.85); text-shadow: 0 1px 12px rgba(0,0,0,0.55);">A love story — Belize City, 2026</span>
     <div class="cb-ornament"></div>
-    <p class="font-script-accent italic leading-[1.32] block" style="font-size: clamp(28px,5vw,52px); font-family:'Brother Signature', 'The Feeling', cursive; color: rgba(255,255,255,0.96); text-shadow: 0 2px 18px rgba(0,0,0,0.62), 0 1px 0 rgba(0,0,0,0.35); padding: 0.15em 0;">"To love and be loved<br/>is to feel the sun from both sides."</p>
+    <p class="font-script-accent italic leading-[1.32] block" style="font-size: clamp(28px,5vw,52px); font-family:'Wedding Party', 'Brother Signature', cursive; color: rgba(255,255,255,0.96); text-shadow: 0 2px 18px rgba(0,0,0,0.62), 0 1px 0 rgba(0,0,0,0.35); padding: 0.15em 0;">"To love and be loved<br/>is to feel the sun from both sides."</p>
     <div class="cb-ornament"></div>
   </div>
 </div>
@@ -1314,7 +1322,7 @@ body, .font-body-md, .font-body-lg, .bento-body, .dark-section-body { font-famil
       <div class="absolute inset-0 opacity-[0.06] pointer-events-none" style="background: url('../galery%20(1).jpeg') center 35% / cover no-repeat; filter: blur(18px) saturate(0.5); mask-image: linear-gradient(to bottom, transparent 0%, black 28%, black 72%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 28%, black 72%, transparent 100%);"></div>
       <div class="relative z-10 px-8 sm:px-12 py-10 sm:py-14">
         <div class="mb-6">
-          <span class="block leading-none italic" style="font-family:'Brother Signature', 'The Feeling', cursive; font-size: clamp(48px, 8vw, 72px); color: #fce4a0; line-height: 0.9;">Our</span>
+          <span class="block leading-none italic" style="font-family:'Wedding Party', 'Brother Signature', cursive; font-size: clamp(48px, 8vw, 72px); color: #fce4a0; line-height: 0.9;">Our</span>
           <h3 class="font-bold uppercase tracking-[0.32em] text-[#FFF8E6] leading-none -mt-1 sm:-mt-2" style="font-family:'Cinzel','Playfair Display',serif; font-size: clamp(20px, 3.8vw, 30px);">JOURNEY TOGETHER</h3>
           <div class="w-16 h-[1px] bg-gradient-to-r from-transparent via-[#c49948] to-transparent mx-auto mt-4 opacity-60"></div>
         </div>
