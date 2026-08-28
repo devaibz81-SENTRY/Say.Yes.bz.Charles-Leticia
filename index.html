@@ -990,7 +990,7 @@ body, .font-body-md, .font-body-lg, .bento-body, .dark-section-body { font-famil
 }
 .gold-rsvp-btn:active { transform: translateY(0) scale(0.98); }
 @media (max-width: 640px) { .gold-rsvp-btn { font-size: 22px; letter-spacing: 4px; padding: 14px 36px; } }
-/* ===== Gold movement & shimmer — all gold elements ===== */
+/* shimmer — text + SVG gold only (no cards) */
 .text-gold-gradient {
   background-size: 220% auto !important;
   animation: goldShimmerMove 3.8s linear infinite !important;
@@ -999,101 +999,13 @@ body, .font-body-md, .font-body-lg, .bento-body, .dark-section-body { font-famil
   0% { background-position: 220% 0; }
   100% { background-position: -120% 0; }
 }
-.bento-accent, .text-gold { position: relative; }
-.bento-accent::after, .text-gold::after {
-  content: '';
-  position: absolute;
-  left: 0; right: 0; bottom: -2px; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(196,153,72,0.55), transparent);
-  background-size: 200% 100%;
-  animation: goldShimmerMove 2.8s ease-in-out infinite;
-  opacity: 0.0; transition: opacity 0.3s ease;
-}
-.bento-card:hover .bento-accent::after, .text-gold:hover::after { opacity: 1; }
-.gold-rsvp-btn {
-  position: relative; overflow: hidden;
-  background-size: 200% 100% !important;
-  animation: goldPlaqueShimmer 4.5s ease-in-out infinite;
-}
-.gold-rsvp-btn::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.22) 48%, transparent 70%);
-  background-size: 220% 100%;
-  animation: goldShimmerMove 2.6s linear infinite;
-  pointer-events: none; mix-blend-mode: overlay;
-}
-@keyframes goldPlaqueShimmer { 0%,100% { background-position: 0% 50%; filter: brightness(1); } 50% { background-position: 100% 50%; filter: brightness(1.07); } }
 .event-icon { animation: goldIconFloat 4.2s ease-in-out infinite, goldIconGlow 3s ease-in-out infinite; }
 @keyframes goldIconFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
 @keyframes goldIconGlow { 0%,100% { filter: drop-shadow(0 0 6px rgba(196,153,72,0.35)); } 50% { filter: drop-shadow(0 0 14px rgba(252,228,160,0.55)); } }
-.countdown-pill { position: relative; overflow: hidden; }
-.countdown-pill::before {
-  content: ''; position: absolute; inset: 0; border-radius: inherit;
-  background: linear-gradient(90deg, transparent, rgba(196,153,72,0.14), transparent);
-  background-size: 220% 100%;
-  animation: goldShimmerMove 3s linear infinite;
-  pointer-events: none;
-}
 .ornament-divider svg { animation: goldOrnamentPulse 3.6s ease-in-out infinite; }
 @keyframes goldOrnamentPulse { 0%,100% { opacity: 0.85; transform: scaleX(1); } 50% { opacity: 1; transform: scaleX(1.04); } }
-.glass-panel.border-gold\/20, .glass-panel.border-gold\/10 { animation: goldBorderBreath 4s ease-in-out infinite; }
-@keyframes goldBorderBreath { 0%,100% { border-color: rgba(196,153,72,0.14); box-shadow: 0 8px 30px rgba(0,0,0,0.45); } 50% { border-color: rgba(196,153,72,0.28); box-shadow: 0 12px 40px rgba(196,153,72,0.10); } }
-/* sweet subtle edge bevel — glowing gold rim */
-.bento-card, .bento-card-dark, .countdown-pill, .glass-panel {
-  position: relative;
-}
-.bento-card::after, .bento-card-dark::after {
-  content: '';
-  position: absolute; inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(120deg, transparent 20%, rgba(252,228,160,0.55) 48%, transparent 78%);
-  background-size: 220% 100%;
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  opacity: 0.52;
-  animation: bevelSweep 3.4s ease-in-out infinite;
-}
-@keyframes bevelSweep {
-  0% { background-position: 220% 0; opacity: 0.0; }
-  15% { opacity: 0.55; }
-  50% { opacity: 0.45; }
-  85% { opacity: 0.55; }
-  100% { background-position: -120% 0; opacity: 0.0; }
-}
-.gold-rsvp-btn::after {
-  content: '';
-  position: absolute; inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(120deg, transparent 18%, rgba(255,255,255,0.42) 42%, rgba(252,228,160,0.9) 50%, rgba(255,255,255,0.32) 58%, transparent 82%);
-  background-size: 220% 100%;
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  opacity: 0.62;
-  animation: bevelSweep 2.9s ease-in-out infinite;
-}
-/* soft outer glow for all gold-framed elements */
-.bento-card, .bento-card-dark, .countdown-pill, .glass-panel, .gold-rsvp-btn {
-  box-shadow: 0 8px 30px rgba(0,0,0,0.45), 0 0 0 1px rgba(196,153,72,0.10), 0 0 22px rgba(196,153,72,0.08);
-  animation: sweetGlow 4.2s ease-in-out infinite;
-}
-.bento-card:hover, .bento-card-dark:hover, .gold-rsvp-btn:hover {
-  animation: sweetGlow 2.2s ease-in-out infinite;
-}
-@keyframes sweetGlow {
-  0%,100% { box-shadow: 0 8px 30px rgba(0,0,0,0.45), 0 0 0 1px rgba(196,153,72,0.10), 0 0 18px rgba(196,153,72,0.06); }
-  50% { box-shadow: 0 12px 40px rgba(0,0,0,0.52), 0 0 0 1px rgba(196,153,72,0.18), 0 0 28px rgba(252,228,160,0.14); }
-}
 @media (prefers-reduced-motion: reduce) {
-  .text-gold-gradient, .gold-rsvp-btn, .gold-rsvp-btn::before, .gold-rsvp-btn::after, .bento-card::after, .bento-card-dark::after, .event-icon, .countdown-pill::before, .ornament-divider svg { animation: none !important; }
-  .gold-rsvp-btn { background-size: auto !important; }
-  .bento-card::after, .bento-card-dark::after, .gold-rsvp-btn::after { display: none !important; }
+  .text-gold-gradient, .event-icon, .ornament-divider svg { animation: none !important; }
 }
 </style>
 <!-- Include a luxury serif font like Cinzel -->
@@ -1418,7 +1330,9 @@ body, .font-body-md, .font-body-lg, .bento-body, .dark-section-body { font-famil
       <p class="font-body-md dark-section-subheading italic max-w-xl mx-auto mt-4 px-4 font-semibold">Please note: While we love your little ones, our wedding will be an adult-only celebration.</p>
     </div>
     <div class="rv flex justify-center">
-      <a href="rsvp.html" class="gold-rsvp-btn" aria-label="Open the RSVP form">RSVP</a>
+      <a href="rsvp.html" class="group inline-block" aria-label="Open the RSVP form">
+        <img src="../RSVP%20BUTTON.png" alt="RSVP" draggable="false" class="rsvp-img w-full max-w-[300px] sm:max-w-[380px] h-auto select-none pointer-events-none transition-transform duration-300 group-hover:scale-105 group-active:scale-95"/>
+      </a>
     </div>
   </div>
 </div>
