@@ -1208,6 +1208,8 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
 </div>
 </div>
 <div id="revealFlash" class="hidden absolute inset-0 pointer-events-none z-[60]"></div>
+<!-- Foreground fireworks canvas — renders in FRONT of the GIF image -->
+<canvas id="fwCanvasFg" class="absolute inset-0 z-[55] pointer-events-none" aria-hidden="true"></canvas>
 </div>
 <!-- =================== END INTRO EXPERIENCE =================== -->
 
@@ -2389,6 +2391,147 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
 })();
 </script>
 
+<!-- Foreground fireworks — renders IN FRONT of the GIF (z-55), triggered on reveal -->
+<script>
+(function() {
+  var canvas = document.getElementById('fwCanvasFg');
+  if (!canvas || !canvas.getContext) return;
+  var ctx = canvas.getContext('2d');
+  var W = 0, H = 0, DPR = 1;
+  var shells = [], sparks = [], flashes = [];
+  var rafId = null;
+
+  function resize() {
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    var intro = document.getElementById('introScreen');
+    W = intro ? intro.clientWidth : window.innerWidth;
+    H = intro ? intro.clientHeight : window.innerHeight;
+    canvas.width = W * DPR;
+    canvas.height = H * DPR;
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  var PALETTES = [
+    ['hsl(45,100%,72%)', 'hsl(45,100%,88%)'],
+    ['hsl(55,100%,80%)', 'hsl(40,90%,65%)'],
+    ['hsl(0,0%,100%)', 'hsl(45,100%,82%)'],
+    ['hsl(35,100%,70%)', 'hsl(50,100%,90%)']
+  ];
+  var GRAVITY = 260;
+
+  function rand(a, b) { return a + Math.random() * (b - a); }
+  function choice(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  function Shell(x, scale) {
+    this.x = x;
+    this.y = H;
+    this.targetY = rand(H * 0.08, H * 0.45);
+    var dist = this.y - this.targetY;
+    this.vy = -Math.sqrt(2 * GRAVITY * dist) * rand(0.98, 1.06);
+    this.vx = rand(-18, 18);
+    var pal = choice(PALETTES);
+    this.color = Math.random() < 0.5 ? pal[0] : pal[1];
+    this.scale = scale || 1;
+    this.dead = false;
+    this.trail = [];
+  }
+  Shell.prototype.step = function(dt) {
+    this.trail.push({x: this.x, y: this.y});
+    if (this.trail.length > 10) this.trail.shift();
+    this.vy += GRAVITY * dt;
+    this.x += this.vx * dt;
+    this.y += this.vy * dt;
+    if (this.vy >= -4 || this.y <= this.targetY) { this.explode(); this.dead = true; }
+  };
+  Shell.prototype.draw = function() {
+    for (var i = 0; i < this.trail.length; i++) {
+      var p = this.trail[i], a = i / this.trail.length;
+      ctx.globalAlpha = a * 0.85;
+      ctx.fillStyle = this.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 1.8 * a + 0.5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  };
+  Shell.prototype.explode = function() {
+    flashes.push({x: this.x, y: this.y, life: 1, color: this.color});
+    var count = Math.round(rand(48, 80) * this.scale);
+    for (var i = 0; i < count; i++) {
+      var angle = (i / count) * Math.PI * 2;
+      var speed = rand(55, 130) * this.scale;
+      sparks.push({
+        x: this.x, y: this.y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        life: 1, maxLife: rand(1.1, 1.8),
+        color: this.color,
+        size: rand(1.4, 2.6) * this.scale,
+        drag: rand(0.968, 0.985)
+      });
+    }
+  };
+
+  function fgFrame() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.globalCompositeOperation = 'lighter';
+    var dt = 1 / 60;
+    for (var i = shells.length - 1; i >= 0; i--) {
+      shells[i].step(dt); shells[i].draw();
+      if (shells[i].dead) shells.splice(i, 1);
+    }
+    for (var j = sparks.length - 1; j >= 0; j--) {
+      var sp = sparks[j];
+      sp.vy += GRAVITY * dt * 0.7;
+      sp.vx *= sp.drag; sp.vy *= sp.drag;
+      sp.x += sp.vx * dt; sp.y += sp.vy * dt;
+      sp.life -= dt / sp.maxLife;
+      if (sp.life <= 0) { sparks.splice(j, 1); continue; }
+      ctx.globalAlpha = sp.life * 0.85;
+      ctx.fillStyle = sp.color;
+      ctx.beginPath();
+      ctx.arc(sp.x, sp.y, Math.max(0.3, sp.size * sp.life), 0, Math.PI * 2);
+      ctx.fill();
+    }
+    for (var k = flashes.length - 1; k >= 0; k--) {
+      var f = flashes[k];
+      f.life -= 0.08;
+      if (f.life <= 0) { flashes.splice(k, 1); continue; }
+      ctx.globalAlpha = f.life * 0.28;
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, 60 * (1 - f.life) + 10, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,250,230,1)';
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = 'source-over';
+    if (shells.length > 0 || sparks.length > 0 || flashes.length > 0) {
+      rafId = requestAnimationFrame(fgFrame);
+    } else { rafId = null; }
+  }
+
+  function launchFg(count, scale) {
+    scale = scale || 1.2;
+    resize();
+    var allowed = Math.min(count || 4, 6);
+    var laneW = W / (allowed + 1);
+    for (var i = 0; i < allowed; i++) {
+      (function(idx) {
+        setTimeout(function() {
+          var x = laneW * (idx + 1) + rand(-laneW * 0.35, laneW * 0.35);
+          shells.push(new Shell(x, scale * rand(0.9, 1.15)));
+          if (!rafId) rafId = requestAnimationFrame(fgFrame);
+        }, idx * 75);
+      })(i);
+    }
+  }
+
+  window.__bigFgFireworks = function(count) { launchFg(count || 6, 1.3); };
+})();
+</script>
+
 <!-- Save-the-Date card fireworks — white & gold, behind an opacity layer -->
 <script>
 (function () {
@@ -2622,7 +2765,7 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
   var currentProgress = 0;
   var accumulated = 0;
   var velocity = 0;
-  var maxScroll = 3200;
+  var maxScroll = 1800;
   var frameCount = 127;
   var isRevealing = false;
   var rafId = null;
@@ -2763,8 +2906,17 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
       revealFlash.classList.remove('hidden');
       revealFlash.classList.add('reveal-flash');
     }
-    if (window.__bigFireworks) window.__bigFireworks(6);
-    setTimeout(exit, 450);
+    // big foreground salvo — fires in waves in front of the GIF
+    if (window.__bigFireworks) window.__bigFireworks(8);
+    if (window.__bigFgFireworks) window.__bigFgFireworks(10);
+    setTimeout(function() {
+      if (window.__bigFireworks) window.__bigFireworks(6);
+      if (window.__bigFgFireworks) window.__bigFgFireworks(8);
+    }, 180);
+    setTimeout(function() {
+      if (window.__bigFgFireworks) window.__bigFgFireworks(6);
+    }, 360);
+    setTimeout(exit, 500);
   }
 
   function exit() {
@@ -2775,7 +2927,8 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
     if (lastImg) lastImg.classList.add('last-frame-fly');
     var pageEl = document.querySelector('main');
     if (pageEl) pageEl.classList.add('page-scale-in');
-    if (window.__bigFireworks) window.__bigFireworks(4);
+    if (window.__bigFireworks) window.__bigFireworks(6);
+    if (window.__bigFgFireworks) window.__bigFgFireworks(6);
     setTimeout(function () { if (window.__animateHero) window.__animateHero(); }, 450);
     setTimeout(function () {
       try { sessionStorage.setItem('cl_intro_done', '1'); } catch (e) {}
@@ -2813,9 +2966,9 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
     e.preventDefault();
     var delta = e.deltaY;
     if (Math.abs(delta) < 4) delta *= 2.2;
-    // slower, smoother — 3 scrolls to complete
-    addVelocity(delta * 0.32);
-    accumulated += delta * 0.28;
+    // 3-4 scroll swipes to complete
+    addVelocity(delta * 0.28);
+    accumulated += delta * 0.22;
     accumulated = Math.max(0, Math.min(maxScroll, accumulated));
     setProgress(accumulated / maxScroll);
   }
@@ -2834,9 +2987,9 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
     lastTouchY = curY;
     if (Math.abs(delta) < 1) return;
     e.preventDefault();
-    touchVelocity = delta * 0.75;
-    addVelocity(touchVelocity * 0.55);
-    accumulated += delta * 0.75;
+    touchVelocity = delta * 0.62;
+    addVelocity(touchVelocity * 0.45);
+    accumulated += delta * 0.62;
     accumulated = Math.max(0, Math.min(maxScroll, accumulated));
     setProgress(accumulated / maxScroll);
   }
