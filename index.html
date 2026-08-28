@@ -402,6 +402,14 @@
 .memory-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
 .memory-card:hover img{transform:scale(1.04)}
 .memory-card-mat{position:absolute;inset:7px;border-radius:12px;border:1px solid rgba(255,255,255,0.35);pointer-events:none;box-shadow:inset 0 0 0 1px rgba(212,175,55,0.12)}
+.dresscode-visual{position:relative;overflow:hidden;border-radius:24px;border:1px solid rgba(212,175,55,0.35);background:#0d0c0b;box-shadow:0 20px 60px rgba(0,0,0,0.45);margin:0 auto 1.25rem;max-width:600px;cursor:pointer;transition:transform .25s ease, box-shadow .25s ease}
+.dresscode-visual:hover{transform:translateY(-4px);box-shadow:0 24px 70px rgba(0,0,0,0.58)}
+.dresscode-visual img{display:block;width:100%;height:auto;object-fit:cover;filter:saturate(1.06) contrast(1.02)}
+.dresscode-visual::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.0), rgba(10,8,8,0.34));pointer-events:none}
+.dresscode-visual{position:relative;overflow:hidden;border-radius:24px;border:1px solid rgba(212,175,55,0.35);background:#0d0c0b;box-shadow:0 20px 60px rgba(0,0,0,0.45);margin:0 auto 1.25rem;max-width:600px;cursor:pointer;transition:transform .25s ease, box-shadow .25s ease}
+.dresscode-visual:hover{transform:translateY(-4px);box-shadow:0 24px 70px rgba(0,0,0,0.58)}
+.dresscode-visual img{display:block;width:100%;height:auto;object-fit:cover;filter:saturate(1.06) contrast(1.02)}
+.dresscode-visual::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.0), rgba(10,8,8,0.34));pointer-events:none}
 @media(max-width:1024px){.memories-grid{grid-template-columns:repeat(3,1fr);gap:12px}}
 @media(max-width:640px){.memories-grid{grid-template-columns:repeat(2,1fr);gap:10px}.memory-card:nth-child(5){grid-column:1 / -1;max-width:50%;justify-self:center}}
 .float-slow { animation: floating 9s ease-in-out infinite; }
@@ -452,8 +460,11 @@ html.no-scroll, html.no-scroll body { overflow: hidden; }
 }
 .last-frame-fly { animation: lastFrameFly 1.25s cubic-bezier(.5, 0, .2, 1) forwards; }
 
-@keyframes introFadeAway { to { opacity: 0; } }
-.intro-fade-away { animation: introFadeAway .95s ease forwards; }
+@keyframes introFadeAway {
+  0% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1); }
+}
+.intro-fade-away { animation: introFadeAway .8s ease forwards; }
 
 @keyframes pageScaleIn {
   0% { transform: scale(.92); opacity: 0; }
@@ -467,7 +478,7 @@ html.no-scroll, html.no-scroll body { overflow: hidden; }
   100% { opacity: 0; transform: scale(1.2); }
 }
 .reveal-flash { animation: revealFlash 1s ease-out forwards; }
-#revealFlash { background: radial-gradient(circle, rgba(245,215,110,.9) 0%, rgba(212,175,55,.4) 42%, transparent 68%); }
+#revealFlash { background: radial-gradient(circle, rgba(255,255,255,0.96) 0%, rgba(255,244,206,0.82) 22%, rgba(212,175,55,0.38) 42%, rgba(147,109,41,0.18) 60%, transparent 72%); }
 
 .stars {
   position: absolute;
@@ -487,15 +498,16 @@ html.no-scroll, html.no-scroll body { overflow: hidden; }
 @keyframes twinkle { from { opacity: .45; } to { opacity: .85; } }
 .glow-wash {
   position: absolute;
-  inset: -20px;
+  inset: 0;
   pointer-events: none;
   opacity: 0;
   transition: opacity .6s ease-out;
-  background: radial-gradient(ellipse 110% 70% at 50% 50%,
-    rgba(196,143,60,0.22) 0%,
-    rgba(180,120,40,0.12) 38%,
-    rgba(100,70,20,0.06) 65%,
-    transparent 100%);
+  background: radial-gradient(circle at center,
+    rgba(255,240,189,0.32) 0%,
+    rgba(212,175,55,0.20) 18%,
+    rgba(180,120,40,0.14) 32%,
+    rgba(100,70,20,0.08) 48%,
+    transparent 68%);
 }
 </style>
 <style>
@@ -1382,12 +1394,18 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
   </div>
   <div class="dc-fade" aria-hidden="true"></div>
   <div class="inner max-w-[1200px] mx-auto px-5 sm:px-container-padding py-12">
-    <div id="dresscode" class="mx-auto max-w-[520px] text-center rounded-[20px] p-8 sm:p-10 rv-up" style="background: rgba(18,16,12,0.96); border: 1px solid #7d541b; box-shadow: 0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04);">
+    <div id="dresscode" class="mx-auto max-w-[720px] text-center rounded-[20px] p-6 sm:p-8 rv-up" style="background: rgba(18,16,12,0.96); border: 1px solid #7d541b; box-shadow: 0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04);">
+      <div class="dresscode-visual" onclick="if (window.openDressCode) openDressCode()" aria-label="Open the dress code guide">
+        <img src="../dress code.png" alt="Dress code guide" loading="lazy"/>
+      </div>
       <span class="block text-[10px] tracking-[0.32em] uppercase mb-3" style="color: #c49948; font-family:'Be Vietnam Pro',sans-serif;">Dress Code</span>
       <h3 class="font-bold uppercase tracking-[0.18em] mb-2" style="font-family:'Cinzel','Playfair Display',serif; color:#FFF8E6; font-size: 22px;">Black dress code</h3>
       <div class="w-12 h-[1px] bg-gradient-to-r from-transparent via-[#c49948] to-transparent mx-auto mb-3 opacity-60"></div>
       <p class="text-[12px] tracking-[0.22em] uppercase" style="color: #fce4a0; font-family:'Cinzel',serif;">Black Shimmer</p>
       <p class="mt-4 text-[13px] leading-relaxed" style="color: rgba(255,248,230,0.62)">Elegant black attire with subtle shimmer — timeless for a midnight celebration.</p>
+      <button onclick="if (window.openDressCode) openDressCode()" class="mt-6 inline-flex items-center justify-center gap-2 rounded-full border border-gold/40 bg-white/5 px-5 py-2.5 text-[10px] uppercase tracking-[0.24em] text-gold-light transition-colors hover:bg-white/10" style="font-family:'Be Vietnam Pro',sans-serif;">
+        View full guide
+      </button>
     </div>
   </div>
 </div>
@@ -2393,12 +2411,12 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
     MAX_ACTIVE_SHELLS = 18;
     MAX_TOTAL_SPARKS = 600;
 
-    // Wave 1 — wide coverage left to right
+    // Wave 1 — quick coverage left to right
     const wave1 = [0.08, 0.22, 0.38, 0.52, 0.66, 0.80, 0.94];
     wave1.forEach((xFrac, i) => {
       setTimeout(() => {
         if (isRunning) launchShell(W * xFrac, 1.35 + Math.random() * 0.25);
-      }, i * 55);
+      }, i * 42);
     });
 
     // Wave 2 — center cluster with scale boost
@@ -2406,35 +2424,35 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
       [0.15, 0.35, 0.5, 0.65, 0.85].forEach((xFrac, i) => {
         setTimeout(() => {
           if (isRunning) launchShell(W * xFrac, 1.55 + Math.random() * 0.3);
-        }, i * 70);
+        }, i * 52);
       });
-    }, 320);
+    }, 220);
 
     // Wave 3 — rapid fill
     setTimeout(() => {
       [0.1, 0.28, 0.44, 0.58, 0.72, 0.88].forEach((xFrac, i) => {
         setTimeout(() => {
           if (isRunning) launchShell(W * xFrac, 1.4 + Math.random() * 0.25);
-        }, i * 50);
+        }, i * 40);
       });
-    }, 640);
+    }, 470);
 
     // Wave 4 — big centered salvo
     setTimeout(() => {
       launchSalvo(5, 1.7);
-    }, 920);
+    }, 700);
 
     // Wave 5 — finale blowout
     setTimeout(() => {
       [0.2, 0.4, 0.5, 0.6, 0.8].forEach((xFrac, i) => {
         setTimeout(() => {
           if (isRunning) launchShell(W * xFrac, 1.8 + Math.random() * 0.3);
-        }, i * 60);
+        }, i * 48);
       });
-    }, 1180);
+    }, 860);
 
     // Restore limits after burst
-    setTimeout(() => { MAX_ACTIVE_SHELLS = 5; MAX_TOTAL_SPARKS = 180; }, 2800);
+    setTimeout(() => { MAX_ACTIVE_SHELLS = 5; MAX_TOTAL_SPARKS = 180; }, 2200);
   };
 
   window.__stopIntroFireworks = function () {
@@ -2964,37 +2982,29 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
       revealFlash.classList.remove('hidden');
       revealFlash.classList.add('reveal-flash');
     }
-    // Chain-reaction grand finale with full screen coverage & foreground bursts
+    // Keep it to a few clean bursts — no upward launch, just a celebratory reveal.
     if (window.__grandFinale) window.__grandFinale();
-    if (window.__bigFgFireworks) window.__bigFgFireworks(8);
+    if (window.__bigFgFireworks) window.__bigFgFireworks(4);
     setTimeout(function() {
-      if (window.__bigFgFireworks) window.__bigFgFireworks(10);
-    }, 280);
+      if (window.__bigFgFireworks) window.__bigFgFireworks(5);
+    }, 180);
     setTimeout(function() {
-      if (window.__bigFgFireworks) window.__bigFgFireworks(8);
-    }, 600);
-    setTimeout(function() {
-      if (window.__bigFgFireworks) window.__bigFgFireworks(8);
-    }, 950);
-    setTimeout(function() {
-      if (window.__bigFgFireworks) window.__bigFgFireworks(6);
-    }, 1300);
+      if (window.__bigFgFireworks) window.__bigFgFireworks(4);
+    }, 440);
 
-    // Give guests ~1.85 seconds to enjoy the full fireworks celebration before page transition
-    setTimeout(exit, 1850);
+    setTimeout(exit, 1000);
   }
 
   function exit() {
     if (state === 'exit') return;
     state = 'exit';
-    intro.classList.add('scatter');
     intro.classList.add('intro-fade-away');
-    if (lastImg) lastImg.classList.add('last-frame-fly');
+    if (lastImg) lastImg.classList.remove('last-frame-fly');
     var pageEl = document.querySelector('main');
     if (pageEl) pageEl.classList.add('page-scale-in');
-    if (window.__bigFireworks) window.__bigFireworks(6);
-    if (window.__bigFgFireworks) window.__bigFgFireworks(6);
-    setTimeout(function () { if (window.__animateHero) window.__animateHero(); }, 450);
+    if (window.__bigFireworks) window.__bigFireworks(4);
+    if (window.__bigFgFireworks) window.__bigFgFireworks(4);
+    setTimeout(function () { if (window.__animateHero) window.__animateHero(); }, 350);
     setTimeout(function () {
       try { sessionStorage.setItem('cl_intro_done', '1'); } catch (e) {}
       if (intro.parentNode) intro.parentNode.removeChild(intro);
@@ -3481,9 +3491,9 @@ function fallbackCopy(text) {
 </script>
 <!-- Dress code fullscreen viewer -->
 <div id="dressOverlay" class="hidden fixed inset-0 z-[10001] bg-black/90 backdrop-blur-md flex items-center justify-center cursor-pointer" onclick="if(event.target===this)closeDressCode()">
-<img src="../dress-code (right).png" alt="Dress code guide" class="max-w-[92vw] max-h-[88vh] w-auto h-auto object-contain select-none" style="box-shadow:0 0 80px rgba(212,175,55,.28)"/>
+<img src="../dress code.png" alt="Dress code guide" class="max-w-[92vw] max-h-[88vh] w-auto h-auto object-contain select-none" style="box-shadow:0 0 80px rgba(212,175,55,.28)"/>
 <div class="absolute top-4 right-4 flex gap-3">
-<a href="../dress-code (right).png" download="Dress-Code.png" onclick="event.stopPropagation()" class="w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors no-underline" aria-label="Download dress code">
+<a href="../dress code.png" download="Dress-Code.png" onclick="event.stopPropagation()" class="w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors no-underline" aria-label="Download dress code">
 <span class="material-symbols-outlined" data-icon="download">download</span>
 </a>
 <button onclick="event.stopPropagation();closeDressCode()" class="w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors" aria-label="Close">
@@ -3508,6 +3518,11 @@ function fallbackCopy(text) {
 (function () {
   var overlay = document.getElementById('dressOverlay');
   if (!overlay) return;
+  window.openDressCode = function () {
+    overlay.classList.remove('hidden');
+    document.documentElement.classList.add('no-scroll');
+    document.body.classList.add('no-scroll');
+  };
   window.closeDressCode = function () {
     overlay.classList.add('hidden');
     document.documentElement.classList.remove('no-scroll');
