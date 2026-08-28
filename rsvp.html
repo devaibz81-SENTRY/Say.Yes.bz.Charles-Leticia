@@ -729,20 +729,19 @@ select:-webkit-autofill {
           <div id="voiceTimerSub" class="voice-timer sub hidden"><span class="voice-rec-dot inline-block align-middle" style="margin-right:6px"></span>Recording</div>
         </div>
       </div>
-      <div id="voiceBars" class="voice-bars idle" aria-hidden="true">
-        <i style="height:6px"></i><i style="height:10px"></i><i style="height:6px"></i><i style="height:14px"></i><i style="height:8px"></i><i style="height:18px"></i><i style="height:10px"></i><i style="height:22px"></i><i style="height:8px"></i><i style="height:14px"></i><i style="height:6px"></i><i style="height:10px"></i><i style="height:6px"></i><i style="height:12px"></i><i style="height:7px"></i><i style="height:16px"></i><i style="height:9px"></i><i style="height:6px"></i>
-      </div>
       <div class="voice-progress-track" aria-hidden="true"><div id="voiceProgressFill" class="voice-progress-fill"></div></div>
-      <p id="voiceProgressLabel" class="text-center font-label-sm" style="font-size:.72rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#F5D76E;margin-top:26px;text-shadow:0 1px 12px rgba(212,175,55,.35)">Tap the mic — 60s</p>
+      <p id="voiceProgressLabel" class="text-center font-label-sm" style="font-size:.72rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#F5D76E;margin-top:48px;text-shadow:0 1px 12px rgba(212,175,55,.35)">Tap the mic — 60s</p>
       <p id="voiceErr" class="hidden text-center font-label-sm" style="font-size:.68rem;color:#ff8a80;letter-spacing:.04em"></p>
     </div>
 
     <!-- Controls: Stop / Preview / Re-record / Send (no-hold, single mic toggle) -->
-    <div id="voiceControls" class="grid grid-cols-2 gap-2 relative z-10">
-      <button id="voiceStopBtn" type="button" class="hidden chad-btn w-full flex items-center justify-center gap-2" style="background:#1a1a1a;border:1px solid rgba(239,68,68,.35);pointer-events:auto"><span class="material-symbols-outlined text-base" style="color:#F87171">stop_circle</span> Stop</button>
-      <button id="voiceRerecordBtn" type="button" class="hidden chad-btn w-full flex items-center justify-center gap-2 relative z-10" style="pointer-events:auto"><span class="material-symbols-outlined text-base">refresh</span> Re-record</button>
+    <div id="voiceControls" class="flex flex-col gap-3 relative z-10">
+      <div class="grid grid-cols-2 gap-2">
+        <button id="voiceStopBtn" type="button" class="hidden chad-btn w-full flex items-center justify-center gap-2" style="background:#1a1a1a;border:1px solid rgba(239,68,68,.35);pointer-events:auto"><span class="material-symbols-outlined text-base" style="color:#F87171">stop_circle</span> Stop</button>
+        <button id="voiceRerecordBtn" type="button" class="hidden chad-btn w-full flex items-center justify-center gap-2 relative z-10" style="pointer-events:auto"><span class="material-symbols-outlined text-base">refresh</span> Re-record</button>
+        <button id="voiceStopOnlySpacer" type="button" class="hidden chad-btn" style="visibility:hidden" aria-hidden="true"></button>
+      </div>
       <button id="voiceSendBtn" type="button" class="hidden chad-btn chad-btn-gold w-full flex items-center justify-center gap-2 relative z-10 shadow-[0_8px_24px_rgba(212,175,55,.35)]" style="pointer-events:auto"><span class="material-symbols-outlined text-base">send</span> Send my voice</button>
-      <button id="voiceStopOnlySpacer" type="button" class="hidden chad-btn" style="visibility:hidden" aria-hidden="true"></button>
     </div>
 
     <!-- Preview player -->
