@@ -12,6 +12,39 @@
 tailwind.config={darkMode:"class",theme:{extend:{colors:{"gold":{"DEFAULT":"#c49948","light":"#fce4a0","dark":"#7d541b"},"ink":"#0a0a0a","on-error":"#ffffff","primary":"#c49948","inverse-on-surface":"#0a0a0a","on-tertiary":"#0a0a0a","on-error-container":"#ffb4ab","outline":"#5c5c5c","on-secondary":"#0a0a0a","surface-container-low":"#0f0f0f","on-surface-variant":"#FFF8E6","primary-fixed-dim":"#5e3c0c","background":"#0a0a0a","on-primary-fixed":"#fce4a0","on-primary-container":"#fce4a0","secondary":"#c49948","tertiary":"#fce4a0","inverse-surface":"#FFF8E6","inverse-primary":"#c49948","surface-dim":"#0c0c0c","on-tertiary-fixed":"#fce4a0","on-secondary-fixed":"#fce4a0","surface-container-high":"#1a1a1a","secondary-container":"#3b2f10","primary-fixed":"#2a220c","surface-tint":"#c49948","tertiary-fixed":"#2a220c","surface":"#121212","outline-variant":"#2e2e2e","primary-container":"#5e3c0c","on-tertiary-container":"#fce4a0","error-container":"#3b0a0a","surface-variant":"#1c1c1c","on-surface":"#FFF8E6","tertiary-fixed-dim":"#5e3c0c","on-background":"#FFF8E6","tertiary-container":"#2a220c","error":"#ba1a1a","surface-bright":"#2a2a2a","surface-container-lowest":"#050505","secondary-fixed":"#2a220c","on-tertiary-fixed-variant":"#fce4a0","on-primary-fixed-variant":"#fce4a0","surface-container-highest":"#222222","on-secondary-container":"#fce4a0","on-primary":"#0a0a0a","on-secondary-fixed-variant":"#fce4a0","surface-container":"#151515","secondary-fixed-dim":"#5e3c0c"},borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},spacing:{"container-padding":"2rem","unit":"8px","section-gap":"4rem","gutter":"1.5rem","element-gap":"1rem"},fontFamily:{"headline-lg":["Cinzel","Playfair Display","Noto Serif","serif"],"script-accent":["Great Vibes","Alex Brush","cursive"],"headline-xl":["Cinzel","Playfair Display","Noto Serif","serif"],"headline-md":["Cinzel","Playfair Display","Noto Serif","serif"],"body-md":["Be Vietnam Pro","system-ui","sans-serif"],"label-sm":["Be Vietnam Pro","system-ui","sans-serif"],"body-lg":["Be Vietnam Pro","system-ui","sans-serif"],"serif":["Cinzel","Playfair Display","Noto Serif","Georgia","serif"],"sans":["Be Vietnam Pro","system-ui","sans-serif"]},fontSize:{"headline-lg":["32px",{"lineHeight":"1.2","fontWeight":"600"}],"script-accent":["32px",{"lineHeight":"1","fontWeight":"400"}],"headline-xl":["48px",{"lineHeight":"1.1","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-md":["24px",{"lineHeight":"1.3","fontWeight":"500"}],"body-md":["16px",{"lineHeight":"1.6","fontWeight":"400"}],"label-sm":["12px",{"lineHeight":"1","letterSpacing":"0.1em","fontWeight":"600"}],"body-lg":["18px",{"lineHeight":"1.6","fontWeight":"400"}]}}}}
 </script>
 <style>
+@font-face {
+  font-family: 'Butterline';
+  src: url('Butterline.woff2') format('woff2'),
+       url('Butterline.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'The Feeling';
+  src: url('TheFeeling.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Angel Wedding';
+  src: url('AngelWedding.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Wedding Party';
+  src: url('WeddingParty.ttf') format('truetype'),
+       url('WeddingParty.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+.font-script-accent {
+  font-family: 'Butterline', 'The Feeling', 'Angel Wedding', cursive !important;
+}
 .glass-panel{background:rgba(18,18,18,.55);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(196,153,72,0.16)}
 .satin-gradient{background:radial-gradient(1100px 500px at 80% -10%,rgba(196,153,72,.10),transparent 60%),radial-gradient(900px 600px at -10% 110%,rgba(196,153,72,.06),transparent 55%),linear-gradient(160deg,#0a0a0a 0%,#121212 45%,#0a0a0a 100%)}
 .gold-shimmer{background:linear-gradient(90deg,transparent,rgba(196,153,72,.16),transparent);background-size:220% 100%;animation:shimmer 4s linear infinite}
