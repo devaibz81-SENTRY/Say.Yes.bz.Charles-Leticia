@@ -487,11 +487,15 @@ html.no-scroll, html.no-scroll body { overflow: hidden; }
 @keyframes twinkle { from { opacity: .45; } to { opacity: .85; } }
 .glow-wash {
   position: absolute;
-  inset: 0;
+  inset: -20px;
   pointer-events: none;
-  mix-blend-mode: screen;
   opacity: 0;
-  transition: opacity .5s ease-out, background .5s ease-out;
+  transition: opacity .6s ease-out;
+  background: radial-gradient(ellipse 110% 70% at 50% 50%,
+    rgba(196,143,60,0.22) 0%,
+    rgba(180,120,40,0.12) 38%,
+    rgba(100,70,20,0.06) 65%,
+    transparent 100%);
 }
 </style>
 <style>
@@ -1886,8 +1890,8 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
   const GRAVITY = 0.055;
   const AIR_DRAG = 0.988;
   const WIND = 0.005;
-  const MAX_ACTIVE_SHELLS = 5;      // User limit: Max 3-6 fireworks at any given time
-  const MAX_TOTAL_SPARKS = 180;     // Ultra-lightweight pool limit for high browser performance
+  let MAX_ACTIVE_SHELLS = 5;      // raised during finale
+  let MAX_TOTAL_SPARKS = 180;     // raised during finale
 
   // ---------- background stars (lightweight) ----------
   const stars = [];
@@ -1901,12 +1905,15 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
     });
   }
 
-  // ---------- palettes ----------
+  // ---------- palettes — rich bronze, gold, champagne, pearl ----------
   const PALETTES = [
-    [45, 38],    // gold -> amber
-    [50, 44],    // bright gold -> champagne
-    [42, 34],    // warm gold -> honey
-    [47, 41]     // yellow gold
+    [38, 32],    // deep bronze -> amber
+    [44, 38],    // warm gold -> honey
+    [50, 44],    // champagne -> light gold
+    [32, 26],    // copper -> bronze
+    [46, 40],    // rich gold
+    [52, 48],    // pale champagne
+    [-1, -1]     // white / pearl (handled by white flag)
   ];
 
   function hsl(h, s, l, a) {
@@ -2380,6 +2387,56 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
     if (isRunning) launchSalvo(Math.min(count || 4, MAX_ACTIVE_SHELLS), 1.15);
   };
 
+  // Chain-reaction grand finale — the best fireworks transition ever
+  window.__grandFinale = function () {
+    if (!isRunning) return;
+    MAX_ACTIVE_SHELLS = 18;
+    MAX_TOTAL_SPARKS = 600;
+
+    // Wave 1 — wide coverage left to right
+    const wave1 = [0.08, 0.22, 0.38, 0.52, 0.66, 0.80, 0.94];
+    wave1.forEach((xFrac, i) => {
+      setTimeout(() => {
+        if (isRunning) launchShell(W * xFrac, 1.35 + Math.random() * 0.25);
+      }, i * 55);
+    });
+
+    // Wave 2 — center cluster with scale boost
+    setTimeout(() => {
+      [0.15, 0.35, 0.5, 0.65, 0.85].forEach((xFrac, i) => {
+        setTimeout(() => {
+          if (isRunning) launchShell(W * xFrac, 1.55 + Math.random() * 0.3);
+        }, i * 70);
+      });
+    }, 320);
+
+    // Wave 3 — rapid fill
+    setTimeout(() => {
+      [0.1, 0.28, 0.44, 0.58, 0.72, 0.88].forEach((xFrac, i) => {
+        setTimeout(() => {
+          if (isRunning) launchShell(W * xFrac, 1.4 + Math.random() * 0.25);
+        }, i * 50);
+      });
+    }, 640);
+
+    // Wave 4 — big centered salvo
+    setTimeout(() => {
+      launchSalvo(5, 1.7);
+    }, 920);
+
+    // Wave 5 — finale blowout
+    setTimeout(() => {
+      [0.2, 0.4, 0.5, 0.6, 0.8].forEach((xFrac, i) => {
+        setTimeout(() => {
+          if (isRunning) launchShell(W * xFrac, 1.8 + Math.random() * 0.3);
+        }, i * 60);
+      });
+    }, 1180);
+
+    // Restore limits after burst
+    setTimeout(() => { MAX_ACTIVE_SHELLS = 5; MAX_TOTAL_SPARKS = 180; }, 2800);
+  };
+
   window.__stopIntroFireworks = function () {
     isRunning = false;
     if (rafId) cancelAnimationFrame(rafId);
@@ -2414,10 +2471,11 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
   resize();
 
   var PALETTES = [
-    ['hsl(45,100%,72%)', 'hsl(45,100%,88%)'],
-    ['hsl(55,100%,80%)', 'hsl(40,90%,65%)'],
-    ['hsl(0,0%,100%)', 'hsl(45,100%,82%)'],
-    ['hsl(35,100%,70%)', 'hsl(50,100%,90%)']
+    ['hsl(38,90%,70%)', 'hsl(44,95%,85%)'],  // bronze -> warm gold
+    ['hsl(46,100%,75%)', 'hsl(52,100%,88%)'], // rich gold -> champagne
+    ['hsl(0,0%,100%)', 'hsl(48,100%,86%)'],   // pearl white -> gold
+    ['hsl(32,85%,65%)', 'hsl(42,95%,80%)'],   // copper bronze -> honey
+    ['hsl(50,100%,82%)', 'hsl(40,90%,72%)']   // pale gold -> amber
   ];
   var GRAVITY = 260;
 
@@ -2906,17 +2964,16 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
       revealFlash.classList.remove('hidden');
       revealFlash.classList.add('reveal-flash');
     }
-    // big foreground salvo — fires in waves in front of the GIF
-    if (window.__bigFireworks) window.__bigFireworks(8);
-    if (window.__bigFgFireworks) window.__bigFgFireworks(10);
+    // Chain-reaction grand finale with full screen coverage & foreground bursts
+    if (window.__grandFinale) window.__grandFinale();
+    if (window.__bigFgFireworks) window.__bigFgFireworks(8);
     setTimeout(function() {
-      if (window.__bigFireworks) window.__bigFireworks(6);
+      if (window.__bigFgFireworks) window.__bigFgFireworks(10);
+    }, 200);
+    setTimeout(function() {
       if (window.__bigFgFireworks) window.__bigFgFireworks(8);
-    }, 180);
-    setTimeout(function() {
-      if (window.__bigFgFireworks) window.__bigFgFireworks(6);
-    }, 360);
-    setTimeout(exit, 500);
+    }, 450);
+    setTimeout(exit, 650);
   }
 
   function exit() {
