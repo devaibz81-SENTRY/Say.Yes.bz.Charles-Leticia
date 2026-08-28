@@ -1039,9 +1039,61 @@ body, .font-body-md, .font-body-lg, .bento-body, .dark-section-body { font-famil
 @keyframes goldOrnamentPulse { 0%,100% { opacity: 0.85; transform: scaleX(1); } 50% { opacity: 1; transform: scaleX(1.04); } }
 .glass-panel.border-gold\/20, .glass-panel.border-gold\/10 { animation: goldBorderBreath 4s ease-in-out infinite; }
 @keyframes goldBorderBreath { 0%,100% { border-color: rgba(196,153,72,0.14); box-shadow: 0 8px 30px rgba(0,0,0,0.45); } 50% { border-color: rgba(196,153,72,0.28); box-shadow: 0 12px 40px rgba(196,153,72,0.10); } }
+/* sweet subtle edge bevel — glowing gold rim */
+.bento-card, .bento-card-dark, .countdown-pill, .glass-panel {
+  position: relative;
+}
+.bento-card::after, .bento-card-dark::after {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(120deg, transparent 20%, rgba(252,228,160,0.55) 48%, transparent 78%);
+  background-size: 220% 100%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.52;
+  animation: bevelSweep 3.4s ease-in-out infinite;
+}
+@keyframes bevelSweep {
+  0% { background-position: 220% 0; opacity: 0.0; }
+  15% { opacity: 0.55; }
+  50% { opacity: 0.45; }
+  85% { opacity: 0.55; }
+  100% { background-position: -120% 0; opacity: 0.0; }
+}
+.gold-rsvp-btn::after {
+  content: '';
+  position: absolute; inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(120deg, transparent 18%, rgba(255,255,255,0.42) 42%, rgba(252,228,160,0.9) 50%, rgba(255,255,255,0.32) 58%, transparent 82%);
+  background-size: 220% 100%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.62;
+  animation: bevelSweep 2.9s ease-in-out infinite;
+}
+/* soft outer glow for all gold-framed elements */
+.bento-card, .bento-card-dark, .countdown-pill, .glass-panel, .gold-rsvp-btn {
+  box-shadow: 0 8px 30px rgba(0,0,0,0.45), 0 0 0 1px rgba(196,153,72,0.10), 0 0 22px rgba(196,153,72,0.08);
+  animation: sweetGlow 4.2s ease-in-out infinite;
+}
+.bento-card:hover, .bento-card-dark:hover, .gold-rsvp-btn:hover {
+  animation: sweetGlow 2.2s ease-in-out infinite;
+}
+@keyframes sweetGlow {
+  0%,100% { box-shadow: 0 8px 30px rgba(0,0,0,0.45), 0 0 0 1px rgba(196,153,72,0.10), 0 0 18px rgba(196,153,72,0.06); }
+  50% { box-shadow: 0 12px 40px rgba(0,0,0,0.52), 0 0 0 1px rgba(196,153,72,0.18), 0 0 28px rgba(252,228,160,0.14); }
+}
 @media (prefers-reduced-motion: reduce) {
-  .text-gold-gradient, .gold-rsvp-btn, .gold-rsvp-btn::before, .event-icon, .countdown-pill::before, .ornament-divider svg { animation: none !important; }
+  .text-gold-gradient, .gold-rsvp-btn, .gold-rsvp-btn::before, .gold-rsvp-btn::after, .bento-card::after, .bento-card-dark::after, .event-icon, .countdown-pill::before, .ornament-divider svg { animation: none !important; }
   .gold-rsvp-btn { background-size: auto !important; }
+  .bento-card::after, .bento-card-dark::after, .gold-rsvp-btn::after { display: none !important; }
 }
 </style>
 <!-- Include a luxury serif font like Cinzel -->
