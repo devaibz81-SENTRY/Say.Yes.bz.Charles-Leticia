@@ -47,6 +47,13 @@
   font-display: swap;
 }
 @font-face {
+  font-family: 'Angel Wedding';
+  src: url('AngelWedding.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
   font-family: 'Wedding Party';
   src: url('WeddingParty.ttf') format('truetype'),
        url('WeddingParty.otf') format('opentype');
@@ -54,11 +61,22 @@
   font-style: normal;
   font-display: swap;
 }
-/* Wedding Party — bold celebration script from /wed cl */
-.font-corinthia, .font-script-accent { font-family: 'Wedding Party', 'Brother Signature', cursive !important; font-weight: 400; }
-.font-monte-carlo { font-family: 'Wedding Party', cursive !important; font-weight: 400; }
-#heroHead h2, #heroNames { font-family: 'Wedding Party', 'Brother Signature', cursive !important; font-weight: 400; letter-spacing: 0.02em; }
+/* Wedding Party — bold celebration script exclusively for main hero names (Charles & Leticia) */
+#heroNames, .intro-hero-names, .hero-name-font {
+  font-family: 'Wedding Party', 'Brother Signature', cursive !important;
+  font-weight: 400 !important;
+}
 #heroNames .text-gold { font-family: 'Wedding Party', cursive !important; }
+
+/* Butterline & The Feeling — clean, crystal-clear, elegant script for all quotes, subheadings, and phrases */
+.font-corinthia, .font-monte-carlo, .font-script-accent, .font-quote-script, .quote-script {
+  font-family: 'Butterline', 'The Feeling', 'Angel Wedding', cursive !important;
+  font-weight: 400;
+}
+#heroHead h2 {
+  font-family: 'Butterline', 'The Feeling', 'Angel Wedding', cursive !important;
+  font-weight: 400;
+}
 /* hero 10-sec intro — photo first, driven by GSAP; keep photo visible under overlay */
 #mainPhotoCard { will-change: opacity; }
 #mainPhotoCard img { will-change: transform; }
@@ -1010,7 +1028,7 @@ body { background: #0a0a0a !important; color: var(--cream) !important; }
   box-sizing: border-box !important;
 }
 /* hero & intro — extra large Charles & Leticia with generous side padding */
-#heroHead h2 { font-family: 'Wedding Party', 'Brother Signature', cursive !important; font-size: clamp(32px, 5.5vw, 56px) !important; font-weight: 400 !important; letter-spacing: 0.02em !important; color: #fce4a0 !important; line-height: 1.25 !important; overflow: visible !important; padding: 0.12em clamp(14px, 2.5vw, 32px) !important; }
+#heroHead h2 { font-family: 'Butterline', 'The Feeling', 'Angel Wedding', cursive !important; font-size: clamp(32px, 5.5vw, 56px) !important; font-weight: 400 !important; letter-spacing: 0.02em !important; color: #fce4a0 !important; line-height: 1.25 !important; overflow: visible !important; padding: 0.12em clamp(14px, 2.5vw, 32px) !important; }
 #heroNames, .intro-hero-names {
   font-family: 'Wedding Party', 'Brother Signature', cursive !important;
   font-weight: 400 !important;
@@ -1261,7 +1279,7 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
   <div class="cb-content rv-up" style="padding: 2.8rem 1.5rem;">
     <span class="font-label-sm label-premium uppercase tracking-[0.3em] block mb-3" style="color: rgba(252,228,160,0.85); text-shadow: 0 1px 12px rgba(0,0,0,0.55);">A love story — Belize City, 2026</span>
     <div class="cb-ornament"></div>
-    <p class="font-script-accent italic leading-[1.32] block" style="font-size: clamp(28px,5vw,52px); font-family:'Wedding Party', 'Brother Signature', cursive; color: rgba(255,255,255,0.96); text-shadow: 0 2px 18px rgba(0,0,0,0.62), 0 1px 0 rgba(0,0,0,0.35); padding: 0.15em 0;">"To love and be loved<br/>is to feel the sun from both sides."</p>
+    <p class="font-script-accent italic leading-[1.32] block" style="font-size: clamp(32px,5.5vw,56px); font-family:'Butterline', 'The Feeling', 'Angel Wedding', cursive !important; color: rgba(255,255,255,0.96); text-shadow: 0 2px 18px rgba(0,0,0,0.62), 0 1px 0 rgba(0,0,0,0.35); padding: 0.15em 0;">"To love and be loved<br/>is to feel the sun from both sides."</p>
     <div class="cb-ornament"></div>
   </div>
 </div>
@@ -1343,7 +1361,7 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
   <div class="cb-content rv-up">
     <span class="font-label-sm label-premium text-gold/80 uppercase tracking-[0.3em] block mb-3">Style</span>
     <div class="cb-ornament"></div>
-    <p class="font-script-accent text-[clamp(28px,5vw,52px)] text-white/90 italic leading-snug">Dress to Celebrate</p>
+    <p class="font-script-accent text-[clamp(30px,5.5vw,54px)] text-white/90 italic leading-snug" style="font-family:'Butterline', 'The Feeling', 'Angel Wedding', cursive !important;">Dress to Celebrate</p>
     <div class="cb-ornament"></div>
     <p class="font-body-md dark-section-body mt-2">Rich, Elegant &amp; Timeless — December 31, 2026</p>
   </div>
@@ -1404,7 +1422,7 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
       <div class="absolute inset-0 opacity-[0.06] pointer-events-none" style="background: url('../galery%20(1).jpeg') center 35% / cover no-repeat; filter: blur(18px) saturate(0.5); mask-image: linear-gradient(to bottom, transparent 0%, black 28%, black 72%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 28%, black 72%, transparent 100%);"></div>
       <div class="relative z-10 px-8 sm:px-12 py-10 sm:py-14">
         <div class="mb-6">
-          <span class="block leading-none italic" style="font-family:'Wedding Party', 'Brother Signature', cursive; font-size: clamp(48px, 8vw, 72px); color: #fce4a0; line-height: 0.9;">Our</span>
+          <span class="block leading-none italic" style="font-family:'Butterline', 'The Feeling', 'Angel Wedding', cursive !important; font-size: clamp(52px, 8vw, 76px); color: #fce4a0; line-height: 0.95;">Our</span>
           <h3 class="font-bold uppercase tracking-[0.32em] text-[#FFF8E6] leading-none -mt-1 sm:-mt-2" style="font-family:'Cinzel','Playfair Display',serif; font-size: clamp(20px, 3.8vw, 30px);">JOURNEY TOGETHER</h3>
           <div class="w-16 h-[1px] bg-gradient-to-r from-transparent via-[#c49948] to-transparent mx-auto mt-4 opacity-60"></div>
         </div>
@@ -1423,7 +1441,7 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
   <div class="cb-content rv-up">
     <span class="font-label-sm label-premium text-gold/80 uppercase tracking-[0.3em] block mb-3">With love</span>
     <div class="cb-ornament"></div>
-    <p class="font-script-accent italic leading-[1.18] block heading-standout" style="font-size: clamp(34px,6.5vw,62px); font-family:'Wedding Party','Brother Signature',cursive; color: rgba(255,255,255,0.98); text-shadow: 0 3px 24px rgba(0,0,0,0.62), 0 1px 0 rgba(0,0,0,0.45);">"We can't imagine this moment<br/>without you."</p>
+    <p class="font-script-accent italic leading-[1.2] block heading-standout" style="font-size: clamp(34px,6vw,60px); font-family:'Butterline', 'The Feeling', 'Angel Wedding', cursive !important; color: rgba(255,255,255,0.98); text-shadow: 0 3px 24px rgba(0,0,0,0.62), 0 1px 0 rgba(0,0,0,0.45);">"We can't imagine this moment<br/>without you."</p>
     <div class="cb-ornament"></div>
     <p class="font-body-md dark-section-body mt-2">Charles &amp; Leticia</p>
   </div>
