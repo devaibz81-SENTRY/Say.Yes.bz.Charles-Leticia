@@ -33,4 +33,15 @@ export default defineSchema({
     voters: v.optional(v.array(v.string())),
     createdAt: v.number(),
   }),
+  voice_notes: defineTable({
+    guestId: v.string(),
+    guestName: v.string(),
+    storageId: v.id("_storage"),
+    mimeType: v.string(),
+    durationSec: v.number(),
+    createdAt: v.number(),
+    lastName: v.optional(v.string()),
+  })
+    .index("by_guestId", ["guestId"])
+    .index("by_createdAt", ["createdAt"]),
 });

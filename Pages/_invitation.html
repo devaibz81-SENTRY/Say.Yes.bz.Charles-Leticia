@@ -420,12 +420,7 @@ section[id] { scroll-margin-top: 5rem; }
 <span class="font-script-accent text-[clamp(46px,9.5vw,90px)] text-gold-gradient italic leading-none drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">Charles &amp; Leticia</span>
 </div>
 
-<!-- Orbit elements -->
-<img class="orbit-circle absolute select-none pointer-events-none w-[clamp(120px,20vw,280px)]" style="top:16%; left:4%; --tx:-340px; --ty:-120px; --rot:160deg; animation-delay:0s;" src="../Element%20(1).png" alt=""/>
-<img class="orbit-circle absolute select-none pointer-events-none w-[clamp(120px,22vw,320px)]" style="top:13%; right:3%; --tx:380px; --ty:-140px; --rot:-200deg; animation-delay:.5s;" src="../Element%20(2).png" alt=""/>
-<img class="orbit-circle absolute select-none pointer-events-none w-[clamp(110px,17vw,240px)]" style="top:42%; left:-5%; --tx:-360px; --ty:40px; --rot:220deg; animation-delay:1s;" src="../Element%20(3).png" alt=""/>
-<img class="orbit-circle absolute select-none pointer-events-none w-[clamp(120px,20vw,300px)]" style="bottom:13%; left:6%; --tx:-360px; --ty:140px; --rot:180deg; animation-delay:2s;" src="../Element%20(5).png" alt=""/>
-<img class="orbit-circle absolute select-none pointer-events-none w-[clamp(120px,20vw,280px)]" style="bottom:11%; right:5%; --tx:400px; --ty:130px; --rot:-180deg; animation-delay:2.5s;" src="../Element%20(6).png" alt=""/>
+
 
 <!-- Center block -->
 <div class="relative z-10 flex flex-col items-center center-reveal">
@@ -803,13 +798,7 @@ section[id] { scroll-margin-top: 5rem; }
       '../galery (4).jpeg',
       '../galery (5).jpeg',
       '../dress code.png',
-      '../RSVP BUTTON.png',
-      '../Element (1).png',
-      '../Element (2).png',
-      '../Element (3).png',
-      '../Element (4).png',
-      '../Element (5).png',
-      '../Element (6).png'
+      '../RSVP BUTTON.png'
     ];
 
     var total = assetsToPreload.length;
@@ -877,9 +866,9 @@ section[id] { scroll-margin-top: 5rem; }
     else if (state === 'hold') startLoading();
   });
 
-  // ---- Falling interactive petals ----
-  if (petalsWrap) {
-    var PETAL_SRC = '../Element%20(4).png';
+  // ---- Falling interactive petals — removed (floral assets deleted) ----
+  if (false && petalsWrap) {
+    var PETAL_SRC = '';
     var petals = [];
     var W = window.innerWidth, H = window.innerHeight;
 

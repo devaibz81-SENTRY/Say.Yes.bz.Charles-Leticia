@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -914,7 +914,7 @@ Charles and Leticia</textarea>
   <script>function countUp(id,target){var el=document.getElementById(id);var start=0;var dur=600;var startTime=null;function step(ts){if(!startTime)startTime=ts;var p=Math.min((ts-startTime)/dur,1);el.textContent=Math.floor(p*target);if(p<1)requestAnimationFrame(step);}requestAnimationFrame(step);}</script>
 
   <script>
-    const CONVEX_HTTP_URL = 'https://neat-bee-452.convex.site';
+    const CONVEX_HTTP_URL = 'https://canny-hummingbird-920.convex.site';
     const WEDDING_URL = 'https://sayyesbzcharles-leticia.vercel.app';
     const SESSION_KEY = 'cl_admin_token';
     const LIVE_REFRESH_MS = 12000;
@@ -1438,7 +1438,7 @@ Charles and Leticia</textarea>
       document.getElementById('m-type').value = 'single';
       document.getElementById('m-max').value = '1';
       document.getElementById('m-phone').value = '';
-      document.getElementById('m-due').value = '2026-11-01';
+      document.getElementById('m-due').value = '2026-10-31';
       document.getElementById('m-spouse').value = '';
       syncPartySize();
       document.getElementById('add-modal').classList.add('open');
@@ -1454,7 +1454,7 @@ Charles and Leticia</textarea>
       document.getElementById('m-type').value = g.guest_type || 'single';
       document.getElementById('m-max').value = g.max_party || 1;
       document.getElementById('m-phone').value = g.phone || '';
-      document.getElementById('m-due').value = (g.deadline || '2026-11-01').split('T')[0];
+      document.getElementById('m-due').value = (g.deadline || '2026-10-31').split('T')[0];
       document.getElementById('m-spouse').value = g.spouse_name || '';
       document.getElementById('m-easy').checked = g.easy_mode === true;
       syncPartySize();
@@ -1635,7 +1635,7 @@ Charles and Leticia</textarea>
     }
 
     function formatDeadline(deadline) {
-      if (!deadline) return 'November 1, 2026';
+      if (!deadline) return 'October 31, 2026';
       const date = new Date(deadline);
       if (Number.isNaN(date.getTime())) return String(deadline);
       return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });

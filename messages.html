@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Voice Notes — Charles &amp; Leticia</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Be+Vietnam+Pro:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+tailwind.config={darkMode:"class",theme:{extend:{colors:{"gold":{"DEFAULT":"#D4AF37","light":"#F5D76E","dark":"#A8862B"},"ink":"#0a0a0a","on-error":"#ffffff","primary":"#D4AF37","inverse-on-surface":"#0a0a0a","on-tertiary":"#0a0a0a","on-error-container":"#ffb4ab","outline":"#5c5c5c","on-secondary":"#0a0a0a","surface-container-low":"#0f0f0f","on-surface-variant":"#b9b9b9","primary-fixed-dim":"#4a3b14","background":"#0a0a0a","on-primary-fixed":"#f5e3a3","on-primary-container":"#f5e3a3","secondary":"#C9A84C","tertiary":"#E8CE7A","inverse-surface":"#f5f5f5","inverse-primary":"#D4AF37","surface-dim":"#0c0c0c","on-tertiary-fixed":"#f5e3a3","on-secondary-fixed":"#f0d98c","surface-container-high":"#1a1a1a","secondary-container":"#3b2f10","primary-fixed":"#2a220c","surface-tint":"#D4AF37","tertiary-fixed":"#2a220c","surface":"#121212","outline-variant":"#2e2e2e","primary-container":"#3b2f10","on-tertiary-container":"#f5e3a3","error-container":"#3b0a0a","surface-variant":"#1c1c1c","on-surface":"#f5f5f5","tertiary-fixed-dim":"#4a3b14","on-background":"#f5f5f5","tertiary-container":"#2a220c","error":"#ba1a1a","surface-bright":"#2a2a2a","surface-container-lowest":"#050505","secondary-fixed":"#2a220c","on-tertiary-fixed-variant":"#e8ce7a","on-primary-fixed-variant":"#f5e3a3","surface-container-highest":"#222222","on-secondary-container":"#f0d98c","on-primary":"#0a0a0a","on-secondary-fixed-variant":"#e8ce7a","surface-container":"#151515","secondary-fixed-dim":"#4a3b14"},borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},spacing:{"container-padding":"2rem","unit":"8px","section-gap":"4rem","gutter":"1.5rem","element-gap":"1rem"},fontFamily:{"headline-lg":["Noto Serif"],"script-accent":["Great Vibes","cursive"],"headline-xl":["Noto Serif"],"headline-md":["Noto Serif"],"body-md":["Be Vietnam Pro"],"label-sm":["Be Vietnam Pro"],"body-lg":["Be Vietnam Pro"],"serif":["Noto Serif","Georgia","serif"],"sans":["Be Vietnam Pro","system-ui","sans-serif"]},fontSize:{"headline-lg":["32px",{"lineHeight":"1.2","fontWeight":"600"}],"script-accent":["32px",{"lineHeight":"1","fontWeight":"400"}],"headline-xl":["48px",{"lineHeight":"1.1","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-md":["24px",{"lineHeight":"1.3","fontWeight":"500"}],"body-md":["16px",{"lineHeight":"1.6","fontWeight":"400"}],"label-sm":["12px",{"lineHeight":"1","letterSpacing":"0.1em","fontWeight":"600"}],"body-lg":["18px",{"lineHeight":"1.6","fontWeight":"400"}]}}}}
+</script>
+<style>
+.glass-panel{background:rgba(18,18,18,0.55);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(212,175,55,0.16)}
+.satin-gradient{background:radial-gradient(1100px 500px at 80% -10%,rgba(212,175,55,0.10),transparent 60%),radial-gradient(900px 600px at -10% 110%,rgba(212,175,55,0.06),transparent 55%),linear-gradient(160deg,#050505 0%,#100e09 45%,#060606 100%)}
+.gold-shimmer{background:linear-gradient(90deg,transparent,rgba(212,175,55,0.16),transparent);background-size:220% 100%;animation:shimmer 4s linear infinite}
+@keyframes shimmer{0%{background-position:220% 0}100%{background-position:-120% 0}}
+.text-gold-gradient{background:linear-gradient(120deg,#F5D76E 0%,#D4AF37 45%,#8A6B1F 80%,#F5D76E 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}
+.sparkle-bg{background-image:radial-gradient(circle at center,#D4AF37 1px,transparent 1px);background-size:24px 24px;opacity:.05}
+body{min-height:100dvh;background:#0a0a0a}
+.countdown-pill{background:#000;border:1px solid rgba(212,175,55,0.28);border-radius:9999px;padding:0.55rem 1.4rem;display:inline-flex;align-items:center;gap:0;box-shadow:0 6px 28px rgba(0,0,0,0.45),inset 0 1px 0 rgba(255,255,255,0.06)}
+.countdown-pill .cd-sep{color:rgba(212,175,55,0.38);font-size:22px;font-weight:200;line-height:1;padding:0 4px;align-self:flex-start;margin-top:4px}
+.countdown-pill .cd-unit{display:flex;flex-direction:column;align-items:center;padding:0 0.5rem}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .85s cubic-bezier(.25,.8,.25,1),transform .85s cubic-bezier(.25,.8,.25,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.voice-card{background:rgba(18,18,18,0.55);backdrop-filter:blur(16px);border:1px solid rgba(212,175,55,0.16);border-radius:24px;overflow:hidden;transition:transform .35s ease,box-shadow .35s ease}
+.voice-card:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(212,175,55,0.12)}
+.voice-wave{height:42px;display:flex;align-items:center;gap:3px}
+.voice-wave i{width:3px;background:linear-gradient(180deg,#F5D76E,#D4AF37 55%,#A8862B);border-radius:9999px;display:block}
+.chad-btn{padding:.70em 1.3em;border-radius:9999px;border:none;outline:none;cursor:pointer;transition:.3s ease;background:#252525;color:#fff;font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600}
+.chad-btn:hover{background:#000}
+.chad-btn-gold{background:#D4AF37;color:#0a0a0a}
+.chad-btn-gold:hover{background:#F5D76E}
+.bottom-nav a{display:flex;flex-direction:column;align-items:center;gap:2px}
+.bottom-nav .nav-ic{display:inline-flex;font-size:20px;line-height:1}
+@keyframes floatUp{0%{opacity:0;transform:translateY(0) scale(.7)}10%{opacity:.6}90%{opacity:.2}100%{opacity:0;transform:translateY(-160px) scale(1.1)}}
+.heart-float{position:absolute;font-size:18px;opacity:0;animation:floatUp var(--dur,7s) var(--delay,0s) ease-in infinite;user-select:none;pointer-events:none;color:rgba(212,175,55,0.6)}
+.lock-shake{animation:lockShake .5s ease}
+@keyframes lockShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+</style>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-gold/30 selection:text-white">
+<!-- Bg -->
+<div class="fixed inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
+  <img src="galery%20(3).jpeg" alt="" class="w-full h-full object-cover scale-105" style="filter:brightness(0.16) saturate(0.45) blur(1px)"/>
+  <div class="absolute inset-0 bg-gradient-to-b from-[#050505]/90 via-[#050505]/70 to-[#050505]/95"></div>
+  <div class="absolute inset-0" style="background:radial-gradient(ellipse 80% 60% at 50% 40%,transparent 18%,rgba(5,4,2,0.88) 100%)"></div>
+</div>
+<div class="fixed inset-0 satin-gradient pointer-events-none opacity-40 z-0"></div>
+
+<!-- Header -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-5 sm:px-8 h-16 bg-white/[0.06] backdrop-blur-2xl border-b border-gold/20 shadow-[0_8px_32px_rgba(0,0,0,0.6)]">
+  <a id="backLink" href="index.html" class="inline-flex items-center gap-2 font-label-sm uppercase tracking-[0.15em] text-on-surface-variant hover:text-gold transition-colors no-underline"><span class="material-symbols-outlined text-lg">arrow_back</span> Invitation</a>
+  <div class="font-serif italic text-xl text-gold">Charles &amp; Leticia</div>
+  <a href="rsvp.html" class="inline-flex items-center gap-1.5 font-label-sm uppercase tracking-[0.15em] text-gold border border-gold/30 px-3.5 py-2 rounded-full hover:bg-gold/10 transition-colors no-underline"><span class="material-symbols-outlined text-lg">mail</span> RSVP</a>
+</header>
+
+<main class="pt-20 pb-28 px-4 sm:px-6 max-w-[900px] mx-auto relative z-20">
+  <!-- Hero -->
+  <div class="text-center pt-6 pb-8 reveal">
+    <span class="font-script-accent text-[clamp(28px,6vw,42px)] text-gold-gradient italic block mb-2">Voice notes</span>
+    <h1 class="font-headline-xl text-white leading-tight">From those we love</h1>
+    <div class="w-20 h-[1px] bg-gold mx-auto mt-4 opacity-60"></div>
+    <p class="font-body-lg text-on-surface-variant italic max-w-xl mx-auto mt-4">A little time capsule — 60-second love letters you left on the RSVP, kept private until the celebration is over.</p>
+    <div class="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.04] border border-gold/15">
+      <span class="material-symbols-outlined text-gold text-sm" style="font-variation-settings:'FILL' 1">lock</span>
+      <span class="font-label-sm text-white/70" style="font-size:.62rem;letter-spacing:.10em">Unlocks after <strong class="text-gold-light">Dec 31, 2026 — 6PM Belize time</strong> • Opus • not mp3</span>
+    </div>
+  </div>
+
+  <!-- LOCKED VIEW -->
+  <div id="lockedView" class="hidden">
+    <div class="glass-panel rounded-[28px] p-7 sm:p-10 text-center relative overflow-hidden reveal">
+      <div class="absolute inset-0 gold-shimmer pointer-events-none"></div>
+      <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <span class="heart-float" style="left:12%;bottom:0;--dur:8s;--delay:0s">♥</span><span class="heart-float" style="left:78%;bottom:0;--dur:7s;--delay:1.2s">♡</span><span class="heart-float" style="left:45%;bottom:0;--dur:9s;--delay:.5s">♥</span>
+      </div>
+      <div class="relative z-10">
+        <div id="lockIcon" class="w-20 h-20 mx-auto rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center text-gold mb-5">
+          <span class="material-symbols-outlined text-4xl" style="font-variation-settings:'FILL' 1">lock</span>
+        </div>
+        <h2 class="font-headline-md text-white italic mb-2">Sealed until the first dance</h2>
+        <p class="font-body-md text-on-surface-variant max-w-md mx-auto">Every laugh, every whisper, every “we love you” you recorded on the RSVP is safe in Convex. You’ll hear them all at once — right after Charles &amp; Leticia say “I do.”</p>
+
+        <!-- Countdown pill -->
+        <div class="mt-7 flex flex-col items-center gap-3">
+          <span class="font-label-sm text-gold uppercase tracking-[0.22em]" style="font-size:.64rem">Unlocks in</span>
+          <div class="countdown-pill"><div id="countdown" class="flex items-center justify-center gap-0"></div></div>
+          <p class="font-label-sm text-on-surface-variant" style="font-size:.62rem;letter-spacing:.08em">Dec 31, 2026 — 6:00 PM America/Belize • <span id="lockedNow"></span></p>
+        </div>
+
+        <div class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 text-left">
+          <div class="rounded-2xl border border-gold/15 bg-white/[0.03] p-4 text-center">
+            <span class="material-symbols-outlined text-gold text-2xl">mic</span>
+            <p class="font-label-sm text-white mt-2" style="font-size:.64rem;letter-spacing:.12em;text-transform:uppercase">Opus • 60s</p>
+            <p class="font-body-md text-on-surface-variant mt-1" style="font-size:.74rem">Not mp3 — crystal voice, tiny files, stored securely.</p>
+          </div>
+          <div class="rounded-2xl border border-gold/15 bg-white/[0.03] p-4 text-center">
+            <span class="material-symbols-outlined text-gold text-2xl">favorite</span>
+            <p class="font-label-sm text-white mt-2" style="font-size:.64rem;letter-spacing:.12em;text-transform:uppercase">One per guest</p>
+            <p class="font-body-md text-on-surface-variant mt-1" style="font-size:.74rem">Re-record to replace it anytime before the wedding.</p>
+          </div>
+          <div class="rounded-2xl border border-gold/15 bg-white/[0.03] p-4 text-center">
+            <span class="material-symbols-outlined text-gold text-2xl">headphones</span>
+            <p class="font-label-sm text-white mt-2" style="font-size:.64rem;letter-spacing:.12em;text-transform:uppercase">Private until then</p>
+            <p class="font-body-md text-on-surface-variant mt-1" style="font-size:.74rem">We don’t email or share them — just here, after.</p>
+          </div>
+        </div>
+
+        <div class="mt-8 flex flex-wrap justify-center gap-3">
+          <a id="lockedRsvpBtn" href="rsvp.html" class="chad-btn chad-btn-gold inline-flex items-center gap-2 no-underline"><span class="material-symbols-outlined text-base">mic</span> Leave a voice note on your RSVP</a>
+          <a href="index.html" class="chad-btn inline-flex items-center gap-2 no-underline"><span class="material-symbols-outlined text-base">auto_awesome</span> Back to invitation</a>
+        </div>
+        <p class="font-label-sm text-on-surface-variant mt-3" style="font-size:.62rem;letter-spacing:.08em">Already left one? You can still listen here after Dec 31 — we’ll open it for you.</p>
+        <p class="mt-4 text-center"><a href="#" onclick="event.preventDefault(); var u=new URL(location.href); u.searchParams.set('preview','1'); location.href=u.toString();" class="font-label-sm text-gold/60 hover:text-gold underline underline-offset-4" style="font-size:.62rem;letter-spacing:.08em">Preview unlocked view (for testing) →</a></p>
+      </div>
+    </div>
+
+    <div class="glass-panel rounded-3xl p-6 sm:p-8 mt-6 reveal">
+      <h3 class="font-headline-md text-white italic flex items-center gap-2"><span class="material-symbols-outlined text-gold">auto_stories</span> How it works</h3>
+      <ol class="mt-4 space-y-3 font-body-md text-on-surface-variant" style="font-size:.88rem">
+        <li class="flex gap-3"><span class="shrink-0 w-7 h-7 rounded-full bg-gold/15 border border-gold/25 flex items-center justify-center text-gold font-label-sm">1</span><span><strong class="text-white">RSVP first</strong> — the recorder appears on your success page right after you say Yes/No/Ask Later.</span></li>
+        <li class="flex gap-3"><span class="shrink-0 w-7 h-7 rounded-full bg-gold/15 border border-gold/25 flex items-center justify-center text-gold font-label-sm">2</span><span><strong class="text-white">Hold the mic</strong> — tap record, speak for up to 60 seconds, preview, then Send. Your voice is saved as Opus in Convex File Storage.</span></li>
+        <li class="flex gap-3"><span class="shrink-0 w-7 h-7 rounded-full bg-gold/15 border border-gold/25 flex items-center justify-center text-gold font-label-sm">3</span><span><strong class="text-white">Come back New Year’s</strong> — this page unlocks at 6PM Belize time. All notes play right here.</span></li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- UNLOCKED VIEW -->
+  <div id="unlockedView" class="hidden space-y-6">
+    <div class="glass-panel rounded-[28px] p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-4 reveal">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-full bg-gold/15 border border-gold/30 flex items-center justify-center text-gold"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">celebration</span></div>
+        <div>
+          <h2 class="font-headline-md text-white italic leading-tight">The time capsule is open</h2>
+          <p class="font-body-md text-on-surface-variant" style="font-size:.82rem">Tap play — these were recorded with love, one minute at a time.</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <span id="voiceCount" class="inline-flex items-center gap-1.5 rounded-full border border-gold/30 bg-gold/10 text-gold-light font-label-sm px-3.5 py-1.5" style="font-size:.64rem;letter-spacing:.12em;text-transform:uppercase"><span class="material-symbols-outlined text-sm">graphic_eq</span> <span id="voiceCountNum">—</span></span>
+        <button id="refreshBtn" type="button" class="chad-btn inline-flex items-center gap-1.5"><span class="material-symbols-outlined text-base">refresh</span> Refresh</button>
+      </div>
+    </div>
+
+    <div id="voiceList" class="grid grid-cols-1 gap-4"></div>
+
+    <div id="emptyState" class="hidden glass-panel rounded-[28px] p-8 sm:p-10 text-center reveal">
+      <div class="w-16 h-16 mx-auto rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center text-gold/60"><span class="material-symbols-outlined text-3xl">mic_off</span></div>
+      <h3 class="font-headline-md text-white italic mt-4">No voice notes yet</h3>
+      <p class="font-body-md text-on-surface-variant max-w-md mx-auto mt-2">Be the first — leave yours from the RSVP success page. It’ll appear here for everyone after the celebration.</p>
+      <a href="rsvp.html" class="chad-btn chad-btn-gold inline-flex items-center gap-2 mt-5 no-underline"><span class="material-symbols-outlined text-base">mic</span> Go to RSVP</a>
+    </div>
+
+    <div id="errState" class="hidden rounded-2xl border border-red-500/25 bg-red-500/10 p-4 text-center">
+      <p class="font-body-md text-red-200" style="font-size:.86rem">Could not load voice notes. <button onclick="loadVoices()" class="underline underline-offset-4 text-red-100">Try again</button></p>
+    </div>
+
+    <div class="flex flex-wrap justify-center gap-3 pt-2 reveal">
+      <a href="index.html" class="chad-btn inline-flex items-center gap-2 no-underline"><span class="material-symbols-outlined text-base">arrow_back</span> Back to invitation</a>
+      <a href="rsvp.html" class="chad-btn chad-btn-gold inline-flex items-center gap-2 no-underline"><span class="material-symbols-outlined text-base">mail</span> RSVP again</a>
+    </div>
+  </div>
+
+  <!-- LOADING -->
+  <div id="loadingView" class="text-center py-16">
+    <div class="inline-flex items-center gap-3 rounded-full border border-gold/20 bg-white/[0.04] px-5 py-3">
+      <span class="material-symbols-outlined text-gold animate-spin">progress_activity</span>
+      <span class="font-label-sm text-gold-light uppercase tracking-[0.16em]" style="font-size:.66rem">Checking the clock…</span>
+    </div>
+  </div>
+</main>
+
+<nav class="bottom-nav fixed bottom-5 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1 px-2 py-2 rounded-full bg-white/[0.08] backdrop-blur-2xl border border-gold/20 shadow-[0_8px_32px_rgba(0,0,0,0.6)]" aria-label="Site navigation">
+  <a href="index.html" class="px-3 sm:px-4 py-2 rounded-full text-on-surface-variant hover:text-gold transition-colors no-underline" aria-label="Home"><span class="nav-ic material-symbols-outlined">home</span></a>
+  <a href="story.html" class="px-3 sm:px-4 py-2 rounded-full text-on-surface-variant hover:text-gold transition-colors no-underline" aria-label="Story"><span class="nav-ic material-symbols-outlined">auto_stories</span></a>
+  <a href="voice-messages.html" class="px-3 sm:px-4 py-2 rounded-full text-gold bg-gold/10 no-underline" aria-label="Voices" style="font-variation-settings:'FILL' 1"><span class="nav-ic material-symbols-outlined">mic</span></a>
+  <a href="music.html" class="px-3 sm:px-4 py-2 rounded-full text-on-surface-variant hover:text-gold transition-colors no-underline" aria-label="Music"><span class="nav-ic material-symbols-outlined">music_note</span></a>
+  <a href="rsvp.html" class="px-3 sm:px-4 py-2 rounded-full text-on-surface-variant hover:text-gold transition-colors no-underline" aria-label="RSVP"><span class="nav-ic material-symbols-outlined">mail</span></a>
+</nav>
+
+<script>
+(function(){
+  var CONVEX_HTTP_URL = 'https://canny-hummingbird-920.convex.site';
+  var WEDDING_ISO = '2026-12-31T18:00:00-06:00';
+  var weddingMs = new Date(WEDDING_ISO).getTime();
+  var params = new URLSearchParams(location.search || '');
+  var previewBypass = params.get('preview') === '1';
+
+  var els = {
+    loading: document.getElementById('loadingView'),
+    locked: document.getElementById('lockedView'),
+    unlocked: document.getElementById('unlockedView'),
+    countdown: document.getElementById('countdown'),
+    lockedNow: document.getElementById('lockedNow'),
+    lockIcon: document.getElementById('lockIcon'),
+    voiceList: document.getElementById('voiceList'),
+    empty: document.getElementById('emptyState'),
+    err: document.getElementById('errState'),
+    count: document.getElementById('voiceCount'),
+    countNum: document.getElementById('voiceCountNum'),
+    refreshBtn: document.getElementById('refreshBtn')
+  };
+
+  // Carry ?id & friends onto back links
+  try {
+    var q = params.toString();
+    if (q) {
+      var a = document.getElementById('backLink'); if (a) a.href = 'index.html?' + q;
+      var b = document.getElementById('lockedRsvpBtn'); if (b) b.href = 'rsvp.html' + (q ? '?' + q : '');
+    }
+  } catch(e){}
+
+  function fmtSec(s){ s=Math.max(0,Math.floor(s)); var m=Math.floor(s/60), r=s%60; return m+':'+(r<10?'0'+r:r); }
+  function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function fmtDate(ms){
+    try { return new Date(ms).toLocaleString('en-US',{ month:'short', day:'numeric', year:'numeric', hour:'numeric', minute:'2-digit' }); } catch(e){ return new Date(ms).toISOString(); }
+  }
+
+  // Countdown (locked view)
+  var tickTimer = null;
+  function startCountdown(){
+    if (!els.countdown) return;
+    var units = [{k:'d',label:'Days'},{k:'h',label:'Hours'},{k:'m',label:'Minutes'},{k:'s',label:'Seconds'}];
+    var cells={};
+    els.countdown.innerHTML='';
+    units.forEach(function(u,i){
+      if(i>0){ var sep=document.createElement('span'); sep.className='cd-sep'; sep.textContent=':'; els.countdown.appendChild(sep); }
+      var el=document.createElement('div'); el.className='cd-unit';
+      var num=document.createElement('span'); num.className='font-headline-lg text-gold-gradient text-[22px] sm:text-[30px] tabular-nums'; num.id='cd-'+u.k;
+      var lab=document.createElement('span'); lab.className='font-label-sm text-gold/60 uppercase mt-0.5 text-[9px] sm:text-[10px]'; lab.style.letterSpacing='0.18em'; lab.textContent=u.label;
+      el.appendChild(num); el.appendChild(lab); cells[u.k]=num; els.countdown.appendChild(el);
+    });
+    function pad(n){return n<10?'0'+n:''+n;}
+    function tick(){
+      var diff = weddingMs - Date.now();
+      if (els.lockedNow) els.lockedNow.textContent = new Date().toLocaleString();
+      if (diff <= 0) {
+        els.countdown.innerHTML = '<div class="font-headline-md text-gold-gradient italic">It’s time — the capsule is open!</div>';
+        clearInterval(tickTimer);
+        // auto-switch to unlocked after a beat
+        setTimeout(function(){ checkGateAndLoad(true); }, 900);
+        return;
+      }
+      cells.d.textContent = pad(Math.floor(diff/86400000));
+      cells.h.textContent = pad(Math.floor(diff/3600000)%24);
+      cells.m.textContent = pad(Math.floor(diff/60000)%60);
+      cells.s.textContent = pad(Math.floor(diff/1000)%60);
+    }
+    tick(); tickTimer = setInterval(tick, 1000);
+  }
+
+  function showLocked(){
+    els.loading.classList.add('hidden');
+    els.unlocked.classList.add('hidden');
+    els.locked.classList.remove('hidden');
+    startCountdown();
+    // reveal anim
+    requestAnimationFrame(function(){
+      document.querySelectorAll('#lockedView .reveal').forEach(function(el,i){ setTimeout(function(){ el.classList.add('visible'); }, i*90); });
+    });
+    // little shake on lock every 4s while locked
+    setInterval(function(){ if(els.lockIcon){ els.lockIcon.classList.remove('lock-shake'); void els.lockIcon.offsetWidth; els.lockIcon.classList.add('lock-shake'); } }, 4200);
+  }
+  function showUnlocked(){
+    els.loading.classList.add('hidden');
+    els.locked.classList.add('hidden');
+    els.unlocked.classList.remove('hidden');
+    document.querySelectorAll('#unlockedView .reveal').forEach(function(el,i){ setTimeout(function(){ el.classList.add('visible'); }, i*80); });
+  }
+
+  function renderVoices(list){
+    var container = els.voiceList;
+    if (!container) return;
+    if (!list || !list.length) {
+      container.innerHTML = '';
+      if (els.empty) els.empty.classList.remove('hidden');
+      if (els.countNum) els.countNum.textContent = '0 notes';
+      return;
+    }
+    if (els.empty) els.empty.classList.add('hidden');
+    if (els.countNum) els.countNum.textContent = list.length === 1 ? '1 note' : list.length + ' notes';
+    container.innerHTML = list.map(function(v, idx){
+      var name = escapeHtml(v.guestName || 'Guest');
+      var last = v.lastName ? ' ' + escapeHtml(v.lastName) : '';
+      var full = (name + last).trim();
+      var dur = fmtSec(v.durationSec || 0);
+      var when = fmtDate(v.createdAt);
+      var mime = escapeHtml(v.mimeType || 'audio/webm;codecs=opus');
+      var url = v.audioUrl || '';
+      var initial = (full.trim()[0] || 'G').toUpperCase();
+      // wave heights varied by idx for visual interest
+      var wave = '';
+      for (var i=0;i<18;i++){ var h = 6 + ((idx*7 + i*13)%22); var op = 0.55 + ((i%3)*0.15); wave += '<i style="height:'+h+'px;opacity:'+op+'"></i>'; }
+      return '<div class="voice-card p-5 sm:p-6 relative overflow-hidden">'
+        + '<div class="absolute inset-0 gold-shimmer pointer-events-none opacity-40"></div>'
+        + '<div class="relative z-10">'
+        + '<div class="flex items-start gap-4">'
+        + '<div class="shrink-0 w-12 h-12 rounded-full bg-gold/15 border border-gold/30 flex items-center justify-center text-gold font-headline-md">'+escapeHtml(initial)+'</div>'
+        + '<div class="min-w-0 flex-1">'
+        + '<div class="flex flex-wrap items-center gap-2">'
+        + '<h3 class="font-headline-md text-white italic leading-tight">'+full+'</h3>'
+        + '<span class="inline-flex items-center gap-1 rounded-full border border-gold/20 bg-gold/10 px-2.5 py-1 font-label-sm text-gold-light" style="font-size:.60rem;letter-spacing:.10em;text-transform:uppercase"><span class="material-symbols-outlined text-xs">schedule</span> '+dur+'</span>'
+        + '<span class="font-label-sm text-on-surface-variant" style="font-size:.60rem;letter-spacing:.08em">'+escapeHtml(when)+'</span>'
+        + '</div>'
+        + '<div class="voice-wave mt-3">'+wave+'</div>'
+        + '<audio class="w-full mt-3 rounded-full" style="height:38px" controls preload="none" controlsList="nodownload">'
+        + (url ? '<source src="'+escapeHtml(url)+'" type="'+mime+'">' : '')
+        + '</audio>'
+        + '<p class="font-label-sm text-on-surface-variant mt-2" style="font-size:.62rem;letter-spacing:.06em">Opus • '+mime+' • tap play to hear their voice</p>'
+        + '</div>'
+        + '</div>'
+        + '</div>'
+        + '</div>';
+    }).join('');
+  }
+
+  window.loadVoices = function(){
+    if (els.err) els.err.classList.add('hidden');
+    // keep unlocked visible
+    var url = CONVEX_HTTP_URL + '/api/voice/list' + (previewBypass ? '?preview=1' : '');
+    fetch(url)
+      .then(function(r){ return r.json().catch(function(){return {};}).then(function(j){ return { ok: r.ok, body: j, status: r.status }; }); })
+      .then(function(res){
+        var body = res.body;
+        if (body && body.locked) {
+          showLocked();
+          return;
+        }
+        if (!res.ok) throw new Error(body && body.error ? body.error : 'Load failed');
+        showUnlocked();
+        var list = Array.isArray(body) ? body : [];
+        renderVoices(list);
+      })
+      .catch(function(err){
+        // if we were locked and preview bypass, show err
+        showUnlocked();
+        if (els.err) els.err.classList.remove('hidden');
+        console.error('voice load', err);
+      });
+  };
+
+  function checkGateAndLoad(force){
+    if (previewBypass) { els.loading.classList.add('hidden'); loadVoices(); return; }
+    var now = Date.now();
+    if (now < weddingMs && !force) {
+      els.loading.classList.add('hidden');
+      showLocked();
+      return;
+    }
+    // verify server gate too
+    var url = CONVEX_HTTP_URL + '/api/voice/list' + (previewBypass ? '?preview=1' : '');
+    fetch(url)
+      .then(function(r){ return r.json().catch(function(){return {};}).then(function(j){ return { ok: r.ok, body: j }; }); })
+      .then(function(res){
+        var body = res.body;
+        if (body && body.locked) { els.loading.classList.add('hidden'); showLocked(); return; }
+        els.loading.classList.add('hidden');
+        showUnlocked();
+        renderVoices(Array.isArray(body)?body:[]);
+      })
+      .catch(function(){
+        // fallback to time check
+        if (Date.now() < weddingMs) { els.loading.classList.add('hidden'); showLocked(); }
+        else { els.loading.classList.add('hidden'); showUnlocked(); loadVoices(); }
+      });
+  }
+
+  if (els.refreshBtn) els.refreshBtn.addEventListener('click', function(){ loadVoices(); });
+
+  // initial
+  checkGateAndLoad(false);
+  // also start countdown if locked (will be called via showLocked)
+})();
+</script>
+</body></html>
