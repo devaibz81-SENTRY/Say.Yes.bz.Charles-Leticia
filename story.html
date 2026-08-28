@@ -94,10 +94,13 @@
   font-family: 'Wedding Party';
   src: url('WeddingParty.ttf') format('truetype'),
        url('WeddingParty.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
 }
+  .font-script-accent, .font-corinthia, .font-monte-carlo {
+    overflow: visible !important;
+    padding-left: clamp(12px, 2.5vw, 30px) !important;
+    padding-right: clamp(12px, 2.5vw, 30px) !important;
+    box-sizing: border-box !important;
+  }
   .satin-gradient {
     background:
       radial-gradient(1100px 500px at 80% -10%, rgba(196,153,72,0.08), transparent 60%),

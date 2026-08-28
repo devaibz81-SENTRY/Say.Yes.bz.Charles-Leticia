@@ -273,26 +273,42 @@
   -webkit-backdrop-filter: none;
   border: 1px solid rgba(212,175,55,0.28);
   border-radius: 9999px;
-  padding: 0.55rem 1.4rem;
+  padding: 0.6rem 1.4rem;
   display: inline-flex;
   align-items: center;
   gap: 0;
   box-shadow: 0 6px 28px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
+  overflow: visible;
 }
 .countdown-pill .cd-sep {
-  color: rgba(212,175,55,0.38);
-  font-size: 22px;
-  font-weight: 200;
+  color: rgba(212,175,55,0.45);
+  font-size: 20px;
+  font-weight: 300;
   line-height: 1;
-  padding: 0 4px;
-  align-self: flex-start;
-  margin-top: 4px;
+  padding: 0 2px;
+  align-self: center;
+  margin-bottom: 6px;
 }
 .countdown-pill .cd-unit {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 0 0.5rem;
+  min-width: 46px;
+  overflow: visible;
+}
+.cd-digit {
+  font-family: 'Rapodhite', 'Cinzel', 'Playfair Display', serif !important;
+  font-size: 24px !important;
+  line-height: 1.15 !important;
+  font-weight: 700 !important;
+  display: inline-block !important;
+  padding: 2px 2px !important;
+  overflow: visible !important;
+}
+@media (min-width: 640px) {
+  .cd-digit { font-size: 30px !important; }
+  .countdown-pill .cd-unit { min-width: 56px; padding: 0 0.65rem; }
 }
 
 /* ---- 6. Gallery fan card: cream photo mat ---- */
@@ -885,12 +901,14 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
 .rv-scale.rv-in { opacity: 1; transform: scale(1) translateY(0); }
 .rv-blur { opacity: 0; filter: blur(10px); transform: translateY(12px); transition: opacity .85s cubic-bezier(.22,1,.36,1), transform .85s cubic-bezier(.22,1,.36,1), filter .85s ease; }
 .rv-blur.rv-in { opacity: 1; filter: blur(0); transform: translateY(0); }
-.word-reveal-wrap { overflow: hidden; }
+.word-reveal-wrap { overflow: visible !important; display: inline-block; padding: 0 0.12em; }
 .word-reveal {
   display: inline-block;
   opacity: 0;
   transform: translateY(110%) rotate(0.4deg);
   transition: transform .7s cubic-bezier(.16,1,.3,1), opacity .55s ease;
+  overflow: visible !important;
+  padding: 0.06em 0.12em;
 }
 .word-reveal.rv-in { opacity: 1; transform: translateY(0) rotate(0); }
 /* headings that get word-split should not also fly as a block — let words drive */
@@ -984,12 +1002,34 @@ body { background: #0a0a0a !important; color: var(--cream) !important; }
 .celebration-section > .inner .dark-section-subheading { color: rgba(255,248,230,0.55) !important; }
 .celebration-section .bento-card-dark { background: rgba(18,16,12,0.92) !important; box-shadow: 0 12px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04) !important; border-color: rgba(196,153,72,0.22) !important; }
 /* update bento typography to cream + bronze */
-.bento-heading { color: #FFF8E6 !important; font-family: 'Cinzel','Playfair Display',serif !important; letter-spacing: 0.04em; }
-.bento-body { color: rgba(255,248,230,0.72) !important; }
-.bento-accent { color: #c49948 !important; }
-/* hero — large curvy script + spaced serif light bronze */
-#heroHead h2 { font-family: 'Wedding Party', 'Brother Signature', cursive !important; font-size: clamp(30px, 5.5vw, 50px) !important; font-weight: 400 !important; letter-spacing: 0.02em !important; color: #fce4a0 !important; }
-#heroNames { font-family: 'Wedding Party', 'Brother Signature', cursive !important; font-weight: 400 !important; font-size: clamp(66px, 18vw, 138px) !important; line-height: 1.28 !important; padding: 0.22em 0 0.28em 0 !important; overflow: visible !important; display: inline-block !important; white-space: normal !important; word-break: keep-all !important; text-shadow: 0 0 24px rgba(252,228,160,0.35); }
+/* Generous left and right space on all script fonts so flourishes and swashes never crop */
+.font-corinthia, .font-monte-carlo, .font-script-accent {
+  overflow: visible !important;
+  padding-left: clamp(14px, 2.8vw, 36px) !important;
+  padding-right: clamp(14px, 2.8vw, 36px) !important;
+  box-sizing: border-box !important;
+}
+/* hero & intro — extra large Charles & Leticia with generous side padding */
+#heroHead h2 { font-family: 'Wedding Party', 'Brother Signature', cursive !important; font-size: clamp(32px, 5.5vw, 56px) !important; font-weight: 400 !important; letter-spacing: 0.02em !important; color: #fce4a0 !important; line-height: 1.25 !important; overflow: visible !important; padding: 0.12em clamp(14px, 2.5vw, 32px) !important; }
+#heroNames, .intro-hero-names {
+  font-family: 'Wedding Party', 'Brother Signature', cursive !important;
+  font-weight: 400 !important;
+  font-size: clamp(68px, 16vw, 175px) !important;
+  line-height: 1.14 !important;
+  letter-spacing: 0.01em !important;
+  padding-left: clamp(18px, 3.5vw, 44px) !important;
+  padding-right: clamp(18px, 3.5vw, 44px) !important;
+  padding-top: 0.15em !important;
+  padding-bottom: 0.18em !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  display: block !important;
+  text-align: center !important;
+  overflow: visible !important;
+  word-break: keep-all !important;
+  text-shadow: 0 0 32px rgba(252,228,160,0.45);
+  box-sizing: border-box !important;
+}
 #heroNames .text-gold { color: #c49948 !important; }
 #countdown-block p { font-family: 'Rapodhite','Cormorant Garamond','Cinzel','Playfair Display',serif !important; letter-spacing: 0.18em !important; color: rgba(252,228,160,0.85) !important; }
 /* fix headings cropping — ensure no clip & luxe sizing */
@@ -1122,9 +1162,9 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
 <div class="glow-wash absolute inset-0 z-[2]" id="glowWash" aria-hidden="true"></div>
 <canvas id="fwCanvas" class="absolute inset-0 z-[2]" aria-hidden="true"></canvas>
 
-<!-- Ornament text — luxe, not cropped -->
-<div class="absolute top-10 sm:top-16 left-0 right-0 text-center pointer-events-none z-20 px-4 overflow-visible">
-<span class="font-script-accent text-[clamp(56px,13vw,115px)] text-gold-gradient italic drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)] inline-block overflow-visible py-3" style="line-height:1.28; display:inline-block; padding-top:0.18em; padding-bottom:0.22em; overflow:visible;">Charles &amp; Leticia</span>
+<!-- Ornament text — fit to width with generous side padding -->
+<div class="absolute top-6 sm:top-12 left-0 right-0 w-full max-w-5xl mx-auto text-center pointer-events-none z-20 px-6 sm:px-12 overflow-visible flex items-center justify-center">
+<span class="font-script-accent intro-hero-names text-gold-gradient italic drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)] inline-block overflow-visible py-3">Charles &amp; Leticia</span>
 </div>
 
 <!-- Center block -->
@@ -1164,11 +1204,11 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
   <div class="absolute inset-0 hero-overlay-velvet pointer-events-none"></div>
 </div>
 
-<div class="relative z-10 max-w-[1200px] w-full mx-auto px-5 sm:px-container-padding flex flex-col items-center flex-1 justify-center gap-6 lg:gap-8 my-auto">
+<div class="relative z-10 max-w-[1280px] w-full mx-auto px-4 sm:px-8 flex flex-col items-center flex-1 justify-center gap-6 lg:gap-8 my-auto overflow-visible">
   <!-- Headline Block — luxe stagger -->
-  <div class="space-y-3 text-center hero-stagger" id="heroHead">
+  <div class="w-full max-w-5xl mx-auto space-y-2 text-center hero-stagger overflow-visible" id="heroHead">
     <h2 class="hd-fade font-script-accent text-script-accent italic text-gold leading-[1.3] text-2xl sm:text-3xl lg:text-4xl">Join us for the wedding of</h2>
-    <h3 id="heroNames" class="hd-fade font-script-accent text-white text-center leading-[1.18] sm:leading-[1.32] px-2" style="line-height:1.22; overflow:visible;">Charles <span class="text-gold">&amp;</span><br class="block sm:hidden"> Leticia</h3>
+    <h3 id="heroNames" class="hd-fade font-script-accent text-white text-center">Charles <span class="text-gold">&amp;</span> Leticia</h3>
   </div>
   
   <div class="w-full max-w-[340px] sm:max-w-[380px] mx-auto">
@@ -1484,7 +1524,7 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
     var el = document.createElement('div');
     el.className = 'cd-unit';
     var num = document.createElement('span');
-    num.className = 'font-headline-lg text-gold-gradient text-[22px] sm:text-[30px] tabular-nums';
+    num.className = 'cd-digit text-gold-gradient tabular-nums';
     num.id = 'cd-' + u.key;
     var lab = document.createElement('span');
     lab.className = 'font-label-sm label-premium text-gold/60 uppercase mt-0.5 text-[9px] sm:text-[10px]';
@@ -3186,28 +3226,21 @@ function fallbackCopy(text) {
   }
 })();
 </script>
-<!-- Fit hero names to the full hero width -->
+<!-- Fit hero & intro names cleanly with generous side padding -->
 <script>
 (function () {
-  var h3 = document.getElementById('heroNames');
-  var head = document.getElementById('heroHead');
-  if (!h3 || !head) return;
-  function fit() {
-    var mainEl = document.querySelector('main');
-    var desktop = window.matchMedia('(min-width: 1024px)').matches;
-    var target = (desktop ? mainEl.offsetWidth * 2 : head.offsetWidth) - 8;
-    if (target < 140) return;
-    h3.style.fontSize = '20px';
-    var w = h3.scrollWidth;
-    if (!w) return;
-    var size = Math.max(36, Math.min(400, 20 * target / w));
-    h3.style.fontSize = size + 'px';
+  function fitNames() {
+    var heroH3 = document.getElementById('heroNames');
+    var introNames = document.querySelector('.intro-hero-names');
+    var targets = [heroH3, introNames].filter(Boolean);
+    targets.forEach(function(el) {
+      el.style.overflow = 'visible';
+    });
   }
-  h3.style.lineHeight = '1.15';
-  window.addEventListener('resize', fit);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
-  window.addEventListener('load', fit);
-  fit();
+  window.addEventListener('resize', fitNames);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitNames);
+  window.addEventListener('load', fitNames);
+  fitNames();
 })();
 </script>
 <!-- Dress code fullscreen viewer -->
