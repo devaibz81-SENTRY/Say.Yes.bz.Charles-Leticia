@@ -4,20 +4,16 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Charles &amp; Leticia — The Invitation</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;family=Great+Vibes&amp;display=swap" rel="stylesheet"/>
-<link rel="preconnect" href="https://fonts.bunny.net"/>
-<link href="https://fonts.bunny.net/css?family=corinthia:700" rel="stylesheet"/>
-<link href="https://fonts.bunny.net/css?family=monte-carlo:400" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Great+Vibes&amp;family=Alex+Brush&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <style>
-/* Bunny Fonts — Corinthia 700 */
-.font-corinthia { font-family: 'Corinthia', handwriting !important; font-weight: 700; }
-/* Use Corinthia for all script accents (was Great Vibes) */
-.font-script-accent { font-family: 'Corinthia', handwriting !important; font-weight: 700; }
-/* Monte Carlo — available as .font-monte-carlo (hero now uses below-photo fonts) */
-.font-monte-carlo { font-family: 'Monte Carlo', cursive !important; font-weight: 400; }
-#heroHead h2, #heroNames { font-family: 'Corinthia', handwriting !important; font-weight: 700; letter-spacing: 0.015em; }
-#heroNames .text-gold { font-family: 'Corinthia', handwriting !important; }
+/* Editorial theme — Cinzel/Playfair for headers, Great Vibes/Alex Brush for script */
+.font-corinthia, .font-script-accent { font-family: 'Great Vibes', 'Alex Brush', cursive !important; font-weight: 400; }
+.font-monte-carlo { font-family: 'Alex Brush', cursive !important; font-weight: 400; }
+#heroHead h2, #heroNames { font-family: 'Great Vibes', 'Alex Brush', cursive !important; font-weight: 400; letter-spacing: 0.015em; }
+#heroNames .text-gold { font-family: 'Great Vibes', 'Alex Brush', cursive !important; }
 /* hero 10-sec intro — photo first, driven by GSAP; keep photo visible under overlay */
 #mainPhotoCard { will-change: opacity; }
 #mainPhotoCard img { will-change: transform; }
@@ -31,55 +27,55 @@
         theme: {
           extend: {
             "colors": {
-                    "gold": { "DEFAULT": "#D4AF37", "light": "#F5D76E", "dark": "#A8862B" },
+                    "gold": { "DEFAULT": "#c49948", "light": "#fce4a0", "dark": "#7d541b" },
                     "ink": "#0a0a0a",
                     "on-error": "#ffffff",
-                    "primary": "#D4AF37",
+                    "primary": "#c49948",
                     "inverse-on-surface": "#0a0a0a",
                     "on-tertiary": "#0a0a0a",
                     "on-error-container": "#ffb4ab",
                     "outline": "#5c5c5c",
                     "on-secondary": "#0a0a0a",
                     "surface-container-low": "#0f0f0f",
-                    "on-surface-variant": "#b9b9b9",
-                    "primary-fixed-dim": "#4a3b14",
+                    "on-surface-variant": "#FFF8E6",
+                    "primary-fixed-dim": "#5e3c0c",
                     "background": "#0a0a0a",
-                    "on-primary-fixed": "#f5e3a3",
-                    "on-primary-container": "#f5e3a3",
-                    "secondary": "#C9A84C",
-                    "tertiary": "#E8CE7A",
-                    "inverse-surface": "#f5f5f5",
-                    "inverse-primary": "#D4AF37",
+                    "on-primary-fixed": "#fce4a0",
+                    "on-primary-container": "#fce4a0",
+                    "secondary": "#c49948",
+                    "tertiary": "#fce4a0",
+                    "inverse-surface": "#FFF8E6",
+                    "inverse-primary": "#c49948",
                     "surface-dim": "#0c0c0c",
-                    "on-tertiary-fixed": "#f5e3a3",
-                    "on-secondary-fixed": "#f0d98c",
+                    "on-tertiary-fixed": "#fce4a0",
+                    "on-secondary-fixed": "#fce4a0",
                     "surface-container-high": "#1a1a1a",
                     "secondary-container": "#3b2f10",
                     "primary-fixed": "#2a220c",
-                    "surface-tint": "#D4AF37",
+                    "surface-tint": "#c49948",
                     "tertiary-fixed": "#2a220c",
                     "surface": "#121212",
                     "outline-variant": "#2e2e2e",
-                    "primary-container": "#3b2f10",
-                    "on-tertiary-container": "#f5e3a3",
+                    "primary-container": "#5e3c0c",
+                    "on-tertiary-container": "#fce4a0",
                     "error-container": "#3b0a0a",
                     "surface-variant": "#1c1c1c",
-                    "on-surface": "#f5f5f5",
-                    "tertiary-fixed-dim": "#4a3b14",
-                    "on-background": "#f5f5f5",
+                    "on-surface": "#FFF8E6",
+                    "tertiary-fixed-dim": "#5e3c0c",
+                    "on-background": "#FFF8E6",
                     "tertiary-container": "#2a220c",
                     "error": "#ba1a1a",
                     "surface-bright": "#2a2a2a",
                     "surface-container-lowest": "#050505",
                     "secondary-fixed": "#2a220c",
-                    "on-tertiary-fixed-variant": "#e8ce7a",
-                    "on-primary-fixed-variant": "#f5e3a3",
+                    "on-tertiary-fixed-variant": "#fce4a0",
+                    "on-primary-fixed-variant": "#fce4a0",
                     "surface-container-highest": "#222222",
-                    "on-secondary-container": "#f0d98c",
+                    "on-secondary-container": "#fce4a0",
                     "on-primary": "#0a0a0a",
-                    "on-secondary-fixed-variant": "#e8ce7a",
+                    "on-secondary-fixed-variant": "#fce4a0",
                     "surface-container": "#151515",
-                    "secondary-fixed-dim": "#4a3b14"
+                    "secondary-fixed-dim": "#5e3c0c"
             },
             "borderRadius": {
                     "DEFAULT": "0.25rem",
@@ -95,14 +91,14 @@
                     "element-gap": "1rem"
             },
             "fontFamily": {
-                    "headline-lg": ["Noto Serif"],
-                    "script-accent": ["Great Vibes", "cursive"],
-                    "headline-xl": ["Noto Serif"],
-                    "headline-md": ["Noto Serif"],
-                    "body-md": ["Be Vietnam Pro"],
-                    "label-sm": ["Be Vietnam Pro"],
-                    "body-lg": ["Be Vietnam Pro"],
-                    "serif": ["Noto Serif", "Georgia", "serif"],
+                    "headline-lg": ["Cinzel", "Playfair Display", "Noto Serif", "serif"],
+                    "script-accent": ["Great Vibes", "Alex Brush", "cursive"],
+                    "headline-xl": ["Cinzel", "Playfair Display", "Noto Serif", "serif"],
+                    "headline-md": ["Cinzel", "Playfair Display", "Noto Serif", "serif"],
+                    "body-md": ["Be Vietnam Pro", "system-ui", "sans-serif"],
+                    "label-sm": ["Be Vietnam Pro", "system-ui", "sans-serif"],
+                    "body-lg": ["Be Vietnam Pro", "system-ui", "sans-serif"],
+                    "serif": ["Cinzel", "Playfair Display", "Noto Serif", "Georgia", "serif"],
                     "sans": ["Be Vietnam Pro", "system-ui", "sans-serif"]
             },
             "fontSize": {
@@ -123,16 +119,16 @@
             background: rgba(18, 18, 18, 0.55);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(212, 175, 55, 0.16);
+            border: 1px solid rgba(196, 153, 72, 0.18);
         }
         .satin-gradient {
             background:
-                radial-gradient(1100px 500px at 80% -10%, rgba(212, 175, 55, 0.10), transparent 60%),
-                radial-gradient(900px 600px at -10% 110%, rgba(212, 175, 55, 0.06), transparent 55%),
-                linear-gradient(160deg, #050505 0%, #100e09 45%, #060606 100%);
+                radial-gradient(1100px 500px at 80% -10%, rgba(196, 153, 72, 0.10), transparent 60%),
+                radial-gradient(900px 600px at -10% 110%, rgba(196, 153, 72, 0.06), transparent 55%),
+                linear-gradient(160deg, #0a0a0a 0%, #121212 45%, #0a0a0a 100%);
         }
         .gold-shimmer {
-            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.16), transparent);
+            background: linear-gradient(90deg, transparent, rgba(196, 153, 72, 0.16), transparent);
             background-size: 220% 100%;
             animation: shimmer 4s linear infinite;
         }
@@ -141,7 +137,7 @@
             100% { background-position: -120% 0; }
         }
         .text-gold-gradient {
-            background: linear-gradient(120deg, #F5D76E 0%, #D4AF37 45%, #8A6B1F 80%, #F5D76E 100%);
+            background: linear-gradient(120deg, #fce4a0 0%, #c49948 45%, #7d541b 80%, #fce4a0 100%);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -664,19 +660,6 @@ section[id] { scroll-margin-top: 5rem; }
   margin: 1.2rem auto;
 }
 
-/* ---- Floral corner accents ---- */
-.floral-corner {
-  position: absolute;
-  pointer-events: none;
-  z-index: 3;
-  opacity: 0.12;
-}
-.floral-corner img { width: 100%; height: 100%; object-fit: contain; }
-.floral-tl { top: -2%; left: -3%; width: clamp(120px,20vw,260px); height: clamp(120px,20vw,260px); transform: rotate(0deg); }
-.floral-tr { top: -2%; right: -3%; width: clamp(120px,22vw,300px); height: clamp(120px,22vw,300px); transform: rotate(90deg) scaleX(-1); }
-.floral-bl { bottom: -2%; left: -3%; width: clamp(100px,18vw,240px); height: clamp(100px,18vw,240px); transform: rotate(-90deg); }
-.floral-br { bottom: -2%; right: -3%; width: clamp(120px,20vw,260px); height: clamp(120px,20vw,260px); transform: rotate(180deg); }
-
 /* ---- Frosted bento card (dark context) ---- */
 .bento-card-dark {
   background: rgba(12,10,8,.72) !important;
@@ -788,7 +771,6 @@ section[id] { scroll-margin-top: 5rem; }
 }
 .gallery-section > .inner { position: relative; z-index: 2; padding-top: 4rem; padding-bottom: 4rem; }
 
-/* ---- Gift section floral texture ---- */
 .gift-section {
   position: relative;
   overflow: hidden;
@@ -821,13 +803,7 @@ section[id] { scroll-margin-top: 5rem; }
     linear-gradient(160deg, rgba(0,0,0,0.08) 0%, rgba(10,8,6,0.10) 45%, rgba(0,0,0,0.14) 100%) !important;
 }
 
-/* ---- Section floral float ---- */
-.floral-float { animation: floralFloat 10s ease-in-out infinite; }
-.floral-float-rev { animation: floralFloat 13s ease-in-out infinite reverse; }
-@keyframes floralFloat {
-  0%,100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-14px) rotate(4deg); }
-}
+
 
 /* ---- FIX: hurtful white hover — keep dark cards dark, light cards subtle ---- */
 .bento-card:hover {
@@ -848,23 +824,9 @@ section[id] { scroll-margin-top: 5rem; }
 /* map card overlay — keep subtle dark, not brightening to white */
 a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,.08) !important; }
 
-/* ---- FIX: celebration section — white paper bg, keep cards black ---- */
-.celebration-section {
-  background: #FFFBF5 !important;
-  background-color: #FBF8F3 !important;
-}
+/* ---- celebration — dark seamless (no white) ---- */
 .celebration-section .cel-photo-bg,
-.celebration-section .cel-fade { display: none !important; }
-.celebration-section > .inner .dark-section-heading { color: #1C1406 !important; }
-.celebration-section > .inner .dark-section-body { color: #4A3F32 !important; line-height: 1.6; }
-.celebration-section > .inner .dark-section-subheading { color: #6B5A3A !important; }
-.celebration-section .text-gold\/70,
-.celebration-section span[class*="text-gold"] { color: #A8862B !important; }
-/* keep bento-dark cards crisp on the new light bg */
-.celebration-section .bento-card-dark {
-  background: rgba(12,10,8,.92) !important;
-  box-shadow: 0 12px 50px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.06) !important;
-}
+.celebration-section .cel-fade { display: block !important; }
 
 /* ---- Remotion-inspired polish: spring reveals, word stagger, card lift ---- */
 .rv, .rv-left, .rv-right, .rv-up {
@@ -959,6 +921,58 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
   .bento-card-dark, .bento-card, .fan-card { transform: none !important; }
 }
 </style>
+<style>
+/* ===================== EDITORIAL GLOBAL — dark canvas + bronze + cream ===================== */
+:root { --bronze: #c49948; --bronze-dark: #7d541b; --bronze-deep: #5e3c0c; --bronze-light: #fce4a0; --cream: #FFF8E6; --cream-soft: rgba(255,248,230,0.78); }
+body { background: #0a0a0a !important; color: var(--cream) !important; }
+.satin-gradient { background: radial-gradient(1100px 500px at 80% -10%, rgba(196,153,72,0.08), transparent 60%), radial-gradient(900px 600px at -10% 110%, rgba(196,153,72,0.05), transparent 55%), linear-gradient(160deg, #0a0a0a 0%, #121212 45%, #0a0a0a 100%) !important; }
+/* seamless section blend — no white gaps */
+.celebration-section, .dresscode-section, .gallery-section, .rsvp-photo-section, .gift-section, .closing-hero { background: #0a0a0a !important; border-color: rgba(196,153,72,0.10) !important; position: relative; }
+.celebration-section::before, .dresscode-section::before, .gallery-section::before, .rsvp-photo-section::before { content:''; position:absolute; top:-1px; left:0; right:0; height:80px; background: linear-gradient(to bottom, #0a0a0a 0%, transparent 100%); z-index:2; pointer-events:none; }
+.celebration-section::after, .dresscode-section::after, .gallery-section::after { content:''; position:absolute; bottom:-1px; left:0; right:0; height:80px; background: linear-gradient(to top, #0a0a0a 0%, transparent 100%); z-index:2; pointer-events:none; }
+/* fix white paper override — restore dark */
+.celebration-section { background: #0a0a0a !important; background-color: #0a0a0a !important; }
+.celebration-section .cel-photo-bg, .celebration-section .cel-fade { display: block !important; }
+.celebration-section .cel-photo-bg img { filter: brightness(0.22) saturate(0.55) blur(1px) !important; }
+.celebration-section > .inner .dark-section-heading { color: #FFF8E6 !important; }
+.celebration-section > .inner .dark-section-body { color: rgba(255,248,230,0.72) !important; }
+.celebration-section > .inner .dark-section-subheading { color: rgba(255,248,230,0.55) !important; }
+.celebration-section .bento-card-dark { background: rgba(18,16,12,0.92) !important; box-shadow: 0 12px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04) !important; border-color: rgba(196,153,72,0.22) !important; }
+/* update bento typography to cream + bronze */
+.bento-heading { color: #FFF8E6 !important; font-family: 'Cinzel','Playfair Display',serif !important; letter-spacing: 0.04em; }
+.bento-body { color: rgba(255,248,230,0.72) !important; }
+.bento-accent { color: #c49948 !important; }
+/* hero — large curvy script + spaced serif light bronze */
+#heroHead h2 { font-family: 'Great Vibes','Alex Brush',cursive !important; font-size: clamp(26px, 4vw, 42px) !important; font-weight: 400 !important; letter-spacing: 0.02em !important; color: #fce4a0 !important; }
+#heroNames { font-family: 'Great Vibes','Alex Brush',cursive !important; font-weight: 400 !important; font-size: clamp(58px, 18vw, 118px) !important; line-height: 0.95 !important; }
+#heroNames .text-gold { color: #c49948 !important; }
+#countdown-block p { font-family: 'Cinzel','Playfair Display',serif !important; letter-spacing: 0.18em !important; color: rgba(252,228,160,0.85) !important; }
+/* metallic RSVP plaque */
+.gold-rsvp-btn {
+  display: inline-block;
+  padding: 16px 54px;
+  font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 6px;
+  text-decoration: none;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #7d541b 0%, #c49948 18%, #fce4a0 45%, #c49948 70%, #5e3c0c 100%);
+  color: #3b2405;
+  text-shadow: 0px 1px 1px rgba(255,240,200,0.5), 0px -1px 1px rgba(0,0,0,0.8);
+  border: 1px solid #7d541b;
+  box-shadow: 0 0 30px rgba(212,167,85,0.35), 0 8px 20px rgba(0,0,0,0.6), inset 0 2px 3px rgba(255,255,255,0.7), inset 0 -3px 4px rgba(0,0,0,0.7), inset 0 0 0 2px #9c732b;
+  transition: all 0.3s ease;
+}
+.gold-rsvp-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 40px rgba(252,228,160,0.5), 0 12px 25px rgba(0,0,0,0.7), inset 0 2px 4px rgba(255,255,255,0.8), inset 0 -3px 4px rgba(0,0,0,0.8), inset 0 0 0 2px #c49948;
+}
+.gold-rsvp-btn:active { transform: translateY(0) scale(0.98); }
+@media (max-width: 640px) { .gold-rsvp-btn { font-size: 22px; letter-spacing: 4px; padding: 14px 36px; } }
+</style>
+<!-- Include a luxury serif font like Cinzel -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body class="bg-background text-on-background font-body-md selection:bg-gold/30 selection:text-white">
 <!-- Background music — starts on first user interaction (browser autoplay policy) -->
@@ -1072,9 +1086,6 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
   </div>
 </div>
 </div>
-<!-- Hero floral corner accents -->
-<div class="floral-corner floral-tl floral-float" aria-hidden="true"><img src="../Element%20(1).png" alt=""/></div>
-<div class="floral-corner floral-br floral-float-rev" aria-hidden="true"><img src="../Element%20(5).png" alt=""/></div>
 </section>
 
 <!-- ============================================================ -->
@@ -1099,8 +1110,6 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
     <img src="https://res.cloudinary.com/dl5gbzrgh/image/upload/c_limit,w_3840/f_auto/q_75/grand_resort/gallery/bpemf7dj2xurneumcwdu" alt="" loading="lazy"/>
   </div>
   <div class="cel-fade" aria-hidden="true"></div>
-  <div class="floral-corner floral-tr" style="opacity:0.09" aria-hidden="true"><img src="../Element%20(3).png" alt=""/></div>
-  <div class="floral-corner floral-bl" style="opacity:0.08" aria-hidden="true"><img src="../Element%20(2).png" alt=""/></div>
   <div class="inner max-w-[1200px] mx-auto px-5 sm:px-container-padding py-20">
     <div class="text-center mb-14" id="details">
       <span class="font-label-sm label-premium text-gold/70 uppercase tracking-[0.3em] block mb-3 rv-up">The Evening</span>
@@ -1114,26 +1123,30 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
         </svg>
       </div>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-      <!-- Ceremony — now main attraction LEFT -->
-      <div id="ceremony" class="bento-card bento-card-dark rounded-[28px] p-8 lg:p-10 rv-right">
-        <svg class="event-icon event-icon-rings" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="22" cy="32" r="14" stroke="currentColor" stroke-width="2.6"/><circle cx="42" cy="32" r="14" stroke="currentColor" stroke-width="2.6"/><path d="M22 18.5 C28.5 18.5 32.5 24 32.5 32 C32.5 40 28.5 45.5 22 45.5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
-        <h3 class="font-headline-md bento-heading mb-4 italic">The Ceremony</h3>
-        <p class="font-body-md bento-body mb-4">Grand Resort &amp; Residences<br/>Belize City, Belize</p>
-        <div class="flex items-center gap-2 bento-accent font-label-sm label-premium">
-          <span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
-          <span>Starts at 6:00 PM</span>
-        </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-6">
+      <!-- Ceremony — 2:00 PM -->
+      <div id="ceremony" class="bento-card bento-card-dark rounded-[28px] p-8 lg:p-8 rv-up text-center" style="border-color: rgba(196,153,72,0.18);">
+        <div class="w-12 h-12 mx-auto rounded-full flex items-center justify-center mb-4" style="background: rgba(196,153,72,0.10); border: 1px solid rgba(196,153,72,0.25); color: #c49948;"><span class="material-symbols-outlined">favorite</span></div>
+        <span class="font-label-sm label-premium uppercase tracking-[0.22em] block mb-2" style="color: #c49948; font-size: 10px;">2:00 PM</span>
+        <h3 class="font-bold uppercase tracking-[0.14em] mb-3" style="font-family:'Cinzel','Playfair Display',serif; color:#FFF8E6; font-size: 16px;">The Ceremony</h3>
+        <p class="text-[13px] leading-relaxed" style="color: rgba(255,248,230,0.72)">Grand Resort &amp; Residences<br/>Belize City, Belize</p>
+        <div class="w-8 h-[1px] bg-gradient-to-r from-transparent via-[#c49948] to-transparent mx-auto mt-4 opacity-40"></div>
       </div>
-      <!-- Reception — main attraction (animated toast) -->
-      <div id="reception" class="bento-card bento-card-dark rounded-[28px] p-8 lg:p-10 rv-left" style="transition-delay:.08s">
-        <svg class="event-icon event-icon-toast" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18 12 L18 28 C18 34 24 40 32 40 C40 40 46 34 46 28 L46 12 Z" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/><path d="M32 40 L32 52 M26 52 L38 52" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><circle cx="52" cy="14" r="2.2" fill="currentColor" opacity="0.95"><animate attributeName="cy" values="14;8;14" dur="2.8s" repeatCount="indefinite"/></circle><circle cx="12" cy="16" r="1.7" fill="currentColor" opacity="0.7"><animate attributeName="cy" values="16;10;16" dur="3s" repeatCount="indefinite"/></circle></svg>
-        <h3 class="font-headline-md bento-heading mb-4 italic">The Reception</h3>
-        <p class="font-body-md bento-body mb-4">New Year's Eve Celebration<br/>Cocktails, Dinner &amp; Dancing until midnight</p>
-        <div class="flex items-center gap-2 bento-accent font-label-sm label-premium">
-          <span class="material-symbols-outlined text-sm" data-icon="nights_stay">nights_stay</span>
-          <span>Rich, Elegant &amp; Timeless Attire</span>
-        </div>
+      <!-- Cocktail Hour — 4:00 PM -->
+      <div id="cocktail" class="bento-card bento-card-dark rounded-[28px] p-8 lg:p-8 rv-up text-center" style="transition-delay:.08s; border-color: rgba(196,153,72,0.18);">
+        <div class="w-12 h-12 mx-auto rounded-full flex items-center justify-center mb-4" style="background: rgba(196,153,72,0.10); border: 1px solid rgba(196,153,72,0.25); color: #c49948;"><span class="material-symbols-outlined">local_bar</span></div>
+        <span class="font-label-sm label-premium uppercase tracking-[0.22em] block mb-2" style="color: #c49948; font-size: 10px;">4:00 PM</span>
+        <h3 class="font-bold uppercase tracking-[0.14em] mb-3" style="font-family:'Cinzel','Playfair Display',serif; color:#FFF8E6; font-size: 16px;">Cocktail Hour</h3>
+        <p class="text-[13px] leading-relaxed" style="color: rgba(255,248,230,0.72)">Sunset cocktails &amp;<br/>golden hour toasts</p>
+        <div class="w-8 h-[1px] bg-gradient-to-r from-transparent via-[#c49948] to-transparent mx-auto mt-4 opacity-40"></div>
+      </div>
+      <!-- Reception — 6:00 PM -->
+      <div id="reception" class="bento-card bento-card-dark rounded-[28px] p-8 lg:p-8 rv-up text-center" style="transition-delay:.16s; border-color: rgba(196,153,72,0.18);">
+        <div class="w-12 h-12 mx-auto rounded-full flex items-center justify-center mb-4" style="background: rgba(196,153,72,0.10); border: 1px solid rgba(196,153,72,0.25); color: #c49948;"><span class="material-symbols-outlined">celebration</span></div>
+        <span class="font-label-sm label-premium uppercase tracking-[0.22em] block mb-2" style="color: #c49948; font-size: 10px;">6:00 PM</span>
+        <h3 class="font-bold uppercase tracking-[0.14em] mb-3" style="font-family:'Cinzel','Playfair Display',serif; color:#FFF8E6; font-size: 16px;">The Reception</h3>
+        <p class="text-[13px] leading-relaxed" style="color: rgba(255,248,230,0.72)">Dinner, dancing<br/>&amp; New Year's Eve celebration</p>
+        <div class="w-8 h-[1px] bg-gradient-to-r from-transparent via-[#c49948] to-transparent mx-auto mt-4 opacity-40"></div>
       </div>
       <!-- Card 4: Map — RIGHT -->
       <a href="https://maps.app.goo.gl/BrJ1PJeSXihXyeW77" target="_blank" rel="noopener" aria-label="Get directions to Grand Resort &amp; Residences" class="bento-card bento-card-dark block md:col-span-2 rounded-[28px] overflow-hidden relative group min-h-[220px] rv-right" style="transition-delay:.08s">
@@ -1180,28 +1193,13 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
     <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=1920&q=80&auto=format&fit=crop" alt="" loading="lazy"/>
   </div>
   <div class="dc-fade" aria-hidden="true"></div>
-  <div class="floral-corner floral-tl" style="opacity:0.08" aria-hidden="true"><img src="../Element%20(4).png" alt=""/></div>
-  <div class="floral-corner floral-br" style="opacity:0.08" aria-hidden="true"><img src="../Element%20(1).png" alt=""/></div>
-  <div class="inner max-w-[1200px] mx-auto px-5 sm:px-container-padding py-20">
-    <div id="dresscode" class="bento-card bento-card-dark rounded-[28px] relative overflow-hidden rv-up">
-      <div class="sparkle-bg absolute inset-0 pointer-events-none"></div>
-      <div class="relative z-10 flex items-center justify-center p-6 sm:p-10 cursor-zoom-in" onclick="openDressCode()">
-        <img src="../dress-code%20(right).png" alt="Dress code guide" class="w-full max-w-[780px] h-auto object-contain rounded-2xl border border-gold/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-transform duration-700 hover:scale-[1.02]"/>
-        <div class="absolute top-4 left-4 z-10">
-          <span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-[0.18em] uppercase bg-gold/90 text-ink shadow-lg">Dress Code Guide</span>
-        </div>
-      </div>
-      <div class="relative z-10 text-center p-8 sm:p-12 md:p-14">
-        <span class="font-label-sm label-premium bento-accent uppercase tracking-[0.25em] block mb-4">Dress Code</span>
-        <h2 class="font-script-accent text-[40px] sm:text-[46px] text-gold-gradient italic mb-5">Guest Attire Palette</h2>
-        <p class="font-body-lg bento-body max-w-[52ch] mx-auto mb-8">Celebrate the night in our warm and rich color palette: Brown, Dark Green, Blue, Burgundy, Maroon, Black, and Shimmer. We invite men and women to wear these rich, elegant, and timeless colors to ring in the new year together.</p>
-        <div class="flex flex-wrap justify-center gap-3">
-          <p class="w-full text-center font-label-sm text-gold/60 uppercase tracking-wider mb-1">Tap the image to enlarge</p>
-          <a href="../dress-code%20(right).png" download="Dress-Code.png" class="inline-flex items-center gap-2 border border-gold/30 bento-accent font-label-sm label-premium uppercase px-8 py-4 rounded-full hover:bg-gold/10 hover:border-gold/50 transition-all no-underline">
-            <span class="material-symbols-outlined text-lg" data-icon="download">download</span> Download Guide
-          </a>
-        </div>
-      </div>
+  <div class="inner max-w-[1200px] mx-auto px-5 sm:px-container-padding py-12">
+    <div id="dresscode" class="mx-auto max-w-[520px] text-center rounded-[20px] p-8 sm:p-10 rv-up" style="background: rgba(18,16,12,0.96); border: 1px solid #7d541b; box-shadow: 0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04);">
+      <span class="block text-[10px] tracking-[0.32em] uppercase mb-3" style="color: #c49948; font-family:'Be Vietnam Pro',sans-serif;">Dress Code</span>
+      <h3 class="font-bold uppercase tracking-[0.18em] mb-2" style="font-family:'Cinzel','Playfair Display',serif; color:#FFF8E6; font-size: 22px;">Black dress code</h3>
+      <div class="w-12 h-[1px] bg-gradient-to-r from-transparent via-[#c49948] to-transparent mx-auto mb-3 opacity-60"></div>
+      <p class="text-[12px] tracking-[0.22em] uppercase" style="color: #fce4a0; font-family:'Cinzel',serif;">Black Shimmer</p>
+      <p class="mt-4 text-[13px] leading-relaxed" style="color: rgba(255,248,230,0.62)">Elegant black attire with subtle shimmer — timeless for a midnight celebration.</p>
     </div>
   </div>
 </div>
@@ -1212,8 +1210,6 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
 <div class="gallery-section border-b border-gold/10" id="gallery">
   <div class="gal-photo-bg" aria-hidden="true"><img src="../galery%20(3).jpeg" alt="" loading="lazy"/></div>
   <div class="gal-fade" aria-hidden="true"></div>
-  <div class="floral-corner floral-tl" style="opacity:0.07" aria-hidden="true"><img src="../Element%20(2).png" alt=""/></div>
-  <div class="floral-corner floral-br" style="opacity:0.07" aria-hidden="true"><img src="../Element%20(3).png" alt=""/></div>
   <div id="galleryHearts" class="absolute inset-0 pointer-events-none z-[30]" aria-hidden="true"></div>
   <div class="inner max-w-[1200px] mx-auto px-5 sm:px-container-padding">
     <div class="text-center mb-14">
@@ -1238,17 +1234,18 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
       <div class="memory-card cursor-pointer touch-manipulation select-none active:scale-[0.98]" role="button" tabindex="0" aria-label="Tap for hearts"><img src="galery%20(3).jpeg" alt="Charles and Leticia moment"/><div class="memory-card-mat"></div></div>
     </div>
     <div id="galleryHeartsGrid" class="pointer-events-none" aria-hidden="true" style="position:relative;height:0"></div>
-    <!-- Love Story — moved under Memories as requested -->
-    <div id="story" class="bento-card bento-card-dark rounded-[28px] p-7 sm:p-10 flex flex-col justify-between relative overflow-hidden group rv-up mt-10 max-w-3xl mx-auto">
-      <div class="floral-corner floral-br" style="opacity:0.06" aria-hidden="true"><img src="../Element%20(6).png" alt=""/></div>
-      <div class="relative z-10">
-        <span class="font-label-sm label-premium bento-accent uppercase tracking-widest block mb-4">A love story</span>
-        <h3 class="font-headline-md bento-heading mb-4 italic">Our Journey Together</h3>
-        <p class="font-body-md bento-body max-w-[52ch] mb-6">From chance meetings to a love that lights up every room, our journey has been written in laughter, late-night talks and big dreams. This New Year's Eve, we write our next chapter &mdash; together, with you by our side.</p>
-        <a class="inline-flex items-center bento-accent font-label-sm label-premium uppercase hover:gap-3 transition-all" href="story.html">Read the full story <span class="material-symbols-outlined ml-2" data-icon="chevron_right">chevron_right</span></a>
-      </div>
-      <div class="mt-8 mx-auto md:mt-0 md:mx-0 md:absolute md:bottom-6 md:right-6 w-32 h-32 sm:w-40 sm:h-40 md:w-44 md:h-44 rounded-full overflow-hidden border-2 border-gold/40 shadow-[0_0_45px_rgba(212,175,55,0.25)] pointer-events-none group-hover:scale-105 transition-transform duration-1000">
-        <img class="w-full h-full object-cover object-top" alt="A memory from their journey" src="../galery%20(1).jpeg"/>
+    <!-- Love Story — editorial narrative (Our / JOURNEY TOGETHER) -->
+    <div id="story" class="relative overflow-hidden rounded-[28px] rv-up mt-10 max-w-3xl mx-auto text-center" style="background: linear-gradient(180deg, rgba(18,16,12,0.96) 0%, rgba(10,10,10,0.98) 100%); border: 1px solid rgba(196,153,72,0.14); box-shadow: 0 20px 60px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.04);">
+      <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(700px 420px at 50% 0%, rgba(196,153,72,0.07), transparent 62%);"></div>
+      <div class="absolute inset-0 opacity-[0.06] pointer-events-none" style="background: url('../galery%20(1).jpeg') center 35% / cover no-repeat; filter: blur(18px) saturate(0.5); mask-image: linear-gradient(to bottom, transparent 0%, black 28%, black 72%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 28%, black 72%, transparent 100%);"></div>
+      <div class="relative z-10 px-8 sm:px-12 py-10 sm:py-14">
+        <div class="mb-6">
+          <span class="block leading-none italic" style="font-family:'Great Vibes','Alex Brush',cursive; font-size: clamp(48px, 8vw, 72px); color: #fce4a0; line-height: 0.9;">Our</span>
+          <h3 class="font-bold uppercase tracking-[0.32em] text-[#FFF8E6] leading-none -mt-1 sm:-mt-2" style="font-family:'Cinzel','Playfair Display',serif; font-size: clamp(20px, 3.8vw, 30px);">JOURNEY TOGETHER</h3>
+          <div class="w-16 h-[1px] bg-gradient-to-r from-transparent via-[#c49948] to-transparent mx-auto mt-4 opacity-60"></div>
+        </div>
+        <p class="italic leading-relaxed max-w-[52ch] mx-auto" style="font-family:'Playfair Display','Cinzel',serif; font-size: clamp(16px, 2.2vw, 18px); color: rgba(255,248,230,0.78); font-weight: 400;">From chance meetings to a love that lights up every room, our journey has been written in laughter, late-night talks and big dreams. This New Year's Eve, we write our next chapter &mdash; together, with you by our side.</p>
+        <a href="story.html" class="mt-7 inline-flex items-center gap-1.5 text-[11px] tracking-[0.22em] uppercase transition-colors no-underline" style="color: #c49948;">Read the full story <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
       </div>
     </div>
     <div class="mt-12 flex flex-col items-center gap-2 text-center rv-up">
@@ -1280,7 +1277,6 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
 <div class="rsvp-photo-section border-b border-gold/10 py-20 lg:py-28" id="rsvp">
   <div class="rsvp-bg-photo" aria-hidden="true"><img src="../galery%20(3).jpeg" alt="" loading="lazy"/></div>
   <div class="rsvp-bg-vignette" aria-hidden="true"></div>
-  <div class="floral-corner floral-tr" style="opacity:0.09" aria-hidden="true"><img src="../Element%20(1).png" alt=""/></div>
   <div class="inner max-w-[1200px] mx-auto px-5 sm:px-container-padding">
     <div class="text-center mb-10 rv-up">
       <p class="rsvp-pull mb-3" style="color:#F5D76E;opacity:.95">We'd be honoured by your presence</p>
@@ -1293,13 +1289,11 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
           <line x1="52" y1="6" x2="80" y2="6" stroke="#D4AF37" stroke-opacity="0.5" stroke-width="0.75"/>
         </svg>
       </div>
-      <p class="font-body-lg dark-section-body max-w-[52ch] mx-auto mt-2">We would love for you to join us under the stars as we ring in 2027 together. Kindly let us know by November 1st, 2026.</p>
+      <p class="font-body-lg dark-section-body max-w-[52ch] mx-auto mt-2">We would love for you to join us under the stars as we ring in 2027 together. Kindly let us know by <strong style="color:#fce4a0;">October 31st, 2026</strong>.</p>
       <p class="font-body-md dark-section-subheading italic max-w-xl mx-auto mt-4 px-4 font-semibold">Please note: While we love your little ones, our wedding will be an adult-only celebration.</p>
     </div>
     <div class="rv flex justify-center">
-      <a href="rsvp.html" class="group inline-block" aria-label="Open the RSVP form">
-        <img src="../RSVP%20BUTTON.png" alt="RSVP" draggable="false" class="rsvp-img w-full max-w-[300px] sm:max-w-[380px] h-auto select-none pointer-events-none transition-transform duration-300 group-hover:scale-105 group-active:scale-95"/>
-      </a>
+      <a href="rsvp.html" class="gold-rsvp-btn" aria-label="Open the RSVP form">RSVP</a>
     </div>
   </div>
 </div>
@@ -1308,8 +1302,6 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
 <!-- GIFT SECTION                                                 -->
 <!-- ============================================================ -->
 <div class="gift-section py-20 border-b border-gold/10" id="gift">
-  <div class="absolute inset-0 z-0 pointer-events-none opacity-[0.05]" aria-hidden="true"
-       style="background-image:url('Element%20(4).png'),url('Element%20(2).png');background-size:260px,200px;background-position:top left,bottom right;background-repeat:no-repeat,no-repeat"></div>
   <div class="inner max-w-[1200px] mx-auto px-5 sm:px-container-padding">
     <div class="rv bento-card bento-card-dark rounded-[28px] p-10 sm:p-14 text-center relative overflow-hidden max-w-2xl mx-auto">
       <div class="absolute inset-0 gold-shimmer pointer-events-none"></div>
@@ -1332,8 +1324,6 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
 <div class="closing-hero">
   <div class="ch-photo"><img src="../galery%20(1).jpeg" alt="Charles and Leticia"/></div>
   <div class="ch-vignette"></div>
-  <div class="floral-corner floral-tl floral-float" style="opacity:0.1" aria-hidden="true"><img src="../Element%20(5).png" alt=""/></div>
-  <div class="floral-corner floral-br floral-float-rev" style="opacity:0.1" aria-hidden="true"><img src="../Element%20(6).png" alt=""/></div>
   <div class="ch-content rv-up">
     <div class="cb-ornament mb-4"></div>
     <p class="font-script-accent text-[clamp(40px,8vw,80px)] text-gold-gradient italic leading-none mb-3">Charles &amp; Leticia</p>
