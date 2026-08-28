@@ -944,7 +944,7 @@ body { background: #0a0a0a !important; color: var(--cream) !important; }
 .bento-accent { color: #c49948 !important; }
 /* hero — large curvy script + spaced serif light bronze */
 #heroHead h2 { font-family: 'Great Vibes','Alex Brush',cursive !important; font-size: clamp(26px, 4vw, 42px) !important; font-weight: 400 !important; letter-spacing: 0.02em !important; color: #fce4a0 !important; }
-#heroNames { font-family: 'Great Vibes','Alex Brush',cursive !important; font-weight: 400 !important; font-size: clamp(58px, 18vw, 118px) !important; line-height: 1.08 !important; padding: 0.08em 0 !important; overflow: visible !important; }
+#heroNames { font-family: 'Great Vibes','Alex Brush',cursive !important; font-weight: 400 !important; font-size: clamp(54px,16vw,112px) !important; line-height: 1.32 !important; padding: 0.22em 0 0.28em 0 !important; overflow: visible !important; display: inline-block !important; white-space: normal !important; word-break: keep-all !important; }
 #heroNames .text-gold { color: #c49948 !important; }
 #countdown-block p { font-family: 'Cormorant Garamond','Cinzel','Playfair Display',serif !important; letter-spacing: 0.18em !important; color: rgba(252,228,160,0.85) !important; }
 /* fix headings cropping — ensure no clip & luxe */
@@ -1035,9 +1035,9 @@ body, .font-body-md, .font-body-lg, .bento-body, .dark-section-body { font-famil
 <div class="glow-wash absolute inset-0 z-[2]" id="glowWash" aria-hidden="true"></div>
 <canvas id="fwCanvas" class="absolute inset-0 z-[2]" aria-hidden="true"></canvas>
 
-<!-- Ornament text — brought down a bit -->
-<div class="absolute top-14 sm:top-20 left-0 right-0 text-center pointer-events-none z-20 px-4">
-<span class="font-script-accent text-[clamp(46px,9.5vw,90px)] text-gold-gradient italic leading-none drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">Charles &amp; Leticia</span>
+<!-- Ornament text — luxe, not cropped -->
+<div class="absolute top-10 sm:top-16 left-0 right-0 text-center pointer-events-none z-20 px-4 overflow-visible">
+<span class="font-script-accent text-[clamp(46px,9.5vw,90px)] text-gold-gradient italic drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)] inline-block overflow-visible py-3" style="line-height:1.28; display:inline-block; padding-top:0.18em; padding-bottom:0.22em; overflow:visible;">Charles &amp; Leticia</span>
 </div>
 
 <!-- Center block -->
@@ -1069,8 +1069,8 @@ body, .font-body-md, .font-body-lg, .bento-body, .dark-section-body { font-famil
 <main class="relative min-h-screen overflow-hidden">
 <!-- Background Silk Texture -->
 <div class="absolute inset-0 satin-gradient -z-10"></div>
-<!-- Hero Section with Photo Background -->
-<section class="relative min-h-[100svh] lg:h-[100vh] flex flex-col items-center justify-center overflow-hidden py-12 lg:py-14">
+<!-- Hero Section with Photo Background — overflow visible for script -->
+<section class="relative min-h-[100svh] lg:h-[100vh] flex flex-col items-center justify-center overflow-visible py-12 lg:py-14">
 <!-- Background Photo with Overlay and Heart clicker capability -->
 <div class="absolute inset-0 z-0" id="mainPhotoCard" style="background:#000;">
   <img src="../galery%20(2).jpeg" class="w-full h-full object-cover object-center transition-transform duration-1000" alt="Charles and Leticia Background" style="opacity:0.50; filter:brightness(0.96) saturate(0.82);" />
@@ -1081,7 +1081,7 @@ body, .font-body-md, .font-body-lg, .bento-body, .dark-section-body { font-famil
   <!-- Headline Block — luxe stagger -->
   <div class="space-y-3 text-center hero-stagger" id="heroHead">
     <h2 class="hd-fade font-script-accent text-script-accent italic text-gold leading-[1.3] text-2xl sm:text-3xl lg:text-4xl">Join us for the wedding of</h2>
-    <h3 id="heroNames" class="hd-fade font-script-accent text-white leading-[1.1] whitespace-nowrap text-center text-[clamp(54px,18vw,114px)] lg:text-[clamp(64px,8vw,112px)]">Charles <span class="text-gold">&amp;</span> Leticia</h3>
+    <h3 id="heroNames" class="hd-fade font-script-accent text-white text-center" style="line-height:1.32;">Charles <span class="text-gold">&amp;</span> Leticia</h3>
   </div>
   
   <div class="w-full max-w-[340px] sm:max-w-[380px] mx-auto">
