@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -148,6 +148,14 @@
 
   .reveal { opacity:0; transform:translateY(32px); transition:opacity .85s cubic-bezier(.25,.8,.25,1), transform .85s cubic-bezier(.25,.8,.25,1); }
   .reveal.visible { opacity:1; transform:translateY(0); }
+  .reveal.visible h2, .reveal.visible h3, .reveal.visible span.block[style*="font-family:'Wedding Party'"] {
+    animation: headingGlowBloom 1.5s cubic-bezier(.16,1,.3,1) forwards;
+  }
+  @keyframes headingGlowBloom {
+    0% { filter: brightness(0.9) drop-shadow(0 0 0px rgba(252,228,160,0)); text-shadow: 0 0 0px rgba(252,228,160,0); }
+    50% { filter: brightness(1.3) drop-shadow(0 0 20px rgba(252,228,160,0.8)); text-shadow: 0 0 28px rgba(252,228,160,0.85), 0 0 50px rgba(196,153,72,0.5); }
+    100% { filter: brightness(1) drop-shadow(0 0 8px rgba(212,175,55,0.25)); text-shadow: 0 2px 16px rgba(0,0,0,0.35), 0 0 14px rgba(196,153,72,0.3); }
+  }
 
   .slide-left  { opacity:0; transform:translateX(-48px); transition:opacity .9s ease, transform .9s ease; }
   .slide-right { opacity:0; transform:translateX( 48px); transition:opacity .9s ease, transform .9s ease; }
@@ -215,7 +223,7 @@
   <a href="index.html" class="inline-flex items-center gap-2 font-label-sm uppercase tracking-[0.15em] text-on-surface-variant hover:text-gold transition-colors no-underline">
     <span class="material-symbols-outlined text-lg">arrow_back</span> Invitation
   </a>
-  <h1 class="font-script-accent text-[22px] sm:text-[26px] leading-none text-gold">Charles &amp; Leticia</h1>
+  <h1 class="font-script-accent text-[28px] sm:text-[34px] leading-none text-gold">Charles &amp; Leticia</h1>
   <a href="rsvp.html" class="inline-flex items-center gap-1.5 font-label-sm uppercase tracking-[0.15em] text-gold border border-gold/30 px-3.5 sm:px-4 py-2 rounded-full hover:bg-gold/10 transition-colors no-underline">
     <span class="material-symbols-outlined text-lg">mail</span> RSVP
   </a>
@@ -226,8 +234,8 @@
   <!-- ══ HERO — editorial two-tiered == -->
   <div class="relative text-center mb-16 pt-8">
     <div class="reveal">
-      <span class="block leading-none italic" style="font-family:'Wedding Party', cursive; font-size: clamp(48px, 8vw, 74px); color: #fce4a0; line-height: 0.9;">Our</span>
-      <h2 class="font-bold uppercase tracking-[0.32em] text-[#FFF8E6] leading-none -mt-1 sm:-mt-2" style="font-family:'Cinzel','Cormorant Garamond',serif; font-size: clamp(22px, 3.8vw, 34px);">JOURNEY TOGETHER</h2>
+      <span class="block leading-none italic" style="font-family:'Wedding Party', cursive; font-size: clamp(58px, 10vw, 88px); color: #fce4a0; line-height: 0.95;">Our</span>
+      <h2 class="font-bold uppercase tracking-[0.32em] text-[#FFF8E6] leading-none -mt-1 sm:-mt-2" style="font-family:'Cinzel','Cormorant Garamond',serif; font-size: clamp(26px, 4.5vw, 40px);">JOURNEY TOGETHER</h2>
       <div class="w-16 h-[1px] bg-gradient-to-r from-transparent via-[#c49948] to-transparent mx-auto mt-5 opacity-60"></div>
     </div>
   </div>
