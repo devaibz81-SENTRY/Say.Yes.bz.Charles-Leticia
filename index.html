@@ -3,6 +3,9 @@
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
 <title>Charles &amp; Leticia — The Invitation</title>
 <style>html{visibility:hidden;opacity:0}html.ready{visibility:visible;opacity:1;transition:opacity .28s ease}html.ready body{opacity:1}</style>
 <script>!function(){var d=document.documentElement;function r(){d.classList.add('ready')}if(d.classList.contains('ready'))return;document.addEventListener('DOMContentLoaded',r);window.addEventListener('load',r);setTimeout(r,1400)}();</script>
@@ -188,12 +191,12 @@
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(196, 153, 72, 0.18);
         }
-        .satin-gradient {
-            background:
-                radial-gradient(1100px 500px at 80% -10%, rgba(196, 153, 72, 0.10), transparent 60%),
-                radial-gradient(900px 600px at -10% 110%, rgba(196, 153, 72, 0.06), transparent 55%),
-                linear-gradient(160deg, #0a0a0a 0%, #121212 45%, #0a0a0a 100%);
-        }
+         .satin-gradient {
+             background:
+                 radial-gradient(1100px 500px at 80% -10%, rgba(196, 153, 72, 0.12), transparent 60%),
+                 radial-gradient(900px 600px at -10% 110%, rgba(196, 153, 72, 0.08), transparent 55%),
+                 linear-gradient(160deg, #050505 0%, #0a0a0a 45%, #050505 100%);
+         }
         .gold-shimmer {
             background: linear-gradient(90deg, transparent, rgba(196, 153, 72, 0.16), transparent);
             background-size: 220% 100%;
@@ -276,15 +279,15 @@
 .bento-body    { color: #4A3F32 !important; font-weight: 300; }
 .bento-accent  { color: #A8862B !important; }
 
-/* ---- 4. Velvet hero overlay — bottom ramp for white text ---- */
+/* ---- 4. Velvet hero overlay — bottom ramp for white text (darker, as it was a month ago) ---- */
 .hero-overlay-velvet {
   background: linear-gradient(
     to bottom,
-    rgba(10,5,0,0.10) 0%,
-    rgba(8,4,0,0.06) 42%,
-    rgba(8,4,0,0.18) 62%,
-    rgba(8,4,0,0.58) 78%,
-    rgba(8,4,0,0.90) 100%
+    rgba(5,3,1,0.16) 0%,
+    rgba(8,4,0,0.10) 42%,
+    rgba(8,4,0,0.24) 62%,
+    rgba(8,4,0,0.68) 78%,
+    rgba(5,3,1,0.94) 100%
   );
 }
 
@@ -775,11 +778,13 @@ section[id] { scroll-margin-top: 5rem; }
 .closing-hero {
   position: relative;
   min-height: clamp(340px, 55vh, 620px);
-  display: flex;
+  display: flex !important;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  z-index: 1;
+  overflow: visible !important;
+  z-index: 10 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
   margin-top: 0;
 }
 .closing-hero .ch-photo {
@@ -875,11 +880,14 @@ section[id] { scroll-margin-top: 5rem; }
 .gift-section {
   position: relative;
   overflow: visible;
-  z-index: 5;
+  z-index: 10 !important;
   padding-bottom: 3rem !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
-.gift-section > .inner { position: relative; z-index: 5; }
-.gift-section .bento-card{position:relative;z-index:6;opacity:1 !important;transform:none !important;visibility:visible !important}
+.gift-section > .inner { position: relative; z-index: 10 !important; display:block !important; }
+.gift-section .bento-card{position:relative;z-index:11 !important;opacity:1 !important;transform:none !important;visibility:visible !important;display:block !important}
 
 /* ---- Heading text color in dark photo sections ---- */
 .dark-section-heading { color: #F5F0E8 !important; }
