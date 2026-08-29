@@ -724,6 +724,9 @@
       <div class="top-bar-actions">
         <button class="btn-sm" onclick="fetchGuests()">Refresh</button>
         <button id="add-guest-btn" class="btn-sm primary" onclick="openAddGuest()">+ Add Guest</button>
+        <button class="btn-sm" onclick="downloadGuestTemplate()">Download CSV Template</button>
+        <input id="guest-csv-input" type="file" accept=".csv" style="display:none" onchange="handleGuestCsv(event)" />
+        <button class="btn-sm" onclick="document.getElementById('guest-csv-input').click()">Upload CSV</button>
       </div>
     </div>
 
@@ -914,7 +917,7 @@ Charles and Leticia</textarea>
   <script>function countUp(id,target){var el=document.getElementById(id);var start=0;var dur=600;var startTime=null;function step(ts){if(!startTime)startTime=ts;var p=Math.min((ts-startTime)/dur,1);el.textContent=Math.floor(p*target);if(p<1)requestAnimationFrame(step);}requestAnimationFrame(step);}</script>
 
   <script>
-    const CONVEX_HTTP_URL = 'https://neat-bee-452.convex.site';
+    const CONVEX_HTTP_URL = 'https://canny-hummingbird-920.convex.site';
     const WEDDING_URL = 'https://sayyesbzcharles-leticia.vercel.app';
     const SESSION_KEY = 'cl_admin_token';
     const LIVE_REFRESH_MS = 12000;
@@ -1356,6 +1359,61 @@ Charles and Leticia</textarea>
       document.getElementById('st-attending').textContent = att;
       document.getElementById('st-declined').textContent = dec;
       document.getElementById('st-later').textContent = lat;
+    }
+
+    function downloadGuestTemplate() {
+      const headers = ['first_name','last_name','spouse_name','guest_type','max_party','phone','email','deadline','attendance','easy_mode','plus_names','song','message'];
+      const example = ['Charles','Smith','','single','1','555-123-4567','charles@example.com','2026-10-31','invited','false','','',''];
+      const csv = [headers.join(','), example.join(',')].join('\n');
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'guest-import-template.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    async function handleGuestCsv(evt) {
+      const file = evt.target.files && evt.target.files[0];
+      if (!file) return;
+      const text = await file.text();
+      const rows = text.split(/\r?\n/).map(r => r.trim()).filter(Boolean);
+      if (rows.length < 2) { alert('CSV contains no data rows.'); return; }
+      const headers = rows[0].split(',').map(h => h.trim());
+      const data = [];
+      for (let i = 1; i < rows.length; i++) {
+        const cols = rows[i].split(',');
+        const obj = {};
+        for (let j = 0; j < headers.length; j++) {
+          obj[headers[j]] = cols[j] !== undefined ? cols[j].trim() : '';
+        }
+        data.push(obj);
+      }
+
+      const confirmed = confirm(`Import ${data.length} guests? This will add them to Convex.`);
+      if (!confirmed) return;
+
+      try {
+        const res = await fetch(`${CONVEX_HTTP_URL}/api/guests/import`, {
+          method: 'POST',
+          headers: authHeaders({ 'Content-Type': 'application/json' }),
+          body: JSON.stringify({ guests: data })
+        });
+
+        if (res.status === 401) {
+          await logout();
+          throw new Error('Session expired. Please log in again.');
+        }
+        if (!res.ok) throw new Error(await res.text());
+
+        const result = await res.json();
+        alert(`Import complete. Inserted: ${result.inserted || 0}. Errors: ${result.errors ? result.errors.length : 0}`);
+        await fetchGuests({ showLoading: true });
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        alert(`Import failed: ${msg}`);
+      }
     }
 
     function renderTable() {

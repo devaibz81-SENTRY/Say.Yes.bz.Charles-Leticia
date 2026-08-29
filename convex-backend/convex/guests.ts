@@ -76,3 +76,38 @@ export const deleteGuest = httpAction(async (ctx, request) => {
   await ctx.runMutation(internal.db.deleteGuest, { guestId });
   return json({ ok: true });
 });
+
+export const importGuests = httpAction(async (ctx, request) => {
+  if (request.method === "OPTIONS") return json({ ok: true });
+  if (request.method !== "POST") return json({ error: "Method not allowed" }, 405);
+  if (!(await hasSession(ctx, request))) return json({ error: "Unauthorized" }, 401);
+
+  const body = await request.json().catch(() => ({}));
+  const rows = Array.isArray(body.guests) ? body.guests : body;
+  if (!Array.isArray(rows)) return json({ error: 'Expecting JSON array of guests' }, 400);
+
+  const results: { inserted: number; errors: any[] } = { inserted: 0, errors: [] };
+
+  for (const [i, r] of rows.entries()) {
+    try {
+      const args = {
+        first_name: r.first_name || r.firstName || undefined,
+        last_name: r.last_name || r.lastName || undefined,
+        spouse_name: r.spouse_name || r.spouseName || undefined,
+        guest_type: r.guest_type || r.guestType || undefined,
+        max_party: r.max_party !== undefined ? Number(r.max_party) : undefined,
+        phone: r.phone || undefined,
+        deadline: r.deadline || undefined,
+        attendance: r.attendance || undefined,
+        easy_mode: r.easy_mode === true || r.easy_mode === 'true' ? true : undefined,
+      };
+
+      await ctx.runMutation(internal.db.insertGuest, args);
+      results.inserted++;
+    } catch (err) {
+      results.errors.push({ row: i, error: String(err) });
+    }
+  }
+
+  return json(results);
+});
