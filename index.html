@@ -962,6 +962,17 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
   padding: 0.06em 0.12em;
 }
 .word-reveal.rv-in { opacity: 1; transform: translateY(0) rotate(0); }
+/* SHIP GUARANTEE: Honeymoon Fund + closing copy can never be hidden by reveal animations */
+.gift-section h2,
+.gift-section h2 .word-reveal,
+.closing-hero .ch-content,
+.closing-hero .ch-content p,
+.closing-hero .ch-content .word-reveal {
+  opacity: 1 !important;
+  transform: translateY(0) rotate(0) !important;
+  visibility: visible !important;
+  display: inline-block !important;
+}
 /* headings that get word-split should not also fly as a block — let words drive */
 [data-wrapped].rv-up, [data-wrapped].rv-left, [data-wrapped].rv-right { opacity: 1 !important; transform: none !important; }
 /* card hover: Remotion spring-ish lift + gold glow, no color inversion */
@@ -1895,6 +1906,39 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
       card.style.transform = '';
     });
   });
+})();
+</script>
+
+<!-- Ship guarantee: nothing the reveal observers miss ever stays hidden -->
+<script>
+(function () {
+  function reveal(el) {
+    el.style.opacity = '1';
+    el.style.transform = 'none';
+    el.style.visibility = 'visible';
+    el.classList.add('rv-in');
+  }
+  function sweep() {
+    var sel = '.word-reveal:not(.rv-in), .rv:not(.rv-in), .rv-left:not(.rv-in), .rv-right:not(.rv-in), .rv-up:not(.rv-in), .rv-scale:not(.rv-in), .rv-blur:not(.rv-in)';
+    var els = document.querySelectorAll(sel);
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      if (el.closest && el.closest('.gift-section, .closing-hero')) { reveal(el); continue; }
+      var r = el.getBoundingClientRect();
+      if (r.width === 0 && r.height === 0) continue;
+      if (r.bottom < -10 || r.top > vh + 10) continue;
+      reveal(el);
+    }
+  }
+  function go() { sweep(); }
+  window.addEventListener('scroll', sweep, { passive: true });
+  window.addEventListener('resize', sweep, { passive: true });
+  if (document.readyState !== 'loading') go();
+  else document.addEventListener('DOMContentLoaded', go);
+  window.addEventListener('load', function () { setTimeout(sweep, 300); });
+  setTimeout(sweep, 1000);
+  setTimeout(sweep, 2500);
 })();
 </script>
 
