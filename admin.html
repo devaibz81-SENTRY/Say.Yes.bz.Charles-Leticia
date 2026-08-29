@@ -1897,8 +1897,26 @@ Charles and Leticia</textarea>
       reader.readAsText(file, 'UTF-8');
     }
 
-    function renderCsvPreview(text) {
-      const rows = parseCsv(text.trim());
+    const COLUMN_ALIASES = {
+      first_name: ['first_name', 'firstname', 'first', 'fname', 'name', 'fullname', 'guest', 'guestname', 'lead', 'leadguest', 'person'],
+      last_name: ['last_name', 'lastname', 'last', 'lname', 'surname'],
+      spouse_name: ['spouse_name', 'spousename', 'spouse', 'partner', 'partnername', 'plusone', 'plus_one', 'plus1', 'guest2'],
+      guest_type: ['guest_type', 'guesttype', 'type', 'category', 'invitationtype', 'group'],
+      max_party: ['max_party', 'maxparty', 'maxpartysize', 'partysize', 'party', 'seats', 'size', 'count', 'max', 'allotted'],
+      phone: ['phone', 'phonenumber', 'mobile', 'cell', 'whatsapp', 'whatsappnumber', 'contact', 'tel', 'telephone'],
+      attendance: ['attendance', 'status', 'rsvp', 'rsvpstatus', 'state'],
+      deadline: ['deadline', 'rsvpdeadline', 'due', 'duedate', 'date', 'expiry'],
+      easy_mode: ['easy_mode', 'easymode', 'easy', 'simple', 'simplified']
+    };
+
+    function cleanHeaderStr(str) {
+      return String(str || '').toLowerCase().replace(/[\u200B-\u200D\uFEFF]/g, '').replace(/[^a-z0-9]/g, '');
+    }
+
+    function renderCsvPreview(rawText) {
+      // Strip UTF-8 BOM and leading zero-width spaces
+      const text = (rawText || '').replace(/^\uFEFF/, '').replace(/[\u200B-\u200D\uFEFF]/g, '').trim();
+      const rows = parseCsv(text);
       if (rows.length < 2) {
         document.getElementById('csv-preview-stats').textContent = 'CSV appears empty or has no data rows.';
         document.getElementById('csv-preview-area').style.display = 'block';
@@ -1907,71 +1925,123 @@ Charles and Leticia</textarea>
         return;
       }
 
-      const headers = rows[0].map(h => h.trim().toLowerCase());
-      const dataRows = rows.slice(1).filter(r => r.some(c => c.trim() !== ''));
+      const rawHeaders = rows[0].map(h => String(h || '').trim());
+      const cleanHeaders = rawHeaders.map(cleanHeaderStr);
+      const dataRows = rows.slice(1).filter(r => r.some(c => String(c || '').trim() !== ''));
 
-      // Map column indices
-      const col = (name) => headers.indexOf(name);
-      const knownCols = CSV_COLUMNS.map(c => ({ name: c, idx: col(c) }));
-      const missingRequired = [];
-      if (col('first_name') === -1) missingRequired.push('first_name');
+      // Find column index matching schema keys or aliases
+      const findColIdx = (key) => {
+        const aliases = COLUMN_ALIASES[key] || [key];
+        for (const a of aliases) {
+          const cleanA = cleanHeaderStr(a);
+          const idx = cleanHeaders.indexOf(cleanA);
+          if (idx !== -1) return idx;
+        }
+        return -1;
+      };
+
+      const fnIdx = findColIdx('first_name');
+      const lnIdx = findColIdx('last_name');
+      const spIdx = findColIdx('spouse_name');
+      const gtIdx = findColIdx('guest_type');
+      const mpIdx = findColIdx('max_party');
+      const phIdx = findColIdx('phone');
+      const atIdx = findColIdx('attendance');
+      const dlIdx = findColIdx('deadline');
+      const ezIdx = findColIdx('easy_mode');
+
+      const isSingleNameCol = fnIdx !== -1 && lnIdx === -1 && (cleanHeaders[fnIdx] === 'name' || cleanHeaders[fnIdx] === 'fullname' || cleanHeaders[fnIdx] === 'guest' || cleanHeaders[fnIdx] === 'guestname');
 
       const errors = [];
       const guests = dataRows.map((r, i) => {
-        const get = (name) => {
-          const idx = col(name);
-          return idx !== -1 ? (r[idx] || '').trim() : '';
-        };
+        let firstName = fnIdx !== -1 ? String(r[fnIdx] || '').trim() : '';
+        let lastName = lnIdx !== -1 ? String(r[lnIdx] || '').trim() : '';
+
+        // If user gave a single "Name" column (e.g. "John Doe"), split into first and last name
+        if (isSingleNameCol && firstName && !lastName) {
+          const parts = firstName.split(/\s+/);
+          if (parts.length > 1) {
+            firstName = parts[0];
+            lastName = parts.slice(1).join(' ');
+          }
+        }
+
+        const spouseName = spIdx !== -1 ? String(r[spIdx] || '').trim() : '';
+        let guestType = gtIdx !== -1 ? String(r[gtIdx] || '').toLowerCase().trim() : '';
+        let maxParty = mpIdx !== -1 ? parseInt(String(r[mpIdx] || '').replace(/[^\d]/g, ''), 10) : NaN;
+
+        // Auto-detect type and party size if not fully specified
+        if (!guestType) {
+          if (maxParty > 2) guestType = 'family';
+          else if (maxParty === 2 || spouseName) guestType = 'couple';
+          else guestType = 'single';
+        }
+        if (isNaN(maxParty) || maxParty < 1) {
+          if (guestType === 'family') maxParty = 4;
+          else if (guestType === 'couple') maxParty = 2;
+          else maxParty = 1;
+        }
+
+        const phone = phIdx !== -1 ? String(r[phIdx] || '').trim() : '';
+        const attendance = atIdx !== -1 && String(r[atIdx] || '').trim() ? String(r[atIdx] || '').trim().toLowerCase() : 'invited';
+        const deadline = dlIdx !== -1 ? String(r[dlIdx] || '').trim() : '2026-10-31';
+        const easyVal = ezIdx !== -1 ? String(r[ezIdx] || '').trim().toLowerCase() : '';
+        const easyMode = easyVal === 'true' || easyVal === '1' || easyVal === 'yes' ? true : undefined;
+
         const g = {
-          first_name: get('first_name') || undefined,
-          last_name: get('last_name') || undefined,
-          spouse_name: get('spouse_name') || undefined,
-          guest_type: get('guest_type') || undefined,
-          max_party: get('max_party') ? Number(get('max_party')) : undefined,
-          phone: get('phone') || undefined,
-          attendance: get('attendance') || 'invited',
-          deadline: get('deadline') || undefined,
-          easy_mode: get('easy_mode') === 'true' ? true : undefined,
+          first_name: firstName || undefined,
+          last_name: lastName || undefined,
+          spouse_name: spouseName || undefined,
+          guest_type: guestType || 'single',
+          max_party: maxParty,
+          phone: phone || undefined,
+          attendance: attendance || 'invited',
+          deadline: deadline || undefined,
+          easy_mode: easyMode
         };
-        if (!g.first_name) errors.push(`Row ${i + 2}: missing first_name`);
+
+        if (!g.first_name) {
+          errors.push(`Row ${i + 2}: missing name or first name`);
+        }
         return g;
       });
 
       csvParsedGuests = guests;
 
       // Build preview table
-      const visibleCols = CSV_COLUMNS.filter(c => col(c) !== -1);
+      const previewCols = ['first_name', 'last_name', 'spouse_name', 'guest_type', 'max_party', 'phone', 'attendance', 'deadline'];
       const thead = document.getElementById('csv-preview-thead');
       const tbody = document.getElementById('csv-preview-tbody');
-      const cellStyle = 'padding:5px 8px;border-bottom:1px solid var(--border);white-space:nowrap;';
-      const headStyle = cellStyle + 'background:var(--bg);color:var(--muted);font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;font-weight:600;';
+      const cellStyle = 'padding:6px 10px;border-bottom:1px solid var(--border);white-space:nowrap;';
+      const headStyle = cellStyle + 'background:var(--bg);color:var(--gold);font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;';
 
-      thead.innerHTML = '<tr>' + visibleCols.map(c => `<th style="${headStyle}">${c}</th>`).join('') + '</tr>';
+      thead.innerHTML = '<tr>' + previewCols.map(c => `<th style="${headStyle}">${c.replace('_', ' ')}</th>`).join('') + '</tr>';
       const preview = guests.slice(0, 20);
       tbody.innerHTML = preview.map((g, i) => {
         const bg = i % 2 === 0 ? 'background:rgba(255,255,255,0.02);' : '';
-        return '<tr style="' + bg + '">' + visibleCols.map(c => {
+        return '<tr style="' + bg + '">' + previewCols.map(c => {
           const v = g[c] !== undefined ? String(g[c]) : '';
-          const warn = c === 'first_name' && !v ? 'color:#e74c3c;' : '';
-          return `<td style="${cellStyle}${warn}">${v || '<span style="opacity:0.3">—</span>'}</td>`;
+          const warn = c === 'first_name' && !v ? 'color:#e74c3c;font-weight:bold;' : '';
+          return `<td style="${cellStyle}${warn}">${v || '<span style="opacity:0.25">—</span>'}</td>`;
         }).join('') + '</tr>';
       }).join('');
 
       const statsEl = document.getElementById('csv-preview-stats');
-      statsEl.innerHTML = `<strong style="color:var(--text);">${dataRows.length}</strong> rows detected` +
-        (dataRows.length > 20 ? ` <span style="color:var(--muted)">(showing first 20)</span>` : '') +
-        (missingRequired.length ? ` · <span style="color:#e74c3c;">Missing columns: ${missingRequired.join(', ')}</span>` : '');
+      const detectedCount = dataRows.length;
+      const validCount = guests.filter(g => g.first_name).length;
+      statsEl.innerHTML = `<strong style="color:var(--text);">${detectedCount}</strong> rows detected · <span style="color:var(--attending);">${validCount} ready to import</span>` +
+        (detectedCount > 20 ? ` <span style="color:var(--muted)">(previewing first 20)</span>` : '');
 
       const errEl = document.getElementById('csv-preview-errors');
       if (errors.length) {
         errEl.style.display = 'block';
-        errEl.innerHTML = '⚠ ' + errors.slice(0, 5).join('<br>') + (errors.length > 5 ? `<br>…and ${errors.length - 5} more` : '');
+        errEl.innerHTML = '⚠ ' + errors.slice(0, 5).join('<br>') + (errors.length > 5 ? `<br>…and ${errors.length - 5} more with empty names` : '');
       } else {
         errEl.style.display = 'none';
       }
 
       document.getElementById('csv-preview-area').style.display = 'block';
-      document.getElementById('csv-import-submit').disabled = guests.length === 0 || missingRequired.length > 0;
+      document.getElementById('csv-import-submit').disabled = validCount === 0;
     }
 
     function openImportCsv() {
