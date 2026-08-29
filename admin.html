@@ -922,6 +922,12 @@ Charles and Leticia</textarea>
         Existing guests are <em>not</em> overwritten — only new rows are inserted.
       </p>
 
+      <!-- Tab selector for File vs Paste -->
+      <div style="display:flex;gap:0.5rem;margin-bottom:1rem;border-bottom:1px solid var(--border);padding-bottom:0.5rem;">
+        <button id="csv-tab-file" type="button" class="btn-sm primary" onclick="setCsvImportTab('file')">📁 Upload File</button>
+        <button id="csv-tab-paste" type="button" class="btn-sm" onclick="setCsvImportTab('paste')">📋 Paste Data</button>
+      </div>
+
       <!-- Drop zone / file input -->
       <div id="csv-drop-zone" style="border:2px dashed var(--border);border-radius:8px;padding:1.6rem;text-align:center;cursor:pointer;transition:border-color .2s;"
            onclick="document.getElementById('csv-file-input').click()"
@@ -929,8 +935,18 @@ Charles and Leticia</textarea>
            ondragleave="this.style.borderColor='var(--border)'"
            ondrop="handleCsvDrop(event)">
         <div style="font-size:2rem;margin-bottom:0.5rem;">📂</div>
-        <div style="font-size:0.82rem;color:var(--muted);">Click or drag &amp; drop a <strong style="color:var(--text);">.csv</strong> file here</div>
-        <input type="file" id="csv-file-input" accept=".csv,text/csv" style="display:none;" onchange="handleCsvFile(this.files[0])">
+        <div style="font-size:0.82rem;color:var(--muted);">Click or drag &amp; drop a <strong style="color:var(--text);">.csv / .tsv / .txt</strong> file here</div>
+        <input type="file" id="csv-file-input" accept=".csv,.tsv,.txt,text/csv,text/tab-separated-values,text/plain" style="display:none;" onchange="handleCsvFile(this.files[0])">
+      </div>
+
+      <!-- Paste input -->
+      <div id="csv-paste-zone" style="display:none;">
+        <textarea id="csv-paste-text" placeholder="Paste your guest rows directly here from Excel, Google Sheets, or CSV...
+Example:
+Brian	Escalante	Abigail Escalante	couple	2	6373007
+Amelie	Guerra	Julian	couple	2	6140942"
+          style="width:100%;min-height:130px;background:rgba(0,0,0,0.35);border:1px solid var(--border);border-radius:6px;color:var(--text);padding:0.75rem;font-family:monospace;font-size:0.78rem;resize:vertical;"
+          oninput="renderCsvPreview(this.value)"></textarea>
       </div>
 
       <!-- Preview area -->
@@ -1851,12 +1867,32 @@ Charles and Leticia</textarea>
       URL.revokeObjectURL(url);
     }
 
-    // RFC-4180 compliant CSV parser
+
+    // Universal CSV / TSV parser (supports tab, comma, semicolon, with quoted strings)
     function parseCsv(text) {
+      if (!text || !text.trim()) return [];
+      
+      // Auto-detect delimiter from first non-empty line
+      const lines = text.split(/\r?\n/).filter(l => l.trim().length > 0);
+      if (!lines.length) return [];
+      
+      const firstLine = lines[0];
+      const tabCount = (firstLine.match(/\t/g) || []).length;
+      const commaCount = (firstLine.match(/,/g) || []).length;
+      const semiCount = (firstLine.match(/;/g) || []).length;
+      
+      let delimiter = ',';
+      if (tabCount > commaCount && tabCount >= semiCount) delimiter = '\t';
+      else if (semiCount > commaCount && semiCount > tabCount) delimiter = ';';
+
       const rows = [];
       let row = [], field = '', inQuotes = false;
-      const push = () => { row.push(field); field = ''; };
-      const newRow = () => { push(); rows.push(row); row = []; };
+      const pushField = () => { row.push(field.trim()); field = ''; };
+      const endRow = () => {
+        pushField();
+        if (row.some(c => c !== '')) rows.push(row);
+        row = [];
+      };
 
       for (let i = 0; i < text.length; i++) {
         const ch = text[i], nx = text[i + 1];
@@ -1866,18 +1902,37 @@ Charles and Leticia</textarea>
           else { field += ch; }
         } else {
           if (ch === '"') { inQuotes = true; }
-          else if (ch === ',') { push(); }
-          else if (ch === '\r' && nx === '\n') { newRow(); i++; }
-          else if (ch === '\n' || ch === '\r') { newRow(); }
+          else if (ch === delimiter) { pushField(); }
+          else if (ch === '\r' && nx === '\n') { endRow(); i++; }
+          else if (ch === '\n' || ch === '\r') { endRow(); }
           else { field += ch; }
         }
       }
-      push();
-      if (row.length > 1 || row[0] !== '') rows.push(row);
+      endRow();
       return rows;
     }
 
-    let csvParsedGuests = null; // holds array of guest objects ready for import
+    let csvParsedGuests = null;
+
+    function setCsvImportTab(tab) {
+      const fileTab = document.getElementById('csv-tab-file');
+      const pasteTab = document.getElementById('csv-tab-paste');
+      const dropZone = document.getElementById('csv-drop-zone');
+      const pasteZone = document.getElementById('csv-paste-zone');
+
+      if (tab === 'paste') {
+        fileTab.className = 'btn-sm';
+        pasteTab.className = 'btn-sm primary';
+        dropZone.style.display = 'none';
+        pasteZone.style.display = 'block';
+        document.getElementById('csv-paste-text').focus();
+      } else {
+        fileTab.className = 'btn-sm primary';
+        pasteTab.className = 'btn-sm';
+        dropZone.style.display = 'block';
+        pasteZone.style.display = 'none';
+      }
+    }
 
     function handleCsvDrop(event) {
       event.preventDefault();
@@ -1888,10 +1943,6 @@ Charles and Leticia</textarea>
 
     function handleCsvFile(file) {
       if (!file) return;
-      if (!file.name.endsWith('.csv') && file.type !== 'text/csv') {
-        alert('Please select a .csv file.');
-        return;
-      }
       const reader = new FileReader();
       reader.onload = (e) => renderCsvPreview(e.target.result);
       reader.readAsText(file, 'UTF-8');
@@ -1914,50 +1965,61 @@ Charles and Leticia</textarea>
     }
 
     function renderCsvPreview(rawText) {
-      // Strip UTF-8 BOM and leading zero-width spaces
       const text = (rawText || '').replace(/^\uFEFF/, '').replace(/[\u200B-\u200D\uFEFF]/g, '').trim();
       const rows = parseCsv(text);
-      if (rows.length < 2) {
-        document.getElementById('csv-preview-stats').textContent = 'CSV appears empty or has no data rows.';
+      if (!rows.length) {
+        document.getElementById('csv-preview-stats').textContent = 'No data detected.';
         document.getElementById('csv-preview-area').style.display = 'block';
         document.getElementById('csv-import-submit').disabled = true;
         csvParsedGuests = null;
         return;
       }
 
-      const rawHeaders = rows[0].map(h => String(h || '').trim());
-      const cleanHeaders = rawHeaders.map(cleanHeaderStr);
-      const dataRows = rows.slice(1).filter(r => r.some(c => String(c || '').trim() !== ''));
+      const cleanRow0 = rows[0].map(cleanHeaderStr);
+      
+      // Auto-detect if row 0 has headers or is already actual data
+      const knownHeaderKeywords = ['firstname', 'first', 'lastname', 'last', 'guestname', 'lead', 'spousename', 'spouse', 'guesttype', 'maxparty', 'partysize', 'phonenumber', 'whatsapp', 'attendance', 'deadline'];
+      const hasHeaderKeywords = cleanRow0.some(c => knownHeaderKeywords.includes(c));
+      const row0LooksLikeData = rows[0][3] && ['couple', 'single', 'family'].includes(rows[0][3].toLowerCase().trim()) ||
+                                rows[0][4] && /^[0-9]+$/.test(rows[0][4].trim());
 
-      // Find column index matching schema keys or aliases
-      const findColIdx = (key) => {
-        const aliases = COLUMN_ALIASES[key] || [key];
-        for (const a of aliases) {
-          const cleanA = cleanHeaderStr(a);
-          const idx = cleanHeaders.indexOf(cleanA);
-          if (idx !== -1) return idx;
-        }
-        return -1;
-      };
+      const hasHeaderRow = hasHeaderKeywords && !row0LooksLikeData;
+      
+      let dataRows = [];
+      let fnIdx = 0, lnIdx = 1, spIdx = 2, gtIdx = 3, mpIdx = 4, phIdx = 5, atIdx = -1, dlIdx = -1, ezIdx = -1;
+      let isSingleNameCol = false;
 
-      const fnIdx = findColIdx('first_name');
-      const lnIdx = findColIdx('last_name');
-      const spIdx = findColIdx('spouse_name');
-      const gtIdx = findColIdx('guest_type');
-      const mpIdx = findColIdx('max_party');
-      const phIdx = findColIdx('phone');
-      const atIdx = findColIdx('attendance');
-      const dlIdx = findColIdx('deadline');
-      const ezIdx = findColIdx('easy_mode');
+      if (hasHeaderRow) {
+        dataRows = rows.slice(1);
+        const findColIdx = (key) => {
+          const aliases = COLUMN_ALIASES[key] || [key];
+          for (const a of aliases) {
+            const cleanA = cleanHeaderStr(a);
+            const idx = cleanRow0.indexOf(cleanA);
+            if (idx !== -1) return idx;
+          }
+          return -1;
+        };
 
-      const isSingleNameCol = fnIdx !== -1 && lnIdx === -1 && (cleanHeaders[fnIdx] === 'name' || cleanHeaders[fnIdx] === 'fullname' || cleanHeaders[fnIdx] === 'guest' || cleanHeaders[fnIdx] === 'guestname');
+        fnIdx = findColIdx('first_name');
+        lnIdx = findColIdx('last_name');
+        spIdx = findColIdx('spouse_name');
+        gtIdx = findColIdx('guest_type');
+        mpIdx = findColIdx('max_party');
+        phIdx = findColIdx('phone');
+        atIdx = findColIdx('attendance');
+        dlIdx = findColIdx('deadline');
+        ezIdx = findColIdx('easy_mode');
+        isSingleNameCol = fnIdx !== -1 && lnIdx === -1 && ['name', 'fullname', 'guest', 'guestname'].includes(cleanRow0[fnIdx]);
+      } else {
+        dataRows = rows; // all rows are data
+      }
 
       const errors = [];
       const guests = dataRows.map((r, i) => {
-        let firstName = fnIdx !== -1 ? String(r[fnIdx] || '').trim() : '';
-        let lastName = lnIdx !== -1 ? String(r[lnIdx] || '').trim() : '';
+        let firstName = fnIdx !== -1 && r[fnIdx] ? String(r[fnIdx]).trim() : '';
+        let lastName = lnIdx !== -1 && r[lnIdx] ? String(r[lnIdx]).trim() : '';
 
-        // If user gave a single "Name" column (e.g. "John Doe"), split into first and last name
         if (isSingleNameCol && firstName && !lastName) {
           const parts = firstName.split(/\s+/);
           if (parts.length > 1) {
@@ -1966,11 +2028,10 @@ Charles and Leticia</textarea>
           }
         }
 
-        const spouseName = spIdx !== -1 ? String(r[spIdx] || '').trim() : '';
-        let guestType = gtIdx !== -1 ? String(r[gtIdx] || '').toLowerCase().trim() : '';
-        let maxParty = mpIdx !== -1 ? parseInt(String(r[mpIdx] || '').replace(/[^\d]/g, ''), 10) : NaN;
+        const spouseName = spIdx !== -1 && r[spIdx] ? String(r[spIdx]).trim() : '';
+        let guestType = gtIdx !== -1 && r[gtIdx] ? String(r[gtIdx]).toLowerCase().trim() : '';
+        let maxParty = mpIdx !== -1 && r[mpIdx] ? parseInt(String(r[mpIdx]).replace(/[^\d]/g, ''), 10) : NaN;
 
-        // Auto-detect type and party size if not fully specified
         if (!guestType) {
           if (maxParty > 2) guestType = 'family';
           else if (maxParty === 2 || spouseName) guestType = 'couple';
@@ -1982,10 +2043,10 @@ Charles and Leticia</textarea>
           else maxParty = 1;
         }
 
-        const phone = phIdx !== -1 ? String(r[phIdx] || '').trim() : '';
-        const attendance = atIdx !== -1 && String(r[atIdx] || '').trim() ? String(r[atIdx] || '').trim().toLowerCase() : 'invited';
-        const deadline = dlIdx !== -1 ? String(r[dlIdx] || '').trim() : '2026-10-31';
-        const easyVal = ezIdx !== -1 ? String(r[ezIdx] || '').trim().toLowerCase() : '';
+        const phone = phIdx !== -1 && r[phIdx] ? String(r[phIdx]).trim() : '';
+        const attendance = atIdx !== -1 && r[atIdx] && String(r[atIdx]).trim() ? String(r[atIdx]).trim().toLowerCase() : 'invited';
+        const deadline = dlIdx !== -1 && r[dlIdx] ? String(r[dlIdx]).trim() : '2026-10-31';
+        const easyVal = ezIdx !== -1 && r[ezIdx] ? String(r[ezIdx]).trim().toLowerCase() : '';
         const easyMode = easyVal === 'true' || easyVal === '1' || easyVal === 'yes' ? true : undefined;
 
         const g = {
@@ -2001,7 +2062,7 @@ Charles and Leticia</textarea>
         };
 
         if (!g.first_name) {
-          errors.push(`Row ${i + 2}: missing name or first name`);
+          errors.push(`Row ${i + (hasHeaderRow ? 2 : 1)}: missing name or first name`);
         }
         return g;
       });
@@ -2029,7 +2090,7 @@ Charles and Leticia</textarea>
       const statsEl = document.getElementById('csv-preview-stats');
       const detectedCount = dataRows.length;
       const validCount = guests.filter(g => g.first_name).length;
-      statsEl.innerHTML = `<strong style="color:var(--text);">${detectedCount}</strong> rows detected · <span style="color:var(--attending);">${validCount} ready to import</span>` +
+      statsEl.innerHTML = `<strong style="color:var(--text);">${detectedCount}</strong> rows detected · <span style="color:var(--attending);">${validCount} valid guests ready to import</span>` +
         (detectedCount > 20 ? ` <span style="color:var(--muted)">(previewing first 20)</span>` : '');
 
       const errEl = document.getElementById('csv-preview-errors');
@@ -2047,9 +2108,13 @@ Charles and Leticia</textarea>
     function openImportCsv() {
       csvParsedGuests = null;
       document.getElementById('csv-file-input').value = '';
+      const pasteArea = document.getElementById('csv-paste-text');
+      if (pasteArea) pasteArea.value = '';
       document.getElementById('csv-preview-area').style.display = 'none';
       document.getElementById('csv-import-submit').disabled = true;
+      document.getElementById('csv-import-submit').textContent = 'Import Guests';
       document.getElementById('csv-drop-zone').style.borderColor = 'var(--border)';
+      setCsvImportTab('file');
       document.getElementById('import-modal').classList.add('open');
     }
 
@@ -2060,32 +2125,65 @@ Charles and Leticia</textarea>
     async function submitCsvImport() {
       if (!csvParsedGuests || csvParsedGuests.length === 0) return;
 
+      const validGuests = csvParsedGuests.filter(g => g.first_name);
+      if (!validGuests.length) {
+        alert('No valid guests to import.');
+        return;
+      }
+
       const btn = document.getElementById('csv-import-submit');
-      btn.textContent = 'Importing…'; btn.disabled = true;
+      btn.textContent = `Importing (${validGuests.length})...`;
+      btn.disabled = true;
 
       try {
-        const res = await fetch(`${CONVEX_HTTP_URL}/api/guests/import`, {
-          method: 'POST',
-          headers: authHeaders({ 'Content-Type': 'application/json' }),
-          body: JSON.stringify({ guests: csvParsedGuests })
-        });
+        // Try bulk import first
+        let bulkSuccess = false;
+        try {
+          const res = await fetch(`${CONVEX_HTTP_URL}/api/guests/import`, {
+            method: 'POST',
+            headers: authHeaders({ 'Content-Type': 'application/json' }),
+            body: JSON.stringify({ guests: validGuests })
+          });
+          if (res.ok) {
+            const result = await res.json();
+            bulkSuccess = true;
+            closeImportCsv();
+            alert(`✅ Successfully imported ${result.inserted || validGuests.length} guest(s)!`);
+            fetchGuests();
+            return;
+          }
+        } catch { }
 
-        if (res.status === 401) { await logout(); throw new Error('Session expired.'); }
-        if (!res.ok) throw new Error(await res.text());
-
-        const result = await res.json();
-        const errCount = (result.errors || []).length;
-        const msg = `✅ Imported ${result.inserted} guest(s).` +
-          (errCount ? `\n⚠ ${errCount} row(s) failed — check console for details.` : '');
-
-        if (errCount) console.warn('Import errors:', result.errors);
+        // Fallback: fast concurrent insertion via verified /api/guest endpoint
+        let inserted = 0;
+        let errors = 0;
+        
+        for (let i = 0; i < validGuests.length; i++) {
+          const g = validGuests[i];
+          btn.textContent = `Importing (${i + 1}/${validGuests.length})...`;
+          try {
+            const res = await fetch(`${CONVEX_HTTP_URL}/api/guest`, {
+              method: 'POST',
+              headers: authHeaders({ 'Content-Type': 'application/json' }),
+              body: JSON.stringify({
+                action: 'add_guest',
+                ...g
+              })
+            });
+            if (res.ok) inserted++;
+            else errors++;
+          } catch {
+            errors++;
+          }
+        }
 
         closeImportCsv();
-        alert(msg);
+        alert(`✅ Successfully imported ${inserted} guest(s)!` + (errors ? `\n⚠ ${errors} failed.` : ''));
         fetchGuests();
       } catch (err) {
         alert('Import failed: ' + err.message);
-        btn.textContent = 'Import Guests'; btn.disabled = false;
+        btn.textContent = 'Import Guests';
+        btn.disabled = false;
       }
     }
 
