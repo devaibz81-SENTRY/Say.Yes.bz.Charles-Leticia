@@ -5,17 +5,105 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>RSVP — Charles &amp; Leticia</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Be+Vietnam+Pro:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Great+Vibes&family=Alex+Brush&family=Be+Vietnam+Pro:wght@400;500;600&family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
-tailwind.config={darkMode:"class",theme:{extend:{colors:{"gold":{"DEFAULT":"#D4AF37","light":"#F5D76E","dark":"#A8862B"},"ink":"#0a0a0a","on-error":"#ffffff","primary":"#D4AF37","inverse-on-surface":"#0a0a0a","on-tertiary":"#0a0a0a","on-error-container":"#ffb4ab","outline":"#5c5c5c","on-secondary":"#0a0a0a","surface-container-low":"#0f0f0f","on-surface-variant":"#b9b9b9","primary-fixed-dim":"#4a3b14","background":"#0a0a0a","on-primary-fixed":"#f5e3a3","on-primary-container":"#f5e3a3","secondary":"#C9A84C","tertiary":"#E8CE7A","inverse-surface":"#f5f5f5","inverse-primary":"#D4AF37","surface-dim":"#0c0c0c","on-tertiary-fixed":"#f5e3a3","on-secondary-fixed":"#f0d98c","surface-container-high":"#1a1a1a","secondary-container":"#3b2f10","primary-fixed":"#2a220c","surface-tint":"#D4AF37","tertiary-fixed":"#2a220c","surface":"#121212","outline-variant":"#2e2e2e","primary-container":"#3b2f10","on-tertiary-container":"#f5e3a3","error-container":"#3b0a0a","surface-variant":"#1c1c1c","on-surface":"#f5f5f5","tertiary-fixed-dim":"#4a3b14","on-background":"#f5f5f5","tertiary-container":"#2a220c","error":"#ba1a1a","surface-bright":"#2a2a2a","surface-container-lowest":"#050505","secondary-fixed":"#2a220c","on-tertiary-fixed-variant":"#e8ce7a","on-primary-fixed-variant":"#f5e3a3","surface-container-highest":"#222222","on-secondary-container":"#f0d98c","on-primary":"#0a0a0a","on-secondary-fixed-variant":"#e8ce7a","surface-container":"#151515","secondary-fixed-dim":"#4a3b14"},borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},spacing:{"container-padding":"2rem","unit":"8px","section-gap":"4rem","gutter":"1.5rem","element-gap":"1rem"},fontFamily:{"headline-lg":["Noto Serif"],"script-accent":["Great Vibes","cursive"],"headline-xl":["Noto Serif"],"headline-md":["Noto Serif"],"body-md":["Be Vietnam Pro"],"label-sm":["Be Vietnam Pro"],"body-lg":["Be Vietnam Pro"],"serif":["Noto Serif","Georgia","serif"],"sans":["Be Vietnam Pro","system-ui","sans-serif"]},fontSize:{"headline-lg":["32px",{"lineHeight":"1.2","fontWeight":"600"}],"script-accent":["32px",{"lineHeight":"1","fontWeight":"400"}],"headline-xl":["48px",{"lineHeight":"1.1","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-md":["24px",{"lineHeight":"1.3","fontWeight":"500"}],"body-md":["16px",{"lineHeight":"1.6","fontWeight":"400"}],"label-sm":["12px",{"lineHeight":"1","letterSpacing":"0.1em","fontWeight":"600"}],"body-lg":["18px",{"lineHeight":"1.6","fontWeight":"400"}]}}}}
+tailwind.config={darkMode:"class",theme:{extend:{colors:{"gold":{"DEFAULT":"#c49948","light":"#fce4a0","dark":"#7d541b"},"ink":"#0a0a0a","on-error":"#ffffff","primary":"#c49948","inverse-on-surface":"#0a0a0a","on-tertiary":"#0a0a0a","on-error-container":"#ffb4ab","outline":"#5c5c5c","on-secondary":"#0a0a0a","surface-container-low":"#0f0f0f","on-surface-variant":"#FFF8E6","primary-fixed-dim":"#5e3c0c","background":"#0a0a0a","on-primary-fixed":"#fce4a0","on-primary-container":"#fce4a0","secondary":"#c49948","tertiary":"#fce4a0","inverse-surface":"#FFF8E6","inverse-primary":"#c49948","surface-dim":"#0c0c0c","on-tertiary-fixed":"#fce4a0","on-secondary-fixed":"#fce4a0","surface-container-high":"#1a1a1a","secondary-container":"#3b2f10","primary-fixed":"#2a220c","surface-tint":"#c49948","tertiary-fixed":"#2a220c","surface":"#121212","outline-variant":"#2e2e2e","primary-container":"#5e3c0c","on-tertiary-container":"#fce4a0","error-container":"#3b0a0a","surface-variant":"#1c1c1c","on-surface":"#FFF8E6","tertiary-fixed-dim":"#5e3c0c","on-background":"#FFF8E6","tertiary-container":"#2a220c","error":"#ba1a1a","surface-bright":"#2a2a2a","surface-container-lowest":"#050505","secondary-fixed":"#2a220c","on-tertiary-fixed-variant":"#fce4a0","on-primary-fixed-variant":"#fce4a0","surface-container-highest":"#222222","on-secondary-container":"#fce4a0","on-primary":"#0a0a0a","on-secondary-fixed-variant":"#fce4a0","surface-container":"#151515","secondary-fixed-dim":"#5e3c0c"},borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},spacing:{"container-padding":"2rem","unit":"8px","section-gap":"4rem","gutter":"1.5rem","element-gap":"1rem"},fontFamily:{"headline-lg":["Cinzel","Playfair Display","Noto Serif","serif"],"script-accent":["Great Vibes","Alex Brush","cursive"],"headline-xl":["Cinzel","Playfair Display","Noto Serif","serif"],"headline-md":["Cinzel","Playfair Display","Noto Serif","serif"],"body-md":["Be Vietnam Pro","system-ui","sans-serif"],"label-sm":["Be Vietnam Pro","system-ui","sans-serif"],"body-lg":["Be Vietnam Pro","system-ui","sans-serif"],"serif":["Cinzel","Playfair Display","Noto Serif","Georgia","serif"],"sans":["Be Vietnam Pro","system-ui","sans-serif"]},fontSize:{"headline-lg":["32px",{"lineHeight":"1.2","fontWeight":"600"}],"script-accent":["32px",{"lineHeight":"1","fontWeight":"400"}],"headline-xl":["48px",{"lineHeight":"1.1","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-md":["24px",{"lineHeight":"1.3","fontWeight":"500"}],"body-md":["16px",{"lineHeight":"1.6","fontWeight":"400"}],"label-sm":["12px",{"lineHeight":"1","letterSpacing":"0.1em","fontWeight":"600"}],"body-lg":["18px",{"lineHeight":"1.6","fontWeight":"400"}]}}}}
 </script>
 <style>
-.glass-panel{background:rgba(18,18,18,.55);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(212,175,55,.16)}
-.satin-gradient{background:radial-gradient(1100px 500px at 80% -10%,rgba(212,175,55,.10),transparent 60%),radial-gradient(900px 600px at -10% 110%,rgba(212,175,55,.06),transparent 55%),linear-gradient(160deg,#050505 0%,#100e09 45%,#060606 100%)}
-.gold-shimmer{background:linear-gradient(90deg,transparent,rgba(212,175,55,.16),transparent);background-size:220% 100%;animation:shimmer 4s linear infinite}
+@font-face {
+  font-family: 'Butterline';
+  src: url('Butterline.woff2') format('woff2'),
+       url('Butterline.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'The Feeling';
+  src: url('TheFeeling.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Angel Wedding';
+  src: url('AngelWedding.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Wedding Party';
+  src: url('WeddingParty.ttf') format('truetype'),
+       url('WeddingParty.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+.font-script-accent {
+  font-family: 'Butterline', 'The Feeling', 'Angel Wedding', cursive !important;
+}
+.glass-panel{background:rgba(18,18,18,.55);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(196,153,72,0.16)}
+.satin-gradient{background:radial-gradient(1100px 500px at 80% -10%,rgba(196,153,72,.10),transparent 60%),radial-gradient(900px 600px at -10% 110%,rgba(196,153,72,.06),transparent 55%),linear-gradient(160deg,#0a0a0a 0%,#121212 45%,#0a0a0a 100%)}
+.gold-shimmer{background:linear-gradient(90deg,transparent,rgba(196,153,72,.16),transparent);background-size:220% 100%;animation:shimmer 4s linear infinite}
 @keyframes shimmer{0%{background-position:220% 0}100%{background-position:-120% 0}}
-.text-gold-gradient{background:linear-gradient(120deg,#F5D76E 0%,#D4AF37 45%,#8A6B1F 80%,#F5D76E 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.text-gold-gradient{background:linear-gradient(120deg,#fce4a0 0%,#c49948 45%,#7d541b 80%,#fce4a0 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.gold-rsvp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 1rem 2rem;
+  font-family: 'Be Vietnam Pro', system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 9999px;
+  border: 1px solid rgba(212,175,55,0.45);
+  background: linear-gradient(135deg, rgba(252,228,160,0.14), rgba(212,175,55,0.10));
+  color: #fce4a0;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -2px 0 rgba(0,0,0,0.18);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+.gold-rsvp-btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(252,228,160,0.68);
+  box-shadow: 0 14px 36px rgba(212,175,55,0.18), inset 0 1px 0 rgba(255,255,255,0.26), inset 0 -2px 0 rgba(0,0,0,0.18);
+  background: linear-gradient(135deg, rgba(252,228,160,0.18), rgba(212,175,55,0.14));
+}
+.chad-btn.chad-btn-gold {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.8rem 1.2rem;
+  border: 1px solid rgba(160,130,109,0.4);
+  border-radius: 8px;
+  background: rgba(18,18,18,0.7);
+  color: #a89968;
+  font-family: 'Be Vietnam Pro', system-ui, sans-serif;
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.chad-btn.chad-btn-gold:hover {
+  transform: translateY(-1px);
+  border-color: rgba(168,153,104,0.6);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+}
+.chad-btn.chad-btn-gold:active {
+  transform: translateY(0);
+}
+@media (max-width: 640px) { .gold-rsvp-btn { font-size: 0.68rem; letter-spacing: 0.18em; padding: 0.9rem 1.2rem; } .chad-btn.chad-btn-gold { font-size: 0.62rem; letter-spacing: 0.12em; } }
 .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}
 body{min-height:100dvh}
 .sparkle-bg{background-image:radial-gradient(circle at center,#D4AF37 1px,transparent 1px);background-size:24px 24px;opacity:.05}
@@ -70,39 +158,53 @@ input[type=number]{-moz-appearance:textfield}
 /* === CHAD COMPACT — ULTRA COMPACT V2 === */
 /* RSVP title */
 h1 { font-size: clamp(1.65rem, 4.2vw, 2.4rem) !important; font-weight: 800 !important; letter-spacing: -0.02em !important; line-height:1.1 !important; }
+
 /* Script accent */
 .font-script-accent.italic { font-size: clamp(1.15rem, 2.8vw, 1.55rem) !important; }
+
 /* Bolder form labels */
 label { font-weight: 600 !important; }
 label.chad-label { font-size: 0.70rem !important; }
+
 /* Attendance section label */
 .att-choices ~ p, p:has(+ .att-choices) { font-size: 0.68rem !important; font-weight: 600 !important; letter-spacing: 0.16em !important; }
+
 /* Attendance row — compact */
 .att-choice { padding: 0.45rem 0.3rem 0.35rem !important; }
 .att-choice .att-ic { font-size: 20px !important; }
 .att-choice .att-lbl { font-size: 10px !important; font-weight: 600 !important; letter-spacing: 0.13em !important; }
 .att-choice .att-sub { font-size: 8px !important; }
+
 /* Submit button */
 button[type=submit] { padding: 0.9rem 2.2rem !important; font-size: 0.72rem !important; font-weight: 700 !important; letter-spacing: 0.24em !important; box-shadow: 0 10px 30px rgba(212,175,55,0.28) !important; }
 button[type=submit]:hover { box-shadow: 0 14px 38px rgba(212,175,55,0.42) !important; transform: translateY(-1px); }
+
 /* Gold divider */
 .w-16.h-\[1px\] { height: 1.5px !important; width: 3.5rem !important; opacity: 0.7 !important; }
+
 /* Header title */
 .font-serif.italic.text-xl { font-size: 1.05rem !important; font-weight: 600 !important; }
+
 /* Guest counter stepper buttons */
 .w-12.h-12 { width: 2.5rem !important; height: 2.5rem !important; font-size: 1.2rem !important; }
+
 /* Deadline notice */
 .mt-6.font-label-sm.text-on-surface-variant.italic { font-size: 0.72rem !important; font-weight: 500 !important; letter-spacing: 0.1em !important; color: rgba(212,175,55,0.65) !important; }
+
 /* Section dividers */
 .flex.items-center.gap-3 .font-label-sm.text-gold { font-size: 0.68rem !important; font-weight: 600 !important; }
+
 /* "Please reply" text */
 .pt-8.text-center p { opacity: 0.75 !important; }
+
 /* Success heading */
 #success h2 { font-size: clamp(1.8rem, 4.5vw, 2.6rem) !important; }
 #success .w-20.h-20 { width: 4.5rem !important; height: 4.5rem !important; }
 #success .text-4xl { font-size: 2rem !important; }
+
 /* Input text */
 .text-headline-md { font-size: 1.05rem !important; }
+
 /* "Will you be attending" prompt */
 .font-label-sm.text-on-surface-variant.tracking-\[0\.2em\].uppercase.text-center {
   font-size: 0.75rem !important;
@@ -110,6 +212,7 @@ button[type=submit]:hover { box-shadow: 0 14px 38px rgba(212,175,55,0.42) !impor
   color: rgba(245,245,245,0.85) !important;
   letter-spacing: 0.18em !important;
 }
+
 /* Mobile first: tighter spacing */
 @media (max-width: 640px) {
   .space-y-8 { margin-top: 1.25rem; }
@@ -119,6 +222,7 @@ button[type=submit]:hover { box-shadow: 0 14px 38px rgba(212,175,55,0.42) !impor
   .mt-6 { margin-top: 1rem; }
   input.py-3, textarea.py-3 { padding-top: 0.6rem; padding-bottom: 0.6rem; }
 }
+
 /* === UIVERSE-STYLE CHAD FORM — ULTRA COMPACT V3 (first principles) === */
 .chad-form{
   display:flex;flex-direction:column;gap:8px;
@@ -175,6 +279,7 @@ select:-webkit-autofill {
 .chad-btn:hover{background-color:#000;color:#fff}
 .chad-btn-gold{background:#D4AF37;color:#0a0a0a}
 .chad-btn-gold:hover{background:#F5D76E;color:#0a0a0a}
+
 /* === NEON CHECKBOX (adapted from Uiverse.io by 3HugaDa3) === */
 .checkbox-wrapper {
   --checkbox-size: 22px;
@@ -296,12 +401,70 @@ select:-webkit-autofill {
   25% { transform: translateX(-6px); }
   75% { transform: translateX(6px); }
 }
+
+/* === Minimal Voice Note Recorder === */
+.voice-mic-btn {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(196, 153, 72, 0.5);
+  background: linear-gradient(135deg, rgba(252, 228, 160, 0.15) 0%, rgba(196, 153, 72, 0.25) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fce4a0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+.voice-mic-btn:hover {
+  transform: scale(1.05);
+  border-color: #fce4a0;
+  background: linear-gradient(135deg, rgba(252, 228, 160, 0.25) 0%, rgba(196, 153, 72, 0.35) 100%);
+  box-shadow: 0 6px 20px rgba(196, 153, 72, 0.3);
+}
+.voice-mic-btn:active {
+  transform: scale(0.96);
+}
+.voice-mic-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+.voice-mic-btn.rec {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+  animation: voiceRecPulse 1.2s infinite ease-in-out;
+}
+@keyframes voiceRecPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 12px rgba(239, 68, 68, 0.4); }
+  50% { transform: scale(1.06); box-shadow: 0 0 24px rgba(239, 68, 68, 0.7); }
+}
+.voice-audio {
+  width: 100%;
+  height: 38px;
+  border-radius: 9999px;
+}
+.voice-audio::-webkit-media-controls-panel {
+  background: #1c1c1c;
+}
+/* success stack: voice first, then written note, then calendar */
+#success{display:flex;flex-direction:column;gap:1.25rem}
+#success > .success-pop{width:100%}
+#voiceNoteCard{order:1}
+#postRsvpLove{order:2}
+#toggleWrittenWrap{order:3}
+#sucCalendarBlock{order:4}
+#success .success-pop.flex.flex-col.gap-3{order:5}
 </style>
 </head>
 <body class="bg-background font-body-md text-on-background min-h-screen relative overflow-x-hidden">
 <!-- Dark cinematic couple photo background -->
 <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
-  <img src="../galery%20(3).jpeg" alt="" class="w-full h-full object-cover object-center scale-105" style="filter: brightness(0.18) saturate(0.5) blur(1px);"/>
+  <img src="galery%20(3).jpeg" alt="" class="w-full h-full object-cover object-center scale-105" style="filter: brightness(0.18) saturate(0.5) blur(1px);"/>
   <div class="absolute inset-0 bg-gradient-to-b from-[#050505]/90 via-[#050505]/70 to-[#050505]/95"></div>
   <div class="absolute inset-0" style="background: radial-gradient(ellipse 80% 60% at 50% 50%, transparent 20%, rgba(5,4,2,0.85) 100%);"></div>
 </div>
@@ -316,9 +479,11 @@ select:-webkit-autofill {
 </div>
 <div class="font-serif italic text-xl text-gold">Charles &amp; Leticia</div>
 </header>
+
 <main class="pt-16 pb-12 px-4 sm:px-[1rem] flex justify-center items-start sm:items-center min-h-screen relative z-20">
 <div class="max-w-[400px] w-full">
 <section class="relative">
+
 <!-- Heading — compact (visible on form, hidden on post-RSVP success) -->
 <div id="rsvpHeading" class="text-center mb-4 relative z-10">
 <h1 class="font-headline-xl text-white leading-tight" style="font-size:clamp(1.9rem,5vw,2.5rem);font-weight:800;letter-spacing:-0.02em;">RSVP</h1>
@@ -328,6 +493,7 @@ select:-webkit-autofill {
 <span class="material-symbols-outlined text-gold text-sm" style="font-variation-settings:'FILL' 1">favorite</span>
 <span class="font-label-sm text-white/70 tracking-wide" style="font-size:.62rem;letter-spacing:.08em">We love your babies — but this is an <strong class="text-gold-light font-semibold">adults-only</strong> celebration</span>
 </div>
+
 <p id="totalLine" class="font-label-sm text-gold uppercase tracking-[0.2em] mt-3" style="font-size:.66rem;"></p>
 <p id="coupleNote" class="font-label-sm text-gold-light uppercase tracking-[0.2em] mt-1.5 hidden" style="font-size:.66rem;">RSVPing for the two of you</p>
 <div id="priorStatus" class="hidden mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-gold/40 bg-gold/10 font-label-sm text-gold uppercase tracking-[0.15em]" style="font-size:.66rem;">
@@ -335,6 +501,7 @@ select:-webkit-autofill {
 <span id="priorStatusText"></span>
 </div>
 </div>
+
 <!-- FORM -->
 <form id="rsvpForm" class="chad-form relative z-10" onsubmit="handleSubmit(event)">
 <!-- SINGLE MODE -->
@@ -382,6 +549,8 @@ select:-webkit-autofill {
 <span id="statusPill" class="att-status hidden"><span class="material-symbols-outlined text-base"></span><span class="att-status-text"></span></span>
 </div>
 </div>
+
+
 </div>
 <!-- COUPLE MODE -->
 <div id="coupleFields" class="hidden space-y-5">
@@ -500,6 +669,7 @@ select:-webkit-autofill {
 <p class="chad-deadline mt-2" style="font-size:.58rem;opacity:.45">Reply by <strong>Oct 31, 2026</strong></p>
 </div>
 </form>
+
 <!-- SUCCESS -->
 <div id="success" class="hidden text-center relative z-10 space-y-5">
 <h2 class="success-pop font-script-accent text-gold-gradient italic leading-tight" style="font-size:clamp(2rem,6vw,3rem)">Thank You,<br/><span id="sucName">Guest</span></h2>
@@ -510,12 +680,10 @@ select:-webkit-autofill {
 </div>
 <p id="sucSummary" class="hidden"></p>
 <p id="sucTotal" class="success-pop font-label-sm text-on-surface-variant uppercase tracking-[0.15em]"></p>
-<!-- Post-RSVP: sweet & funny love note — offered AFTER the yes (as requested) -->
+
+<!-- Post-RSVP: written note (song requests live on voting page) -->
 <div id="postRsvpLove" class="success-pop chad-form text-left space-y-3 mt-1">
-<div class="text-center pb-1">
-<p class="font-script-accent text-gold italic" style="font-size:1.25rem">Leave a little love</p>
-<p class="chad-label !mb-0" style="font-size:.66rem;opacity:.6;letter-spacing:.12em;text-transform:uppercase">A note — make them smile</p>
-</div>
+<div id="writtenExtra" class="hidden space-y-3">
 <div>
 <label class="chad-label" for="postMessage" style="color:rgba(245,215,110,.9)">Whisper to the couple <span style="opacity:.5">— leave a little love</span></label>
 <div class="chad-field chad-field-textarea">
@@ -523,11 +691,71 @@ select:-webkit-autofill {
 <textarea class="chad-input chad-area" id="postMessage" placeholder="A sweet or funny note for Charles & Leticia… make them smile" rows="2"></textarea>
 </div>
 </div>
-<button onclick="savePostLove()" id="postLoveBtn" type="button" class="chad-btn chad-btn-gold w-full flex items-center justify-center gap-2">
-<span class="material-symbols-outlined text-base">send</span> Send my love
+<button onclick="savePostLove()" type="button" class="chad-btn w-full flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-base">send</span> Send my note
 </button>
-<p id="postLoveOk" class="hidden text-center text-emerald-400 font-label-sm" style="font-size:.68rem;letter-spacing:.08em">Sent — they’ll feel it 💛</p>
 </div>
+</div>
+
+<!-- VOICE NOTE — post-RSVP (60s max) -->
+<div id="voiceNoteCard" class="success-pop chad-form text-center space-y-3">
+
+  <!-- Unsupported -->
+  <div id="voiceUnsupported" class="hidden rounded-2xl border border-amber-500/30 bg-amber-500/10 p-4 space-y-2">
+    <p class="font-label-sm text-amber-200" style="font-size:.72rem;letter-spacing:.08em">Voice notes need Chrome or Edge</p>
+    <p class="font-body-md" style="font-size:.76rem;color:rgba(255,255,255,.70);line-height:1.5">Safari doesn't support this yet — open in <strong style="color:#F5D76E">Chrome</strong> to record, or leave a written note.</p>
+  </div>
+
+  <!-- Recorder core -->
+  <div id="voiceCore" class="space-y-3">
+    <p class="font-label-sm uppercase tracking-[0.2em] text-gold" style="font-size:.68rem">Leave a voice note</p>
+
+    <!-- Mic button + status -->
+    <div class="flex flex-col items-center gap-3">
+      <button id="voiceRecordBtn" type="button" class="voice-mic-btn" aria-label="Record voice note">
+        <span class="material-symbols-outlined mic-icon" style="font-size:32px">mic</span>
+      </button>
+      <p id="voiceProgressLabel" class="font-label-sm" style="font-size:.70rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#F5D76E">Tap to record — 60s</p>
+      <p id="voiceErr" class="hidden font-label-sm" style="font-size:.68rem;color:#ff8a80;letter-spacing:.04em"></p>
+      <!-- hidden timer/sub kept for JS compat -->
+      <div id="voiceTimer" class="voice-timer hidden">0:00 / 1:00</div>
+      <div id="voiceTimerSub" class="voice-timer sub hidden"><span class="voice-rec-dot inline-block align-middle" style="margin-right:6px"></span>Recording</div>
+      <!-- hidden ring for JS compat -->
+      <svg id="voiceRingFg" style="display:none"></svg>
+      <div id="voiceProgressFill" style="display:none"></div>
+    </div>
+
+    <!-- Controls -->
+    <div id="voiceControls" class="flex flex-col gap-2">
+      <div class="flex gap-2 justify-center">
+        <button id="voiceStopBtn" type="button" class="hidden chad-btn flex items-center justify-center gap-1.5" style="background:#1a1a1a;border:1px solid rgba(239,68,68,.35)"><span class="material-symbols-outlined text-sm" style="color:#F87171">stop_circle</span> Stop</button>
+        <button id="voiceRerecordBtn" type="button" class="hidden chad-btn flex items-center justify-center gap-1.5"><span class="material-symbols-outlined text-sm">refresh</span> Re-record</button>
+        <button id="voiceStopOnlySpacer" type="button" class="hidden chad-btn" style="visibility:hidden" aria-hidden="true"></button>
+      </div>
+      <button id="voiceSendBtn" type="button" class="hidden chad-btn chad-btn-gold w-full flex items-center justify-center gap-2"><span class="material-symbols-outlined text-base">send</span> Send my voice</button>
+    </div>
+
+    <!-- Preview player -->
+    <div id="voicePreviewWrap" class="hidden pt-1">
+      <audio id="voicePreviewAudio" class="voice-audio w-full" controls preload="metadata"></audio>
+      <p id="voicePreviewDur" class="chad-label text-center !mb-0" style="font-size:.58rem;opacity:.45;margin-top:4px">Listen back, then send when ready</p>
+    </div>
+
+    <!-- Sent state -->
+    <div id="voiceSent" class="hidden rounded-2xl border border-emerald-500/25 bg-emerald-500/10 p-4 text-center space-y-2">
+      <span class="material-symbols-outlined text-emerald-300 text-3xl">check_circle</span>
+      <p class="font-label-sm text-emerald-200" style="font-size:.70rem;letter-spacing:.08em">Voice note sent 💛</p>
+      <p class="font-body-md" style="font-size:.72rem;color:rgba(255,255,255,.65)">From: <span id="voiceSentName" class="text-gold-light">you</span> — you can re-record before the wedding.</p>
+      <button id="voiceReplaceBtn" type="button" class="chad-btn mt-1 flex items-center justify-center gap-2 mx-auto"><span class="material-symbols-outlined text-base">mic</span> Record a new one</button>
+    </div>
+  </div>
+</div>
+
+<div id="toggleWrittenWrap" class="text-center success-pop" style="order:3">
+  <button id="toggleWrittenBtn" type="button" class="font-label-sm text-gold/60 hover:text-gold underline underline-offset-4 py-2" style="font-size:.68rem;letter-spacing:.08em">Prefer to write a note instead? →</button>
+</div>
+
+
 <div id="sucCalendarBlock" class="success-pop bg-white/5 border border-gold/30 rounded-2xl p-5 text-center space-y-3">
   <div class="flex items-center justify-center gap-2 text-gold font-label-sm uppercase tracking-[0.2em]">
     <span class="material-symbols-outlined text-lg">event</span>
@@ -545,7 +773,9 @@ select:-webkit-autofill {
     </a>
   </div>
 </div>
+
 <div class="success-pop flex flex-col gap-3 pt-2 max-w-md mx-auto">
+
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
   <button onclick="resetForAnother()" class="chad-btn w-full">
     RSVP for another guest
@@ -556,10 +786,12 @@ select:-webkit-autofill {
 </div>
 </div>
 </div>
+
 </section>
 <p class="text-center font-serif text-xs uppercase tracking-[0.2em] opacity-50 mt-10">Charles &amp; Leticia &bull; December 31, 2026 &bull; Belize City</p>
 </div>
 </main>
+
 <!-- Mobile bottom nav -->
 <nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-4 bg-white/[0.08] backdrop-blur-2xl backdrop-saturate-150 border-t border-gold/20 shadow-[0_-10px_40px_rgba(0,0,0,0.6)]">
 <a id="navHome" href="index.html" class="btn-feedback flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:text-gold transition-colors no-underline">
@@ -571,6 +803,7 @@ select:-webkit-autofill {
 <span class="font-serif text-[10px] uppercase tracking-widest text-gold">RSVP</span>
 </a>
 </nav>
+
 <!-- CHAD NOT ON GUEST LIST MODAL -->
 <div id="notOnListModal" class="hidden fixed inset-0 z-[150] flex items-center justify-center p-4 bg-black/85 backdrop-blur-xl">
   <div class="max-w-md w-full bg-[#12121a]/95 border-2 border-amber-500/40 rounded-2xl p-6 sm:p-8 shadow-[0_0_50px_rgba(212,175,55,0.2)] text-center space-y-5 relative overflow-hidden">
@@ -594,6 +827,7 @@ select:-webkit-autofill {
     </div>
   </div>
 </div>
+
 <!-- Error toast -->
 <div id="errToast" class="hidden fixed top-4 left-1/2 -translate-x-1/2 z-[100] w-[calc(100vw-2rem)] max-w-sm">
 <div class="error-alert flex items-center justify-between w-full h-14 rounded-lg bg-[#232531]/95 backdrop-blur px-3 border border-[#d65563]/30 shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
@@ -611,6 +845,7 @@ select:-webkit-autofill {
 </button>
 </div>
 </div>
+
 <script>
 (function () {
   var CONVEX_HTTP_URL = 'https://canny-hummingbird-920.convex.site';
@@ -621,10 +856,14 @@ select:-webkit-autofill {
   var guestType = (params.get('type') || '').toLowerCase();
   var isEasy = params.get('easy') === '1';
   var isCouple = !isEasy && (guestType === 'couple' || !!spouseName);
+
   var STORAGE_KEY = 'cl_rsvps';
+
   function loadAll() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch (e) { return {}; } }
   function saveAll(d) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); } catch (e) {} }
+
   function responsesFor(id) { var d = loadAll(); return d[id] || []; }
+
   function totalAttending() {
     var d = loadAll(); var n = 0;
     Object.keys(d).forEach(function (k) {
@@ -632,17 +871,20 @@ select:-webkit-autofill {
     });
     return n;
   }
+
   function splitName(full) {
     var parts = (full || '').trim().split(/\s+/);
     if (!parts.length || !parts[0]) return { first: '', last: '' };
     return { first: parts[0], last: parts.slice(1).join(' ') };
   }
+
   // ---- Mode setup ----
   var singleFields = document.getElementById('singleFields');
   var coupleFields = document.getElementById('coupleFields');
   var coupleNote = document.getElementById('coupleNote');
   var lastNameField = document.getElementById('lastNameField');
   var optionalFields = document.getElementById('optionalFields');
+
   if (isEasy) {
     // Keep First + Last Name and attending choices always visible (user requirement)
     // Null-guarded — guestField does not exist in this layout, so guard to avoid TypeError that broke RSVP
@@ -650,6 +892,7 @@ select:-webkit-autofill {
     if (_gf) _gf.classList.add('hidden');
     // Note: lastNameField and optionalFields are intentionally NOT hidden — we need first/last + Yes/No/Ask Later hooked to backend
   }
+
   if (isCouple) {
     singleFields.classList.add('hidden');
     coupleFields.classList.remove('hidden');
@@ -661,6 +904,7 @@ select:-webkit-autofill {
     if (pB.first) document.getElementById('nameB').value = pB.first;
     if (pB.last) document.getElementById('lastNameB').value = pB.last;
   }
+
   // Pre-fill name from link
   var nameInput = document.getElementById('name');
   if (guestName) {
@@ -674,6 +918,7 @@ select:-webkit-autofill {
     greeting.classList.remove('hidden');
     greeting.querySelector('span').textContent = guestName;
   }
+
   // Carry params onto invitation links
   function withParams(path) {
     if (!params.toString()) return path;
@@ -682,6 +927,7 @@ select:-webkit-autofill {
   document.getElementById('backLink').href = withParams('index.html');
   document.getElementById('doneLink').href = withParams('index.html');
   document.getElementById('navHome').href = withParams('index.html');
+
   function updateTotals() {
     var line = document.getElementById('totalLine');
     var t = document.getElementById('sucTotal');
@@ -697,12 +943,14 @@ select:-webkit-autofill {
         setFromLocal();
       })
       .catch(function () { setFromLocal(); });
+
     function setFromLocal() {
       var n = totalAttending();
       if (line) line.textContent = n > 0 ? 'Guests confirmed so far: ' + n : '';
       if (t) t.textContent = 'Confirmed attending so far: ' + totalAttending();
     }
   }
+
   // ---- Status pill helpers ----
   function setPill(pill, value) {
     var el = pill;
@@ -726,6 +974,7 @@ select:-webkit-autofill {
       el.classList.add('hidden');
     }
   }
+
   function makeChoices(ids) {
     var radios = [ids.yes, ids.no, ids.maybe].map(function (id) {
       return document.getElementById(id);
@@ -733,6 +982,7 @@ select:-webkit-autofill {
     var guestField = document.getElementById(ids.guestField);
     var pill = document.getElementById(ids.pill);
     var cards = Array.prototype.slice.call(document.querySelectorAll('#' + ids.group + ' .att-choice'));
+
     function current() {
       for (var i = 0; i < radios.length; i++) if (radios[i].checked) return radios[i].value;
       return '';
@@ -748,20 +998,24 @@ select:-webkit-autofill {
     for (var i = 0; i < radios.length; i++) radios[i].addEventListener('change', sync);
     return { radios: radios, guestField: guestField, current: current, sync: sync };
   }
+
   var singleToggle = makeChoices({ group: 'attChoices', yes: 'att-yes', no: 'att-no', maybe: 'att-maybe', guestField: 'guestField', pill: 'statusPill' });
   var coupleA = makeChoices({ group: 'attChoicesA', yes: 'att-yes-a', no: 'att-no-a', maybe: 'att-maybe-a', guestField: 'guestFieldA', pill: 'statusPillA' });
   var coupleB = makeChoices({ group: 'attChoicesB', yes: 'att-yes-b', no: 'att-no-b', maybe: 'att-maybe-b', guestField: 'guestFieldB', pill: 'statusPillB' });
+
   // Easy plus-one: always visible — partner + you, impossible to mess up
   (function(){
     var plusWrap = document.getElementById('easyPlusOneField');
     if (plusWrap) plusWrap.classList.remove('hidden');
   })();
+
   function stepGuests(id, d) {
     var el = document.getElementById(id);
     var v = parseInt(el.value, 10) || 1;
     v = Math.min(8, Math.max(1, v + d));
     el.value = v;
   }
+
   var errTimer = null;
   window.hideError = function () {
     var t = document.getElementById('errToast');
@@ -785,7 +1039,9 @@ select:-webkit-autofill {
     if (errTimer) clearTimeout(errTimer);
     errTimer = setTimeout(window.hideError, 5000);
   }
+
   function val(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
+
   var isSubmitting = false;
   function setSubmittingState(submitting) {
     isSubmitting = !!submitting;
@@ -796,9 +1052,11 @@ select:-webkit-autofill {
     if (spinner) spinner.classList.toggle('hidden', !submitting);
     if (btnText) btnText.textContent = submitting ? 'Sealing your yes…' : 'Say Yes — With Love';
   }
+
   function postRsvp(payload, cb) {
     var controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
     var timeoutId = controller ? setTimeout(function () { controller.abort(); }, 9000) : null;
+
     fetch(CONVEX_HTTP_URL + '/api/rsvp', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -816,11 +1074,13 @@ select:-webkit-autofill {
       cb(null, { ok: true, localSaved: true });
     });
   }
+
   function overallAttendance(a, b) {
     if (a === 'yes' || b === 'yes') return 'yes';
     if (a === 'maybe' || b === 'maybe') return 'maybe';
     return 'no';
   }
+
   window.handleSubmit = function (e) {
     e.preventDefault();
     if (isSubmitting) return;
@@ -856,13 +1116,16 @@ select:-webkit-autofill {
         return;
       }
     }
+
     var confirmEl = document.getElementById('confirmCheck');
     if (confirmEl) confirmEl.checked = true;
+
     var phone = val('phone');
     var song = val('song');
     var message = val('message');
     var records = [];
     var guests = 0;
+
     if (isCouple) {
       var nameA = val('nameA');
       var lastNameA = val('lastNameA');
@@ -870,6 +1133,7 @@ select:-webkit-autofill {
       var lastNameB = val('lastNameB');
       var attA = coupleA.current();
       var attB = coupleB.current();
+
       // Smart name splitting if full name entered in one field
       if (nameA && !lastNameA && nameA.indexOf(' ') > 0) {
         var partsA = nameA.split(/\s+/);
@@ -881,6 +1145,7 @@ select:-webkit-autofill {
         nameB = partsB[0];
         lastNameB = partsB.slice(1).join(' ');
       }
+
       // Guest 2 is optional — can leave blank and RSVP for Guest 1 only, fill later
       var missing = [];
       if (!nameA) missing.push('guest 1 first name');
@@ -897,9 +1162,11 @@ select:-webkit-autofill {
       if (!nameB) nameB = '';
       if (!nameA) nameA = 'Guest 1';
       if (!nameB) nameB = 'Guest 2';
+
       var countA = attA === 'yes' ? 1 : 0;
       var countB = attB === 'yes' ? 1 : 0;
       guests = countA + countB;
+
       records.push({
         id: guestId + ':A', name: nameA, lastName: lastNameA, phone: phone,
         attendance: attA, guests: countA, song: song, message: message, at: new Date().toISOString()
@@ -908,11 +1175,15 @@ select:-webkit-autofill {
         id: guestId + ':B', name: nameB, lastName: lastNameB, phone: phone,
         attendance: attB, guests: countB, song: song, message: message, at: new Date().toISOString()
       });
+
       var attendingNames = [];
       if (attA === 'yes') attendingNames.push((nameA + ' ' + lastNameA).trim());
       if (attB === 'yes') attendingNames.push((nameB + ' ' + lastNameB).trim());
+
       var overall = overallAttendance(attA, attB);
+
       setSubmittingState(true);
+
       var d = loadAll();
       if (!d[guestId]) d[guestId] = [];
       // Couple update: if record with same id exists, update, else push
@@ -922,6 +1193,7 @@ select:-webkit-autofill {
         if (_cIdx !== -1) d[guestId][_cIdx]=rec; else d[guestId].push(rec);
       });
       saveAll(d);
+
       postRsvp({
         guestId: guestId,
         name: (nameA + ' ' + lastNameA).trim(),
@@ -936,6 +1208,7 @@ select:-webkit-autofill {
         setSubmittingState(false);
         showSuccess({ couple: true, nameA: nameA, nameB: nameB, attendance: overall, guests: guests }, records.length);
       });
+
     } else {
       var name = nameInput.value.trim();
       var lastName = val('lastName');
@@ -948,6 +1221,7 @@ select:-webkit-autofill {
       var attendance = singleToggle.current();
       var plusOneRaw = val('plusOneName');
       var plusNames = plusOneRaw ? plusOneRaw.trim() : '';
+
       if (!name) { showError('Missing information', 'Please add your name — first name is enough.'); return; }
       if (!lastName) { showError('Missing information', 'Please add your last name — required for main guest.'); return; }
       if (!attendance) { showError('Choose an option', 'Please tap Yes, No, or Ask Later.'); return; }
@@ -956,6 +1230,7 @@ select:-webkit-autofill {
       var singleGuests = yes ? 1 : 0;
       guests = isPlus ? 2 : singleGuests;
       // keep plusNames for backend display
+
       // Rule 2: same name updates instead of duplicates
       var _allCheck = loadAll();
       var _dupIdx = -1;
@@ -981,7 +1256,9 @@ select:-webkit-autofill {
           attendance: 'yes', guests: 1, plusNames: '', song: '', message: '', at: new Date().toISOString()
         });
       }
+
       setSubmittingState(true);
+
       var d = loadAll();
       if (!d[guestId]) d[guestId] = [];
       // push both you + plus-one so local count = 2 when plus
@@ -996,6 +1273,7 @@ select:-webkit-autofill {
         if (_sIdx !== -1) d[guestId][_sIdx]=rec; else d[guestId].push(rec);
       });
       saveAll(d);
+
       postRsvp({
         guestId: guestId,
         name: (name + (lastName ? ' ' + lastName : '')).trim(),
@@ -1016,6 +1294,7 @@ select:-webkit-autofill {
       });
     }
   };
+
   function downloadIcs() {
     var icsData = [
       'BEGIN:VCALENDAR',
@@ -1045,6 +1324,7 @@ select:-webkit-autofill {
       'END:VEVENT',
       'END:VCALENDAR'
     ].join('\r\n');
+
     var blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
     var url = URL.createObjectURL(blob);
     var a = document.createElement('a');
@@ -1056,6 +1336,7 @@ select:-webkit-autofill {
     setTimeout(function () { URL.revokeObjectURL(url); }, 500);
   }
   window.downloadIcs = downloadIcs;
+
   function showSuccess(info, count) {
     document.getElementById('rsvpForm').classList.add('hidden');
     document.getElementById('success').classList.remove('hidden');
@@ -1063,6 +1344,7 @@ select:-webkit-autofill {
     document.getElementById('sucName').textContent = info.couple ? (info.nameA + ' & ' + info.nameB) : info.name;
     var summary = document.getElementById('sucSummary');
     var calBlock = document.getElementById('sucCalendarBlock');
+
     if (info.attendance === 'yes') {
       if (calBlock) calBlock.classList.remove('hidden');
       summary.textContent = info.couple
@@ -1080,7 +1362,12 @@ select:-webkit-autofill {
       : 'Your RSVP has been received';
     updateTotals();
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    try {
+      var __voiceName = info.couple ? (info.nameA || guestName || 'Guest') : (info.name || guestName || 'Guest');
+      if (typeof window._voiceInitCard === 'function') window._voiceInitCard(__voiceName);
+    } catch(e){}
   }
+
   function fetchPriorStatus() {
     if (!guestId || guestId.indexOf('guest_') === 0) return;
     fetch(CONVEX_HTTP_URL + '/api/rsvp/status?guestId=' + encodeURIComponent(guestId))
@@ -1100,31 +1387,465 @@ select:-webkit-autofill {
       })
       .catch(function () {});
   }
+
   window.savePostLove = function () {
-    var song = (document.getElementById('postSong') ? document.getElementById('postSong').value.trim() : '');
     var msg = (document.getElementById('postMessage') ? document.getElementById('postMessage').value.trim() : '');
-    if (!song && !msg) { showError('Add something', 'Drop a song or a little love note — even one word counts.'); return; }
+    if (!msg) { showError('Add something', 'Write a little love note — even one word counts.'); return; }
     var btn = document.getElementById('postLoveBtn');
     var ok = document.getElementById('postLoveOk');
     if (btn) { btn.disabled = true; btn.innerHTML = '<span class="material-symbols-outlined text-base animate-spin">progress_activity</span> Sending…'; }
-    // also mirror into hidden fields for local storage consistency
-    var sEl = document.getElementById('song'); if (sEl) sEl.value = song;
     var mEl = document.getElementById('message'); if (mEl) mEl.value = msg;
-    postRsvp({ guestId: guestId, name: guestName || 'Guest', attendance: 'yes', guests: 0, song: song, message: msg, postLove: true }, function(err){
+    postRsvp({ guestId: guestId, name: guestName || 'Guest', attendance: 'yes', guests: 0, song: '', message: msg, postLove: true }, function(err){
       if (btn) { btn.disabled = false; btn.innerHTML = '<span class="material-symbols-outlined text-base">send</span> Send my love'; }
       if (ok) { ok.classList.remove('hidden'); setTimeout(function(){ ok.classList.add('hidden'); }, 3500); }
-      // also save locally
       try {
-        var d = loadAll(); if (!d[guestId]) d[guestId]=[]; d[guestId].push({ song: song, message: msg, at: new Date().toISOString(), postLove: true }); saveAll(d);
+        var d = loadAll(); if (!d[guestId]) d[guestId]=[]; d[guestId].push({ message: msg, at: new Date().toISOString(), postLove: true }); saveAll(d);
       } catch(e){}
     });
   };
+
+  /* ==========================================================
+     VOICE NOTE — Opus → Convex File Storage, 60s max (Opus only)
+     ========================================================== */
+  var VOICE_MAX_SEC = 60;
+  var WEDDING_ISO_VOICE = '2026-12-31T18:00:00-06:00';
+  var voiceEls = {
+    card: document.getElementById('voiceNoteCard'),
+    fromLine: document.getElementById('voiceFromLine'),
+    fromName: document.getElementById('voiceFromName'),
+    unsupported: document.getElementById('voiceUnsupported'),
+    core: document.getElementById('voiceCore'),
+    ringFg: document.getElementById('voiceRingFg'),
+    recordBtn: document.getElementById('voiceRecordBtn'),
+    timer: document.getElementById('voiceTimer'),
+    timerSub: document.getElementById('voiceTimerSub'),
+    bars: document.getElementById('voiceBars'),
+    progressFill: document.getElementById('voiceProgressFill'),
+    progressLabel: document.getElementById('voiceProgressLabel'),
+    err: document.getElementById('voiceErr'),
+    stopBtn: document.getElementById('voiceStopBtn'),
+    rerecordBtn: document.getElementById('voiceRerecordBtn'),
+    sendBtn: document.getElementById('voiceSendBtn'),
+    previewWrap: document.getElementById('voicePreviewWrap'),
+    previewAudio: document.getElementById('voicePreviewAudio'),
+    previewDur: document.getElementById('voicePreviewDur'),
+    sent: document.getElementById('voiceSent'),
+    sentName: document.getElementById('voiceSentName'),
+    replaceBtn: document.getElementById('voiceReplaceBtn')
+  };
+  var voiceState = {
+    stream: null,
+    recorder: null,
+    chunks: [],
+    mime: '',
+    blob: null,
+    durationSec: 0,
+    startMs: 0,
+    timerId: null,
+    animId: null,
+    ctx: null,
+    analyser: null,
+    isRecording: false,
+    isSupported: false,
+    sentOnce: false
+  };
+
+  function voicePickMime() {
+    var prefs = ['audio/webm;codecs=opus','audio/ogg;codecs=opus','audio/webm'];
+    if (typeof MediaRecorder === 'undefined' || !MediaRecorder.isTypeSupported) return '';
+    for (var i=0;i<prefs.length;i++) { try { if (MediaRecorder.isTypeSupported(prefs[i])) return prefs[i]; } catch(e){} }
+    return '';
+  }
+  function voiceFmt(sec) {
+    sec = Math.max(0, Math.floor(sec));
+    var m = Math.floor(sec/60), s = sec%60;
+    return m + ':' + (s<10?'0'+s:s);
+  }
+  function voiceSetRing(p) {
+    var el = voiceEls.ringFg;
+    if (!el) return;
+    var circ = 2 * Math.PI * 44; // r=44
+    var off = circ * (1 - Math.max(0, Math.min(1, p)));
+    el.style.strokeDasharray = circ;
+    el.style.strokeDashoffset = off;
+  }
+  function voiceShowErr(msg) {
+    if (!voiceEls.err) return;
+    voiceEls.err.textContent = msg;
+    voiceEls.err.classList.remove('hidden');
+    setTimeout(function(){ voiceEls.err.classList.add('hidden'); }, 4200);
+  }
+  function voiceHideErr(){ if(voiceEls.err) voiceEls.err.classList.add('hidden'); }
+  function voiceUpdateBarsFake() {
+    if (!voiceEls.bars) return;
+    var bars = voiceEls.bars.querySelectorAll('i');
+    if (voiceState.isRecording && voiceState.analyser) {
+      var data = new Uint8Array(voiceState.analyser.frequencyBinCount);
+      voiceState.analyser.getByteFrequencyData(data);
+      for (var i=0;i<bars.length;i++) {
+        var idx = Math.floor(i * data.length / bars.length);
+        var v = data[idx] || 0;
+        var h = 6 + (v / 255) * 28;
+        if (i%3===0) h *= 0.7;
+        bars[i].style.height = Math.round(h) + 'px';
+        bars[i].style.opacity = 0.7 + (v/255)*0.3;
+      }
+    } else if (voiceState.isRecording) {
+      for (var j=0;j<bars.length;j++) {
+        var rnd = 6 + Math.random()*18 + Math.sin(Date.now()/120 + j)*6;
+        bars[j].style.height = Math.round(rnd)+'px';
+      }
+    } else {
+      var idleH = [6,10,6,14,8,18,10,22,8,14,6,10,6,12,7,16,9,6];
+      for (var k=0;k<bars.length;k++) bars[k].style.height = (idleH[k%idleH.length]||8)+'px';
+      for (var k2=0;k2<bars.length;k2++) bars[k2].style.opacity = 0.55;
+    }
+    if (voiceState.isRecording) {
+      voiceState.animId = requestAnimationFrame(voiceUpdateBarsFake);
+    }
+  }
+  function voiceResetBarsIdle(){
+    if (!voiceEls.bars) return;
+    voiceEls.bars.classList.add('idle');
+    voiceUpdateBarsFake();
+  }
+  function voiceSetUiRecording(isRec) {
+    voiceState.isRecording = isRec;
+    if (voiceEls.recordBtn) {
+      voiceEls.recordBtn.disabled = false;
+      voiceEls.recordBtn.classList.toggle('rec', isRec);
+      voiceEls.recordBtn.setAttribute('aria-label', isRec ? 'Tap to stop recording' : 'Tap to record voice note');
+      var ic = voiceEls.recordBtn.querySelector('.mic-icon');
+      if (ic) { ic.textContent = isRec ? 'stop' : 'mic'; ic.style.fontVariationSettings = isRec ? "'FILL' 1" : "'FILL' 0"; }
+    }
+    if (voiceEls.timerSub) voiceEls.timerSub.classList.toggle('hidden', !isRec);
+    if (voiceEls.ringFg) voiceEls.ringFg.classList.toggle('rec', isRec);
+    if (voiceEls.bars) voiceEls.bars.classList.toggle('idle', !isRec);
+    if (voiceEls.progressFill) voiceEls.progressFill.classList.toggle('rec', isRec);
+    if (voiceEls.progressLabel) voiceEls.progressLabel.textContent = isRec ? 'Recording — tap mic to stop' : 'Tap the mic — 60s';
+    // keep separate Stop button hidden — single mic does both (no hold needed)
+    if (voiceEls.stopBtn) voiceEls.stopBtn.classList.add('hidden');
+    if (isRec) {
+      voiceUpdateBarsFake();
+    } else {
+      if (voiceState.animId) { cancelAnimationFrame(voiceState.animId); voiceState.animId=null; }
+      voiceResetBarsIdle();
+    }
+  }
+  function voiceTick() {
+    var elapsed = (Date.now() - voiceState.startMs)/1000;
+    if (elapsed > VOICE_MAX_SEC) elapsed = VOICE_MAX_SEC;
+    if (voiceEls.timer) voiceEls.timer.textContent = voiceFmt(elapsed) + ' / 1:00';
+    var pct = Math.max(0, Math.min(1, elapsed / VOICE_MAX_SEC));
+    voiceSetRing(pct);
+    if (voiceEls.progressFill) voiceEls.progressFill.style.width = (pct*100) + '%';
+    if (voiceEls.progressLabel && voiceState.isRecording) voiceEls.progressLabel.textContent = 'Recording — ' + voiceFmt(elapsed) + ' / 1:00 — tap to stop';
+    if (elapsed >= VOICE_MAX_SEC) {
+      voiceStopRecording();
+    }
+  }
+  function voiceStopTracks() {
+    if (voiceState.stream) {
+      try { voiceState.stream.getTracks().forEach(function(t){ t.stop(); }); } catch(e){}
+      voiceState.stream = null;
+    }
+    if (voiceState.ctx) {
+      try { voiceState.ctx.close(); } catch(e){}
+      voiceState.ctx = null; voiceState.analyser = null;
+    }
+  }
+  function voiceStopRecording() {
+    if (!voiceState.isRecording) return;
+    voiceState.isRecording = false;
+    if (voiceState.timerId) { clearInterval(voiceState.timerId); voiceState.timerId=null; }
+    if (voiceState.animId) { cancelAnimationFrame(voiceState.animId); voiceState.animId=null; }
+    try { if (voiceState.recorder && voiceState.recorder.state !== 'inactive') voiceState.recorder.stop(); } catch(e){}
+    voiceSetUiRecording(false);
+  }
+  function voiceCleanupPreview() {
+    if (voiceEls.previewAudio) {
+      try { voiceEls.previewAudio.pause(); } catch(e){}
+      if (voiceEls.previewAudio.src) {
+        try { URL.revokeObjectURL(voiceEls.previewAudio.src); } catch(e){}
+        voiceEls.previewAudio.removeAttribute('src');
+        voiceEls.previewAudio.load();
+      }
+    }
+    if (voiceState.blob) {
+      // keep blob for send until re-record
+    }
+  }
+  function voiceShowPreview() {
+    if (!voiceState.blob || !voiceEls.previewAudio) return;
+    var url = URL.createObjectURL(voiceState.blob);
+    voiceEls.previewAudio.src = url;
+    voiceEls.previewAudio.load();
+    if (voiceEls.previewDur) voiceEls.previewDur.textContent = voiceFmt(voiceState.durationSec);
+    if (voiceEls.previewWrap) voiceEls.previewWrap.classList.remove('hidden');
+    if (voiceEls.rerecordBtn) voiceEls.rerecordBtn.classList.remove('hidden');
+    if (voiceEls.sendBtn) voiceEls.sendBtn.classList.remove('hidden');
+    if (voiceEls.recordBtn) { voiceEls.recordBtn.disabled = true; var ic2=voiceEls.recordBtn.querySelector('.mic-icon'); if(ic2){ic2.textContent='mic';} }
+    if (voiceEls.progressFill) { voiceEls.progressFill.style.width = (Math.max(0,Math.min(1, voiceState.durationSec/VOICE_MAX_SEC))*100)+'%'; voiceEls.progressFill.classList.remove('rec'); }
+    if (voiceEls.progressLabel) voiceEls.progressLabel.textContent = 'Preview — ' + voiceFmt(voiceState.durationSec) + ' — tap Send';
+    voiceHideErr();
+  }
+  function voiceHidePreview() {
+    if (voiceEls.previewWrap) voiceEls.previewWrap.classList.add('hidden');
+    if (voiceEls.rerecordBtn) voiceEls.rerecordBtn.classList.add('hidden');
+    if (voiceEls.sendBtn) voiceEls.sendBtn.classList.add('hidden');
+    if (voiceEls.recordBtn) { voiceEls.recordBtn.disabled = false; var ic3=voiceEls.recordBtn.querySelector('.mic-icon'); if(ic3){ic3.textContent='mic';} }
+    voiceCleanupPreview();
+    voiceState.blob = null;
+    voiceState.durationSec = 0;
+    voiceState.mime = voicePickMime() || voiceState.mime;
+    if (voiceEls.timer) voiceEls.timer.textContent = '0:00 / 1:00';
+    voiceSetRing(0);
+    if (voiceEls.progressFill) { voiceEls.progressFill.style.width = '0%'; voiceEls.progressFill.classList.remove('rec'); }
+    if (voiceEls.progressLabel) voiceEls.progressLabel.textContent = 'Tap the mic — 60s';
+    voiceResetBarsIdle();
+  }
+  function voiceEnterSent(nameForSent) {
+    if (voiceEls.core) voiceEls.core.classList.add('hidden');
+    if (voiceEls.sent) voiceEls.sent.classList.remove('hidden');
+    if (voiceEls.sentName) voiceEls.sentName.textContent = nameForSent || 'you';
+    if (voiceEls.recordBtn) voiceEls.recordBtn.disabled = true;
+    if (voiceEls.progressFill) { voiceEls.progressFill.style.width = '100%'; voiceEls.progressFill.classList.remove('rec'); }
+    if (voiceEls.progressLabel) voiceEls.progressLabel.textContent = 'Sent — 60s max';
+    try { localStorage.setItem('cl_voice_sent_'+guestId, String(Date.now())); } catch(e){}
+  }
+  function voiceExitSent() {
+    if (voiceEls.sent) voiceEls.sent.classList.add('hidden');
+    if (voiceEls.core) voiceEls.core.classList.remove('hidden');
+    voiceHidePreview();
+    voiceSetRing(0);
+    if (voiceEls.progressFill) { voiceEls.progressFill.style.width = '0%'; voiceEls.progressFill.classList.remove('rec'); }
+    if (voiceEls.progressLabel) voiceEls.progressLabel.textContent = 'Tap the mic — 60s';
+    if (voiceEls.timer) voiceEls.timer.textContent = '0:00 / 1:00';
+    if (voiceEls.recordBtn) { voiceEls.recordBtn.disabled = false; var ic4=voiceEls.recordBtn.querySelector('.mic-icon'); if(ic4){ic4.textContent='mic';} }
+    voiceHideErr();
+  }
+  function voiceBindOnce() {
+    if (voiceEls.recordBtn && !voiceEls.recordBtn._bound) {
+      voiceEls.recordBtn._bound = true;
+      voiceEls.recordBtn.addEventListener('click', function(){
+        if (voiceState.isRecording) voiceStopRecording();
+        else voiceStartRecording();
+      });
+    }
+    // separate Stop button kept hidden — hero mic does both (no hold)
+    if (voiceEls.stopBtn && !voiceEls.stopBtn._bound) {
+      voiceEls.stopBtn._bound = true;
+      voiceEls.stopBtn.addEventListener('click', voiceStopRecording);
+      voiceEls.stopBtn.classList.add('hidden');
+    }
+    if (voiceEls.rerecordBtn && !voiceEls.rerecordBtn._bound) {
+      voiceEls.rerecordBtn._bound = true;
+      voiceEls.rerecordBtn.addEventListener('click', function(){ voiceHidePreview(); voiceHideErr(); });
+    }
+    if (voiceEls.replaceBtn && !voiceEls.replaceBtn._bound) {
+      voiceEls.replaceBtn._bound = true;
+      voiceEls.replaceBtn.addEventListener('click', function(){ voiceExitSent(); });
+    }
+    if (voiceEls.sendBtn && !voiceEls.sendBtn._bound) {
+      voiceEls.sendBtn._bound = true;
+      voiceEls.sendBtn.addEventListener('click', voiceSend);
+    }
+  }
+  function voiceInitCard(triggerName) {
+    var card = voiceEls.card;
+    if (!card) return;
+    var from = triggerName || guestName || (document.getElementById('name')?document.getElementById('name').value.trim():'') || (document.getElementById('nameA')?document.getElementById('nameA').value.trim():'') || 'Guest';
+    if (voiceEls.fromName) voiceEls.fromName.textContent = from;
+    if (voiceEls.fromLine) voiceEls.fromLine.classList.remove('hidden');
+    // check support
+    var mime = voicePickMime();
+    voiceState.mime = mime;
+    voiceState.isSupported = !!mime;
+    if (!mime) {
+      if (voiceEls.unsupported) voiceEls.unsupported.classList.remove('hidden');
+      if (voiceEls.core) voiceEls.core.classList.add('hidden');
+      return;
+    }
+    if (voiceEls.unsupported) voiceEls.unsupported.classList.add('hidden');
+    if (voiceEls.core) voiceEls.core.classList.remove('hidden');
+    // check if already sent
+    try {
+      var already = localStorage.getItem('cl_voice_sent_'+guestId);
+      // also check server if we want (silent)
+      fetch(CONVEX_HTTP_URL + '/api/voice/mine?guestId=' + encodeURIComponent(guestId))
+        .then(function(r){ return r.json().catch(function(){return null}); })
+        .then(function(data){
+          if (data && data.storageId) {
+            voiceState.sentOnce = true;
+            voiceEnterSent(from);
+          }
+        }).catch(function(){});
+      if (already && !voiceState.sentOnce) {
+        // don't auto-show sent until confirmed, but hint
+      }
+    } catch(e){}
+    voiceSetRing(0);
+    voiceResetBarsIdle();
+    voiceBindOnce();
+    if (voiceEls.timer) voiceEls.timer.textContent = '0:00 / 1:00';
+  }
+  function voiceStartRecording() {
+    voiceHideErr();
+    var mime = voicePickMime();
+    if (!mime) {
+      voiceShowErr('Voice notes need Opus — please open in Chrome or Edge.');
+      if (voiceEls.unsupported) voiceEls.unsupported.classList.remove('hidden');
+      if (voiceEls.core) voiceEls.core.classList.add('hidden');
+      return;
+    }
+    voiceState.mime = mime;
+    voiceHidePreview();
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      voiceShowErr('Microphone not available in this browser.');
+      return;
+    }
+    // guard: already recording?
+    if (voiceState.isRecording) return;
+    navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1, noiseSuppression: true, echoCancellation: true, autoGainControl: true } })
+      .then(function(stream){
+        voiceState.stream = stream;
+        // analyser for bars
+        try {
+          var AC = window.AudioContext || window.webkitAudioContext;
+          if (AC) {
+            voiceState.ctx = new AC();
+            var src = voiceState.ctx.createMediaStreamSource(stream);
+            voiceState.analyser = voiceState.ctx.createAnalyser();
+            voiceState.analyser.fftSize = 256;
+            voiceState.analyser.smoothingTimeConstant = 0.75;
+            src.connect(voiceState.analyser);
+          }
+        } catch(e){ voiceState.ctx=null; voiceState.analyser=null; }
+        voiceState.chunks = [];
+        var rec;
+        try { rec = new MediaRecorder(stream, { mimeType: mime }); }
+        catch(e){ try { rec = new MediaRecorder(stream); voiceState.mime = rec.mimeType || mime; } catch(e2){ voiceShowErr('Could not start recorder — try Chrome.'); voiceStopTracks(); return; } }
+        voiceState.recorder = rec;
+        rec.ondataavailable = function(ev){ if (ev.data && ev.data.size>0) voiceState.chunks.push(ev.data); };
+        rec.onstop = function(){
+          var elapsed = (Date.now() - voiceState.startMs)/1000;
+          var dur = Math.min(VOICE_MAX_SEC, Math.max(1, Math.round(elapsed)));
+          voiceState.durationSec = dur;
+          var blobType = voiceState.mime || mime;
+          var blob = new Blob(voiceState.chunks, { type: blobType });
+          voiceStopTracks();
+          if (blob.size < 800) {
+            voiceShowErr('That was too short — hold the mic and try again.');
+            voiceHidePreview();
+            return;
+          }
+          if (blob.size > 2 * 1024 * 1024) {
+            voiceShowErr('That note is a bit large — try a shorter one (max 1 min).');
+            return;
+          }
+          voiceState.blob = blob;
+          voiceShowPreview();
+          if (voiceState.timerId) { clearInterval(voiceState.timerId); voiceState.timerId=null; }
+          if (voiceState.animId) { cancelAnimationFrame(voiceState.animId); voiceState.animId=null; }
+        };
+        rec.onerror = function(){ voiceShowErr('Recording error — please try again.'); voiceSetUiRecording(false); voiceStopTracks(); };
+        try { rec.start(100); } catch(e){ voiceShowErr('Could not start — please allow microphone.'); voiceStopTracks(); return; }
+        voiceState.startMs = Date.now();
+        voiceSetUiRecording(true);
+        voiceState.timerId = setInterval(voiceTick, 120);
+        voiceTick();
+      })
+      .catch(function(err){
+        var msg = 'Microphone blocked — please allow access and tap again.';
+        if (err && err.name === 'NotAllowedError') msg = 'Microphone permission denied — allow it in your browser settings, then tap again.';
+        else if (err && err.name === 'NotFoundError') msg = 'No microphone found on this device.';
+        voiceShowErr(msg);
+        voiceSetUiRecording(false);
+      });
+  }
+  function voiceSend() {
+    if (!voiceState.blob) { voiceShowErr('Record something first — tap the mic.'); return; }
+    var dur = voiceState.durationSec || VOICE_MAX_SEC;
+    if (dur < 1 || dur > 62) { voiceShowErr('Please record 1–60 seconds.'); return; }
+    var btn = voiceEls.sendBtn;
+    if (btn) { btn.disabled = true; btn.innerHTML = '<span class="material-symbols-outlined text-base animate-spin">progress_activity</span> Sending…'; }
+    var mimeToSend = voiceState.blob.type || voiceState.mime || 'audio/webm;codecs=opus';
+    // Opus-only guard
+    var low = mimeToSend.toLowerCase();
+    if (!(low.startsWith('audio/webm') || low.startsWith('audio/ogg'))) {
+      voiceShowErr('Please record as Opus — try Chrome.');
+      if (btn) { btn.disabled=false; btn.innerHTML = '<span class="material-symbols-outlined text-base">send</span> Send my voice'; }
+      return;
+    }
+    var guestDisplayName = (voiceEls.fromName ? voiceEls.fromName.textContent : '') || guestName || 'Guest';
+    var lastNameVal = '';
+    try {
+      var lnEl = document.getElementById('lastName');
+      if (lnEl && lnEl.value) lastNameVal = lnEl.value.trim();
+      else {
+        var lnA = document.getElementById('lastNameA');
+        if (lnA && lnA.value) lastNameVal = lnA.value.trim();
+      }
+    } catch(e){}
+    // 1) get upload url
+    fetch(CONVEX_HTTP_URL + '/api/voice/upload-url', { method: 'POST' })
+      .then(function(r){ return r.json().catch(function(){return {};}).then(function(j){ if(!r.ok) throw new Error(j.error||'Could not get upload URL'); return j; }); })
+      .then(function(j){
+        var uploadUrl = j.uploadUrl;
+        if (!uploadUrl) throw new Error('No upload URL');
+        return fetch(uploadUrl, { method: 'POST', headers: { 'Content-Type': mimeToSend }, body: voiceState.blob })
+          .then(function(res){
+            return res.json().catch(function(){return {};}).then(function(j2){
+              if (!res.ok) throw new Error(j2.error||'Upload failed');
+              return j2.storageId || j2.storage_id || j2.id;
+            });
+          });
+      })
+      .then(function(storageId){
+        if (!storageId) throw new Error('Upload failed — no file saved');
+        return fetch(CONVEX_HTTP_URL + '/api/voice/save', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ guestId: guestId, guestName: guestDisplayName, lastName: lastNameVal || undefined, storageId: storageId, mimeType: mimeToSend, durationSec: dur })
+        }).then(function(r){ return r.json().catch(function(){return {};}).then(function(j){ if(!r.ok) throw new Error(j.error||'Could not save'); return j; }); });
+      })
+      .then(function(){
+        if (btn) { btn.disabled=false; btn.innerHTML = '<span class="material-symbols-outlined text-base">send</span> Send my voice'; }
+        // success — show sent, keep blob until re-record
+        voiceEnterSent(guestDisplayName);
+        voiceHideErr();
+        // revoke preview url but keep blob for potential re-send? no need
+        // clean preview audio
+        try { if (voiceEls.previewAudio && voiceEls.previewAudio.src) URL.revokeObjectURL(voiceEls.previewAudio.src); } catch(e){}
+      })
+      .catch(function(err){
+        if (btn) { btn.disabled=false; btn.innerHTML = '<span class="material-symbols-outlined text-base">send</span> Send my voice'; }
+        voiceShowErr(err && err.message ? err.message : 'Could not send — check your connection and try again.');
+      });
+  }
+  // Toggle written extra (song stays open, message is optional)
+  (function(){
+    var tBtn = document.getElementById('toggleWrittenBtn');
+    var extra = document.getElementById('writtenExtra');
+    if (tBtn && extra) {
+      tBtn.addEventListener('click', function(){
+        extra.classList.toggle('hidden');
+        tBtn.textContent = extra.classList.contains('hidden') ? 'Prefer to write a note instead? →' : 'Hide writing — back to voice →';
+        if (!extra.classList.contains('hidden')) { var ta=document.getElementById('postMessage'); if(ta) ta.focus(); }
+      });
+    }
+  })();
+  // expose for showSuccess hook and debugging
+  window._voiceInitCard = voiceInitCard;
+  window._voiceStart = voiceStartRecording;
+  window._voiceSend = voiceSend;
+
   window.resetForAnother = function () {
     setSubmittingState(false);
     document.getElementById('rsvpForm').classList.remove('hidden');
     document.getElementById('success').classList.add('hidden');
     var hd2 = document.getElementById('rsvpHeading'); if (hd2) hd2.classList.remove('hidden');
-    ['name', 'lastName', 'nameA', 'lastNameA', 'nameB', 'lastNameB', 'phone', 'plusOneName', 'plusNames', 'song', 'message', 'postSong', 'postMessage'].forEach(function (id) {
+    ['name', 'lastName', 'nameA', 'lastNameA', 'nameB', 'lastNameB', 'phone', 'plusOneName', 'plusNames', 'song', 'message', 'postMessage'].forEach(function (id) {
       var el = document.getElementById(id);
       if (el) el.value = '';
     });
@@ -1137,8 +1858,31 @@ select:-webkit-autofill {
     });
     window.hideError();
     document.getElementById('greeting').classList.add('hidden');
+    // reset voice note state for next guest
+    try {
+      if (voiceEls.sent) voiceEls.sent.classList.add('hidden');
+      if (voiceEls.core) voiceEls.core.classList.remove('hidden');
+      if (voiceEls.unsupported) voiceEls.unsupported.classList.add('hidden');
+      voiceHidePreview();
+      voiceHideErr();
+      voiceSetRing(0);
+      if (voiceEls.timer) voiceEls.timer.textContent = '0:00 / 1:00';
+      if (voiceEls.timerSub) voiceEls.timerSub.classList.add('hidden');
+      voiceState.sentOnce = false;
+      voiceState.blob = null;
+      voiceState.durationSec = 0;
+      voiceState.chunks = [];
+      voiceStopTracks();
+      if (voiceEls.recordBtn) { voiceEls.recordBtn.disabled = false; voiceEls.recordBtn.classList.remove('rec'); }
+      if (voiceEls.previewAudio) { try { voiceEls.previewAudio.pause(); } catch(e){} }
+      var we2 = document.getElementById('writtenExtra');
+      if (we2) we2.classList.add('hidden');
+      var tb2 = document.getElementById('toggleWrittenBtn');
+      if (tb2) tb2.textContent = 'Prefer to write a note instead? →';
+    } catch(e){}
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
   // Preview: ?showSuccess=1 shows the post-RSVP page instantly
   if (params.get('showSuccess') === '1') {
     setTimeout(function(){ showSuccess({ couple: false, name: (guestName||'Elvis'), attendance: 'yes', guests: 1 }, 1); }, 120);

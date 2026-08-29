@@ -3,9 +3,92 @@
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
 <title>Charles &amp; Leticia — The Invitation</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;family=Great+Vibes&amp;display=swap" rel="stylesheet"/>
+<style>html{visibility:hidden;opacity:0}html.ready{visibility:visible;opacity:1;transition:opacity .28s ease}html.ready body{opacity:1}</style>
+<script>!function(){var d=document.documentElement;function r(){d.classList.add('ready')}if(d.classList.contains('ready'))return;document.addEventListener('DOMContentLoaded',r);window.addEventListener('load',r);setTimeout(r,1400)}();</script>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;family=Cinzel+Decorative:wght@400;700&amp;family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&amp;family=Allura&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Great+Vibes&amp;family=Alex+Brush&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" onload="this.rel='stylesheet'"><noscript><link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;family=Cinzel+Decorative:wght@400;700&amp;family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&amp;family=Allura&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Great+Vibes&amp;family=Alex+Brush&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"></noscript>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+@font-face {
+  font-family: 'Butterline';
+  src: url('Butterline.woff2') format('woff2'),
+       url('Butterline.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Rapodhite';
+  src: url('Rapodhite.woff2') format('woff2'),
+       url('Rapodhite.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Bethoughter';
+  src: url('Bethoughter.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'The Feeling';
+  src: url('TheFeeling.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Brother Signature';
+  src: url('BrotherSignature.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Angel Wedding';
+  src: url('AngelWedding.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Wedding Party';
+  src: url('WeddingParty.ttf') format('truetype'),
+       url('WeddingParty.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+/* Wedding Party — bold celebration script exclusively for main hero names (Charles & Leticia) */
+#heroNames, .intro-hero-names, .hero-name-font {
+  font-family: 'Wedding Party', 'Brother Signature', cursive !important;
+  font-weight: 400 !important;
+}
+#heroNames .text-gold { font-family: 'Wedding Party', cursive !important; }
+
+/* Butterline & The Feeling — clean, crystal-clear, elegant script for all quotes, subheadings, and phrases */
+.font-corinthia, .font-monte-carlo, .font-script-accent, .font-quote-script, .quote-script {
+  font-family: 'Butterline', 'The Feeling', 'Angel Wedding', cursive !important;
+  font-weight: 400;
+}
+#heroHead h2 {
+  font-family: 'Butterline', 'The Feeling', 'Angel Wedding', cursive !important;
+  font-weight: 400;
+}
+/* hero 10-sec intro — photo first, driven by GSAP; keep photo visible under overlay */
+#mainPhotoCard { will-change: opacity; }
+#mainPhotoCard img { will-change: transform; }
+#heroHead h2.hero-intro, #heroNames.hero-intro, #saveDateCard.hero-intro, #countdown-block.hero-intro { will-change: transform, opacity; }
+</style>
+<link rel="preload" href="https://cdn.tailwindcss.com?plugins=forms,container-queries" as="script">
+<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" as="script">
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script id="tailwind-config">
@@ -14,55 +97,55 @@
         theme: {
           extend: {
             "colors": {
-                    "gold": { "DEFAULT": "#D4AF37", "light": "#F5D76E", "dark": "#A8862B" },
+                    "gold": { "DEFAULT": "#c49948", "light": "#fce4a0", "dark": "#7d541b" },
                     "ink": "#0a0a0a",
                     "on-error": "#ffffff",
-                    "primary": "#D4AF37",
+                    "primary": "#c49948",
                     "inverse-on-surface": "#0a0a0a",
                     "on-tertiary": "#0a0a0a",
                     "on-error-container": "#ffb4ab",
                     "outline": "#5c5c5c",
                     "on-secondary": "#0a0a0a",
                     "surface-container-low": "#0f0f0f",
-                    "on-surface-variant": "#b9b9b9",
-                    "primary-fixed-dim": "#4a3b14",
+                    "on-surface-variant": "#FFF8E6",
+                    "primary-fixed-dim": "#5e3c0c",
                     "background": "#0a0a0a",
-                    "on-primary-fixed": "#f5e3a3",
-                    "on-primary-container": "#f5e3a3",
-                    "secondary": "#C9A84C",
-                    "tertiary": "#E8CE7A",
-                    "inverse-surface": "#f5f5f5",
-                    "inverse-primary": "#D4AF37",
+                    "on-primary-fixed": "#fce4a0",
+                    "on-primary-container": "#fce4a0",
+                    "secondary": "#c49948",
+                    "tertiary": "#fce4a0",
+                    "inverse-surface": "#FFF8E6",
+                    "inverse-primary": "#c49948",
                     "surface-dim": "#0c0c0c",
-                    "on-tertiary-fixed": "#f5e3a3",
-                    "on-secondary-fixed": "#f0d98c",
+                    "on-tertiary-fixed": "#fce4a0",
+                    "on-secondary-fixed": "#fce4a0",
                     "surface-container-high": "#1a1a1a",
                     "secondary-container": "#3b2f10",
                     "primary-fixed": "#2a220c",
-                    "surface-tint": "#D4AF37",
+                    "surface-tint": "#c49948",
                     "tertiary-fixed": "#2a220c",
                     "surface": "#121212",
                     "outline-variant": "#2e2e2e",
-                    "primary-container": "#3b2f10",
-                    "on-tertiary-container": "#f5e3a3",
+                    "primary-container": "#5e3c0c",
+                    "on-tertiary-container": "#fce4a0",
                     "error-container": "#3b0a0a",
                     "surface-variant": "#1c1c1c",
-                    "on-surface": "#f5f5f5",
-                    "tertiary-fixed-dim": "#4a3b14",
-                    "on-background": "#f5f5f5",
+                    "on-surface": "#FFF8E6",
+                    "tertiary-fixed-dim": "#5e3c0c",
+                    "on-background": "#FFF8E6",
                     "tertiary-container": "#2a220c",
                     "error": "#ba1a1a",
                     "surface-bright": "#2a2a2a",
                     "surface-container-lowest": "#050505",
                     "secondary-fixed": "#2a220c",
-                    "on-tertiary-fixed-variant": "#e8ce7a",
-                    "on-primary-fixed-variant": "#f5e3a3",
+                    "on-tertiary-fixed-variant": "#fce4a0",
+                    "on-primary-fixed-variant": "#fce4a0",
                     "surface-container-highest": "#222222",
-                    "on-secondary-container": "#f0d98c",
+                    "on-secondary-container": "#fce4a0",
                     "on-primary": "#0a0a0a",
-                    "on-secondary-fixed-variant": "#e8ce7a",
+                    "on-secondary-fixed-variant": "#fce4a0",
                     "surface-container": "#151515",
-                    "secondary-fixed-dim": "#4a3b14"
+                    "secondary-fixed-dim": "#5e3c0c"
             },
             "borderRadius": {
                     "DEFAULT": "0.25rem",
@@ -78,24 +161,24 @@
                     "element-gap": "1rem"
             },
             "fontFamily": {
-                    "headline-lg": ["Noto Serif"],
-                    "script-accent": ["Great Vibes", "cursive"],
-                    "headline-xl": ["Noto Serif"],
-                    "headline-md": ["Noto Serif"],
-                    "body-md": ["Be Vietnam Pro"],
-                    "label-sm": ["Be Vietnam Pro"],
-                    "body-lg": ["Be Vietnam Pro"],
-                    "serif": ["Noto Serif", "Georgia", "serif"],
+                    "headline-lg": ["Rapodhite", "Playfair Display", "serif"],
+                    "script-accent": ["Wedding Party", "Brother Signature", "cursive"],
+                    "headline-xl": ["Rapodhite", "Playfair Display", "serif"],
+                    "headline-md": ["Rapodhite", "Playfair Display", "serif"],
+                    "body-md": ["Rapodhite", "Playfair Display", "serif"],
+                    "label-sm": ["Be Vietnam Pro", "system-ui", "sans-serif"],
+                    "body-lg": ["Rapodhite", "serif"],
+                    "serif": ["Rapodhite", "Playfair Display", "Georgia", "serif"],
                     "sans": ["Be Vietnam Pro", "system-ui", "sans-serif"]
             },
             "fontSize": {
-                    "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "600"}],
-                    "script-accent": ["32px", {"lineHeight": "1", "fontWeight": "400"}],
-                    "headline-xl": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "500"}],
-                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
-                    "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600"}],
-                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+                    "headline-lg": ["40px", {"lineHeight": "1.15", "fontWeight": "700"}],
+                    "script-accent": ["38px", {"lineHeight": "1.3", "fontWeight": "400"}],
+                    "headline-xl": ["60px", {"lineHeight": "1.05", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "headline-md": ["28px", {"lineHeight": "1.25", "fontWeight": "600"}],
+                    "body-md": ["17px", {"lineHeight": "1.65", "fontWeight": "400"}],
+                    "label-sm": ["13px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                    "body-lg": ["19px", {"lineHeight": "1.6", "fontWeight": "400"}]
             }
           },
         },
@@ -106,16 +189,16 @@
             background: rgba(18, 18, 18, 0.55);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(212, 175, 55, 0.16);
+            border: 1px solid rgba(196, 153, 72, 0.18);
         }
-        .satin-gradient {
-            background:
-                radial-gradient(1100px 500px at 80% -10%, rgba(212, 175, 55, 0.10), transparent 60%),
-                radial-gradient(900px 600px at -10% 110%, rgba(212, 175, 55, 0.06), transparent 55%),
-                linear-gradient(160deg, #050505 0%, #100e09 45%, #060606 100%);
-        }
+         .satin-gradient {
+             background:
+                 radial-gradient(1100px 500px at 80% -10%, rgba(196, 153, 72, 0.12), transparent 60%),
+                 radial-gradient(900px 600px at -10% 110%, rgba(196, 153, 72, 0.08), transparent 55%),
+                 linear-gradient(160deg, #050505 0%, #0a0a0a 45%, #050505 100%);
+         }
         .gold-shimmer {
-            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.16), transparent);
+            background: linear-gradient(90deg, transparent, rgba(196, 153, 72, 0.16), transparent);
             background-size: 220% 100%;
             animation: shimmer 4s linear infinite;
         }
@@ -124,7 +207,7 @@
             100% { background-position: -120% 0; }
         }
         .text-gold-gradient {
-            background: linear-gradient(120deg, #F5D76E 0%, #D4AF37 45%, #8A6B1F 80%, #F5D76E 100%);
+            background: linear-gradient(120deg, #fce4a0 0%, #c49948 45%, #7d541b 80%, #fce4a0 100%);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -142,11 +225,159 @@
         }
     </style>
 <style>
+    html { font-size: 19px; }
     body {
       min-height: max(884px, 100dvh);
       background: #0a0a0a;
     }
+    /* a11y bump for elders — even larger */
+    @media (min-width: 640px) { html { font-size: 20px; } }
   </style>
+<style>
+/* =====================================================================
+   PREMIUM UPLIFT — champagne ivory light sections
+   ===================================================================== */
+
+/* ---- 1. Paper-noise texture overlay for light sections ---- */
+.light-section {
+  background-color: #FBF8F3;
+  position: relative;
+}
+.light-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.038'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 300px 300px;
+  pointer-events: none;
+  z-index: 0;
+}
+.light-section > * { position: relative; z-index: 1; }
+
+/* ---- 2. Ornamental divider ---- */
+.ornament-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin: 0 auto;
+  width: fit-content;
+}
+.ornament-divider svg { display: block; }
+
+/* ---- 3. Warm bento card ---- */
+.bento-card {
+  background: #FFFEF9 !important;
+  border-color: rgba(212,175,55,0.22) !important;
+  box-shadow: 0 4px 40px rgba(168,134,43,0.08), 0 1px 3px rgba(168,134,43,0.06) !important;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.bento-card:hover {
+  background: #FDF9F0 !important;
+  border-color: rgba(212,175,55,0.5) !important;
+  box-shadow: 0 8px 50px rgba(168,134,43,0.14), 0 2px 6px rgba(168,134,43,0.08) !important;
+}
+.bento-heading { color: #2C1F0E !important; }
+.bento-body    { color: #4A3F32 !important; font-weight: 300; }
+.bento-accent  { color: #A8862B !important; }
+
+/* ---- 4. Velvet hero overlay — bottom ramp for white text (darker, as it was a month ago) ---- */
+.hero-overlay-velvet {
+  background: linear-gradient(
+    to bottom,
+    rgba(5,3,1,0.16) 0%,
+    rgba(8,4,0,0.10) 42%,
+    rgba(8,4,0,0.24) 62%,
+    rgba(8,4,0,0.68) 78%,
+    rgba(5,3,1,0.94) 100%
+  );
+}
+
+/* ---- 5. Frosted countdown pill — solid black as requested ---- */
+.countdown-pill {
+  background: #000000;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 1px solid rgba(212,175,55,0.28);
+  border-radius: 9999px;
+  padding: 0.6rem 1.4rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  box-shadow: 0 6px 28px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
+  overflow: visible;
+}
+.countdown-pill .cd-sep {
+  color: rgba(212,175,55,0.45);
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 1;
+  padding: 0 2px;
+  align-self: center;
+  margin-bottom: 6px;
+}
+.countdown-pill .cd-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 0.5rem;
+  min-width: 46px;
+  overflow: visible;
+}
+.cd-digit {
+  font-family: 'Rapodhite', 'Cinzel', 'Playfair Display', serif !important;
+  font-size: 24px !important;
+  line-height: 1.15 !important;
+  font-weight: 700 !important;
+  display: inline-block !important;
+  padding: 2px 2px !important;
+  overflow: visible !important;
+}
+@media (min-width: 640px) {
+  .cd-digit { font-size: 30px !important; }
+  .countdown-pill .cd-unit { min-width: 56px; padding: 0 0.65rem; }
+}
+
+/* ---- 6. Gallery fan card: cream photo mat ---- */
+.fan-card-mat {
+  position: absolute;
+  inset: 7px;
+  border-radius: 18px;
+  border: 2px solid rgba(250,246,239,0.75);
+  pointer-events: none;
+  z-index: 2;
+  box-shadow: inset 0 0 0 1px rgba(212,175,55,0.12);
+}
+
+/* ---- 7. RSVP pull-quote ---- */
+.rsvp-pull {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(1.6rem, 4vw, 2.1rem);
+  color: #A8862B;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+  opacity: 0.88;
+}
+
+/* ---- 8. Enhanced label tracking ---- */
+.label-premium { letter-spacing: 0.22em; }
+
+/* ---- 9. Glass nav: warm ivory glass (always) ---- */
+.glass-radio-group {
+  --bg: rgba(251,248,243,0.82);
+  --text: #5A4A35;
+  border-color: rgba(212,175,55,0.30) !important;
+  background: var(--bg) !important;
+  box-shadow:
+    inset 1px 1px 4px rgba(255,255,255,0.70),
+    inset -1px -1px 6px rgba(168,134,43,0.06),
+    0 6px 24px rgba(0,0,0,0.13) !important;
+}
+.glass-radio-group a { color: var(--text) !important; }
+.glass-radio-group a:hover { color: #2C1F0E !important; }
+.glass-radio-group a.active { color: #0a0a0a !important; }
+</style>
 <style>
 .vows-countdown .vows-cd-num { color: #D4AF37; }
 .vows-countdown .vows-cd-label { color: #D4AF37; opacity: 0.6; }
@@ -163,7 +394,7 @@
   height: clamp(340px, 44vw, 560px);
   perspective: 1200px;
 }
-.memory-card {
+.fan-card {
   position: absolute;
   width: clamp(112px, 13vw, 232px);
   aspect-ratio: 4 / 5;
@@ -174,24 +405,23 @@
   background: #1a1a1a;
   will-change: transform;
 }
-.memory-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.fan-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .memories-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;margin-top:8px}
 .memory-card{position:relative;aspect-ratio:4/5;border-radius:18px;overflow:hidden;border:1px solid rgba(212,175,55,0.18);box-shadow:0 10px 30px rgba(0,0,0,0.45);background:#1a1a1a;will-change:transform;transition:transform .35s ease,box-shadow .35s ease}
 .memory-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,0.55)}
 .memory-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
 .memory-card:hover img{transform:scale(1.04)}
 .memory-card-mat{position:absolute;inset:7px;border-radius:12px;border:1px solid rgba(255,255,255,0.35);pointer-events:none;box-shadow:inset 0 0 0 1px rgba(212,175,55,0.12)}
+.dresscode-visual{position:relative;overflow:hidden;border-radius:24px;border:1px solid rgba(212,175,55,0.35);background:#0d0c0b;box-shadow:0 20px 60px rgba(0,0,0,0.45);margin:0 auto 1.25rem;max-width:420px;cursor:pointer;transition:transform .25s ease, box-shadow .25s ease}
+.dresscode-visual:hover{transform:translateY(-4px);box-shadow:0 24px 70px rgba(0,0,0,0.58)}
+.dresscode-visual img{display:block;width:100%;height:auto;object-fit:cover;filter:saturate(1.06) contrast(1.02)}
+.dresscode-visual::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.0), rgba(10,8,8,0.34));pointer-events:none}
+.dresscode-visual{position:relative;overflow:hidden;border-radius:24px;border:1px solid rgba(212,175,55,0.35);background:#0d0c0b;box-shadow:0 20px 60px rgba(0,0,0,0.45);margin:0 auto 1.25rem;max-width:420px;cursor:pointer;transition:transform .25s ease, box-shadow .25s ease}
+.dresscode-visual:hover{transform:translateY(-4px);box-shadow:0 24px 70px rgba(0,0,0,0.58)}
+.dresscode-visual img{display:block;width:100%;height:auto;object-fit:cover;filter:saturate(1.06) contrast(1.02)}
+.dresscode-visual::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.0), rgba(10,8,8,0.34));pointer-events:none}
 @media(max-width:1024px){.memories-grid{grid-template-columns:repeat(3,1fr);gap:12px}}
 @media(max-width:640px){.memories-grid{grid-template-columns:repeat(2,1fr);gap:10px}.memory-card:nth-child(5){grid-column:1 / -1;max-width:50%;justify-self:center}}
-.memory-card-mat {
-  position: absolute;
-  inset: 7px;
-  border-radius: 18px;
-  border: 2px solid rgba(250,246,239,0.75);
-  pointer-events: none;
-  z-index: 2;
-  box-shadow: inset 0 0 0 1px rgba(212,175,55,0.12);
-}
 .float-slow { animation: floating 9s ease-in-out infinite; }
 .float-slower { animation: floating 14s ease-in-out infinite; }
 </style>
@@ -234,20 +464,61 @@ html.no-scroll, html.no-scroll body { overflow: hidden; }
 }
 .intro-scroll-away { animation: introScroll .95s cubic-bezier(.4, 0, .2, 1) forwards; }
 
-.petal {
-  position: absolute;
-  top: -40px;
-  pointer-events: auto;
-  cursor: grab;
-  touch-action: none;
-  opacity: 0;
-  will-change: transform;
-  --petal-opacity: 1;
+@keyframes lastFrameFly {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
+  100% { transform: translate(0, -115vh) scale(1.2) rotate(3deg); opacity: 0; }
 }
-.petal.grabbed { cursor: grabbing; }
-.petal.flung { pointer-events: none; }
-.petal.petal-in { opacity: var(--petal-opacity); transition: opacity .9s ease; }
-.petal.petal-out { opacity: 0 !important; transition: opacity .25s ease; }
+.last-frame-fly { animation: lastFrameFly 1.25s cubic-bezier(.5, 0, .2, 1) forwards; }
+
+@keyframes introFadeAway {
+  0% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1); }
+}
+.intro-fade-away { animation: introFadeAway .8s ease forwards; }
+
+@keyframes pageScaleIn {
+  0% { transform: scale(.92); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.page-scale-in { animation: pageScaleIn 1.15s cubic-bezier(.22, 1, .36, 1) forwards; }
+
+@keyframes revealFlash {
+  0% { opacity: 0; transform: scale(.45); }
+  35% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.2); }
+}
+.reveal-flash { animation: revealFlash 1s ease-out forwards; }
+#revealFlash { background: radial-gradient(circle, rgba(255,255,255,0.96) 0%, rgba(255,244,206,0.82) 22%, rgba(212,175,55,0.38) 42%, rgba(147,109,41,0.18) 60%, transparent 72%); }
+
+.stars {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 10% 20%, rgba(255,255,255,.5), transparent),
+    radial-gradient(1px 1px at 30% 65%, rgba(255,255,255,.35), transparent),
+    radial-gradient(1.5px 1.5px at 55% 15%, rgba(255,255,255,.4), transparent),
+    radial-gradient(1px 1px at 75% 45%, rgba(255,255,255,.3), transparent),
+    radial-gradient(1.5px 1.5px at 85% 75%, rgba(255,255,255,.45), transparent),
+    radial-gradient(1px 1px at 20% 85%, rgba(255,255,255,.3), transparent),
+    radial-gradient(1.5px 1.5px at 60% 90%, rgba(255,255,255,.35), transparent);
+  opacity: .7;
+  animation: twinkle 4s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes twinkle { from { opacity: .45; } to { opacity: .85; } }
+.glow-wash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .6s ease-out;
+  background: radial-gradient(circle at center,
+    rgba(255,240,189,0.32) 0%,
+    rgba(212,175,55,0.20) 18%,
+    rgba(180,120,40,0.14) 32%,
+    rgba(100,70,20,0.08) 48%,
+    transparent 68%);
+}
 </style>
 <style>
 /* ---- Save-the-Date calendar card (compact luxury style) ---- */
@@ -365,14 +636,27 @@ html.no-scroll, html.no-scroll body { overflow: hidden; }
   width: fit-content;
   max-width: calc(100vw - 20px);
   border: 1px solid rgba(212, 175, 55, 0.25);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease;
+}
+.glass-radio-group.nav-hidden {
+  transform: translate(-50%, 140%) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+.glass-radio-group.nav-visible {
+  transform: translate(-50%, 0) !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
 }
 .glass-radio-group a {
   flex: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 2px;
   min-width: 0;
-  padding: 0.6rem 0.55rem;
+  padding: 0.55rem 0.5rem;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: .08em;
@@ -384,8 +668,16 @@ html.no-scroll, html.no-scroll body { overflow: hidden; }
   text-decoration: none;
   white-space: nowrap;
 }
+.glass-radio-group .nav-ic { display: inline-flex; font-size: 22px; line-height: 1; }
+@media (max-width: 639px) {
+  .glass-radio-group { border-radius: 1.1rem; }
+  .glass-radio-group a { padding: 0.5rem 0.7rem; }
+  .glass-radio-group .nav-ic { font-size: 20px; }
+  .glass-radio-group .glass-glider { border-radius: 1.1rem; }
+}
 @media (min-width: 640px) {
-  .glass-radio-group a { padding: 0.8rem 1.2rem; font-size: 14px; min-width: 84px; letter-spacing: .1em; }
+  .glass-radio-group a { padding: 0.75rem 1.05rem; }
+  .glass-radio-group .nav-ic { font-size: 24px; }
 }
 .glass-radio-group a:hover { color: #fff; }
 .glass-radio-group a.active { color: #0a0a0a; }
@@ -405,77 +697,598 @@ html.no-scroll, html.no-scroll body { overflow: hidden; }
     box-shadow .4s ease-in-out;
 }
 section[id] { scroll-margin-top: 5rem; }
+#story, #reception { scroll-margin-top: 5rem; }
+/* Hero entrance (staggered fade-up) */
+.hd-fade { opacity: 0; transform: translateY(30px); }
+.hd-fade.hd-anim { opacity: 1; transform: none; transition: opacity .9s ease, transform .9s cubic-bezier(.22,1,.36,1); }
+/* Scroll reveal (fade-up stagger) */
+.rv { opacity: 0; transform: translateY(30px); transition: opacity .8s ease, transform .8s cubic-bezier(.22,1,.36,1); }
+.rv.rv-in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .hd-fade, .rv { opacity: 1; transform: none; transition: none; }
+}
 </style>
+
+<!-- ===================== LUXURY REDESIGN STYLES ===================== -->
+<style>
+/* ---- Directional scroll reveals ---- */
+.rv-left  { opacity: 0; transform: translateX(-60px); transition: opacity .75s ease, transform .75s cubic-bezier(.22,1,.36,1); }
+.rv-right { opacity: 0; transform: translateX(60px);  transition: opacity .75s ease, transform .75s cubic-bezier(.22,1,.36,1); }
+.rv-up    { opacity: 0; transform: translateY(40px);  transition: opacity .75s ease, transform .75s cubic-bezier(.22,1,.36,1); }
+.rv-left.rv-in, .rv-right.rv-in, .rv-up.rv-in { opacity: 1; transform: none; }
+
+/* ---- Word-by-word heading reveal ---- */
+.word-reveal-wrap { overflow: hidden; display: inline-block; }
+.word-reveal { display: inline-block; opacity: 0; transform: translateY(100%); transition: opacity .65s ease, transform .65s cubic-bezier(.22,1,.36,1); }
+.word-reveal.rv-in { opacity: 1; transform: none; }
+
+/* ---- Cinematic scroll break ---- */
+.cinematic-break {
+  position: relative;
+  width: 100%;
+  min-height: clamp(320px, 55vw, 580px);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cinematic-break .cb-photo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.cinematic-break .cb-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  filter: brightness(0.32) saturate(0.65);
+}
+.cinematic-break .cb-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(to bottom, rgba(10,10,10,.95) 0%, transparent 28%, transparent 72%, rgba(10,10,10,.95) 100%),
+    linear-gradient(to right,  rgba(10,10,10,.6) 0%, transparent 30%, transparent 70%, rgba(10,10,10,.6) 100%);
+}
+.cinematic-break .cb-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  max-width: 700px;
+}
+.cinematic-break .cb-ornament {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+  margin: 1.2rem auto;
+}
+
+/* ---- Frosted bento card (dark context) ---- */
+.bento-card-dark {
+  background: rgba(12,10,8,.72) !important;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(212,175,55,.22) !important;
+  box-shadow: 0 8px 50px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.05) !important;
+}
+.bento-card-dark .bento-heading { color: #F5F0E8 !important; }
+.bento-card-dark .bento-body    { color: rgba(245,240,232,.72) !important; }
+.bento-card-dark .bento-accent  { color: #F5D76E !important; }
+
+/* ---- Closing hero ---- */
+.closing-hero {
+  position: relative;
+  min-height: clamp(340px, 55vh, 620px);
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  overflow: visible !important;
+  z-index: 10 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  margin-top: 0;
+}
+.closing-hero .ch-photo {
+  position: absolute; inset: 0; z-index: 0;
+}
+.closing-hero .ch-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center 25%;
+  filter: brightness(0.3) saturate(0.6);
+}
+.closing-hero .ch-vignette {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to bottom, rgba(10,10,10,.9) 0%, rgba(10,10,10,.25) 45%, rgba(10,10,10,.9) 100%);
+}
+.closing-hero .ch-content { position: relative; z-index: 2; text-align: center; padding: 3rem 1.5rem; }
+
+/* ---- RSVP section photo backdrop ---- */
+.rsvp-photo-section {
+  position: relative;
+  overflow: hidden;
+}
+.rsvp-photo-section .rsvp-bg-photo {
+  position: absolute; inset: 0; z-index: 0;
+}
+.rsvp-photo-section .rsvp-bg-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center 20%;
+  filter: brightness(0.22) saturate(0.5);
+}
+.rsvp-photo-section .rsvp-bg-vignette {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to bottom, rgba(10,10,10,.85) 0%, transparent 25%, transparent 75%, rgba(10,10,10,.85) 100%);
+}
+.rsvp-photo-section > .inner { position: relative; z-index: 2; }
+
+/* ---- Celebration dark overlay (over resort photo) ---- */
+.celebration-section {
+  position: relative;
+  overflow: hidden;
+}
+.celebration-section .cel-photo-bg {
+  position: absolute; inset: 0; z-index: 0;
+}
+.celebration-section .cel-photo-bg img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center 40%;
+  filter: brightness(0.18) saturate(0.5) blur(1px);
+}
+.celebration-section .cel-fade {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to bottom, rgba(10,10,10,.92) 0%, rgba(10,10,10,.5) 40%, rgba(10,10,10,.5) 65%, rgba(10,10,10,.92) 100%);
+}
+.celebration-section > .inner { position: relative; z-index: 2; }
+
+/* ---- Dress code section backdrop ---- */
+.dresscode-section {
+  position: relative;
+  overflow: hidden;
+}
+.dresscode-section .dc-photo-bg {
+  position: absolute; inset: 0; z-index: 0;
+}
+.dresscode-section .dc-photo-bg img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center 60%;
+  filter: brightness(0.22) saturate(0.55) blur(1px);
+}
+.dresscode-section .dc-fade {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to bottom, rgba(10,10,10,.92) 0%, rgba(10,10,10,.45) 45%, rgba(10,10,10,.92) 100%);
+}
+.dresscode-section > .inner { position: relative; z-index: 2; }
+
+/* ---- Gallery section backdrop ---- */
+.gallery-section {
+  position: relative;
+  overflow: hidden;
+}
+.gallery-section .gal-photo-bg {
+  position: absolute; inset: 0; z-index: 0;
+}
+.gallery-section .gal-photo-bg img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center 30%;
+  filter: brightness(0.15) saturate(0.4) blur(2px);
+}
+.gallery-section .gal-fade {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to bottom, rgba(10,10,10,.95) 0%, rgba(10,10,10,.55) 30%, rgba(10,10,10,.55) 70%, rgba(10,10,10,.95) 100%);
+}
+.gallery-section > .inner { position: relative; z-index: 2; padding-top: 4rem; padding-bottom: 4rem; }
+
+.gift-section {
+  position: relative;
+  overflow: visible;
+  z-index: 10 !important;
+  padding-bottom: 3rem !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+.gift-section > .inner { position: relative; z-index: 10 !important; display:block !important; }
+.gift-section .bento-card{position:relative;z-index:11 !important;opacity:1 !important;transform:none !important;visibility:visible !important;display:block !important}
+
+/* ---- Heading text color in dark photo sections ---- */
+.dark-section-heading { color: #F5F0E8 !important; }
+.dark-section-subheading { color: rgba(245,240,232,.72) !important; }
+.dark-section-body { color: rgba(245,240,232,.65) !important; }
+
+/* ---- Light section: now fully transparent, remove paper bg ---- */
+.light-section {
+  background: transparent !important;
+}
+.light-section::before { display: none !important; }
+
+/* ---- Hero vignette — darker bottom ramp for white bottom text ---- */
+.hero-overlay-velvet {
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 50%, transparent 48%, rgba(5,3,1,.26) 100%),
+    linear-gradient(to bottom, rgba(10,5,0,.10) 0%, rgba(8,4,0,.06) 42%, rgba(8,4,0,.18) 62%, rgba(8,4,0,.58) 78%, rgba(8,4,0,.90) 100%) !important;
+}
+
+/* Intro photo must show under fireworks — lighten intro bg */
+#introScreen.satin-gradient {
+  background:
+    radial-gradient(1100px 500px at 80% -10%, rgba(212,175,55,0.07), transparent 60%),
+    radial-gradient(900px 600px at -10% 110%, rgba(212,175,55,0.04), transparent 55%),
+    linear-gradient(160deg, rgba(0,0,0,0.08) 0%, rgba(10,8,6,0.10) 45%, rgba(0,0,0,0.14) 100%) !important;
+}
+
+
+
+/* ---- FIX: hurtful white hover — keep dark cards dark, light cards subtle ---- */
+.bento-card:hover {
+  background: #FFFEF9 !important;
+  border-color: rgba(212,175,55,.32) !important;
+  box-shadow: 0 10px 36px rgba(168,134,43,.10) !important;
+  transform: translateY(-2px);
+}
+.bento-card.bento-card-dark:hover {
+  background: rgba(8,7,6,.98) !important;
+  border-color: rgba(212,175,55,.22) !important;
+  box-shadow: 0 16px 50px rgba(0,0,0,.72), inset 0 1px 0 rgba(255,255,255,.03) !important;
+  transform: translateY(-2px) scale(1.003);
+}
+.bento-card.bento-card-dark:hover .bento-heading { color: #FFF8E6 !important; }
+.bento-card.bento-card-dark:hover .bento-body { color: rgba(245,240,232,.78) !important; }
+.bento-card.bento-card-dark:hover .bento-accent { color: #F5D76E !important; }
+/* map card overlay — keep subtle dark, not brightening to white */
+a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,.08) !important; }
+
+/* ---- celebration — dark seamless (no white) ---- */
+.celebration-section .cel-photo-bg,
+.celebration-section .cel-fade { display: block !important; }
+
+/* ---- Remotion-inspired polish: spring reveals, word stagger, card lift ---- */
+.rv, .rv-left, .rv-right, .rv-up {
+  will-change: transform, opacity;
+}
+.rv-left  { transform: translateX(-82px); }
+.rv-right { transform: translateX(82px); }
+.rv-up    { transform: translateY(36px); }
+.rv-left.rv-in, .rv-right.rv-in, .rv-up.rv-in { transform: none; }
+.rv-scale { opacity: 0; transform: scale(.96) translateY(14px); transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
+.rv-scale.rv-in { opacity: 1; transform: scale(1) translateY(0); }
+.rv-blur { opacity: 0; filter: blur(10px); transform: translateY(12px); transition: opacity .85s cubic-bezier(.22,1,.36,1), transform .85s cubic-bezier(.22,1,.36,1), filter .85s ease; }
+.rv-blur.rv-in { opacity: 1; filter: blur(0); transform: translateY(0); }
+.word-reveal-wrap { overflow: visible !important; display: inline-block; padding: 0 0.12em; }
+.word-reveal {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(110%) rotate(0.4deg);
+  transition: transform .7s cubic-bezier(.16,1,.3,1), opacity .55s ease;
+  overflow: visible !important;
+  padding: 0.06em 0.12em;
+}
+.word-reveal.rv-in { opacity: 1; transform: translateY(0) rotate(0); }
+/* SHIP GUARANTEE: Honeymoon Fund + closing copy — plain text, never hidden, natural spacing */
+.gift-section h2,
+.closing-hero .ch-content p.font-script-accent {
+  opacity: 1 !important;
+  transform: none !important;
+  visibility: visible !important;
+}
+.gift-section h2 .word-reveal,
+.gift-section h2 .word-reveal-wrap,
+.closing-hero .ch-content .word-reveal,
+.closing-hero .ch-content .word-reveal-wrap {
+  opacity: 1 !important;
+  transform: none !important;
+  visibility: visible !important;
+  transition: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: inline !important;
+  letter-spacing: normal !important;
+  word-spacing: normal !important;
+}
+/* headings that get word-split should not also fly as a block — let words drive */
+[data-wrapped].rv-up, [data-wrapped].rv-left, [data-wrapped].rv-right { opacity: 1 !important; transform: none !important; }
+/* card hover: Remotion spring-ish lift + gold glow, no color inversion */
+.bento-card-dark,
+.bento-card {
+  transition: transform .45s cubic-bezier(.16,1,.3,1), box-shadow .45s ease, border-color .35s ease, background .35s ease !important;
+}
+.bento-card-dark:hover { transform: translateY(-2px) scale(1.003) !important; }
+.bento-card:hover { transform: translateY(-2px) !important; }
+
+/* cinematic break: lower vignette so heads breathe */
+.cinematic-break.with-love .cb-vignette {
+  background:
+    linear-gradient(to bottom, rgba(10,10,10,.78) 0%, transparent 24%, transparent 74%, rgba(10,10,10,.88) 100%),
+    linear-gradient(to right, rgba(10,10,10,.45) 0%, transparent 30%, transparent 70%, rgba(10,10,10,.45) 100%);
+}
+.cinematic-break.with-love .cb-photo img { object-position: center 46% !important; filter: brightness(0.42) saturate(0.68) !important; }
+
+/* ---- Premium parallax — subtle crisp move, scale to hide edges ---- */
+.cb-photo, .ch-photo, .rsvp-bg-photo, .gal-photo-bg, .dc-photo-bg { overflow: hidden; }
+.cb-photo img, .ch-photo img, .rsvp-bg-photo img, .gal-photo-bg img, .dc-photo-bg img {
+  will-change: transform;
+  transform: translate3d(0, 0, 0) scale(1.08);
+}
+.parallax-slow { transition: transform .12s linear; }
+
+/* Event cards — animated SVG icons, main attraction */
+.event-icon { width: 44px; height: 44px; color: #F5D76E; margin-bottom: 1rem; display: inline-block; filter: drop-shadow(0 0 8px rgba(212,175,55,0.25)); }
+.event-icon-rings { animation: ringPulse 2.8s ease-in-out infinite; transform-origin: center; }
+.event-icon-toast { animation: toastSway 3.2s ease-in-out infinite; transform-origin: bottom center; }
+@keyframes ringPulse { 0%,100% { transform: scale(1); filter: drop-shadow(0 0 6px rgba(245,215,110,0.35)); } 50% { transform: scale(1.08); filter: drop-shadow(0 0 16px rgba(245,215,110,0.65)); } }
+@keyframes toastSway { 0%,100% { transform: rotate(0deg) translateY(0); } 20% { transform: rotate(-7deg) translateY(-2px); } 80% { transform: rotate(7deg) translateY(-2px); } }
+
+/* ---- Interactive cards — 3D tilt + glare, keeps black ---- */
+.bento-card-dark, .bento-card, .fan-card { transform-style: preserve-3d; }
+.bento-card-dark .tilt-glare, .bento-card .tilt-glare, .fan-card .tilt-glare {
+  position: absolute; inset: 0; border-radius: inherit;
+  background: radial-gradient(520px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,.13), transparent 60%);
+  opacity: 0; transition: opacity .35s ease; pointer-events: none; z-index: 2;
+}
+.bento-card-dark:hover .tilt-glare, .bento-card:hover .tilt-glare, .fan-card:hover .tilt-glare { opacity: 1; }
+
+@media (max-width: 640px) {
+  /* tighten huge gaps on mobile after Celebrate / Dress Code */
+  .celebration-section .inner,
+  .dresscode-section .inner,
+  .gallery-section .inner,
+  .rsvp-photo-section .inner,
+  .gift-section .inner {
+    padding-top: 2.25rem !important;
+    padding-bottom: 2.25rem !important;
+  }
+  .cinematic-break {
+    min-height: 260px !important;
+  }
+  .cinematic-break .cb-content {
+    padding: 1.25rem 1rem !important;
+  }
+  .celebration-section .grid {
+    gap: 0.9rem !important;
+  }
+  #dresscode {
+    margin-top: 0.5rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rv-left, .rv-right, .rv-up { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .word-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .rv-scale, .rv-blur { opacity: 1 !important; transform: none !important; filter: none !important; }
+  .cb-photo img, .ch-photo img, .rsvp-bg-photo img, .gal-photo-bg img, .dc-photo-bg img { transform: none !important; }
+  .bento-card-dark, .bento-card, .fan-card { transform: none !important; }
+}
+</style>
+<style>
+/* ===================== EDITORIAL GLOBAL — dark canvas + bronze + cream ===================== */
+:root { --bronze: #c49948; --bronze-dark: #7d541b; --bronze-deep: #5e3c0c; --bronze-light: #fce4a0; --cream: #FFF8E6; --cream-soft: rgba(255,248,230,0.78); }
+body { background: #0a0a0a !important; color: var(--cream) !important; }
+.satin-gradient { background: radial-gradient(1100px 500px at 80% -10%, rgba(196,153,72,0.08), transparent 60%), radial-gradient(900px 600px at -10% 110%, rgba(196,153,72,0.05), transparent 55%), linear-gradient(160deg, #0a0a0a 0%, #121212 45%, #0a0a0a 100%) !important; }
+/* seamless section blend — no white gaps */
+.celebration-section, .dresscode-section, .gallery-section, .rsvp-photo-section, .gift-section, .closing-hero { background: #0a0a0a !important; border-color: rgba(196,153,72,0.10) !important; position: relative; }
+.celebration-section::before, .dresscode-section::before, .gallery-section::before, .rsvp-photo-section::before { content:''; position:absolute; top:-1px; left:0; right:0; height:80px; background: linear-gradient(to bottom, #0a0a0a 0%, transparent 100%); z-index:2; pointer-events:none; }
+.celebration-section::after, .dresscode-section::after, .gallery-section::after { content:''; position:absolute; bottom:-1px; left:0; right:0; height:80px; background: linear-gradient(to top, #0a0a0a 0%, transparent 100%); z-index:2; pointer-events:none; }
+/* fix white paper override — restore dark */
+.celebration-section { background: #0a0a0a !important; background-color: #0a0a0a !important; }
+.celebration-section .cel-photo-bg, .celebration-section .cel-fade { display: block !important; }
+.celebration-section .cel-photo-bg img { filter: brightness(0.22) saturate(0.55) blur(1px) !important; }
+.celebration-section > .inner .dark-section-heading { color: #FFF8E6 !important; }
+.celebration-section > .inner .dark-section-body { color: rgba(255,248,230,0.72) !important; }
+.celebration-section > .inner .dark-section-subheading { color: rgba(255,248,230,0.55) !important; }
+.celebration-section .bento-card-dark { background: rgba(18,16,12,0.92) !important; box-shadow: 0 12px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04) !important; border-color: rgba(196,153,72,0.22) !important; }
+/* update bento typography to cream + bronze */
+/* Generous left and right space on all script fonts so flourishes and swashes never crop */
+.font-corinthia, .font-monte-carlo, .font-script-accent {
+  overflow: visible !important;
+  padding-left: clamp(14px, 2.8vw, 36px) !important;
+  padding-right: clamp(14px, 2.8vw, 36px) !important;
+  box-sizing: border-box !important;
+}
+/* hero & intro — extra large Charles & Leticia with generous side padding */
+#heroHead h2 { font-family: 'Butterline', 'The Feeling', 'Angel Wedding', cursive !important; font-size: clamp(32px, 5.5vw, 56px) !important; font-weight: 400 !important; letter-spacing: 0.02em !important; color: #fce4a0 !important; line-height: 1.25 !important; overflow: visible !important; padding: 0.12em clamp(14px, 2.5vw, 32px) !important; }
+#heroNames, .intro-hero-names {
+  font-family: 'Wedding Party', 'Brother Signature', cursive !important;
+  font-weight: 400 !important;
+  font-size: clamp(68px, 16vw, 175px) !important;
+  line-height: 1.14 !important;
+  letter-spacing: 0.01em !important;
+  padding-left: clamp(18px, 3.5vw, 44px) !important;
+  padding-right: clamp(18px, 3.5vw, 44px) !important;
+  padding-top: 0.15em !important;
+  padding-bottom: 0.18em !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  display: block !important;
+  text-align: center !important;
+  overflow: visible !important;
+  word-break: keep-all !important;
+  text-shadow: 0 0 32px rgba(252,228,160,0.45);
+  box-sizing: border-box !important;
+}
+#heroNames .text-gold { color: #c49948 !important; }
+#countdown-block p { font-family: 'Rapodhite','Cormorant Garamond','Cinzel','Playfair Display',serif !important; letter-spacing: 0.18em !important; color: rgba(252,228,160,0.85) !important; }
+/* fix headings cropping — ensure no clip & luxe sizing */
+h1, h2, h3, .font-headline-lg, .font-headline-xl, .font-headline-md, #heroNames, .font-script-accent, .bento-heading { overflow: visible !important; line-height: 1.2 !important; padding-top: 0.12em !important; padding-bottom: 0.12em !important; }
+.font-headline-xl { font-size: clamp(48px, 7.5vw, 76px) !important; line-height: 1.18 !important; letter-spacing: -0.01em !important; }
+.font-headline-lg { font-size: clamp(38px, 6vw, 58px) !important; line-height: 1.22 !important; }
+.dark-section-heading { font-size: clamp(38px, 6vw, 58px) !important; }
+.bento-heading { font-size: clamp(20px, 3.2vw, 28px) !important; }
+/* luxe main font — Rapodhite + Cormorant Garamond + Cinzel Decorative for headings */
+body, .font-body-md, .font-body-lg, .bento-body, .dark-section-body { font-family: 'Rapodhite','Cormorant Garamond','Playfair Display',serif !important; font-weight: 400 !important; letter-spacing: 0.01em !important; }
+.font-serif, .serif { font-family: 'Rapodhite','Cormorant Garamond','Cinzel Decorative','Cinzel',serif !important; }
+.bento-heading, .dark-section-heading, .font-headline-lg, .font-headline-xl { font-family: 'Rapodhite','Cormorant Garamond','Cinzel Decorative','Cinzel',serif !important; font-weight: 600 !important; letter-spacing: 0.02em !important; }
+/* stagger fade-up — remotion-style intro for all first-site text */
+.stagger { opacity: 0; transform: translateY(18px); animation: staggerUp 0.9s cubic-bezier(.22,1,.36,1) forwards; }
+.stagger:nth-child(1) { animation-delay: 0.06s; }
+.stagger:nth-child(2) { animation-delay: 0.16s; }
+.stagger:nth-child(3) { animation-delay: 0.26s; }
+.stagger:nth-child(4) { animation-delay: 0.36s; }
+@keyframes staggerUp { to { opacity:1; transform:none; } }
+.hero-stagger > * { opacity: 0; transform: translateY(14px); animation: staggerUp 0.85s cubic-bezier(.22,1,.36,1) forwards; }
+.hero-stagger > *:nth-child(1) { animation-delay: 0.08s; }
+.hero-stagger > *:nth-child(2) { animation-delay: 0.18s; }
+.hero-stagger > *:nth-child(3) { animation-delay: 0.28s; }
+.hero-stagger > *:nth-child(4) { animation-delay: 0.38s; }
+/* metallic RSVP plaque */
+.gold-rsvp-btn {
+  display: inline-block;
+  padding: 16px 54px;
+  font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 6px;
+  text-decoration: none;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #7d541b 0%, #c49948 18%, #fce4a0 45%, #c49948 70%, #5e3c0c 100%);
+  color: #3b2405;
+  text-shadow: 0px 1px 1px rgba(255,240,200,0.5), 0px -1px 1px rgba(0,0,0,0.8);
+  border: 1px solid #7d541b;
+  box-shadow: 0 0 30px rgba(212,167,85,0.35), 0 8px 20px rgba(0,0,0,0.6), inset 0 2px 3px rgba(255,255,255,0.7), inset 0 -3px 4px rgba(0,0,0,0.7), inset 0 0 0 2px #9c732b;
+  transition: all 0.3s ease;
+}
+.gold-rsvp-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 40px rgba(252,228,160,0.5), 0 12px 25px rgba(0,0,0,0.7), inset 0 2px 4px rgba(255,255,255,0.8), inset 0 -3px 4px rgba(0,0,0,0.8), inset 0 0 0 2px #c49948;
+}
+.gold-rsvp-btn:active { transform: translateY(0) scale(0.98); }
+@media (max-width: 640px) { .gold-rsvp-btn { font-size: 22px; letter-spacing: 4px; padding: 14px 36px; } }
+/* Headings entrance animation + golden shimmer glow bloom */
+.heading-standout { animation: headingPop 1.1s cubic-bezier(.16,1,.3,1) both; }
+@keyframes headingPop {
+  0% { opacity:0; transform: translateY(22px) scale(0.95); filter: blur(8px) brightness(0.85); text-shadow: 0 0 0px rgba(252,228,160,0); }
+  50% { opacity:1; filter: blur(0) brightness(1.25) drop-shadow(0 0 20px rgba(252,228,160,0.75)); text-shadow: 0 0 28px rgba(252,228,160,0.85), 0 0 55px rgba(196,153,72,0.5); }
+  100% { opacity:1; transform:none; filter: blur(0) brightness(1) drop-shadow(0 0 8px rgba(212,175,55,0.25)); text-shadow: 0 2px 18px rgba(0,0,0,0.35), 0 0 16px rgba(196,153,72,0.3); }
+}
+.rv-up .heading-standout, .rv .heading-standout { animation-delay: 0.12s; }
+h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin: center; }
+
+/* Golden Shimmer Glow on scroll in for all headings */
+.rv-in .dark-section-heading,
+.rv-in.dark-section-heading,
+.rv-in h2.font-headline-lg,
+.rv-up.rv-in h2,
+#heroHead.hd-anim #heroNames,
+.closing-hero .ch-content.rv-in p.font-script-accent {
+  animation: headingShimmerGlow 1.6s cubic-bezier(.16,1,.3,1) forwards;
+}
+
+@keyframes headingShimmerGlow {
+  0% {
+    filter: brightness(0.9) drop-shadow(0 0 0px rgba(252,228,160,0));
+    text-shadow: 0 0 0px rgba(252,228,160,0);
+  }
+  45% {
+    filter: brightness(1.3) drop-shadow(0 0 22px rgba(252,228,160,0.8));
+    text-shadow: 0 0 30px rgba(252,228,160,0.9), 0 0 60px rgba(196,153,72,0.55);
+  }
+  100% {
+    filter: brightness(1) drop-shadow(0 0 8px rgba(212,175,55,0.28));
+    text-shadow: 0 2px 16px rgba(0,0,0,0.35), 0 0 14px rgba(196,153,72,0.3);
+  }
+}
+
+/* word-reveal shimmer glow as each word lands */
+.word-reveal.rv-in {
+  text-shadow: 0 0 22px rgba(252,228,160,0.45);
+}
+
+/* shimmer — text + SVG gold only (no cards) */
+.text-gold-gradient {
+  background-size: 220% auto !important;
+  animation: goldShimmerMove 3.8s linear infinite !important;
+}
+@keyframes goldShimmerMove {
+  0% { background-position: 220% 0; }
+  100% { background-position: -120% 0; }
+}
+.event-icon { animation: goldIconFloat 4.2s ease-in-out infinite, goldIconGlow 3s ease-in-out infinite; }
+@keyframes goldIconFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+@keyframes goldIconGlow { 0%,100% { filter: drop-shadow(0 0 6px rgba(196,153,72,0.35)); } 50% { filter: drop-shadow(0 0 14px rgba(252,228,160,0.55)); } }
+.ornament-divider svg { animation: goldOrnamentPulse 3.6s ease-in-out infinite; }
+@keyframes goldOrnamentPulse { 0%,100% { opacity: 0.85; transform: scaleX(1); } 50% { opacity: 1; transform: scaleX(1.04); } }
+@media (prefers-reduced-motion: reduce) {
+  .text-gold-gradient, .event-icon, .ornament-divider svg, .heading-standout, .rv-in .dark-section-heading, .rv-in h2.font-headline-lg { animation: none !important; }
+}
+</style>
+<!-- Include a luxury serif font like Cinzel -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body class="bg-background text-on-background font-body-md selection:bg-gold/30 selection:text-white">
+<!-- Background music — starts on first user interaction (browser autoplay policy) -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="../Bad Bunny ft. Bomba Est&#233;reo - Ojitos Lindos (Video Oficial) _ Un Verano Sin Ti.mp3" type="audio/mpeg">
+</audio>
+<!-- Music toggle button (appears after intro exits) -->
+<button id="musicBtn" class="hidden fixed top-5 right-5 z-[9999] w-10 h-10 rounded-full bg-[#0a0a14]/90 border border-gold/40 shadow-[0_4px_16px_rgba(0,0,0,0.6)] flex items-center justify-center text-gold hover:text-gold-light hover:border-gold hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-md" onclick="toggleMusic()" aria-label="Mute or unmute music" title="Mute / Unmute music">
+  <span id="musicIcon" class="material-symbols-outlined text-xl" style="font-variation-settings:'FILL' 1">volume_up</span>
+</button>
 <!-- ===================== INTRO EXPERIENCE ===================== -->
 <div id="introScreen" class="fixed inset-0 z-[10000] flex items-center justify-center satin-gradient cursor-pointer select-none overflow-hidden">
-<div class="sparkle-bg absolute inset-0 pointer-events-none"></div>
 
-<!-- Falling petals — behind all elements, subtle -->
-<div id="petals" class="absolute inset-0 -z-10 pointer-events-none"></div>
+<!-- Couple photo backdrop — darker, black behind at 30% opacity -->
+<div class="absolute inset-0 bg-black z-0" aria-hidden="true"></div>
+<img src="../galery%20(4).jpeg" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover select-none pointer-events-none z-0" style="opacity:0.30; filter:brightness(0.92) saturate(0.78);"/>
+<div class="absolute inset-0 pointer-events-none z-[1]" aria-hidden="true" style="background:radial-gradient(125% 95% at 50% 42%, transparent 55%, rgba(0,0,0,0.45) 100%);"></div>
 
-<!-- Ornament text -->
-<div class="absolute top-6 sm:top-8 left-0 right-0 text-center pointer-events-none z-20 px-4">
-<span class="font-script-accent text-[clamp(46px,9.5vw,90px)] text-gold-gradient italic leading-none drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">Charles &amp; Leticia</span>
+<div class="sparkle-bg absolute inset-0 pointer-events-none z-[1]"></div>
+
+<!-- Fireworks backdrop — overlayed above photo, white & gold only -->
+<div class="stars absolute inset-0 z-[2]" aria-hidden="true"></div>
+<div class="glow-wash absolute inset-0 z-[2]" id="glowWash" aria-hidden="true"></div>
+<canvas id="fwCanvas" class="absolute inset-0 z-[2]" aria-hidden="true"></canvas>
+
+<!-- Ornament text — fit to width with generous side padding -->
+<div class="absolute top-6 sm:top-12 left-0 right-0 w-full max-w-5xl mx-auto text-center pointer-events-none z-20 px-6 sm:px-12 overflow-visible flex items-center justify-center">
+<span class="font-script-accent intro-hero-names text-gold-gradient italic drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)] inline-block overflow-visible py-3">Charles &amp; Leticia</span>
 </div>
-
-
 
 <!-- Center block -->
 <div class="relative z-10 flex flex-col items-center center-reveal">
 <div class="relative" style="width:min(115vw,720px);height:min(72vh,620px);">
-<img id="firstImg" src="../intro-first.png" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-300"/>
-<img id="gifImg" src="" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-300 opacity-0"/>
-<img id="lastImg" src="../intro-last.png" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-300 opacity-0"/>
+<img id="firstImg" src="../intro-first.png" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-500"/>
+<img id="seqImg" src="intro_frames/frame_001.webp" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none hidden"/>
+<img id="gifImg" src="" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-700 opacity-0 hidden"/>
+<img id="lastImg" src="../intro-last.png" alt="Charles and Leticia" class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none transition-opacity duration-500 opacity-0"/>
 </div>
-<div id="hintPill" class="mt-6 hint-pulse inline-flex items-center gap-2.5 px-6 py-3 rounded-full border border-gold/50 shadow-[0_8px_32px_rgba(0,0,0,0.75)]" style="background:rgba(12,12,18,.8);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);">
-<span class="material-symbols-outlined text-gold text-xl" data-icon="touch_app">touch_app</span>
-<span id="hintText" class="font-label-sm text-gold-light uppercase tracking-[0.25em] font-semibold text-xs sm:text-sm">Tap to Begin</span>
+<div id="hintPill" class="hidden -mt-6 sm:-mt-10 z-20 hint-pulse inline-flex items-center gap-2.5 px-6 py-3 rounded-full border border-gold/50 shadow-[0_8px_32px_rgba(0,0,0,0.75)]" style="background:rgba(12,12,18,.8);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);">
+<span class="material-symbols-outlined text-gold text-xl" data-icon="south">south</span>
+<span id="hintText" class="font-label-sm text-gold-light uppercase tracking-[0.25em] font-semibold text-xs sm:text-sm">scroll</span>
 </div>
-<div id="loaderCard" class="hidden mt-4 flex flex-col items-center gap-3 px-6 py-4 rounded-2xl border border-gold/40 glass-panel shadow-[0_10px_30px_rgba(0,0,0,0.5)] min-w-[260px]">
+<div id="loaderCard" class="mt-2 flex flex-col items-center gap-3 px-6 py-4 rounded-2xl border border-gold/40 glass-panel shadow-[0_10px_30px_rgba(0,0,0,0.5)] min-w-[260px]">
 <div class="flex items-center gap-2.5">
 <span class="material-symbols-outlined text-gold text-xl animate-spin" data-icon="auto_awesome">auto_awesome</span>
-<span id="loadText" class="font-label-sm text-gold-light uppercase tracking-[0.2em]">Loading your invitation…</span>
+<span id="loadText" class="font-label-sm text-gold-light uppercase tracking-[0.2em]">Loading for best playback… 0%</span>
 </div>
 <div class="w-56 h-1.5 bg-white/10 rounded-full overflow-hidden relative border border-gold/20">
 <div id="loadProgress" class="h-full bg-gradient-to-r from-gold-light to-gold rounded-full w-0 transition-all duration-300"></div>
 </div>
 </div>
 </div>
+<div id="revealFlash" class="hidden absolute inset-0 pointer-events-none z-[60]"></div>
+<!-- Foreground fireworks canvas — renders in FRONT of the GIF image -->
+<canvas id="fwCanvasFg" class="absolute inset-0 z-[55] pointer-events-none" aria-hidden="true"></canvas>
 </div>
 <!-- =================== END INTRO EXPERIENCE =================== -->
 
 <main class="relative min-h-screen overflow-hidden">
 <!-- Background Silk Texture -->
 <div class="absolute inset-0 satin-gradient -z-10"></div>
-<!-- Hero Section with Photo Background -->
-<section class="relative min-h-[90vh] lg:min-h-[95vh] flex items-center justify-center overflow-hidden py-12 lg:py-20">
+<!-- Hero Section with Photo Background — overflow visible for script -->
+<section class="relative min-h-[100svh] lg:h-[100vh] flex flex-col items-center justify-center overflow-visible py-12 lg:py-14">
 <!-- Background Photo with Overlay and Heart clicker capability -->
-<div class="absolute inset-0 z-0 cursor-pointer" id="mainPhotoCard">
-  <img src="../main.jpeg" class="w-full h-full object-cover object-center lg:object-top transition-transform duration-1000" alt="Charles and Leticia Background" />
-  <div class="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/65 via-[#0a0a0a]/50 to-[#0a0a0a]"></div>
-  <!-- Container for Floating Hearts Animation -->
-  <div id="heartContainer" class="absolute inset-0 pointer-events-none z-30 overflow-hidden"></div>
+<div class="absolute inset-0 z-0" id="mainPhotoCard" style="background:#000;">
+  <img src="../galery%20(2).jpeg" class="w-full h-full object-cover object-center transition-transform duration-1000" alt="Charles and Leticia Background" style="opacity:0.50; filter:brightness(0.96) saturate(0.82);" />
+  <div class="absolute inset-0 hero-overlay-velvet pointer-events-none"></div>
 </div>
 
-<!-- Interactive Heart Clicker Button -->
-<div class="absolute bottom-6 right-6 z-20 flex items-center gap-3 bg-black/60 backdrop-blur-md px-4 py-2 rounded-full border border-gold/40 shadow-lg hover:scale-105 transition-transform" id="photoHeartBtn">
-  <button type="button" class="flex items-center gap-2 text-gold focus:outline-none" aria-label="Send Love Heart">
-    <span class="material-symbols-outlined text-2xl text-red-500 animate-pulse" style="font-variation-settings: 'FILL' 1;">favorite</span>
-    <span class="font-bold text-white text-sm" id="photoHeartCount">0</span>
-    <span class="text-xs text-gold-light uppercase tracking-wider hidden sm:inline">Send Love</span>
-  </button>
-</div>
-
-<div class="relative z-10 max-w-[1200px] w-full mx-auto px-5 sm:px-container-padding flex flex-col items-center">
-  <!-- Headline Block -->
-  <div class="space-y-3 mb-10 text-center" id="heroHead">
+<div class="relative z-10 max-w-[1280px] w-full mx-auto px-4 sm:px-8 flex flex-col items-center flex-1 justify-center gap-6 lg:gap-8 my-auto overflow-visible">
+  <!-- Headline Block — luxe stagger -->
+  <div class="w-full max-w-5xl mx-auto space-y-2 text-center hero-stagger overflow-visible" id="heroHead">
     <h2 class="hd-fade font-script-accent text-script-accent italic text-gold leading-[1.3] text-2xl sm:text-3xl lg:text-4xl">Join us for the wedding of</h2>
-    <h3 id="heroNames" class="hd-fade font-script-accent text-white leading-[1.1] whitespace-nowrap text-center text-[clamp(54px,18vw,112px)] lg:text-[clamp(60px,7.5vw,96px)]">Charles <span class="text-gold">&amp;</span> Leticia</h3>
+    <h3 id="heroNames" class="hd-fade font-script-accent text-white text-center">Charles <span class="text-gold">&amp;</span> Leticia</h3>
   </div>
   
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl items-stretch">
+  <div class="w-full max-w-[340px] sm:max-w-[380px] mx-auto">
     <!-- Save-the-Date Calendar Card -->
     <div class="hd-fade nye-cal glass-panel p-4 sm:p-5 rounded-2xl shadow-[0_16px_40px_rgba(212,175,55,0.1)] border border-gold/25 relative overflow-hidden group flex flex-col justify-between" id="saveDateCard">
       <div class="absolute inset-0 gold-shimmer pointer-events-none"></div>
@@ -499,83 +1312,94 @@ section[id] { scroll-margin-top: 5rem; }
         <span class="tracking-[0.06em] font-medium text-gold-light/90 truncate">Grand Resort &amp; Residences &bull; Belize City &bull; 6:00 PM</span>
       </div>
     </div>
-    
-    <!-- Countdown Card -->
-    <div class="hd-fade glass-panel p-6 rounded-2xl shadow-[0_20px_50px_rgba(212,175,55,0.12)] border border-gold/25 relative overflow-hidden flex flex-col justify-center items-center text-center" id="countdown-block">
-      <div class="absolute inset-0 gold-shimmer pointer-events-none"></div>
-      <div class="relative z-10 w-full">
-        <div class="font-label-sm text-gold uppercase tracking-[0.25em] mb-4">Counting down to forever</div>
-        <div id="countdown" class="flex items-center justify-center gap-3 sm:gap-4"></div>
-        <p class="font-body-md text-white/80 max-w-sm mx-auto mt-6">
-          We cannot wait to celebrate the beginning of our new chapter with you under the sparkling Caribbean night.
-        </p>
-      </div>
+  </div>
+
+  <!-- Countdown & Inviting Note — stagger -->
+  <div class="hd-fade flex flex-col items-center gap-3 text-center hero-stagger" id="countdown-block">
+    <div class="font-label-sm label-premium text-gold uppercase tracking-[0.25em]">Counting down to forever</div>
+    <div class="countdown-pill">
+      <div id="countdown" class="flex items-center justify-center gap-0"></div>
     </div>
+    <p class="font-body-md text-white/80 max-w-lg mx-auto text-center italic tracking-wide text-xs sm:text-sm mt-1 px-4">
+      On New Year's Eve, as Belize City sparkles against the Caribbean night, we invite you to ring in 2027 with us &mdash; the start of forever.
+    </p>
   </div>
 </div>
-<!-- Light Section: The Celebration & Dress Code -->
-<div class="bg-[#FAF9F6] text-[#1A1A1A] border-t border-b border-gold/15 py-6">
-  <!-- Details Section: Bento Grid -->
-  <section id="details" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding py-12">
-    <div class="rv text-center mb-16">
-      <h2 class="font-headline-lg text-[#A8862B] mb-4 italic">The Celebration</h2>
-      <div class="w-24 h-[1px] bg-gold mx-auto"></div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SCROLL BREAK 1 — cinematic chapter break after hero         -->
+<!-- ============================================================ -->
+<div class="cinematic-break" style="min-height: clamp(500px, 70vw, 760px);">
+  <div class="cb-photo"><img src="../galery%20(4).jpeg" alt="Charles and Leticia" style="object-position:center 34%; filter:brightness(0.48) saturate(0.70); transform: scale(1.06);"/></div>
+  <div class="cb-vignette" style="background: linear-gradient(to bottom, rgba(10,10,10,0.82) 0%, rgba(10,10,10,0.45) 28%, rgba(10,10,10,0.35) 50%, rgba(10,10,10,0.55) 78%, rgba(10,10,10,0.88) 100%), radial-gradient(900px 500px at 50% 50%, transparent 42%, rgba(10,10,10,0.45) 100%);"></div>
+  <div class="cb-content rv-up" style="padding: 2.8rem 1.5rem;">
+    <span class="font-label-sm label-premium uppercase tracking-[0.3em] block mb-3" style="color: rgba(252,228,160,0.85); text-shadow: 0 1px 12px rgba(0,0,0,0.55);">A love story — Belize City, 2026</span>
+    <div class="cb-ornament"></div>
+    <p class="italic leading-[1.32] block" style="font-size: clamp(28px,4.8vw,50px); font-family:'Cormorant Garamond','Playfair Display',Georgia,serif; font-weight:500; color: rgba(255,255,255,0.96); text-shadow: 0 2px 18px rgba(0,0,0,0.62), 0 1px 0 rgba(0,0,0,0.35); padding: 0.15em 0; letter-spacing: 0.01em;">Mientras uno esté vivo, uno debe amar lo más que pueda</p>
+    <div class="cb-ornament"></div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- THE CELEBRATION SECTION (dark resort photo background)      -->
+<!-- ============================================================ -->
+<div class="celebration-section border-t border-b border-gold/10">
+  <div class="cel-photo-bg" aria-hidden="true">
+    <img src="https://res.cloudinary.com/dl5gbzrgh/image/upload/c_limit,w_3840/f_auto/q_75/grand_resort/gallery/bpemf7dj2xurneumcwdu" alt="" loading="lazy"/>
+  </div>
+  <div class="cel-fade" aria-hidden="true"></div>
+  <div class="inner max-w-[1200px] mx-auto px-5 sm:px-container-padding py-20">
+    <div class="text-center mb-14" id="details">
+      <span class="font-label-sm label-premium text-gold/70 uppercase tracking-[0.3em] block mb-3 rv-up">The Evening</span>
+      <h2 class="font-headline-lg dark-section-heading mb-5 italic rv-up" style="transition-delay:.1s">The Celebration</h2>
+      <div class="ornament-divider rv-up" style="transition-delay:.2s">
+        <svg width="80" height="12" viewBox="0 0 80 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="0" y1="6" x2="28" y2="6" stroke="#D4AF37" stroke-opacity="0.5" stroke-width="0.75"/>
+          <path d="M34 6 L37 3 L40 6 L37 9 Z" fill="#D4AF37" opacity="0.7"/>
+          <path d="M40 6 L43 3 L46 6 L43 9 Z" fill="#D4AF37" opacity="0.4"/>
+          <line x1="52" y1="6" x2="80" y2="6" stroke="#D4AF37" stroke-opacity="0.5" stroke-width="0.75"/>
+        </svg>
+      </div>
     </div>
-    <div class="rv-g grid grid-cols-1 md:grid-cols-3 gap-8">
-      <!-- Bento Card 1: Our Story -->
-      <div id="story" class="md:col-span-2 bg-white/80 border border-gold/25 rounded-[32px] p-7 sm:p-10 flex flex-col justify-between relative overflow-hidden group shadow-[0_10px_35px_rgba(212,175,55,0.06)] hover:border-[#A8862B]/50 transition-colors">
-        <div class="relative z-10">
-          <span class="font-label-sm text-[#A8862B] uppercase tracking-widest block mb-4">A love story</span>
-          <h3 class="font-headline-md text-[#1A1A1A] mb-4 italic">Our Journey Together</h3>
-          <p class="font-body-md text-[#4A453F] max-w-lg mb-6">
-            From chance meetings to a love that lights up every room, our journey has been written in laughter, late-night talks and big dreams. This New Year's Eve, we write our next chapter &mdash; together, with you by our side.
-          </p>
-          <a class="inline-flex items-center text-[#A8862B] font-label-sm uppercase hover:gap-3 transition-all" href="story.html">
-            Read the full story <span class="material-symbols-outlined ml-2" data-icon="chevron_right">chevron_right</span>
-          </a>
-        </div>
-        <div class="mt-8 mx-auto md:mt-0 md:mx-0 md:absolute md:bottom-6 md:right-6 w-32 h-32 sm:w-40 sm:h-40 md:w-44 md:h-44 rounded-full overflow-hidden border-2 border-gold/40 shadow-[0_0_45px_rgba(212,175,55,0.25)] pointer-events-none group-hover:scale-105 transition-transform duration-1000">
-          <img class="w-full h-full object-cover object-top" alt="A memory from their journey" src="../galery%20(1).jpeg"/>
-        </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-6">
+      <!-- Ceremony — 4:00 PM — SLIDES IN LEFT -->
+      <div id="ceremony" class="bento-card bento-card-dark rounded-[28px] p-8 lg:p-8 rv-left text-center" style="transition-delay:.05s; border-color: rgba(196,153,72,0.18);">
+        <div class="w-12 h-12 mx-auto rounded-full flex items-center justify-center mb-4" style="background: rgba(196,153,72,0.10); border: 1px solid rgba(196,153,72,0.25); color: #c49948;"><span class="material-symbols-outlined">favorite</span></div>
+        <span class="font-label-sm label-premium uppercase tracking-[0.22em] block mb-2" style="color: #c49948; font-size: 10px;">4:00 PM</span>
+        <h3 class="font-bold uppercase tracking-[0.14em] mb-3" style="font-family:'Cinzel','Playfair Display',serif; color:#FFF8E6; font-size: 16px;">The Ceremony</h3>
+        <p class="text-[13px] leading-relaxed" style="color: rgba(255,248,230,0.72)">Grand Resort &amp; Residences<br/>Belize City, Belize</p>
+        <div class="w-8 h-[1px] bg-gradient-to-r from-transparent via-[#c49948] to-transparent mx-auto mt-4 opacity-40"></div>
       </div>
-      <!-- Bento Card 2: Ceremony Details -->
-      <div id="ceremony" class="bg-white/80 border border-gold/25 rounded-[32px] p-8 shadow-[0_10px_35px_rgba(212,175,55,0.06)] hover:border-[#A8862B]/50 transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 512 512" class="text-[#A8862B] mb-4 inline-block"><path d="M64 208c0 7.8 4.4 18.7 17.1 30.3C126.5 214.1 188.9 200 256 200s129.5 14.1 174.9 38.3C443.6 226.7 448 215.8 448 208c0-12.3-10.8-32-47.9-50.6C364.9 139.8 314 128 256 128s-108.9 11.8-144.1 29.4C74.8 176 64 195.7 64 208zm192 40c-47 0-89.3 7.6-122.9 19.7C166.3 280.2 208.8 288 256 288s89.7-7.8 122.9-20.3C345.3 255.6 303 248 256 248zM0 208c0-49.6 39.4-85.8 83.3-107.8C129.1 77.3 190.3 64 256 64s126.9 13.3 172.7 36.2c43.9 22 83.3 58.2 83.3 107.8l0 96c0 49.6-39.4 85.8-83.3 107.8C382.9 434.7 321.7 448 256 448s-126.9-13.3-172.7-36.2C39.4 389.8 0 353.6 0 304l0-96z"/></svg>
-        <h3 class="font-headline-md text-[#1A1A1A] mb-4 italic">The Ceremony</h3>
-        <p class="font-body-md text-[#4A453F] mb-4">
-          Grand Resort &amp; Residences<br/>
-          Belize City, Belize
-        </p>
-        <div class="flex items-center gap-2 text-[#A8862B] font-label-sm">
-          <span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
-          <span>Starts at 6:00 PM</span>
-        </div>
+      <!-- Cocktail Hour — 5:00 PM — SLIDES IN RIGHT -->
+      <div id="cocktail" class="bento-card bento-card-dark rounded-[28px] p-8 lg:p-8 rv-right text-center" style="transition-delay:.15s; border-color: rgba(196,153,72,0.18);">
+        <div class="w-12 h-12 mx-auto rounded-full flex items-center justify-center mb-4" style="background: rgba(196,153,72,0.10); border: 1px solid rgba(196,153,72,0.25); color: #c49948;"><span class="material-symbols-outlined">local_bar</span></div>
+        <span class="font-label-sm label-premium uppercase tracking-[0.22em] block mb-2" style="color: #c49948; font-size: 10px;">5:00 PM</span>
+        <h3 class="font-bold uppercase tracking-[0.14em] mb-3" style="font-family:'Cinzel','Playfair Display',serif; color:#FFF8E6; font-size: 16px;">Cocktail Hour</h3>
+        <p class="text-[13px] leading-relaxed" style="color: rgba(255,248,230,0.72)">Sunset cocktails &amp;<br/>golden hour toasts</p>
+        <div class="w-8 h-[1px] bg-gradient-to-r from-transparent via-[#c49948] to-transparent mx-auto mt-4 opacity-40"></div>
       </div>
-      <!-- Bento Card 2: Reception -->
-      <div id="reception" class="bg-white/80 border border-gold/25 rounded-[32px] p-8 shadow-[0_10px_35px_rgba(212,175,55,0.06)] hover:border-[#A8862B]/50 transition-colors">
-        <span class="material-symbols-outlined text-[#A8862B] mb-4" data-icon="local_bar">local_bar</span>
-        <h3 class="font-headline-md text-[#1A1A1A] mb-4 italic">The Reception</h3>
-        <p class="font-body-md text-[#4A453F] mb-4">
-          New Year's Eve Celebration<br/>
-          Cocktails, Dinner &amp; Dancing until midnight
-        </p>
-        <div class="flex items-center gap-2 text-[#A8862B] font-label-sm">
-          <span class="material-symbols-outlined text-sm" data-icon="nights_stay">nights_stay</span>
-          <span>Rich, Elegant &amp; Timeless Attire</span>
-        </div>
+      <!-- Reception — 6:00 PM — SLIDES IN LEFT -->
+      <div id="reception" class="bento-card bento-card-dark rounded-[28px] p-8 lg:p-8 rv-left text-center" style="transition-delay:.25s; border-color: rgba(196,153,72,0.18);">
+        <div class="w-12 h-12 mx-auto rounded-full flex items-center justify-center mb-4" style="background: rgba(196,153,72,0.10); border: 1px solid rgba(196,153,72,0.25); color: #c49948;"><span class="material-symbols-outlined">celebration</span></div>
+        <span class="font-label-sm label-premium uppercase tracking-[0.22em] block mb-2" style="color: #c49948; font-size: 10px;">6:00 PM</span>
+        <h3 class="font-bold uppercase tracking-[0.14em] mb-3" style="font-family:'Cinzel','Playfair Display',serif; color:#FFF8E6; font-size: 16px;">The Reception</h3>
+        <p class="text-[13px] leading-relaxed" style="color: rgba(255,248,230,0.72)">Dinner, dancing<br/>&amp; New Year's Eve celebration</p>
+        <div class="w-8 h-[1px] bg-gradient-to-r from-transparent via-[#c49948] to-transparent mx-auto mt-4 opacity-40"></div>
       </div>
-      <!-- Bento Card 4: Destination -->
-      <a href="https://www.google.com/maps/place/Grand+Resort+%26+Residences/@17.5348351,-88.2412046,17z/data=!3m1!4b1!4m9!3m8!1s0x8f5c596476" target="_blank" rel="noopener" aria-label="Get directions to Grand Resort &amp; Residences" class="block md:col-span-2 bg-white/80 border border-gold/25 rounded-[32px] overflow-hidden shadow-[0_10px_35px_rgba(212,175,55,0.06)] relative group hover:border-[#A8862B]/50 transition-colors">
+      <!-- Card 4: Map — SLIDES IN RIGHT -->
+      <a href="https://maps.app.goo.gl/BrJ1PJeSXihXyeW77" target="_blank" rel="noopener" aria-label="Get directions to Grand Resort &amp; Residences" class="bento-card bento-card-dark block md:col-span-2 rounded-[28px] overflow-hidden relative group min-h-[220px] rv-right" style="transition-delay:.35s">
         <div class="absolute inset-0 bg-black/10 group-hover:bg-black/5 transition-colors duration-500 z-10"></div>
-        <img class="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700" alt="Grand Resort &amp; Residences, Belize City" src="https://res.cloudinary.com/dl5gbzrgh/image/upload/c_limit,w_3840/f_auto/q_75/grand_resort/gallery/bpemf7dj2xurneumcwdu"/>
+        <img class="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700" alt="Grand Resort &amp; Residences, Belize City" src="https://res.cloudinary.com/dl5gbzrgh/image/upload/c_limit,w_3840/f_auto/q_75/grand_resort/gallery/bpemf7dj2xurneumcwdu" loading="lazy"/>
         <div class="absolute bottom-6 left-6 z-20">
-          <div class="bg-white/95 border border-[#D4AF37]/45 px-4 py-3 rounded-2xl shadow-lg backdrop-blur-md">
-            <span class="block font-serif text-[15px] sm:text-base font-semibold text-[#1A1A1A] mb-1">Grand Resort &amp; Residences</span>
-            <div class="flex items-center gap-1.5 text-[#A8862B]">
+          <div class="bg-black/80 border border-[#D4AF37]/45 px-4 py-3 rounded-2xl shadow-lg backdrop-blur-md">
+            <span class="block font-serif text-[15px] sm:text-base font-semibold text-white mb-1">Grand Resort &amp; Residences</span>
+            <div class="flex items-center gap-1.5 text-[#F5D76E]">
               <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
               <span class="font-label-sm">4.4</span>
             </div>
-            <div class="flex items-center gap-2 text-[#8A6B1F] font-label-sm mt-1.5">
+            <div class="flex items-center gap-2 text-[#F5D76E]/80 font-label-sm mt-1.5">
               <span class="material-symbols-outlined text-sm" data-icon="directions">directions</span>
               <span>Get Directions</span>
             </div>
@@ -583,112 +1407,184 @@ section[id] { scroll-margin-top: 5rem; }
         </div>
       </a>
     </div>
-  </section>
+  </div>
+</div>
 
-  <!-- Dress Code Section -->
-  <section id="dresscode" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding py-12">
-    <div class="rv bg-white/80 border border-gold/25 rounded-[32px] relative overflow-hidden shadow-[0_10px_35px_rgba(212,175,55,0.06)]">
-      <div class="sparkle-bg absolute inset-0 pointer-events-none"></div>
-      <div class="relative z-10 flex flex-col md:flex-row items-center gap-10 md:gap-14 p-8 sm:p-10 md:p-14">
-        <div class="shrink-0">
-          <div class="w-48 sm:w-56 md:w-64 overflow-hidden rounded-2xl border border-gold/30 shadow-[0_20px_50px_rgba(0,0,0,0.15)]">
-            <img src="../dress-code-palette.jpg" alt="Open the dress code" class="w-full h-auto object-cover transition-transform duration-700 hover:scale-105 cursor-zoom-in" onclick="openDressCode()"/>
-          </div>
+<!-- ============================================================ -->
+<!-- SCROLL BREAK 2 — before Dress Code                          -->
+<!-- ============================================================ -->
+<div class="cinematic-break">
+  <div class="cb-photo"><img src="../galery%20(5).jpeg" alt="Charles and Leticia" style="object-position:center 40%"/></div>
+  <div class="cb-vignette"></div>
+  <div class="cb-content rv-up">
+    <span class="font-label-sm label-premium text-gold/80 uppercase tracking-[0.3em] block mb-3">Style</span>
+    <div class="cb-ornament"></div>
+    <p class="font-script-accent text-[clamp(30px,5.5vw,54px)] text-white/90 italic leading-snug" style="font-family:'Butterline', 'The Feeling', 'Angel Wedding', cursive !important;">Dress to Celebrate</p>
+    <div class="cb-ornament"></div>
+    <p class="font-body-md dark-section-body mt-2">Rich, Elegant &amp; Timeless — December 31, 2026</p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- DRESS CODE SECTION (premium cocktail backdrop)               -->
+<!-- ============================================================ -->
+<div class="dresscode-section border-b border-gold/10">
+  <div class="dc-photo-bg" aria-hidden="true">
+    <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=1920&q=80&auto=format&fit=crop" alt="" loading="lazy"/>
+  </div>
+  <div class="dc-fade" aria-hidden="true"></div>
+  <div class="inner max-w-[1200px] mx-auto px-5 sm:px-container-padding py-12">
+    <div id="dresscode" class="mx-auto max-w-[520px] text-center rounded-[20px] p-6 sm:p-8 rv-up" style="background: rgba(18,16,12,0.96); border: 1px solid #7d541b; box-shadow: 0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04);">
+      <div class="dresscode-visual" onclick="if (window.openDressCode) openDressCode()" aria-label="Open the dress code guide">
+        <img src="dress%20code.png" alt="Dress code guide" loading="lazy"/>
+      </div>
+      <span class="block text-[10px] tracking-[0.32em] uppercase mb-3" style="color: #c49948; font-family:'Be Vietnam Pro',sans-serif;">Dress Code</span>
+      <h3 class="font-bold uppercase tracking-[0.18em] mb-2" style="font-family:'Cinzel','Playfair Display',serif; color:#FFF8E6; font-size: 22px;">Black dress code</h3>
+      <div class="w-12 h-[1px] bg-gradient-to-r from-transparent via-[#c49948] to-transparent mx-auto mb-3 opacity-60"></div>
+      <p class="text-[12px] tracking-[0.22em] uppercase" style="color: #fce4a0; font-family:'Cinzel',serif;">Black Shimmer</p>
+      <p class="mt-4 text-[13px] leading-relaxed" style="color: rgba(255,248,230,0.62)">Elegant black attire with subtle shimmer — timeless for a midnight celebration.</p>
+      <button onclick="if (window.openDressCode) openDressCode()" class="mt-6 inline-flex items-center justify-center gap-2 rounded-full border border-gold/40 bg-white/5 px-5 py-2.5 text-[10px] uppercase tracking-[0.24em] text-gold-light transition-colors hover:bg-white/10" style="font-family:'Be Vietnam Pro',sans-serif;">
+        View full guide
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- GALLERY SECTION (couple photo dark backdrop)                 -->
+<!-- ============================================================ -->
+<div class="gallery-section border-b border-gold/10" id="gallery">
+  <div class="gal-photo-bg" aria-hidden="true"><img src="../galery%20(3).jpeg" alt="" loading="lazy"/></div>
+  <div class="gal-fade" aria-hidden="true"></div>
+  <div id="galleryHearts" class="absolute inset-0 pointer-events-none z-[30]" aria-hidden="true"></div>
+  <div class="inner max-w-[1200px] mx-auto px-5 sm:px-container-padding">
+    <div class="text-center mb-14">
+      <span class="font-label-sm label-premium text-gold/70 uppercase tracking-[0.3em] block mb-3 rv-up">Memories</span>
+      <h2 class="font-headline-lg dark-section-heading mb-5 italic rv-up" style="transition-delay:.1s">Our Moments</h2>
+      <div class="ornament-divider rv-up" style="transition-delay:.2s">
+        <svg width="80" height="12" viewBox="0 0 80 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="0" y1="6" x2="28" y2="6" stroke="#D4AF37" stroke-opacity="0.5" stroke-width="0.75"/>
+          <path d="M34 6 L37 3 L40 6 L37 9 Z" fill="#D4AF37" opacity="0.7"/>
+          <path d="M40 6 L43 3 L46 6 L43 9 Z" fill="#D4AF37" opacity="0.4"/>
+          <line x1="52" y1="6" x2="80" y2="6" stroke="#D4AF37" stroke-opacity="0.5" stroke-width="0.75"/>
+        </svg>
+      </div>
+      <p class="font-body-md dark-section-body max-w-md mx-auto mt-5 rv-up" style="transition-delay:.3s">A glimpse of the laughter, love and light that brought us here.</p>
+    </div>
+    <!-- Memories grid — all 5 photos visible (changed from fanned holder as requested) -->
+    <div class="memories-grid">
+      <div class="memory-card cursor-pointer touch-manipulation select-none active:scale-[0.98]" role="button" tabindex="0" aria-label="Tap for hearts"><img src="galery%20(1).jpeg" alt="Charles and Leticia moment"/><div class="memory-card-mat"></div></div>
+      <div class="memory-card cursor-pointer touch-manipulation select-none active:scale-[0.98]" role="button" tabindex="0" aria-label="Tap for hearts"><img src="galery%20(2).jpeg" alt="Charles and Leticia moment"/><div class="memory-card-mat"></div></div>
+      <div class="memory-card cursor-pointer touch-manipulation select-none active:scale-[0.98]" role="button" tabindex="0" aria-label="Tap for hearts"><img src="galery%20(4).jpeg" alt="Charles and Leticia moment" style="object-position:center 38%"/><div class="memory-card-mat"></div></div>
+      <div class="memory-card cursor-pointer touch-manipulation select-none active:scale-[0.98]" role="button" tabindex="0" aria-label="Tap for hearts"><img src="galery%20(5).jpeg" alt="Charles and Leticia moment"/><div class="memory-card-mat"></div></div>
+      <div class="memory-card cursor-pointer touch-manipulation select-none active:scale-[0.98]" role="button" tabindex="0" aria-label="Tap for hearts"><img src="galery%20(3).jpeg" alt="Charles and Leticia moment"/><div class="memory-card-mat"></div></div>
+    </div>
+    <div id="galleryHeartsGrid" class="pointer-events-none" aria-hidden="true" style="position:relative;height:0"></div>
+    <!-- Love Story — editorial narrative (Our / JOURNEY TOGETHER) -->
+    <div id="story" class="relative overflow-hidden rounded-[28px] rv-up mt-10 max-w-3xl mx-auto text-center" style="background: linear-gradient(180deg, rgba(18,16,12,0.96) 0%, rgba(10,10,10,0.98) 100%); border: 1px solid rgba(196,153,72,0.14); box-shadow: 0 20px 60px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.04);">
+      <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(700px 420px at 50% 0%, rgba(196,153,72,0.07), transparent 62%);"></div>
+      <div class="absolute inset-0 opacity-[0.06] pointer-events-none" style="background: url('../galery%20(1).jpeg') center 35% / cover no-repeat; filter: blur(18px) saturate(0.5); mask-image: linear-gradient(to bottom, transparent 0%, black 28%, black 72%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 28%, black 72%, transparent 100%);"></div>
+      <div class="relative z-10 px-8 sm:px-12 py-10 sm:py-14">
+        <div class="mb-6">
+          <span class="block leading-none italic" style="font-family:'Butterline', 'The Feeling', 'Angel Wedding', cursive !important; font-size: clamp(52px, 8vw, 76px); color: #fce4a0; line-height: 0.95;">Our</span>
+          <h3 class="font-bold uppercase tracking-[0.32em] text-[#FFF8E6] leading-none -mt-1 sm:-mt-2" style="font-family:'Cinzel','Playfair Display',serif; font-size: clamp(20px, 3.8vw, 30px);">JOURNEY TOGETHER</h3>
+          <div class="w-16 h-[1px] bg-gradient-to-r from-transparent via-[#c49948] to-transparent mx-auto mt-4 opacity-60"></div>
         </div>
-        <div class="flex-1 text-center md:text-left">
-          <span class="font-label-sm text-[#A8862B] uppercase tracking-[0.25em] block mb-3">Dress Code</span>
-          <h2 class="font-script-accent text-[40px] sm:text-[48px] text-gold-gradient italic mb-4">Guest Attire Palette</h2>
-          <p class="font-body-lg text-[#4A453F] max-w-md mx-auto md:mx-0 mb-8">
-            Celebrate the night in our warm and rich color palette: **Brown, Dark Green, Blue, Burgundy, Maroon, Black, and Shimmer**. We invite men and women to wear these rich, elegant, and timeless colors to ring in the new year together. Tap the photo to view the full guide, or download it to keep close.
-          </p>
-          <div class="flex flex-wrap justify-center md:justify-start gap-4">
-            <button onclick="openDressCode()" class="inline-flex items-center gap-2 bg-gradient-to-r from-gold-light to-gold-dark text-ink font-label-sm uppercase px-8 py-4 rounded-full border border-gold/40 shadow-[0_10px_30px_rgba(212,175,55,0.25)] hover:shadow-[0_10px_40px_rgba(212,175,55,0.45)] transition-all active:scale-95">
-              <span class="material-symbols-outlined text-lg" data-icon="fullscreen">fullscreen</span>
-              View Full
-            </button>
-            <a href="../dress-code-palette.jpg" download="Dress-Code-Palette.jpg" class="inline-flex items-center gap-2 border border-gold/30 text-[#A8862B] font-label-sm uppercase px-8 py-4 rounded-full hover:bg-gold/10 transition-colors no-underline">
-              <span class="material-symbols-outlined text-lg" data-icon="download">download</span>
-              Download
-            </a>
-          </div>
-        </div>
+        <a href="story.html" class="mt-4 inline-flex items-center gap-2 px-8 py-4 rounded-full no-underline" style="background: linear-gradient(145deg, #7d541b 0%, #c49948 18%, #fce4a0 45%, #c49948 70%, #5e3c0c 100%); color:#3b2405; font-family:'Cinzel',serif; font-size:13px; letter-spacing:0.18em; font-weight:700; text-transform:uppercase; border:1px solid #7d541b; box-shadow: 0 0 24px rgba(196,153,72,0.22), inset 0 1px 0 rgba(255,255,255,0.35);">Read the full story <span class="material-symbols-outlined text-[18px]">arrow_forward</span></a>
       </div>
     </div>
-  </section>
+  </div>
 </div>
-<!-- Gallery Section — 5-card fan with hearts (synced from root) -->
-<section id="gallery" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding py-section-gap relative">
-<div class="text-center mb-16">
-<span class="font-label-sm label-premium text-gold/60 uppercase tracking-[0.3em] block mb-2">Memories</span>
-<h2 class="font-headline-lg text-gold mb-4 italic">Our Moments</h2>
-<div class="w-24 h-[1px] bg-gold mx-auto"></div>
-<p class="font-body-md text-on-surface-variant max-w-md mx-auto mt-6">A glimpse of the laughter, love and light that brought us here.</p>
-<p class="font-label-sm text-gold/60 uppercase tracking-wider mt-2">Tap any photo — hearts for the couple</p>
-</div>
-<div id="galleryHearts" class="absolute inset-0 pointer-events-none z-[30]" aria-hidden="true" style="top:140px"></div>
-<div id="galleryHeartsGrid" class="pointer-events-none" aria-hidden="true" style="position:relative;height:0"></div>
-    <div class="memories-grid">
-<div class="memory-card cursor-pointer touch-manipulation select-none active:scale-[0.98]" style="transition-delay:.00s" role="button" tabindex="0" aria-label="Tap for hearts"><img src="../galery%20(1).jpeg" alt="Charles and Leticia moment"/><div class="memory-card-mat"></div></div>
-<div class="memory-card cursor-pointer touch-manipulation select-none active:scale-[0.98]" style="transition-delay:.08s" role="button" tabindex="0" aria-label="Tap for hearts"><img src="../galery%20(2).jpeg" alt="Charles and Leticia moment"/><div class="memory-card-mat"></div></div>
-<div class="memory-card cursor-pointer touch-manipulation select-none active:scale-[0.98]" style="transition-delay:.16s" role="button" tabindex="0" aria-label="Tap for hearts"><img src="../galery%20(4).jpeg" alt="Charles and Leticia moment" class="scale-x-[-1]" style="object-position:center 38%;"/><div class="memory-card-mat"></div></div>
-<div class="memory-card cursor-pointer touch-manipulation select-none active:scale-[0.98]" style="transition-delay:.24s" role="button" tabindex="0" aria-label="Tap for hearts"><img src="../galery%20(5).jpeg" alt="Charles and Leticia moment"/><div class="memory-card-mat"></div></div>
-<div class="memory-card cursor-pointer touch-manipulation select-none active:scale-[0.98]" style="transition-delay:.32s" role="button" tabindex="0" aria-label="Tap for hearts"><img src="../galery%20(3).jpeg" alt="Charles and Leticia moment"/><div class="memory-card-mat"></div></div>
-</div>
-<div class="mt-10 flex flex-col items-center gap-2 text-center">
-<p class="font-script-accent text-script-accent text-gold-gradient italic">See you at midnight</p>
-<span class="font-label-sm text-on-surface-variant uppercase tracking-[0.25em]">December 31, 2026</span>
-<span class="font-label-sm text-gold uppercase tracking-[0.15em] block mt-1">Rich, Elegant &amp; Timeless</span>
-</div>
-</section>
 
-  <!-- Light Section: RSVP & Gift -->
-  <div class="bg-[#FAF9F6] text-[#1A1A1A] border-t border-b border-gold/15 py-12 lg:py-20">
-    <!-- RSVP Section -->
-    <section id="rsvp" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding pb-16">
-      <div class="rv text-center mb-10">
-        <h2 class="font-headline-lg text-[#A8862B] mb-4 italic">RSVP</h2>
-        <div class="w-24 h-[1px] bg-gold mx-auto"></div>
-        <p class="font-body-lg text-[#4A453F] max-w-xl mx-auto mt-6">
-          We would love for you to join us under the stars as we ring in 2027 together. Kindly let us know by December 15th, 2026.
-        </p>
-        <p class="font-body-md text-[#A8862B] italic max-w-xl mx-auto mt-4 px-4 font-semibold">
-          Please note: While we love your little ones, our wedding will be an adult-only celebration.
-        </p>
-      </div>
-      <div class="rv flex justify-center">
-        <a href="rsvp.html" class="group inline-block" aria-label="Open the RSVP form">
-          <img src="../RSVP%20BUTTON.png" alt="RSVP" draggable="false" class="rsvp-img w-full max-w-[300px] sm:max-w-[380px] h-auto select-none pointer-events-none transition-transform duration-300 group-hover:scale-105 group-active:scale-95"/>
-        </a>
-      </div>
-    </section>
+<!-- ============================================================ -->
+<!-- SCROLL BREAK 3 — before RSVP                                -->
+<!-- ============================================================ -->
+<div class="cinematic-break with-love" style="min-height: clamp(460px, 72vw, 740px);">
+  <div class="cb-photo"><img src="../galery%20(2).jpeg" alt="Charles and Leticia" style="object-position:center 46%"/></div>
+  <div class="cb-vignette"></div>
+  <div class="cb-content rv-up">
+    <span class="font-label-sm label-premium text-gold/80 uppercase tracking-[0.3em] block mb-3">With love</span>
+    <div class="cb-ornament"></div>
+    <p class="italic leading-[1.2] block heading-standout" style="font-size: clamp(28px,5vw,54px); font-family:'Cormorant Garamond','Playfair Display',Georgia,serif; font-weight:500; color: rgba(255,255,255,0.98); text-shadow: 0 3px 24px rgba(0,0,0,0.62), 0 1px 0 rgba(0,0,0,0.45); letter-spacing: 0.01em;">Y fuiste tú mi baile inolvidable 💙</p>
+    <div class="cb-ornament"></div>
+    <p class="font-body-md dark-section-body mt-2">Charles &amp; Leticia</p>
+  </div>
+</div>
 
-    <!-- Gift Section -->
-    <section id="gift" class="max-w-[1200px] mx-auto px-5 sm:px-container-padding pt-12 border-t border-gold/15">
-      <div class="rv bg-white/80 border border-gold/25 rounded-[32px] p-10 sm:p-14 text-center relative overflow-hidden shadow-[0_10px_35px_rgba(212,175,55,0.06)] max-w-2xl mx-auto">
-        <div class="absolute inset-0 gold-shimmer pointer-events-none"></div>
-        <div class="sparkle-bg absolute inset-0 pointer-events-none"></div>
-        <div class="relative z-10">
-          <div class="w-20 h-20 rounded-full bg-gold/5 border border-gold/25 flex items-center justify-center mx-auto mb-8">
-            <span class="material-symbols-outlined text-[#A8862B] text-4xl" data-icon="card_travel" style="font-variation-settings:'FILL' 1;">card_travel</span>
-          </div>
-          <h2 class="font-script-accent text-[42px] text-gold-gradient italic mb-4">Honeymoon Fund</h2>
-          <p class="font-body-lg text-[#4A453F] max-w-xl mx-auto mb-8">
-            Your presence is our greatest gift. Should you wish to honor us with a contribution, a monetary gift is preferred. A card and gift box will be available at the reception.
-          </p>
-          <p class="font-label-sm text-[#8A6B1F] italic mt-6">Thank you for celebrating with us &mdash; your kindness means the world.</p>
+<!-- ============================================================ -->
+<!-- RSVP SECTION (dark couple photo backdrop)                    -->
+<!-- ============================================================ -->
+<div class="rsvp-photo-section border-b border-gold/10 py-20 lg:py-28" id="rsvp">
+  <div class="rsvp-bg-photo" aria-hidden="true"><img src="../galery%20(3).jpeg" alt="" loading="lazy"/></div>
+  <div class="rsvp-bg-vignette" aria-hidden="true"></div>
+  <div class="inner max-w-[1200px] mx-auto px-5 sm:px-container-padding">
+    <div class="text-center mb-10 rv-up">
+      <p class="rsvp-pull mb-3" style="color:#F5D76E;opacity:.95">We'd be honoured by your presence</p>
+      <h2 class="font-headline-lg dark-section-heading mb-5 italic">RSVP</h2>
+      <div class="ornament-divider mb-6">
+        <svg width="80" height="12" viewBox="0 0 80 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="0" y1="6" x2="28" y2="6" stroke="#D4AF37" stroke-opacity="0.5" stroke-width="0.75"/>
+          <path d="M34 6 L37 3 L40 6 L37 9 Z" fill="#D4AF37" opacity="0.7"/>
+          <path d="M40 6 L43 3 L46 6 L43 9 Z" fill="#D4AF37" opacity="0.4"/>
+          <line x1="52" y1="6" x2="80" y2="6" stroke="#D4AF37" stroke-opacity="0.5" stroke-width="0.75"/>
+        </svg>
+      </div>
+      <p class="font-body-lg dark-section-body max-w-[52ch] mx-auto mt-2">We would love for you to join us under the stars as we ring in 2027 together. Kindly let us know by <strong style="color:#fce4a0;">October 31st, 2026</strong>.</p>
+      <p class="font-body-md dark-section-subheading italic max-w-xl mx-auto mt-4 px-4 font-semibold">Please note: While we love your little ones, our wedding will be an adult-only celebration.</p>
+    </div>
+    <div class="rv flex justify-center">
+      <a href="rsvp.html" class="group inline-block" aria-label="Open the RSVP form">
+        <img src="../RSVP%20BUTTON.png" alt="RSVP" draggable="false" class="rsvp-img w-full max-w-[300px] sm:max-w-[380px] h-auto select-none pointer-events-none transition-transform duration-300 group-hover:scale-105 group-active:scale-95"/>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- GIFT SECTION                                                 -->
+<!-- ============================================================ -->
+<div class="gift-section py-16 sm:py-20 border-b border-gold/10" id="gift">
+  <div class="inner max-w-[1200px] mx-auto px-5 sm:px-container-padding">
+    <div class="mx-auto max-w-[520px] text-center rounded-[28px] p-8 sm:p-10 relative overflow-hidden rv" style="background: linear-gradient(180deg, rgba(18,16,12,0.96) 0%, rgba(10,10,10,0.98) 100%); border: 1px solid rgba(196,153,72,0.14); box-shadow: 0 20px 60px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.04);">
+      <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(600px 360px at 50% 0%, rgba(196,153,72,0.07), transparent 62%);"></div>
+      <div class="relative z-10">
+        <div class="w-14 h-14 rounded-full bg-gold/10 border border-gold/20 flex items-center justify-center mx-auto mb-5">
+          <span class="material-symbols-outlined text-gold text-[26px]" style="font-variation-settings:'FILL' 1">redeem</span>
         </div>
+        <span class="block text-[10px] tracking-[0.32em] uppercase mb-3" style="color:#c49948; font-family:'Be Vietnam Pro',sans-serif;">With gratitude</span>
+        <h2 class="font-script-accent text-gold-gradient italic leading-none mb-4" style="font-size: clamp(34px, 5.5vw, 44px); letter-spacing: normal; word-spacing: normal;">Honeymoon Fund</h2>
+        <div class="w-12 h-[1px] bg-gradient-to-r from-transparent via-[#c49948] to-transparent mx-auto mb-5 opacity-60"></div>
+        <p class="text-[14px] leading-relaxed max-w-[44ch] mx-auto" style="color: rgba(255,248,230,0.74); font-family:'Be Vietnam Pro',sans-serif;">Your presence is our greatest gift. Should you wish to honor us with a contribution, a monetary gift is preferred. A card and gift box will be available at the reception.</p>
+        <p class="mt-6 text-[11px] tracking-[0.14em] italic" style="color: rgba(252,228,160,0.62); font-family:'Be Vietnam Pro',sans-serif;">Thank you for celebrating with us — your kindness means the world.</p>
       </div>
-    </section>
-
+    </div>
+  </div>
 </div>
+
+<!-- ============================================================ -->
+<!-- CLOSING HERO — cinematic farewell                            -->
+<!-- ============================================================ -->
+<div class="closing-hero" style="min-height: 72vh">
+  <div class="ch-photo"><img src="galery%20(1).jpeg" alt="Charles and Leticia" loading="lazy"/></div>
+  <div class="ch-vignette" style="background: linear-gradient(to bottom, rgba(10,10,10,0.22) 0%, rgba(10,10,10,0.58) 68%, rgba(10,10,10,0.92) 100%)"></div>
+  <div class="ch-content text-center px-6 py-16 sm:py-20">
+    <div class="cb-ornament mb-6"></div>
+    <span class="block text-[10px] tracking-[0.32em] uppercase mb-3" style="color: rgba(252,228,160,0.75); font-family:'Be Vietnam Pro',sans-serif;">With love</span>
+    <h2 class="font-script-accent text-gold-gradient italic leading-[0.95] m-0" style="font-size: clamp(48px, 9vw, 86px); letter-spacing: -0.02em; word-spacing: normal;">Charles <span style="font-size:0.68em; opacity:0.9; font-style: italic; vertical-align: middle; margin: 0 0.08em;">&</span> Leticia</h2>
+    <div class="w-16 h-[1px] bg-gradient-to-r from-transparent via-[#c49948] to-transparent mx-auto my-5 opacity-60"></div>
+    <p class="text-[11px] tracking-[0.28em] uppercase" style="color: rgba(255,248,230,0.88); font-family:'Cinzel',serif;">December 31, 2026 — Belize City</p>
+    <div class="cb-ornament mt-6"></div>
+  </div>
+</div>
+
 </main>
-<!-- Glass NavBar -->
-<nav class="glass-radio-group fixed bottom-5 left-1/2 -translate-x-1/2 z-50" aria-label="Site navigation">
-<a href="#story" class="active">Story</a>
-<a href="#details">Ceremony</a>
-<a href="#gallery">Gallery</a>
-<a href="#gift">Gift</a>
-<a href="#rsvp">RSVP</a>
+<!-- Glass NavBar (hidden on hero, appears on scroll to details/sections) -->
+<nav class="glass-radio-group fixed bottom-5 left-1/2 -translate-x-1/2 z-50 nav-hidden" aria-label="Site navigation">
+<a href="#story" class="active" aria-label="Story"><span class="nav-ic material-symbols-outlined">auto_stories</span></a>
+<a href="#reception" aria-label="Reception"><span class="nav-ic material-symbols-outlined">local_bar</span></a>
+<a href="#gallery" aria-label="Gallery"><span class="nav-ic material-symbols-outlined">photo_library</span></a>
+<a href="#rsvp" aria-label="RSVP"><span class="nav-ic material-symbols-outlined" style="font-variation-settings:'FILL' 1">favorite</span></a>
+<a href="#gift" aria-label="Gift"><span class="nav-ic material-symbols-outlined">card_giftcard</span></a>
 <div class="glass-glider"></div>
 </nav>
 <!-- Countdown -->
@@ -703,14 +1599,20 @@ section[id] { scroll-margin-top: 5rem; }
     { key: 's', label: 'Seconds' }
   ];
   var cells = {};
-  units.forEach(function (u) {
+  units.forEach(function (u, i) {
+    if (i > 0) {
+      var sep = document.createElement('span');
+      sep.className = 'cd-sep';
+      sep.textContent = ':';
+      block.appendChild(sep);
+    }
     var el = document.createElement('div');
-    el.className = 'flex flex-col items-center glass-panel rounded-xl px-2 py-2.5 sm:px-4 sm:py-3 border-gold/20 min-w-[56px] sm:min-w-[72px]';
+    el.className = 'cd-unit';
     var num = document.createElement('span');
-    num.className = 'font-headline-lg text-gold-gradient text-[24px] sm:text-[34px]';
+    num.className = 'cd-digit text-gold-gradient tabular-nums';
     num.id = 'cd-' + u.key;
     var lab = document.createElement('span');
-    lab.className = 'font-label-sm text-on-surface-variant uppercase mt-1';
+    lab.className = 'font-label-sm label-premium text-gold/60 uppercase mt-0.5 text-[9px] sm:text-[10px]';
     lab.textContent = u.label;
     el.appendChild(num);
     el.appendChild(lab);
@@ -737,11 +1639,1263 @@ section[id] { scroll-margin-top: 5rem; }
 })();
 </script>
 
+<!-- Hero entrance + scroll reveal animations -->
+<script>
+(function () {
+  function animateHero() {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var els = document.querySelectorAll('#heroHead .hd-fade, #saveDateCard.hd-fade, #countdown-block.hd-fade');
+    if (reduce || sessionStorage.getItem('heroIntroDone')) {
+      els.forEach(function (el) { el.classList.add('hd-anim'); el.style.opacity=''; el.style.transform=''; });
+      var ph = document.getElementById('mainPhotoCard');
+      if (ph) { ph.style.opacity='1'; var im=ph.querySelector('img'); if(im) im.style.transform='scale(1)'; }
+      // ensure hero names visible if they were word-wrapped
+      document.querySelectorAll('#heroNames .word-reveal').forEach(function(w){ w.classList.add('rv-in'); });
+      return;
+    }
+    if (typeof gsap === 'undefined') {
+      els.forEach(function (el, i) {
+        el.style.transitionDelay = (i * 130) + 'ms';
+        el.classList.add('hd-anim');
+      });
+      return;
+    }
+    var photo = document.getElementById('mainPhotoCard');
+    var photoImg = photo ? photo.querySelector('img') : null;
+    var h2 = document.querySelector('#heroHead h2');
+    var h3 = document.getElementById('heroNames');
+    var card = document.getElementById('saveDateCard');
+    var countdown = document.getElementById('countdown-block');
+    // wrap hero names into words for stagger if not yet done
+    if (h3 && !h3.querySelector('.word-reveal')) {
+      var html = h3.innerHTML;
+      // keep the gold & span intact
+      var parts = html.split(/(\s+|<span[^>]*>.*?<\/span>)/);
+      var out = '';
+      var idx = 0;
+      parts.forEach(function(p){
+        if (!p || !p.trim()) { out += p; return; }
+        if (p.indexOf('<span')===0) { out += p; return; }
+        var w = p.trim();
+        if (!w) { out += p; return; }
+        out += '<span class="word-reveal-wrap"><span class="word-reveal" style="transition:none">' + w + '</span></span> ';
+        idx++;
+      });
+      h3.innerHTML = out;
+    }
+    // initial states — photo stays visible (photo first), text/cards staged
+    var inviteNote = document.querySelector('#countdown-block p.font-body-md');
+    var countPill = document.querySelector('#countdown-block .countdown-pill');
+    if (photoImg) gsap.set(photoImg, {scale:1.14});
+    if (h2) gsap.set(h2, {opacity:0, y:-28});
+    if (h3) {
+      var wrds = h3.querySelectorAll('.word-reveal');
+      if (wrds.length) gsap.set(wrds, {opacity:0, y:-34, rotation:0.5});
+      else gsap.set(h3, {opacity:0, y:-28, scale:0.97});
+    }
+    if (card) gsap.set(card, {opacity:0, y:-36, scale:0.94});
+    if (countPill) gsap.set(countPill, {opacity:0, y:-22});
+    if (inviteNote) gsap.set(inviteNote, {opacity:0, y:-16});
+    if (countdown) { countdown.style.opacity='1'; countdown.style.transform='none'; }
+    els.forEach(function(el){ el.classList.remove('hd-anim'); el.style.transitionDelay=''; });
+    var tl = gsap.timeline({defaults:{ease:'power3.out'}});
+    // 2-sec top-to-bottom cascade — all hero parts fly in from top
+    if (photoImg) tl.to(photoImg, {scale:1, duration:1.6, ease:'power1.out'}, 0);
+    if (h2) tl.to(h2, {opacity:1, y:0, duration:0.55, ease:'back.out(1.15)'}, 0.10);
+    if (h3) {
+      var wrds2 = h3.querySelectorAll('.word-reveal');
+      if (wrds2.length) tl.to(wrds2, {opacity:1, y:0, rotation:0, duration:0.5, stagger:0.07, ease:'back.out(1.25)'}, 0.32);
+      else tl.to(h3, {opacity:1, y:0, scale:1, duration:0.6, ease:'back.out(1.2)'}, 0.32);
+    }
+    if (card) tl.to(card, {opacity:1, y:0, scale:1, duration:0.65, ease:'back.out(1.3)'}, 0.72);
+    if (countPill) tl.to(countPill, {opacity:1, y:0, duration:0.5, ease:'back.out(1.2)'}, 1.15);
+    if (inviteNote) tl.to(inviteNote, {opacity:1, y:0, duration:0.5, ease:'power2.out'}, 1.45);
+    tl.call(function(){
+      try{ sessionStorage.setItem('heroIntroDone','1'); }catch(e){}
+      els.forEach(function(el){ el.classList.add('hd-anim'); });
+      if (h2) h2.style.transform='none';
+      if (h3) h3.querySelectorAll('.word-reveal').forEach(function(w){ w.classList.add('rv-in'); w.style.transform='none'; });
+      if (card) card.style.transform='none';
+      if (countPill) countPill.style.transform='none';
+      if (inviteNote) inviteNote.style.transform='none';
+    }, null, 2.0);
+  }
+  function setupReveal() {
+    document.querySelectorAll('.rv-g').forEach(function (g) {
+      Array.prototype.forEach.call(g.children, function (c, i) {
+        c.classList.add('rv');
+        c.style.transitionDelay = (i * 110) + 'ms';
+      });
+    });
+    var items = document.querySelectorAll('.rv, .rv-left, .rv-right, .rv-up');
+    if (!items.length) return;
+    if (!('IntersectionObserver' in window)) {
+      items.forEach(function (el) { el.classList.add('rv-in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          en.target.classList.add('rv-in');
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -4% 0px' });
+    items.forEach(function (el) { io.observe(el); });
+  }
+  window.__animateHero = animateHero;
+  if (document.readyState !== 'loading') setupReveal();
+  else document.addEventListener('DOMContentLoaded', setupReveal);
+  window.addEventListener('load', function () {
+    if (!document.querySelector('#heroHead .hd-fade.hd-anim')) animateHero();
+  });
+  // Safety net: never leave the hero invisible (e.g. if the intro path is skipped).
+  setTimeout(function () {
+    if (!document.querySelector('#heroHead .hd-fade.hd-anim')) animateHero();
+  }, 2500);
+})();
+</script>
+
+<!-- Remotion-inspired: consistent word-by-word heading reveals + stronger side fly-ins -->
+<script>
+(function () {
+  // Skip if reduced motion
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+
+  // 1) Enhance side fly-ins: make distance + spring more pronounced (85px, spring bezier already in CSS)
+  // Add stagger to bento grid if missing
+  document.querySelectorAll('.celebration-section .grid > div, .gift-section .bento-card, #dresscode').forEach(function (el, i) {
+    if (!el.style.transitionDelay) el.style.transitionDelay = (i * 90) + 'ms';
+  });
+
+  // 2) Word-split for every main heading / script line — single consistent style (Remotion spring)
+  var SELECTOR = [
+    '#details h2',                           // The Celebration
+    '.celebration-section h3',               // Our Journey, Ceremony, Reception
+    '.cinematic-break .cb-content p.font-script-accent', // Dress to Celebrate + With love quote
+    '.cinematic-break .cb-content span.font-label-sm',   // Style / With love labels
+    '.dresscode-section h2',                 // Guest Attire Palette
+    '#gallery h2',                           // Our Moments
+    '.rsvp-photo-section h2'                // RSVP — gift + closing stay plain text
+  ].join(',');
+
+  function wrapWords(el) {
+    if (el.dataset.wrapped) return;
+    // Preserve <br> as forced breaks
+    var html = el.innerHTML;
+    // Split on <br> first
+    var parts = html.split(/<br\s*\/?>/i);
+    var wrapped = parts.map(function (part) {
+      var words = part.trim().split(/\s+/).filter(Boolean);
+      return words.map(function (w, i) {
+        return '<span class="word-reveal-wrap"><span class="word-reveal" style="transition-delay:' + (i * 45) + 'ms">' + w + '</span></span>';
+      }).join(' ');
+    }).join('<br/>');
+    el.innerHTML = wrapped;
+    el.dataset.wrapped = '1';
+    // Observe each word
+    var wordsEls = el.querySelectorAll('.word-reveal');
+    if (!wordsEls.length) return;
+    if (!('IntersectionObserver' in window)) {
+      wordsEls.forEach(function (w) { w.classList.add('rv-in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          // Stagger inside the heading with Remotion-like spring sequence
+          var parent = en.target.closest('[data-wrapped]') || el;
+          var all = parent.querySelectorAll('.word-reveal');
+          all.forEach(function (w, idx) {
+            setTimeout(function () { w.classList.add('rv-in'); }, idx * 45);
+          });
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    // Observe the heading itself; when it enters, trigger all words
+    io.observe(el);
+  }
+
+  function init() {
+    document.querySelectorAll(SELECTOR).forEach(function (h) {
+      // Only wrap if text is not already wrapped and has visible text
+      if (h.textContent.trim().length > 1) wrapWords(h);
+    });
+    // Also ensure .rv-up headings that are not in selector (e.g., RSVP pull) get same treatment
+    document.querySelectorAll('.rv-up:not([data-wrapped]) h2, .rv-up:not([data-wrapped]) .font-script-accent').forEach(function (h) {
+      if (h.textContent.trim().length > 2) wrapWords(h);
+    });
+  }
+
+  if (document.readyState !== 'loading') init();
+  else document.addEventListener('DOMContentLoaded', init);
+
+  // ---- Ensure EVERY heading gets consistent word reveal (fallback) ----
+  var FALLBACK_SEL = 'h2.font-headline-lg, h3.bento-heading, .rsvp-photo-section h2, #gallery h2, .cinematic-break p.font-script-accent';
+  function fallbackWrap() {
+    document.querySelectorAll(FALLBACK_SEL).forEach(function (h) {
+      if (!h.dataset.wrapped && h.textContent.trim().length > 1) wrapWords(h);
+    });
+  }
+  if (document.readyState !== 'loading') fallbackWrap();
+  else document.addEventListener('DOMContentLoaded', fallbackWrap);
+  window.addEventListener('load', function () { setTimeout(fallbackWrap, 400); });
+})();
+</script>
+
+<!-- Premium: Every heading animates, cards feel interactive, bg photos have subtle parallax -->
+<script>
+(function () {
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+
+  // ---- 1. Ensure every heading has Word Reveal (catch any missed) ----
+  // handled above fallback; this block adds staggered delay consistency check
+  // (already word-reveal CSS handles 45ms per word — consistent across all headings)
+
+  // ---- 2. Subtle parallax for bg photos — crisp premium, 6-8% move ----
+  var parallaxImgs = document.querySelectorAll('.cb-photo img, .ch-photo img, .rsvp-bg-photo img, .gal-photo-bg img, .dc-photo-bg img');
+  if (parallaxImgs.length && 'IntersectionObserver' in window) {
+    var ticking = false;
+    function updateParallax() {
+      var vh = window.innerHeight;
+      parallaxImgs.forEach(function (img) {
+        var sec = img.closest('.cinematic-break, .closing-hero, .rsvp-photo-section, .gallery-section, .dresscode-section');
+        if (!sec) return;
+        var rect = sec.getBoundingClientRect();
+        // progress 0 (below viewport) -> 1 (above viewport)
+        var progress = (vh - rect.top) / (vh + rect.height);
+        progress = Math.max(0, Math.min(1, progress));
+        // subtle 36px total travel (-18 to +18) + scale 1.08 already in CSS
+        var y = (progress - 0.5) * 36;
+        img.style.transform = 'translate3d(0,' + y.toFixed(2) + 'px,0) scale(1.08)';
+      });
+      ticking = false;
+    }
+    function onScroll() {
+      if (!ticking) { ticking = true; requestAnimationFrame(updateParallax); }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    // initial
+    updateParallax();
+  }
+
+  // ---- 3. Cards feel interactive — 3D tilt + glare, keeps black ----
+  var cards = document.querySelectorAll('.bento-card-dark, .bento-card, .fan-card');
+  cards.forEach(function (card) {
+    // inject glare layer once
+    if (!card.querySelector('.tilt-glare')) {
+      var glare = document.createElement('span');
+      glare.className = 'tilt-glare';
+      glare.setAttribute('aria-hidden', 'true');
+      card.style.position = card.style.position || 'relative';
+      card.style.overflow = 'hidden';
+      card.appendChild(glare);
+    }
+    var glareEl = card.querySelector('.tilt-glare');
+    card.addEventListener('mousemove', function (e) {
+      var r = card.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width;
+      var y = (e.clientY - r.top) / r.height;
+      var rotY = (x - 0.5) * 9;   // subtle 9deg max
+      var rotX = (0.5 - y) * 7;
+      card.style.transform = 'perspective(900px) rotateX(' + rotX.toFixed(2) + 'deg) rotateY(' + rotY.toFixed(2) + 'deg) translateY(-4px) scale(1.01)';
+      card.style.setProperty('--mx', (x * 100) + '%');
+      card.style.setProperty('--my', (y * 100) + '%');
+      if (glareEl) glareEl.style.opacity = '1';
+    });
+    card.addEventListener('mouseleave', function () {
+      card.style.transform = '';
+      if (glareEl) glareEl.style.opacity = '0';
+    });
+    // keyboard focus also shows subtle lift
+    card.addEventListener('focusin', function () {
+      card.style.transform = 'perspective(900px) translateY(-3px) scale(1.005)';
+    });
+    card.addEventListener('focusout', function () {
+      card.style.transform = '';
+    });
+  });
+})();
+</script>
+
+<!-- Ship guarantee: nothing the reveal observers miss ever stays hidden -->
+<script>
+(function () {
+  function reveal(el) {
+    el.style.transition = 'none';
+    el.style.opacity = '1';
+    el.style.transform = 'none';
+    el.style.visibility = 'visible';
+    el.classList.add('rv-in');
+  }
+  function sweep() {
+    var sel = '.word-reveal:not(.rv-in), .rv:not(.rv-in), .rv-left:not(.rv-in), .rv-right:not(.rv-in), .rv-up:not(.rv-in), .rv-scale:not(.rv-in), .rv-blur:not(.rv-in)';
+    var els = document.querySelectorAll(sel);
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      if (el.closest && el.closest('.gift-section, .closing-hero')) { reveal(el); continue; }
+      var r = el.getBoundingClientRect();
+      if (r.width === 0 && r.height === 0) continue;
+      if (r.bottom < -10 || r.top > vh + 10) continue;
+      reveal(el);
+    }
+  }
+  function go() { sweep(); }
+  window.addEventListener('scroll', sweep, { passive: true });
+  window.addEventListener('resize', sweep, { passive: true });
+  if (document.readyState !== 'loading') go();
+  else document.addEventListener('DOMContentLoaded', go);
+  window.addEventListener('load', function () { setTimeout(sweep, 300); });
+  setTimeout(sweep, 1000);
+  setTimeout(sweep, 2500);
+})();
+</script>
+
+<!-- Reactive Physics Fireworks backdrop behind intro (Optimized: Max 3-6 fireworks limit, ultra-lightweight 60fps) -->
+<script>
+(function () {
+  const canvas = document.getElementById('fwCanvas');
+  if (!canvas || !canvas.getContext) return;
+  const ctx = canvas.getContext('2d', { alpha: true });
+  let W, H, DPR;
+  let isRunning = true;
+  let rafId = null;
+
+  function resize() {
+    DPR = Math.min(window.devicePixelRatio || 1, 1.5);
+    W = window.innerWidth;
+    H = window.innerHeight;
+    canvas.width = W * DPR;
+    canvas.height = H * DPR;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // ---------- physical constants ----------
+  const GRAVITY = 0.055;
+  const AIR_DRAG = 0.988;
+  const WIND = 0.005;
+  let MAX_ACTIVE_SHELLS = 5;      // raised during finale
+  let MAX_TOTAL_SPARKS = 180;     // raised during finale
+
+  // ---------- background stars (lightweight) ----------
+  const stars = [];
+  for (let i = 0; i < 65; i++) {
+    stars.push({
+      x: Math.random() * W,
+      y: Math.random() * H * 0.7,
+      r: Math.random() * 1.1 + 0.3,
+      phase: Math.random() * Math.PI * 2,
+      speed: 0.008 + Math.random() * 0.012
+    });
+  }
+
+  // ---------- palettes — rich bronze, gold, champagne, pearl ----------
+  const PALETTES = [
+    [38, 32],    // deep bronze -> amber
+    [44, 38],    // warm gold -> honey
+    [50, 44],    // champagne -> light gold
+    [32, 26],    // copper -> bronze
+    [46, 40],    // rich gold
+    [52, 48],    // pale champagne
+    [-1, -1]     // white / pearl (handled by white flag)
+  ];
+
+  function hsl(h, s, l, a) {
+    return 'hsla(' + h + ', ' + s + '%, ' + l + '%, ' + a + ')';
+  }
+
+  // ---------- particle pools ----------
+  let sparks = [];
+  let smokePuffs = [];
+  let flashes = [];
+  let shells = [];
+
+  class Spark {
+    constructor(x, y, angle, speed, hue, opts = {}) {
+      this.x = x; this.y = y;
+      this.vx = Math.cos(angle) * speed;
+      this.vy = Math.sin(angle) * speed;
+      this.hue = hue;
+      this.sat = opts.sat || (70 + Math.random() * 20);
+      this.baseLight = opts.light || (52 + Math.random() * 14);
+      this.life = 1;
+      this.decay = opts.decay || (0.018 + Math.random() * 0.016);
+      this.size = opts.size || (1.1 + Math.random() * 1.0);
+      this.gravityMul = opts.gravityMul || 1;
+      this.dragMul = opts.dragMul || 1;
+      this.flicker = opts.flicker || false;
+      this.crackle = opts.crackle || false;
+      this.crackleAt = this.crackle ? (0.2 + Math.random() * 0.3) : -1;
+      this.hasCrackled = false;
+      this.trail = [];
+      this.trailLen = opts.trailLen || 2;
+      this.white = opts.white || false;
+      this.hotSpan = 0.08;
+      this.px = x; this.py = y;
+    }
+    step() {
+      this.px = this.x; this.py = this.y;
+      this.trail.push({ x: this.x, y: this.y });
+      if (this.trail.length > this.trailLen) this.trail.shift();
+
+      this.vx *= (AIR_DRAG * this.dragMul);
+      this.vy *= (AIR_DRAG * this.dragMul);
+      this.vy += GRAVITY * this.gravityMul;
+      this.vx += WIND;
+
+      this.x += this.vx;
+      this.y += this.vy;
+      this.life -= this.decay;
+
+      if (this.crackle && !this.hasCrackled && this.life < (1 - this.crackleAt)) {
+        this.hasCrackled = true;
+        return 'crackle';
+      }
+      return null;
+    }
+    get dead() { return this.life <= 0; }
+
+    thermal(ageFrac) {
+      if (this.white) {
+        const dying = Math.max(0, ageFrac - 0.7) / 0.3;
+        return { h: 40, s: 10 + dying * 20, l: 92 - dying * 35 };
+      }
+      if (ageFrac < this.hotSpan) {
+        return { h: this.hue, s: this.sat * 0.4, l: 95 };
+      }
+      return { h: this.hue, s: this.sat, l: this.baseLight };
+    }
+
+    draw() {
+      const a = Math.max(this.life, 0);
+      if (a <= 0.01) return;
+      const ageFrac = 1 - this.life;
+      const flick = this.flicker ? (0.6 + Math.random() * 0.4) : 1;
+      const c = this.thermal(ageFrac);
+
+      // Lightweight 1-step line trail
+      if (this.trail.length > 0) {
+        const p0 = this.trail[0];
+        ctx.strokeStyle = hsl(c.h, c.s, c.l, a * 0.45 * flick);
+        ctx.lineWidth = this.size * 0.6;
+        ctx.beginPath();
+        ctx.moveTo(p0.x, p0.y);
+        ctx.lineTo(this.x, this.y);
+        ctx.stroke();
+      }
+
+      // Fast core spark
+      ctx.fillStyle = hsl(c.h, c.s, c.l, a * flick);
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size * (0.6 + a * 0.4), 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  class Smoke {
+    constructor(x, y) {
+      this.x = x; this.y = y;
+      this.r = 2 + Math.random() * 2;
+      this.life = 1;
+      this.decay = 0.022 + Math.random() * 0.018;
+    }
+    step() {
+      this.y -= 0.18;
+      this.r += 0.06;
+      this.life -= this.decay;
+    }
+    get dead() { return this.life <= 0; }
+    draw() {
+      ctx.beginPath();
+      ctx.fillStyle = 'rgba(180,180,190,' + (this.life * 0.018) + ')';
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  class Shell {
+    constructor(x, targetY, hueSeed, scale = 1) {
+      this.x = x;
+      this.startX = x;
+      this.y = H + 8;
+      const dist = (H + 8 - targetY);
+      this.vy = -Math.sqrt(2 * GRAVITY * dist) * 1.02;
+      this.vx = (Math.random() - 0.5) * 0.5;
+      this.targetY = targetY;
+      this.hueSeed = hueSeed;
+      this.scale = Math.min(scale, 1.2);
+      this.trail = [];
+      this.dead = false;
+    }
+    step() {
+      this.trail.push({ x: this.x, y: this.y });
+      if (this.trail.length > 5) this.trail.shift();
+
+      this.vy += GRAVITY * 0.9;
+      this.vx *= 0.995;
+      this.x += this.vx;
+      this.y += this.vy;
+
+      if (this.vy >= -0.5 || this.y <= this.targetY) {
+        this.explode();
+        this.dead = true;
+      }
+    }
+    draw() {
+      for (let i = 0; i < this.trail.length; i++) {
+        const t = this.trail[i];
+        const a = (i / this.trail.length) * 0.7;
+        ctx.beginPath();
+        ctx.fillStyle = 'rgba(255, 235, 200, ' + a + ')';
+        ctx.arc(t.x, t.y, 1.3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.fillStyle = 'rgba(255,250,230,0.85)';
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    explode() {
+      const type = Math.random();
+      const s = this.scale;
+      const mom = { x: this.vx, y: this.vy };
+      if (type < 0.35) burstPeony(this.x, this.y, this.hueSeed, s, mom);
+      else if (type < 0.6) burstWillow(this.x, this.y, this.hueSeed, s, mom);
+      else if (type < 0.8) burstChrysanthemum(this.x, this.y, this.hueSeed, s, mom);
+      else if (type < 0.92) burstCrackle(this.x, this.y, this.hueSeed, s, mom);
+      else burstRing(this.x, this.y, this.hueSeed, s, mom);
+
+      if (smokePuffs.length < 8) smokePuffs.push(new Smoke(this.x, this.y));
+      flashAt(this.x, this.y, s);
+    }
+  }
+
+  function flashAt(x, y, scale = 1) {
+    if (flashes.length < 3) flashes.push({ x, y, life: 1, scale });
+  }
+
+  function pickHue(seed) {
+    if (seed === -1) return null;
+    return seed + (Math.random() * 6 - 3);
+  }
+
+  function burstPeony(x, y, hueSeed, scale = 1, mom = { x: 0, y: 0 }) {
+    if (sparks.length >= MAX_TOTAL_SPARKS) return;
+    const white = hueSeed === -1;
+    const count = Math.floor((32 + Math.random() * 14) * scale);
+    const speedBase = (2.8 + Math.random() * 1.0) * (0.9 + scale * 0.2);
+    for (let i = 0; i < count; i++) {
+      const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.3;
+      const speed = speedBase * (0.75 + Math.random() * 0.5);
+      const sp = new Spark(x, y, angle, speed, white ? 0 : pickHue(hueSeed), {
+        decay: 0.012 + Math.random() * 0.01,
+        size: 1.2 + Math.random() * 1.0,
+        trailLen: 2,
+        white
+      });
+      sp.vx += mom.x * 0.18; sp.vy += mom.y * 0.18;
+      sparks.push(sp);
+    }
+  }
+
+  function burstChrysanthemum(x, y, hueSeed, scale = 1, mom = { x: 0, y: 0 }) {
+    if (sparks.length >= MAX_TOTAL_SPARKS) return;
+    const white = hueSeed === -1;
+    const count = Math.floor((38 + Math.random() * 14) * scale);
+    const speedBase = (3.0 + Math.random() * 1.0) * (0.9 + scale * 0.2);
+    for (let i = 0; i < count; i++) {
+      const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.25;
+      const speed = speedBase * (0.8 + Math.random() * 0.4);
+      const sp = new Spark(x, y, angle, speed, white ? 0 : pickHue(hueSeed), {
+        decay: 0.010 + Math.random() * 0.008,
+        size: 1.0 + Math.random() * 0.8,
+        trailLen: 3,
+        flicker: true,
+        white
+      });
+      sp.vx += mom.x * 0.15; sp.vy += mom.y * 0.15;
+      sparks.push(sp);
+    }
+  }
+
+  function burstWillow(x, y, hueSeed, scale = 1, mom = { x: 0, y: 0 }) {
+    if (sparks.length >= MAX_TOTAL_SPARKS) return;
+    const white = hueSeed === -1;
+    const count = Math.floor((26 + Math.random() * 12) * scale);
+    const speedBase = (2.2 + Math.random() * 0.8) * (0.9 + scale * 0.2);
+    for (let i = 0; i < count; i++) {
+      const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.35;
+      const speed = speedBase * (0.75 + Math.random() * 0.45);
+      const sp = new Spark(x, y, angle, speed, white ? 0 : pickHue(hueSeed), {
+        decay: 0.006 + Math.random() * 0.004,
+        size: 1.0 + Math.random() * 0.6,
+        trailLen: 5,
+        gravityMul: 1.4,
+        dragMul: 0.996,
+        white
+      });
+      sp.vx += mom.x * 0.15; sp.vy += mom.y * 0.15;
+      sparks.push(sp);
+    }
+  }
+
+  function burstCrackle(x, y, hueSeed, scale = 1, mom = { x: 0, y: 0 }) {
+    if (sparks.length >= MAX_TOTAL_SPARKS) return;
+    const white = hueSeed === -1;
+    const count = Math.floor((24 + Math.random() * 10) * scale);
+    const speedBase = (2.5 + Math.random() * 1.0) * (0.9 + scale * 0.2);
+    for (let i = 0; i < count; i++) {
+      const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.4;
+      const speed = speedBase * (0.7 + Math.random() * 0.5);
+      const sp = new Spark(x, y, angle, speed, white ? 0 : pickHue(hueSeed), {
+        decay: 0.014 + Math.random() * 0.012,
+        size: 1.1 + Math.random() * 0.8,
+        trailLen: 2,
+        crackle: true,
+        white
+      });
+      sp.vx += mom.x * 0.16; sp.vy += mom.y * 0.16;
+      sparks.push(sp);
+    }
+  }
+
+  function burstRing(x, y, hueSeed, scale = 1, mom = { x: 0, y: 0 }) {
+    if (sparks.length >= MAX_TOTAL_SPARKS) return;
+    const white = hueSeed === -1;
+    const count = Math.floor(28 * scale);
+    const speedBase = 2.8 * (0.9 + scale * 0.2);
+    for (let i = 0; i < count; i++) {
+      const angle = (Math.PI * 2 * i) / count;
+      const speed = speedBase * (0.95 + Math.random() * 0.06);
+      const sp = new Spark(x, y, angle, speed, white ? 0 : pickHue(hueSeed), {
+        decay: 0.010 + Math.random() * 0.006,
+        size: 1.1 + Math.random() * 0.8,
+        trailLen: 3,
+        gravityMul: 0.7,
+        white
+      });
+      sp.vx += mom.x * 0.12; sp.vy += mom.y * 0.12;
+      sparks.push(sp);
+    }
+  }
+
+  function spawnCrackleBurst(x, y) {
+    if (sparks.length >= MAX_TOTAL_SPARKS) return;
+    const count = 4 + Math.floor(Math.random() * 3);
+    for (let i = 0; i < count; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 0.5 + Math.random() * 1.0;
+      sparks.push(new Spark(x, y, angle, speed, 0, {
+        decay: 0.035 + Math.random() * 0.02,
+        size: 0.8 + Math.random() * 0.5,
+        trailLen: 1,
+        white: true
+      }));
+    }
+  }
+
+  let recentX = [];
+  function pickLaunchX() {
+    const margin = W * 0.12;
+    for (let attempt = 0; attempt < 4; attempt++) {
+      const x = margin + Math.random() * (W - margin * 2);
+      const tooClose = recentX.some(rx => Math.abs(rx - x) < W * 0.18);
+      if (!tooClose) {
+        recentX.push(x);
+        if (recentX.length > 3) recentX.shift();
+        return x;
+      }
+    }
+    const x = margin + Math.random() * (W - margin * 2);
+    recentX.push(x);
+    if (recentX.length > 3) recentX.shift();
+    return x;
+  }
+
+  function launchShell(x, scale = 1) {
+    if (!isRunning || shells.length >= MAX_ACTIVE_SHELLS) return;
+    const px = x !== undefined ? x : pickLaunchX();
+    const targetY = H * (0.16 + Math.random() * 0.26);
+    const useWhite = Math.random() < 0.14;
+    const hueSeed = useWhite ? -1 : PALETTES[Math.floor(Math.random() * PALETTES.length)][Math.random() < 0.5 ? 0 : 1];
+    shells.push(new Shell(px, targetY, hueSeed, scale));
+  }
+
+  function launchSalvo(count, scaleBase = 1.0) {
+    if (!isRunning) return;
+    const allowed = Math.min(count, MAX_ACTIVE_SHELLS - shells.length, 3);
+    if (allowed <= 0) return;
+    const laneWidth = W / (allowed + 1);
+    for (let i = 0; i < allowed; i++) {
+      const x = laneWidth * (i + 1) + (Math.random() - 0.5) * laneWidth * 0.4;
+      setTimeout(() => {
+        if (isRunning) launchShell(x, scaleBase * (0.9 + Math.random() * 0.2));
+      }, i * 90);
+    }
+  }
+
+  // Interactive Click & Touch
+  const introEl = document.getElementById('introScreen');
+  const targetForClick = introEl || canvas;
+  targetForClick.addEventListener('click', (e) => {
+    launchShell(e.clientX, 1.0);
+  });
+  targetForClick.addEventListener('touchstart', (e) => {
+    if (e.touches && e.touches[0]) launchShell(e.touches[0].clientX, 1.0);
+  }, { passive: true });
+
+  let frameCount = 0;
+  const PHASES = ['calm', 'build', 'finale', 'rest'];
+  let phaseIndex = 0;
+  let phaseEndFrame = 0;
+  let nextAutoLaunch = 20;
+
+  function enterPhase(phase) {
+    const durations = {
+      calm:   [300, 600],
+      build:  [400, 700],
+      finale: [180, 300],
+      rest:   [500, 800]
+    };
+    const [lo, hi] = durations[phase];
+    phaseEndFrame = frameCount + lo + Math.random() * (hi - lo);
+  }
+  enterPhase(PHASES[phaseIndex]);
+
+  function directorTick() {
+    if (frameCount < phaseEndFrame) {
+      if (shells.length < MAX_ACTIVE_SHELLS && sparks.length < MAX_TOTAL_SPARKS) scheduleWithinPhase();
+    } else {
+      phaseIndex = (phaseIndex + 1) % PHASES.length;
+      enterPhase(PHASES[phaseIndex]);
+    }
+  }
+
+  function scheduleWithinPhase() {
+    if (frameCount < nextAutoLaunch) return;
+    const phase = PHASES[phaseIndex];
+
+    if (phase === 'calm') {
+      launchShell(undefined, 0.75 + Math.random() * 0.25);
+      nextAutoLaunch = frameCount + 100 + Math.random() * 120;
+    } else if (phase === 'build') {
+      if (Math.random() < 0.25 && shells.length <= 2) {
+        launchSalvo(2, 0.85);
+        nextAutoLaunch = frameCount + 80 + Math.random() * 90;
+      } else {
+        launchShell(undefined, 0.85 + Math.random() * 0.3);
+        nextAutoLaunch = frameCount + 60 + Math.random() * 70;
+      }
+    } else if (phase === 'finale') {
+      launchSalvo(2 + Math.floor(Math.random() * 2), 1.05 + Math.random() * 0.25);
+      nextAutoLaunch = frameCount + 35 + Math.random() * 35;
+    } else if (phase === 'rest') {
+      if (Math.random() < 0.4) {
+        launchShell(undefined, 0.65 + Math.random() * 0.2);
+      }
+      nextAutoLaunch = frameCount + 240 + Math.random() * 200;
+    }
+  }
+
+  function drawSky() {
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.clearRect(0, 0, W, H);
+
+    ctx.globalCompositeOperation = 'lighter';
+    for (const s of stars) {
+      s.phase += s.speed;
+      const tw = 0.5 + Math.sin(s.phase) * 0.5;
+      ctx.beginPath();
+      ctx.fillStyle = 'rgba(255,255,255,' + (0.12 + tw * 0.45) + ')';
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  function frame() {
+    if (!isRunning) return;
+    frameCount++;
+    drawSky();
+
+    // smoke
+    ctx.globalCompositeOperation = 'source-over';
+    for (let i = smokePuffs.length - 1; i >= 0; i--) {
+      const p = smokePuffs[i];
+      p.step();
+      p.draw();
+      if (p.dead) smokePuffs.splice(i, 1);
+    }
+
+    ctx.globalCompositeOperation = 'lighter';
+
+    // shells
+    for (let i = shells.length - 1; i >= 0; i--) {
+      const sh = shells[i];
+      sh.step();
+      sh.draw();
+      if (sh.dead) shells.splice(i, 1);
+    }
+
+    // sparks
+    for (let i = sparks.length - 1; i >= 0; i--) {
+      const sp = sparks[i];
+      const evt = sp.step();
+      if (evt === 'crackle') spawnCrackleBurst(sp.x, sp.y);
+      sp.draw();
+      if (sp.dead) sparks.splice(i, 1);
+    }
+
+    // flashes
+    for (let i = flashes.length - 1; i >= 0; i--) {
+      const f = flashes[i];
+      f.life -= 0.08;
+      if (f.life <= 0) { flashes.splice(i, 1); continue; }
+      const r = (45 * (1 - f.life) + 8) * (f.scale || 1);
+      ctx.fillStyle = 'rgba(255,250,230,' + (f.life * 0.22) + ')';
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    directorTick();
+    rafId = requestAnimationFrame(frame);
+  }
+
+  // initial launches
+  setTimeout(() => { if (isRunning) launchShell(W * 0.5); }, 300);
+  setTimeout(() => { if (isRunning) launchShell(W * 0.35); }, 1300);
+
+  rafId = requestAnimationFrame(frame);
+
+  window.__bigFireworks = function (count) {
+    if (isRunning) launchSalvo(Math.min(count || 4, MAX_ACTIVE_SHELLS), 1.15);
+  };
+
+  // Chain-reaction grand finale — the best fireworks transition ever
+  window.__grandFinale = function () {
+    if (!isRunning) return;
+    MAX_ACTIVE_SHELLS = 18;
+    MAX_TOTAL_SPARKS = 600;
+
+    // Wave 1 — quick coverage left to right
+    const wave1 = [0.08, 0.22, 0.38, 0.52, 0.66, 0.80, 0.94];
+    wave1.forEach((xFrac, i) => {
+      setTimeout(() => {
+        if (isRunning) launchShell(W * xFrac, 1.35 + Math.random() * 0.25);
+      }, i * 42);
+    });
+
+    // Wave 2 — center cluster with scale boost
+    setTimeout(() => {
+      [0.15, 0.35, 0.5, 0.65, 0.85].forEach((xFrac, i) => {
+        setTimeout(() => {
+          if (isRunning) launchShell(W * xFrac, 1.55 + Math.random() * 0.3);
+        }, i * 52);
+      });
+    }, 220);
+
+    // Wave 3 — rapid fill
+    setTimeout(() => {
+      [0.1, 0.28, 0.44, 0.58, 0.72, 0.88].forEach((xFrac, i) => {
+        setTimeout(() => {
+          if (isRunning) launchShell(W * xFrac, 1.4 + Math.random() * 0.25);
+        }, i * 40);
+      });
+    }, 470);
+
+    // Wave 4 — big centered salvo
+    setTimeout(() => {
+      launchSalvo(5, 1.7);
+    }, 700);
+
+    // Wave 5 — finale blowout
+    setTimeout(() => {
+      [0.2, 0.4, 0.5, 0.6, 0.8].forEach((xFrac, i) => {
+        setTimeout(() => {
+          if (isRunning) launchShell(W * xFrac, 1.8 + Math.random() * 0.3);
+        }, i * 48);
+      });
+    }, 860);
+
+    // Restore limits after burst
+    setTimeout(() => { MAX_ACTIVE_SHELLS = 5; MAX_TOTAL_SPARKS = 180; }, 2200);
+  };
+
+  window.__stopIntroFireworks = function () {
+    isRunning = false;
+    if (rafId) cancelAnimationFrame(rafId);
+    sparks = [];
+    shells = [];
+    smokePuffs = [];
+    flashes = [];
+  };
+})();
+</script>
+
+<!-- Foreground fireworks — renders IN FRONT of the GIF (z-55), triggered on reveal -->
+<script>
+(function() {
+  var canvas = document.getElementById('fwCanvasFg');
+  if (!canvas || !canvas.getContext) return;
+  var ctx = canvas.getContext('2d');
+  var W = 0, H = 0, DPR = 1;
+  var shells = [], sparks = [], flashes = [];
+  var rafId = null;
+
+  function resize() {
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    var intro = document.getElementById('introScreen');
+    W = intro ? intro.clientWidth : window.innerWidth;
+    H = intro ? intro.clientHeight : window.innerHeight;
+    canvas.width = W * DPR;
+    canvas.height = H * DPR;
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  var PALETTES = [
+    ['hsl(38,90%,70%)', 'hsl(44,95%,85%)'],  // bronze -> warm gold
+    ['hsl(46,100%,75%)', 'hsl(52,100%,88%)'], // rich gold -> champagne
+    ['hsl(0,0%,100%)', 'hsl(48,100%,86%)'],   // pearl white -> gold
+    ['hsl(32,85%,65%)', 'hsl(42,95%,80%)'],   // copper bronze -> honey
+    ['hsl(50,100%,82%)', 'hsl(40,90%,72%)']   // pale gold -> amber
+  ];
+  var GRAVITY = 260;
+
+  function rand(a, b) { return a + Math.random() * (b - a); }
+  function choice(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  function Shell(x, scale) {
+    this.x = x;
+    this.y = H;
+    this.targetY = rand(H * 0.08, H * 0.45);
+    var dist = this.y - this.targetY;
+    this.vy = -Math.sqrt(2 * GRAVITY * dist) * rand(0.98, 1.06);
+    this.vx = rand(-18, 18);
+    var pal = choice(PALETTES);
+    this.color = Math.random() < 0.5 ? pal[0] : pal[1];
+    this.scale = scale || 1;
+    this.dead = false;
+    this.trail = [];
+  }
+  Shell.prototype.step = function(dt) {
+    this.trail.push({x: this.x, y: this.y});
+    if (this.trail.length > 10) this.trail.shift();
+    this.vy += GRAVITY * dt;
+    this.x += this.vx * dt;
+    this.y += this.vy * dt;
+    if (this.vy >= -4 || this.y <= this.targetY) { this.explode(); this.dead = true; }
+  };
+  Shell.prototype.draw = function() {
+    for (var i = 0; i < this.trail.length; i++) {
+      var p = this.trail[i], a = i / this.trail.length;
+      ctx.globalAlpha = a * 0.85;
+      ctx.fillStyle = this.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 1.8 * a + 0.5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  };
+  Shell.prototype.explode = function() {
+    flashes.push({x: this.x, y: this.y, life: 1, color: this.color});
+    var count = Math.round(rand(48, 80) * this.scale);
+    for (var i = 0; i < count; i++) {
+      var angle = (i / count) * Math.PI * 2;
+      var speed = rand(55, 130) * this.scale;
+      sparks.push({
+        x: this.x, y: this.y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        life: 1, maxLife: rand(1.1, 1.8),
+        color: this.color,
+        size: rand(1.4, 2.6) * this.scale,
+        drag: rand(0.968, 0.985)
+      });
+    }
+  };
+
+  function fgFrame() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.globalCompositeOperation = 'lighter';
+    var dt = 1 / 60;
+    for (var i = shells.length - 1; i >= 0; i--) {
+      shells[i].step(dt); shells[i].draw();
+      if (shells[i].dead) shells.splice(i, 1);
+    }
+    for (var j = sparks.length - 1; j >= 0; j--) {
+      var sp = sparks[j];
+      sp.vy += GRAVITY * dt * 0.7;
+      sp.vx *= sp.drag; sp.vy *= sp.drag;
+      sp.x += sp.vx * dt; sp.y += sp.vy * dt;
+      sp.life -= dt / sp.maxLife;
+      if (sp.life <= 0) { sparks.splice(j, 1); continue; }
+      ctx.globalAlpha = sp.life * 0.85;
+      ctx.fillStyle = sp.color;
+      ctx.beginPath();
+      ctx.arc(sp.x, sp.y, Math.max(0.3, sp.size * sp.life), 0, Math.PI * 2);
+      ctx.fill();
+    }
+    for (var k = flashes.length - 1; k >= 0; k--) {
+      var f = flashes[k];
+      f.life -= 0.08;
+      if (f.life <= 0) { flashes.splice(k, 1); continue; }
+      ctx.globalAlpha = f.life * 0.28;
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, 60 * (1 - f.life) + 10, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,250,230,1)';
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = 'source-over';
+    if (shells.length > 0 || sparks.length > 0 || flashes.length > 0) {
+      rafId = requestAnimationFrame(fgFrame);
+    } else { rafId = null; }
+  }
+
+  function launchFg(count, scale) {
+    scale = scale || 1.2;
+    resize();
+    var allowed = Math.min(count || 4, 6);
+    var laneW = W / (allowed + 1);
+    for (var i = 0; i < allowed; i++) {
+      (function(idx) {
+        setTimeout(function() {
+          var x = laneW * (idx + 1) + rand(-laneW * 0.35, laneW * 0.35);
+          shells.push(new Shell(x, scale * rand(0.9, 1.15)));
+          if (!rafId) rafId = requestAnimationFrame(fgFrame);
+        }, idx * 75);
+      })(i);
+    }
+  }
+
+  window.__bigFgFireworks = function(count) { launchFg(count || 6, 1.3); };
+})();
+</script>
+
+<!-- Save-the-Date card fireworks — white & gold, behind an opacity layer -->
+<script>
+(function () {
+  var card = document.getElementById('saveDateCard');
+  var canvas = document.getElementById('stdFwCanvas');
+  if (!card || !canvas || !canvas.getContext) return;
+  var ctx = canvas.getContext('2d');
+
+  var palette = ['#ffffff', '#fffdf2', '#fff9e6', '#ffedb3', '#ffe066', '#ffd700', '#e6b422', '#fff2cc'];
+
+  function rand(min, max) { return Math.random() * (max - min) + min; }
+  function choice(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  var W, H, DPR;
+  function resize() {
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.clientWidth || card.clientWidth;
+    H = canvas.clientHeight || card.clientHeight;
+    canvas.width = W * DPR;
+    canvas.height = H * DPR;
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  var GRAVITY = 55;
+  var DRAG = 0.985;
+  function wind() { return Math.sin(Date.now() / 4000) * 4; }
+
+  var rockets = [];
+  var particles = [];
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function Rocket() {
+    this.x = rand(W * 0.12, W * 0.88);
+    this.y = H;
+    this.targetY = rand(H * 0.08, H * 0.58);
+    var dist = this.y - this.targetY;
+    this.vy = -Math.sqrt(2 * GRAVITY * dist) * rand(1.0, 1.08);
+    this.vx = rand(-4, 4);
+    this.color = choice(palette);
+    var types = ['peony', 'peony', 'willow', 'ring', 'peony'];
+    this.type = types[Math.floor(Math.random() * types.length)];
+    this.trail = [];
+    this.dead = false;
+  }
+  Rocket.prototype.step = function (dt) {
+    this.trail.push({ x: this.x, y: this.y });
+    if (this.trail.length > 14) this.trail.shift();
+    this.vy += GRAVITY * dt * 0.9;
+    this.x += this.vx * dt;
+    this.y += this.vy * dt;
+    if (this.vy >= -6 || this.y <= this.targetY) { this.explode(); this.dead = true; }
+  };
+  Rocket.prototype.draw = function () {
+    ctx.lineCap = 'round';
+    for (var i = 0; i < this.trail.length; i++) {
+      var p = this.trail[i];
+      var a = i / this.trail.length;
+      ctx.beginPath();
+      ctx.fillStyle = this.color;
+      ctx.globalAlpha = a * 0.8;
+      ctx.arc(p.x, p.y, 1.4 * a + 0.4, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  };
+  Rocket.prototype.explode = function () {
+    spawnFlash(this.x, this.y, this.color);
+    spawnBurst(this.x, this.y, this.color, this.type);
+  };
+
+  function spawnFlash(x, y, color) {
+    particles.push({ x: x, y: y, vx: 0, vy: 0, life: 0, maxLife: 0.18, size: 22, color: color, flash: true });
+  }
+
+  function Spark(x, y, angle, speed, color, opts) {
+    opts = opts || {};
+    this.x = x; this.y = y;
+    this.vx = Math.cos(angle) * speed;
+    this.vy = Math.sin(angle) * speed;
+    this.color = color;
+    this.gravityMult = opts.gravityMult || 1;
+    this.dragMult = opts.dragMult || 1;
+    this.size = opts.size || rand(1.4, 2.4);
+    this.life = 0;
+    this.maxLife = opts.maxLife || rand(1.2, 1.8);
+    this.crackle = !!opts.crackle;
+    this.crackled = false;
+    this.dead = false;
+  }
+  Spark.prototype.step = function (dt) {
+    this.life += dt;
+    if (this.life >= this.maxLife) { this.dead = true; return; }
+    var drag = Math.pow(DRAG, this.dragMult);
+    this.vx = this.vx * drag + wind() * dt;
+    this.vy = this.vy * drag + GRAVITY * this.gravityMult * dt;
+    this.x += this.vx * dt;
+    this.y += this.vy * dt;
+    if (this.crackle && !this.crackled && this.life > this.maxLife * 0.55 && Math.random() < 0.045) {
+      this.crackled = true;
+      var n = Math.floor(rand(3, 6));
+      for (var i = 0; i < n; i++) {
+        var a = rand(0, Math.PI * 2);
+        var s = rand(20, 55);
+        particles.push(new Spark(this.x, this.y, a, s, '#fff6d9', { gravityMult: 1.3, dragMult: 1.4, size: rand(1, 1.6), maxLife: rand(0.25, 0.45) }));
+      }
+    }
+  };
+  Spark.prototype.draw = function () {
+    var t = this.life / this.maxLife;
+    var alpha = t < 0.08 ? t / 0.08 : 1 - Math.pow((t - 0.08) / 0.92, 1.4);
+    if (alpha <= 0) return;
+    ctx.globalAlpha = Math.max(0, alpha);
+    ctx.beginPath();
+    ctx.fillStyle = this.color;
+    var sz = this.size * (1 - t * 0.4);
+    ctx.arc(this.x, this.y, Math.max(0.3, sz), 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  };
+
+  function spawnBurst(x, y, color, type) {
+    var secondColor = Math.random() > 0.55 ? choice(palette) : color;
+    var count, speedMin, speedMax, gravityMult, dragMult, maxLife, crackleChance;
+    if (type === 'willow') {
+      count = Math.floor(rand(22, 30)); speedMin = 45; speedMax = 75;
+      gravityMult = 1.5; dragMult = 0.7; maxLife = rand(2.2, 2.8); crackleChance = 0;
+    } else if (type === 'ring') {
+      count = Math.floor(rand(24, 30)); speedMin = 90; speedMax = 105;
+      gravityMult = 0.9; dragMult = 1.1; maxLife = rand(1.3, 1.6); crackleChance = 0.2;
+    } else {
+      count = Math.floor(rand(28, 38)); speedMin = 50; speedMax = 120;
+      gravityMult = 1; dragMult = 1; maxLife = rand(1.3, 1.8); crackleChance = 0.22;
+    }
+    for (var j = 0; j < count; j++) {
+      var ang = type === 'ring' ? (Math.PI * 2 * j) / count + rand(-0.02, 0.02) : rand(0, Math.PI * 2);
+      var spd = rand(speedMin, speedMax);
+      var c = j % 3 === 0 ? secondColor : color;
+      particles.push(new Spark(x, y, ang, spd, c, {
+        gravityMult: gravityMult, dragMult: dragMult, maxLife: maxLife * rand(0.85, 1.05),
+        crackle: Math.random() < crackleChance,
+        size: type === 'willow' ? rand(1.1, 1.7) : rand(1.5, 2.5)
+      }));
+    }
+  }
+
+  function launchFirework() { rockets.push(new Rocket()); }
+
+  function scheduleNext() {
+    launchFirework();
+    if (Math.random() > 0.85) setTimeout(launchFirework, rand(200, 400));
+    setTimeout(scheduleNext, rand(1200, 2400));
+  }
+
+  var lastT = performance.now();
+  function tick(now) {
+    if (!canvas.isConnected) return;
+    var dt = Math.min((now - lastT) / 1000, 0.05);
+    lastT = now;
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.clearRect(0, 0, W, H);
+    ctx.globalCompositeOperation = 'lighter';
+    var i;
+    for (i = rockets.length - 1; i >= 0; i--) {
+      var r = rockets[i];
+      r.step(dt);
+      r.draw();
+      if (r.dead) rockets.splice(i, 1);
+    }
+    for (i = particles.length - 1; i >= 0; i--) {
+      var p = particles[i];
+      if (p.flash) {
+        p.life += dt;
+        var t = p.life / p.maxLife;
+        if (t >= 1) { particles.splice(i, 1); continue; }
+        ctx.globalAlpha = 1 - t;
+        var grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * (0.3 + t));
+        grad.addColorStop(0, '#ffffff');
+        grad.addColorStop(0.4, p.color);
+        grad.addColorStop(1, 'transparent');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size * (0.3 + t), 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+        continue;
+      }
+      p.step(dt);
+      p.draw();
+      if (p.dead) particles.splice(i, 1);
+    }
+    ctx.globalCompositeOperation = 'source-over';
+    requestAnimationFrame(tick);
+  }
+
+  if (reduceMotion) {
+    ctx.clearRect(0, 0, W, H);
+  } else {
+    requestAnimationFrame(tick);
+    launchFirework();
+    setTimeout(launchFirework, 900);
+    setTimeout(scheduleNext, 1500);
+  }
+})();
+</script>
+
 <!-- Intro experience: tap to play the animation, tap to enter. Runs once per session. -->
 <script>
 (function () {
   var intro = document.getElementById('introScreen');
   var firstImg = document.getElementById('firstImg');
+  var seqImg = document.getElementById('seqImg');
   var gifImg = document.getElementById('gifImg');
   var lastImg = document.getElementById('lastImg');
   var hintPill = document.getElementById('hintPill');
@@ -749,109 +2903,292 @@ section[id] { scroll-margin-top: 5rem; }
   var loaderCard = document.getElementById('loaderCard');
   var loadText = document.getElementById('loadText');
   var loadProgress = document.getElementById('loadProgress');
-  var petalsWrap = document.getElementById('petals');
-
-  var GIF_SRC = '../intro_1.gif';
-  var GIF_DURATION = 5080; // ms
-  var state = 'idle';      // idle -> playing -> hold -> loading -> exit
-
-  var preloader = new Image();
-  preloader.src = GIF_SRC;
+  var revealFlash = document.getElementById('revealFlash');
 
   function unlockScroll() {
     document.documentElement.classList.remove('no-scroll');
     document.body.classList.remove('no-scroll');
   }
 
-  function hold() {
-    if (state !== 'playing') return;
-    state = 'hold';
-    if (lastImg) lastImg.classList.remove('opacity-0');
-    if (gifImg) gifImg.classList.add('opacity-0');
-    if (hint) hint.textContent = 'Tap to Enter';
+  var state = 'loading';
+  var progress = 0;
+  var targetProgress = 0;
+  var currentProgress = 0;
+  var accumulated = 0;
+  var velocity = 0;
+  var maxScroll = 1800;
+  var frameCount = 127;
+  var isRevealing = false;
+  var rafId = null;
+  var autoplayId = null;
+
+  function frameSrc(n) {
+    var s = String(n);
+    while (s.length < 3) s = '0' + s;
+    return 'intro_frames/frame_' + s + '.webp';
   }
 
-  function play() {
-    if (state !== 'idle') return;
-    state = 'playing';
-    if (firstImg) firstImg.classList.add('opacity-0');
-    gifImg.src = GIF_SRC;
-    gifImg.classList.remove('opacity-0');
-    if (hint) hint.textContent = 'Enjoy the moment\u2026';
-    setTimeout(hold, GIF_DURATION);
+  // stagger names in first, then gif — names BEFORE card, photo holds
+  function animateNames() {
+    var names = document.querySelector('#introScreen .font-script-accent');
+    var hintEl = hintPill;
+    if (names && typeof gsap !== 'undefined') {
+      gsap.set(names, {opacity:0, y:14});
+      gsap.to(names, {opacity:1, y:0, duration:0.85, delay:0.08, ease:'power2.out'});
+    } else if (names) {
+      names.style.opacity = '1';
+    }
+    // hint scroll appears after names + photo pause
+    if (hintEl && state === 'loading') {
+      // will be shown after loading; keep hidden for now
+    }
   }
 
-  function startLoading() {
-    if (state !== 'hold') return;
-    state = 'loading';
-
-    if (hintPill) hintPill.classList.add('hidden');
-    if (loaderCard) loaderCard.classList.remove('hidden');
-
-    var assetsToPreload = [
-      '../main.jpeg',
-      '../galery (1).jpeg',
-      '../galery (2).jpeg',
-      '../galery (3).jpeg',
-      '../galery (4).jpeg',
-      '../galery (5).jpeg',
-      '../dress code.png',
-      '../RSVP BUTTON.png'
-    ];
-
-    var total = assetsToPreload.length;
-    var loaded = 0;
-    var minDisplayTime = 1200;
-    var startTime = Date.now();
-
-    function updateProgress() {
-      var pct = Math.min(100, Math.round((loaded / total) * 100));
-      if (loadProgress) loadProgress.style.width = pct + '%';
-      if (loadText) loadText.textContent = 'Loading your invitation… ' + pct + '%';
+  function warmCache() {
+    if (window.__frameCacheWarmed) return;
+    window.__frameCacheWarmed = true;
+    window.__frameCache = window.__frameCache || {};
+    for (var i = 1; i <= frameCount; i++) {
+      var src = frameSrc(i);
+      if (window.__frameCache[src]) continue;
+      var im = new Image();
+      im.decoding = 'async';
+      im.src = src;
+      window.__frameCache[src] = im;
     }
-
-    function finish() {
-      var elapsed = Date.now() - startTime;
-      var remaining = Math.max(0, minDisplayTime - elapsed);
-      setTimeout(function () {
-        exit();
-      }, remaining);
+  }
+  function preloadAround(idx) {
+    for (var d = -3; d <= 3; d++) {
+      var n = idx + d;
+      if (n < 1 || n > frameCount) continue;
+      var src = frameSrc(n);
+      if (!window.__frameCache) window.__frameCache = {};
+      if (window.__frameCache[src]) continue;
+      var im = new Image();
+      im.decoding = 'async';
+      im.src = src;
+      window.__frameCache[src] = im;
     }
+  }
 
-    if (total === 0) {
-      finish();
-      return;
+  function render(p) {
+    progress = p;
+    var center = document.querySelector('#introScreen .center-reveal');
+    if (firstImg) {
+      var fOp = progress < 0.18 ? (1 - progress / 0.18) : 0;
+      firstImg.style.opacity = String(fOp);
+      firstImg.style.display = progress < 0.18 ? 'block' : 'none';
     }
-
-    assetsToPreload.forEach(function (src) {
-      var img = new Image();
-      img.onload = img.onerror = function () {
-        loaded++;
-        updateProgress();
-        if (loaded >= total) {
-          finish();
+    if (seqImg) {
+      var showSeq = progress > 0.06 && progress < 0.985;
+      if (showSeq) {
+        seqImg.classList.remove('hidden');
+        seqImg.style.display = 'block';
+        seqImg.style.transform = '';
+        var frame = Math.floor(Math.min(progress, 0.94) * (frameCount - 1)) + 1;
+        if (frame < 1) frame = 1;
+        if (frame > frameCount) frame = frameCount;
+        var src = frameSrc(frame);
+        if (seqImg.getAttribute('src') !== src) seqImg.src = src;
+        preloadAround(frame);
+        // hold last frame 0.94-0.985 — keep seqImg on frame 127, don't disappear
+        if (progress >= 0.94) {
+          var holdSrc = frameSrc(frameCount);
+          if (seqImg.getAttribute('src') !== holdSrc) seqImg.src = holdSrc;
         }
-      };
-      img.src = src;
-    });
+      } else if (progress >= 0.985) {
+        // scroll the held last frame off — keep visible and translate with center
+        seqImg.style.display = 'block';
+        seqImg.classList.remove('hidden');
+        seqImg.src = frameSrc(frameCount);
+        var t2 = (progress - 0.985) / 0.015;
+        t2 = Math.max(0, Math.min(1, t2));
+        if (center) center.style.transform = 'translateY(' + (-t2 * 115) + 'vh) scale(' + (1 + t2 * 0.14) + ') rotate(' + (t2 * 2.5) + 'deg)';
+        else seqImg.style.transform = 'translateY(' + (-t2 * 115) + 'vh)';
+      } else {
+        seqImg.style.display = 'none';
+        seqImg.style.transform = '';
+      }
+    }
+    if (lastImg) {
+      // keep lastImg hidden during scrub — seqImg holds the last frame instead for seamless hold
+      lastImg.style.display = 'none';
+      lastImg.style.opacity = '0';
+      if (progress >= 0.985 && center) {
+        // ensure center scroll still drives even though lastImg hidden — seqImg is the holder
+      }
+    }
+    if (hintPill) {
+      var hintOp = 1 - progress * 1.7;
+      hintPill.style.opacity = String(Math.max(0, hintOp));
+      hintPill.style.transform = 'translateY(' + (progress * 14) + 'px)';
+      if (progress > 0.62) hintPill.style.pointerEvents = 'none';
+    }
+    if (progress >= 0.998 && !isRevealing) {
+      beginReveal();
+    }
+  }
+
+  function setProgress(p) {
+    targetProgress = Math.max(0, Math.min(1, p));
+    if (!rafId) rafId = requestAnimationFrame(tick);
+  }
+  function tick() {
+    var d = targetProgress - currentProgress;
+    if (Math.abs(d) < 0.0006) { currentProgress = targetProgress; render(currentProgress); rafId = null; return; }
+    currentProgress += d * 0.07;
+    render(currentProgress);
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function beginReveal() {
+    if (isRevealing) return;
+    isRevealing = true;
+    state = 'revealing';
+    if (seqImg) seqImg.style.display = 'none';
+    if (firstImg) firstImg.style.display = 'none';
+    if (gifImg) gifImg.style.display = 'none';
+    if (lastImg) {
+      lastImg.style.display = 'block';
+      lastImg.classList.remove('opacity-0');
+      lastImg.style.opacity = '1';
+    }
+    if (revealFlash) {
+      revealFlash.classList.remove('hidden');
+      revealFlash.classList.add('reveal-flash');
+    }
+    // Keep it to a few clean bursts — no upward launch, just a celebratory reveal.
+    if (window.__grandFinale) window.__grandFinale();
+    if (window.__bigFgFireworks) window.__bigFgFireworks(4);
+    setTimeout(function() {
+      if (window.__bigFgFireworks) window.__bigFgFireworks(5);
+    }, 180);
+    setTimeout(function() {
+      if (window.__bigFgFireworks) window.__bigFgFireworks(4);
+    }, 440);
+
+    setTimeout(exit, 1000);
   }
 
   function exit() {
-    if (state !== 'loading' && state !== 'hold') return;
+    if (state === 'exit') return;
     state = 'exit';
-    intro.classList.add('scatter');
-    intro.classList.add('intro-scroll-away');
+    intro.classList.add('intro-fade-away');
+    if (lastImg) lastImg.classList.remove('last-frame-fly');
+    var pageEl = document.querySelector('main');
+    if (pageEl) pageEl.classList.add('page-scale-in');
+    if (window.__bigFireworks) window.__bigFireworks(4);
+    if (window.__bigFgFireworks) window.__bigFgFireworks(4);
+    setTimeout(function () { if (window.__animateHero) window.__animateHero(); }, 350);
     setTimeout(function () {
       try { sessionStorage.setItem('cl_intro_done', '1'); } catch (e) {}
       if (intro.parentNode) intro.parentNode.removeChild(intro);
       unlockScroll();
-    }, 1100);
+      window.removeEventListener('wheel', onWheel, { passive: false });
+      window.removeEventListener('touchstart', onTouchStart, { passive: false });
+      window.removeEventListener('touchmove', onTouchMove, { passive: false });
+      window.removeEventListener('keydown', onKey);
+      var btn = document.getElementById('musicBtn');
+      if (btn) btn.classList.remove('hidden');
+    }, 1200);
+  }
+
+  // weighted momentum for scrub — feels like page scroll with physics
+  var velocity = 0;
+  var momentumRaf = null;
+  function applyVelocity() {
+    if (state !== 'scrolling') { velocity = 0; return; }
+    if (Math.abs(velocity) < 0.05) { velocity = 0; momentumRaf = null; return; }
+    velocity *= 0.95;
+    accumulated += velocity;
+    accumulated = Math.max(0, Math.min(maxScroll, accumulated));
+    setProgress(accumulated / maxScroll);
+    momentumRaf = requestAnimationFrame(applyVelocity);
+  }
+  function addVelocity(delta) {
+    velocity += delta;
+    velocity = Math.max(-60, Math.min(60, velocity));
+    if (!momentumRaf) momentumRaf = requestAnimationFrame(applyVelocity);
+  }
+
+  function onWheel(e) {
+    if (state !== 'scrolling') return;
+    e.preventDefault();
+    var delta = e.deltaY;
+    if (Math.abs(delta) < 4) delta *= 2.2;
+    // 3-4 scroll swipes to complete
+    addVelocity(delta * 0.28);
+    accumulated += delta * 0.22;
+    accumulated = Math.max(0, Math.min(maxScroll, accumulated));
+    setProgress(accumulated / maxScroll);
+  }
+
+  var touchStartY = 0;
+  var lastTouchY = 0;
+  var touchVelocity = 0;
+  function onTouchStart(e) {
+    if (e.touches && e.touches[0]) { touchStartY = e.touches[0].clientY; lastTouchY = touchStartY; touchVelocity = 0; velocity = 0; }
+  }
+  function onTouchMove(e) {
+    if (state !== 'scrolling') return;
+    if (!e.touches || !e.touches[0]) return;
+    var curY = e.touches[0].clientY;
+    var delta = lastTouchY - curY;
+    lastTouchY = curY;
+    if (Math.abs(delta) < 1) return;
+    e.preventDefault();
+    touchVelocity = delta * 0.62;
+    addVelocity(touchVelocity * 0.45);
+    accumulated += delta * 0.62;
+    accumulated = Math.max(0, Math.min(maxScroll, accumulated));
+    setProgress(accumulated / maxScroll);
+  }
+  function onTouchEnd(e) {
+    if (state !== 'scrolling') return;
+    if (Math.abs(touchVelocity) > 2) addVelocity(touchVelocity * 1.2);
+  }
+
+  function onKey(e) {
+    if (state !== 'scrolling') return;
+    if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+      e.preventDefault();
+      addVelocity(14);
+      accumulated += 110;
+      accumulated = Math.min(maxScroll, accumulated);
+      setProgress(accumulated / maxScroll);
+    } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+      e.preventDefault();
+      addVelocity(-14);
+      accumulated -= 110;
+      accumulated = Math.max(0, accumulated);
+      setProgress(accumulated / maxScroll);
+    } else if (e.key === 'Enter') {
+      if (progress > 0.06) autoplayToEnd();
+    }
+  }
+
+  function autoplayToEnd() {
+    if (state !== 'scrolling' || isRevealing) return;
+    var start = accumulated;
+    var startTime = performance.now();
+    var dur = 950;
+    function step(now) {
+      var t = Math.min(1, (now - startTime) / dur);
+      var eased = 1 - Math.pow(1 - t, 3);
+      accumulated = start + (maxScroll - start) * eased;
+      setProgress(accumulated / maxScroll);
+      if (t < 1 && state === 'scrolling') requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
   }
 
   if (!intro) return;
   try {
     if (sessionStorage.getItem('cl_intro_done')) {
       if (intro.parentNode) intro.parentNode.removeChild(intro);
+      if (window.__animateHero) window.__animateHero();
+      var btn2 = document.getElementById('musicBtn');
+      if (btn2) btn2.classList.remove('hidden');
       return;
     }
   } catch (e) {}
@@ -859,123 +3196,72 @@ section[id] { scroll-margin-top: 5rem; }
   document.documentElement.classList.add('no-scroll');
   document.body.classList.add('no-scroll');
 
+  // stagger: names in first, photo holds ~2.5s before gif scrubs
+  animateNames();
+  if (hintPill) { hintPill.classList.add('hidden'); hintPill.style.opacity = '0'; }
+  if (loaderCard) { loaderCard.classList.add('hidden'); loaderCard.style.display='none'; }
+  if (firstImg) { firstImg.style.display = 'block'; firstImg.style.opacity = '1'; }
+  if (lastImg) { lastImg.style.display = 'none'; lastImg.style.opacity = '0'; }
+  if (seqImg) { seqImg.style.display = 'none'; seqImg.classList.add('hidden'); }
+
+  // No jarring loader — let it load in background, show scroll hint immediately
+  state = 'scrolling';
+  if (hintPill) { hintPill.classList.remove('hidden'); hintPill.style.opacity = '1'; hintPill.style.transform = 'translateY(0)'; }
+  if (hint) hint.textContent = 'scroll';
+  render(0);
+  // background preload all 127 webp (no blocking UI)
+  var loadedFrames = 0;
+  for (var i = 1; i <= frameCount; i++) {
+    (function(idx){
+      var src = frameSrc(idx);
+      var im = new Image();
+      im.decoding = 'async';
+      im.onload = im.onerror = function(){ loadedFrames++; };
+      im.src = src;
+      if (!window.__frameCache) window.__frameCache = {};
+      window.__frameCache[src] = im;
+    })(i);
+  }
+
+  window.addEventListener('wheel', onWheel, { passive: false });
+  window.addEventListener('touchstart', onTouchStart, { passive: false });
+  window.addEventListener('touchmove', onTouchMove, { passive: false });
+  window.addEventListener('touchend', onTouchEnd, { passive: false });
+  window.addEventListener('keydown', onKey);
+
   intro.addEventListener('click', function () {
-    if (state === 'idle') play();
-    else if (state === 'hold') startLoading();
+    if (state === 'loading') return;
+    var music = document.getElementById('bgMusic');
+    if (music && music.paused) {
+      music.volume = 0.45;
+      music.play().catch(function () {});
+    }
+    if (state === 'scrolling') {
+      if (progress < 0.08) {
+        // first tap after names — just nudge a bit, don't autoplay fully
+        accumulated += maxScroll * 0.10;
+        accumulated = Math.min(maxScroll, accumulated);
+        setProgress(accumulated / maxScroll);
+      } else {
+        autoplayToEnd();
+      }
+    }
   });
 
-  // ---- Falling interactive petals — removed (floral assets deleted) ----
-  if (false && petalsWrap) {
-    var PETAL_SRC = '';
-    var petals = [];
-    var W = window.innerWidth, H = window.innerHeight;
-
-    function spawnPetal() {
-      var img = document.createElement('img');
-      img.className = 'petal';
-      img.src = PETAL_SRC;
-      img.alt = '';
-      var size = 12 + Math.random() * 18;
-      img.style.width = size + 'px';
-      img.style.zIndex = 1 + Math.floor(Math.random() * 40);
-      petalsWrap.appendChild(img);
-      var p = {
-        el: img, x: Math.random() * W, y: -40 - Math.random() * 120,
-        size: size, speed: 30 + Math.random() * 45,
-        drift: 15 + Math.random() * 30,
-        spin: (Math.random() - 0.5) * 1.5,
-        rot: Math.random() * 360,
-        phase: Math.random() * Math.PI * 2,
-        swaySpeed: 0.4 + Math.random() * 0.8,
-        dragging: false, flung: false, dead: false,
-        vx: 0, vy: 0, lastX: 0, lastY: 0, lastT: 0
-      };
-      petals.push(p);
-      requestAnimationFrame(function () { img.classList.add('petal-in'); });
-      bindPetal(p);
+  window.addEventListener('scroll', function () {
+    if (state !== 'scrolling') return;
+    var cur = window.scrollY;
+    var lastY = window.__lastScrollY || 0;
+    var dy = cur - lastY;
+    window.__lastScrollY = cur;
+    if (Math.abs(dy) > 1) {
+      addVelocity(dy * 0.9);
+      accumulated += dy * 1.6;
+      accumulated = Math.max(0, Math.min(maxScroll, accumulated));
+      setProgress(accumulated / maxScroll);
     }
+  });
 
-    function bindPetal(p) {
-      var el = p.el;
-      el.addEventListener('pointerdown', function (e) {
-        if (p.flung || p.dead) return;
-        e.preventDefault();
-        el.setPointerCapture(e.pointerId);
-        p.dragging = true;
-        p.dragOffX = e.clientX - p.x;
-        p.dragOffY = e.clientY - p.y;
-        p.lastX = e.clientX; p.lastY = e.clientY; p.lastT = performance.now();
-        el.classList.add('grabbed');
-      });
-      el.addEventListener('pointermove', function (e) {
-        if (!p.dragging) return;
-        p.x = e.clientX - p.dragOffX;
-        p.y = e.clientY - p.dragOffY;
-        var now = performance.now();
-        var dt = Math.max(1, now - p.lastT);
-        p.vx = (e.clientX - p.lastX) / dt * 1000;
-        p.vy = (e.clientY - p.lastY) / dt * 1000;
-        p.lastX = e.clientX; p.lastY = e.clientY; p.lastT = now;
-      });
-      el.addEventListener('pointerup', function () {
-        if (!p.dragging) return;
-        p.dragging = false;
-        el.classList.remove('grabbed');
-        if (Math.hypot(p.vx, p.vy) > 250) {
-          p.flung = true;
-          el.classList.add('flung');
-        } else { p.vx = 0; p.vy = 0; }
-      });
-      el.addEventListener('pointercancel', function () {
-        p.dragging = false;
-        el.classList.remove('grabbed');
-        p.vx = 0; p.vy = 0;
-      });
-    }
-
-    function removePetal(p) {
-      if (p.dead) return;
-      p.dead = true;
-      p.el.classList.add('petal-out');
-      setTimeout(function () {
-        if (p.el.parentNode) p.el.parentNode.removeChild(p.el);
-        spawnPetal();
-      }, 250);
-    }
-
-    var lastTime = performance.now();
-    function petalTick(now) {
-      var dt = Math.min(0.05, (now - lastTime) / 1000);
-      lastTime = now;
-      for (var i = 0; i < petals.length; i++) {
-        var p = petals[i];
-        if (p.dead) continue;
-        if (!p.dragging) {
-          if (p.flung) {
-            p.x += p.vx * dt;
-            p.y += p.vy * dt;
-            p.vy += 900 * dt;
-            p.rot += p.spin * 6 * dt;
-            if (p.x < -80 || p.x > W + 80 || p.y > H + 120 || p.y < -400) { removePetal(p); continue; }
-          } else {
-            p.phase += p.swaySpeed * dt;
-            p.y += p.speed * dt;
-            p.x += Math.sin(p.phase) * p.drift * dt;
-            p.rot += p.spin * dt;
-            if (p.y > H + 60) {
-              p.x = Math.random() * W;
-              p.y = -40 - Math.random() * 100;
-              p.speed = 40 + Math.random() * 70;
-            }
-          }
-        }
-        p.el.style.transform = 'translate(' + p.x + 'px,' + p.y + 'px) rotate(' + p.rot + 'deg)';
-      }
-      requestAnimationFrame(petalTick);
-    }
-    for (var i = 0; i < 12; i++) spawnPetal();
-    requestAnimationFrame(petalTick);
-  }
 })();
 </script>
 
@@ -1071,7 +3357,7 @@ function fallbackCopy(text) {
 
   var container = document.querySelector('.fan-layout');
   if (!container) return;
-  var cards = Array.from(container.querySelectorAll('.memory-card'));
+  var cards = Array.from(container.querySelectorAll('.memory-card, .fan-card'));
   var total = cards.length;
   if (!total) return;
   var centerSlot = total >> 1;
@@ -1184,7 +3470,7 @@ function fallbackCopy(text) {
   });
 })();
 </script>
-<!-- Glass nav: sliding gold glider + scroll spy -->
+<!-- Glass nav: sliding gold glider + scroll spy + hero show/hide -->
 <script>
 (function () {
   var nav = document.querySelector('.glass-radio-group');
@@ -1196,10 +3482,13 @@ function fallbackCopy(text) {
   glider.style.width = (100 / n) + '%';
 
   function setActive(link) {
-    if (link.classList.contains('active')) return;
+    if (!link) return;
     links.forEach(function (l) { l.classList.remove('active'); });
     link.classList.add('active');
-    glider.style.transform = 'translateX(' + (links.indexOf(link) * 100) + '%)';
+    var idx = links.indexOf(link);
+    if (idx >= 0) {
+      glider.style.transform = 'translateX(' + (idx * 100) + '%)';
+    }
   }
 
   links.forEach(function (link) {
@@ -1215,21 +3504,57 @@ function fallbackCopy(text) {
   var map = {};
   links.forEach(function (l) { map[l.getAttribute('href').slice(1)] = l; });
   var secs = Object.keys(map).map(function (id) { return document.getElementById(id); }).filter(Boolean);
+  
+  // Show / Hide navbar depending on scroll position (hidden on hero, visible once scrolled down)
+  function checkNavVisibility() {
+    var threshold = Math.min(window.innerHeight * 0.45, 380);
+    if (window.scrollY > threshold) {
+      nav.classList.remove('nav-hidden');
+      nav.classList.add('nav-visible');
+    } else {
+      nav.classList.add('nav-hidden');
+      nav.classList.remove('nav-visible');
+    }
+  }
+
+  window.addEventListener('scroll', checkNavVisibility, { passive: true });
+  checkNavVisibility();
+
+  // Scroll spy observer for section glider transitions
   if ('IntersectionObserver' in window && secs.length) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
-        if (en.isIntersecting && map[en.target.id]) setActive(map[en.target.id]);
+        if (en.isIntersecting && map[en.target.id]) {
+          setActive(map[en.target.id]);
+        }
       });
-    }, { rootMargin: '-45% 0px -50% 0px' });
+    }, { rootMargin: '-25% 0px -40% 0px' });
     secs.forEach(function (s) { io.observe(s); });
   }
 })();
 </script>
+<!-- Fit hero & intro names cleanly with generous side padding -->
+<script>
+(function () {
+  function fitNames() {
+    var heroH3 = document.getElementById('heroNames');
+    var introNames = document.querySelector('.intro-hero-names');
+    var targets = [heroH3, introNames].filter(Boolean);
+    targets.forEach(function(el) {
+      el.style.overflow = 'visible';
+    });
+  }
+  window.addEventListener('resize', fitNames);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitNames);
+  window.addEventListener('load', fitNames);
+  fitNames();
+})();
+</script>
 <!-- Dress code fullscreen viewer -->
 <div id="dressOverlay" class="hidden fixed inset-0 z-[10001] bg-black/90 backdrop-blur-md flex items-center justify-center cursor-pointer" onclick="if(event.target===this)closeDressCode()">
-<img src="../dress%20code.png" alt="Dress code guide" class="max-w-[92vw] max-h-[88vh] w-auto h-auto object-contain select-none" style="box-shadow:0 0 80px rgba(212,175,55,.28)"/>
+<img src="dress%20code.png" alt="Dress code guide" class="max-w-[92vw] max-h-[88vh] w-auto h-auto object-contain select-none" style="box-shadow:0 0 80px rgba(212,175,55,.28)"/>
 <div class="absolute top-4 right-4 flex gap-3">
-<a href="../dress%20code.png" download="Dress-Code.png" onclick="event.stopPropagation()" class="w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors no-underline" aria-label="Download dress code">
+<a href="dress%20code.png" download="Dress-Code.png" onclick="event.stopPropagation()" class="w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors no-underline" aria-label="Download dress code">
 <span class="material-symbols-outlined" data-icon="download">download</span>
 </a>
 <button onclick="event.stopPropagation();closeDressCode()" class="w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors" aria-label="Close">
@@ -1266,6 +3591,98 @@ function fallbackCopy(text) {
   };
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') closeDressCode();
+  });
+})();
+</script>
+
+<!-- Music toggle logic -->
+<script>
+function toggleMusic() {
+  var music = document.getElementById('bgMusic');
+  var icon = document.getElementById('musicIcon');
+  var btn = document.getElementById('musicBtn');
+  if (!music) return;
+  if (music.paused) {
+    music.play().catch(function () {});
+    if (icon) icon.textContent = 'volume_up';
+    if (btn) {
+      btn.classList.remove('opacity-60');
+      btn.setAttribute('title', 'Mute music');
+    }
+  } else {
+    music.pause();
+    if (icon) icon.textContent = 'volume_off';
+    if (btn) {
+      btn.classList.add('opacity-60');
+      btn.setAttribute('title', 'Play music');
+    }
+  }
+}
+</script>
+
+<script>
+(function() {
+  var gallery = document.getElementById('gallery');
+  var layer = document.getElementById('galleryHearts');
+  if (!gallery || !layer) return;
+
+  function spawnHeart(x, y) {
+    var heart = document.createElement('div');
+    heart.className = 'absolute pointer-events-none select-none text-3xl drop-shadow-[0_2px_8px_rgba(212,175,55,0.35)]';
+    heart.innerHTML = Math.random() > 0.5 ? '❤️' : '💖';
+    var rect = layer.getBoundingClientRect();
+    heart.style.left = (x - rect.left) + 'px';
+    heart.style.top = (y - rect.top) + 'px';
+    heart.style.opacity = '1';
+    heart.style.transform = 'translate(-50%, -50%) scale(0.7)';
+    layer.appendChild(heart);
+    var driftX = (Math.random() - 0.5) * 110;
+    var rot = (Math.random() - 0.5) * 80;
+    var scale = 1.4 + Math.random() * 1.1;
+    requestAnimationFrame(function() {
+      heart.style.transition = 'all 1.1s cubic-bezier(.22,1,.36,1)';
+      heart.style.transform = 'translate(calc(-50% + ' + driftX + 'px), -130px) scale(' + scale + ') rotate(' + rot + 'deg)';
+      heart.style.opacity = '0';
+    });
+    setTimeout(function() { if (heart.parentNode) heart.parentNode.removeChild(heart); }, 1150);
+  }
+
+  function burstHearts(x, y) {
+    var bursts = 7 + Math.floor(Math.random() * 4);
+    for (var i = 0; i < bursts; i++) {
+      (function(idx){
+        setTimeout(function(){
+          spawnHeart(x + (Math.random() - 0.5) * 36, y + (Math.random() - 0.5) * 24);
+        }, idx * 60);
+      })(i);
+    }
+  }
+  gallery.querySelectorAll('.memory-card, .fan-card').forEach(function(card) {
+    card.addEventListener('click', function(e){ burstHearts(e.clientX, e.clientY); });
+    card.addEventListener('touchend', function(e){
+      if (e.changedTouches && e.changedTouches[0]) burstHearts(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+    }, {passive: true});
+    card.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); var r = card.getBoundingClientRect(); burstHearts(r.left + r.width/2, r.top + r.height/2); }
+    });
+  });
+})();
+</script>
+<script>
+// remotion-style stagger fade-up for first-site text — luxe
+(function(){
+  var heroEls = document.querySelectorAll('#heroHead > *, #saveDateCard, #countdown-block > *');
+  heroEls.forEach(function(el,i){
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(18px)';
+    el.style.animation = 'staggerUp 0.9s cubic-bezier(.22,1,.36,1) forwards';
+    el.style.animationDelay = (0.08 + i*0.09) + 's';
+  });
+  // ensure all headings overflow visible (fix crop)
+  document.querySelectorAll('h1,h2,h3,.font-headline-lg,.font-headline-xl,.bento-heading,#heroNames').forEach(function(h){
+    h.style.overflow = 'visible';
+    h.style.paddingTop = '0.12em';
+    h.style.paddingBottom = '0.12em';
   });
 })();
 </script>

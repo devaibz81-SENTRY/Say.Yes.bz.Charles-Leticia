@@ -402,40 +402,56 @@ select:-webkit-autofill {
   75% { transform: translateX(6px); }
 }
 
-/* === VOICE NOTE — post-RSVP Opus recorder (luxury hero) === */
-.voice-card{position:relative}
-.voice-card .voice-ring-wrap{position:relative;width:132px;height:132px;margin:0 auto}
-.voice-ring-wrap::before{content:"";position:absolute;inset:-18px;border-radius:50%;background:radial-gradient(circle,rgba(212,175,55,.20) 0%,rgba(212,175,55,.06) 42%,transparent 72%);opacity:.95;pointer-events:none;filter:blur(10px)}
-.voice-ring-wrap svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
-.voice-ring-bg{fill:none;stroke:rgba(212,175,55,.13);stroke-width:3.5}
-.voice-ring-fg{fill:none;stroke:#D4AF37;stroke-width:3.5;stroke-linecap:round;stroke-dasharray: 276.46;stroke-dashoffset: 276.46;transition:stroke-dashoffset .15s linear}
-.voice-ring-fg.rec{stroke:#F5D76E;filter:drop-shadow(0 0 10px rgba(245,215,110,.65))}
-.voice-ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
-.voice-mic-btn{position:relative;width:92px;height:92px;border-radius:9999px;border:1px solid rgba(212,175,55,.38);background:radial-gradient(circle at 30% 28%,#FFF2B2 0%,#F5D76E 18%,#D4AF37 42%,#A8862B 72%,#7A5A12 100%);display:flex;align-items:center;justify-content:center;color:#0a0a0a;cursor:pointer;transition:transform .22s cubic-bezier(.16,1,.3,1),box-shadow .22s ease,opacity .2s ease;box-shadow:0 10px 28px rgba(212,175,55,.32),0 0 0 1px rgba(212,175,55,.18) inset,0 1px 0 rgba(255,255,255,.55) inset;overflow:hidden}
-.voice-mic-btn::before{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 50% 20%,rgba(255,255,255,.45),transparent 62%);opacity:.9;pointer-events:none}
-.voice-mic-btn::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:1px solid rgba(212,175,55,.22);opacity:0;transform:scale(.92);transition:opacity .3s ease,transform .3s ease;pointer-events:none}
-.voice-mic-btn:hover::after{opacity:1;transform:scale(1)}
-.voice-mic-btn:hover{transform:scale(1.05);box-shadow:0 16px 40px rgba(212,175,55,.48),0 0 0 1px rgba(212,175,55,.22) inset,0 1px 0 rgba(255,255,255,.55) inset}
-.voice-mic-btn:active{transform:scale(.97)}
-.voice-mic-btn .mic-icon{position:relative;z-index:1;transition:transform .2s ease,opacity .2s ease}
-.voice-mic-btn:disabled{opacity:.42;cursor:not-allowed;transform:none;box-shadow:0 10px 28px rgba(212,175,55,.18)}
-.voice-mic-btn.rec{animation:voicePulse 1.15s ease-in-out infinite}
-@keyframes voicePulse{0%,100%{box-shadow:0 10px 28px rgba(212,175,55,.32),0 0 0 1px rgba(212,175,55,.18) inset,0 0 0 0 rgba(239,68,68,.42)}50%{box-shadow:0 16px 40px rgba(212,175,55,.48),0 0 0 1px rgba(212,175,55,.22) inset,0 0 0 16px rgba(239,68,68,0)}}
-.voice-hero-label{font-family:'Great Vibes',cursive;font-size:1.02rem;color:rgba(245,215,110,.9);letter-spacing:.02em}
-.voice-timer{font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:.86rem;font-weight:700;letter-spacing:.06em;color:#F5D76E;tabular-nums;text-shadow:0 1px 10px rgba(212,175,55,.25)}
-.voice-timer.sub{font-size:.60rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,245,245,.62);display:inline-flex;align-items:center;gap:6px}
-.voice-bars{display:flex;align-items:center;justify-content:center;gap:3px;height:44px;padding:8px 0 4px}
-.voice-bars i{display:block;width:3.5px;min-height:4px;border-radius:9999px;background:linear-gradient(180deg,#F5D76E 0%,#D4AF37 55%,#A8862B 100%);opacity:.88;transition:height .09s ease,opacity .2s ease}
-.voice-bars.idle i{height:7px;opacity:.32}
-.voice-progress-track{height:5px;background:rgba(212,175,55,.13);border-radius:9999px;overflow:hidden;margin:6px 12px 4px;box-shadow:inset 0 1px 3px rgba(0,0,0,.4)}
-.voice-progress-fill{height:100%;width:0%;background:linear-gradient(90deg,#F5D76E 0%,#D4AF37 55%,#A8862B 100%);border-radius:9999px;transition:width .12s linear;box-shadow:0 0 8px rgba(212,175,55,.45)}
-.voice-progress-fill.rec{background:linear-gradient(90deg,#F87171 0%,#EF4444 100%);box-shadow:0 0 10px rgba(239,68,68,.6)}
-.voice-rec-dot{width:9px;height:9px;border-radius:50%;background:#EF4444;box-shadow:0 0 10px rgba(239,68,68,.9);animation:recBlink 1s ease-in-out infinite}
-@keyframes recBlink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.55;transform:scale(.85)}}
-.voice-pill{inline-size:fit-content;margin:0 auto;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:9999px;border:1px solid rgba(212,175,55,.28);background:rgba(212,175,55,.08);color:#F5D76E;font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:.64rem;letter-spacing:.12em;text-transform:uppercase}
-.voice-audio{width:100%;height:38px;border-radius:9999px}
-.voice-audio::-webkit-media-controls-panel{background:#252525}
-/* success stack: voice hero first, then song, then calendar */
+/* === Minimal Voice Note Recorder === */
+.voice-mic-btn {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(196, 153, 72, 0.5);
+  background: linear-gradient(135deg, rgba(252, 228, 160, 0.15) 0%, rgba(196, 153, 72, 0.25) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fce4a0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+.voice-mic-btn:hover {
+  transform: scale(1.05);
+  border-color: #fce4a0;
+  background: linear-gradient(135deg, rgba(252, 228, 160, 0.25) 0%, rgba(196, 153, 72, 0.35) 100%);
+  box-shadow: 0 6px 20px rgba(196, 153, 72, 0.3);
+}
+.voice-mic-btn:active {
+  transform: scale(0.96);
+}
+.voice-mic-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+.voice-mic-btn.rec {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+  animation: voiceRecPulse 1.2s infinite ease-in-out;
+}
+@keyframes voiceRecPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 12px rgba(239, 68, 68, 0.4); }
+  50% { transform: scale(1.06); box-shadow: 0 0 24px rgba(239, 68, 68, 0.7); }
+}
+.voice-audio {
+  width: 100%;
+  height: 38px;
+  border-radius: 9999px;
+}
+.voice-audio::-webkit-media-controls-panel {
+  background: #1c1c1c;
+}
+/* success stack: voice first, then written note, then calendar */
 #success{display:flex;flex-direction:column;gap:1.25rem}
 #success > .success-pop{width:100%}
 #voiceNoteCard{order:1}
@@ -681,72 +697,56 @@ select:-webkit-autofill {
 </div>
 </div>
 
-<!-- VOICE NOTE — post-RSVP Opus gift (Convex File Storage, 60s) -->
-<div id="voiceNoteCard" class="success-pop chad-form text-center space-y-4">
-  <div class="text-center pb-1">
-    <p class="font-script-accent text-gold italic" style="font-size:1.35rem">Leave a voice note</p>
-    <p id="voiceFromLine" class="chad-label !mb-0 hidden" style="font-size:.62rem;opacity:.9;margin-top:4px">From: <span id="voiceFromName" class="text-gold-light">Guest</span></p>
-  </div>
+<!-- VOICE NOTE — post-RSVP (60s max) -->
+<div id="voiceNoteCard" class="success-pop chad-form text-center space-y-3">
 
-  <!-- Unsupported (Opus only — Safari shows this) -->
-  <div id="voiceUnsupported" class="hidden rounded-2xl border border-amber-500/30 bg-amber-500/10 p-4 text-center space-y-2">
-    <div class="w-12 h-12 mx-auto rounded-full bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-300"><span class="material-symbols-outlined">mic_off</span></div>
-    <p class="font-label-sm text-amber-200" style="font-size:.72rem;letter-spacing:.08em">Voice notes need Opus — try Chrome or Edge</p>
-    <p class="font-body-md" style="font-size:.78rem;color:rgba(255,255,255,.72);line-height:1.5">This iPhone browser doesn’t record Opus yet. Open this page in <strong style="color:#F5D76E">Chrome</strong> and your note will work — or leave a written note above and we’ll treasure it just the same.</p>
-    <a href="#postMessage" onclick="document.getElementById('postMessage')&&document.getElementById('postMessage').focus()" class="inline-flex items-center gap-1.5 text-amber-300 font-label-sm underline underline-offset-4" style="font-size:.70rem;letter-spacing:.06em">Write a note instead →</a>
+  <!-- Unsupported -->
+  <div id="voiceUnsupported" class="hidden rounded-2xl border border-amber-500/30 bg-amber-500/10 p-4 space-y-2">
+    <p class="font-label-sm text-amber-200" style="font-size:.72rem;letter-spacing:.08em">Voice notes need Chrome or Edge</p>
+    <p class="font-body-md" style="font-size:.76rem;color:rgba(255,255,255,.70);line-height:1.5">Safari doesn't support this yet — open in <strong style="color:#F5D76E">Chrome</strong> to record, or leave a written note.</p>
   </div>
 
   <!-- Recorder core -->
   <div id="voiceCore" class="space-y-3">
-    <!-- Ring + timer -->
-    <div class="flex flex-col items-center gap-2 py-1">
-      <div class="voice-ring-wrap">
-        <svg viewBox="0 0 100 100" aria-hidden="true">
-          <circle class="voice-ring-bg" cx="50" cy="50" r="44"></circle>
-          <circle id="voiceRingFg" class="voice-ring-fg" cx="50" cy="50" r="44"></circle>
-        </svg>
-        <div class="voice-ring-center">
-          <button id="voiceRecordBtn" type="button" class="voice-mic-btn" aria-label="Record voice note">
-            <span class="material-symbols-outlined mic-icon" style="font-size:32px">mic</span>
-          </button>
-          <div id="voiceTimer" class="voice-timer">0:00 / 1:00</div>
-          <div id="voiceTimerSub" class="voice-timer sub hidden"><span class="voice-rec-dot inline-block align-middle" style="margin-right:6px"></span>Recording</div>
-        </div>
-      </div>
-      <div class="voice-progress-track" aria-hidden="true"><div id="voiceProgressFill" class="voice-progress-fill"></div></div>
-      <p id="voiceProgressLabel" class="text-center font-label-sm" style="font-size:.72rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#F5D76E;margin-top:48px;text-shadow:0 1px 12px rgba(212,175,55,.35)">Tap the mic — 60s</p>
-      <p id="voiceErr" class="hidden text-center font-label-sm" style="font-size:.68rem;color:#ff8a80;letter-spacing:.04em"></p>
+    <p class="font-label-sm uppercase tracking-[0.2em] text-gold" style="font-size:.68rem">Leave a voice note</p>
+
+    <!-- Mic button + status -->
+    <div class="flex flex-col items-center gap-3">
+      <button id="voiceRecordBtn" type="button" class="voice-mic-btn" aria-label="Record voice note">
+        <span class="material-symbols-outlined mic-icon" style="font-size:32px">mic</span>
+      </button>
+      <p id="voiceProgressLabel" class="font-label-sm" style="font-size:.70rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#F5D76E">Tap to record — 60s</p>
+      <p id="voiceErr" class="hidden font-label-sm" style="font-size:.68rem;color:#ff8a80;letter-spacing:.04em"></p>
+      <!-- hidden timer/sub kept for JS compat -->
+      <div id="voiceTimer" class="voice-timer hidden">0:00 / 1:00</div>
+      <div id="voiceTimerSub" class="voice-timer sub hidden"><span class="voice-rec-dot inline-block align-middle" style="margin-right:6px"></span>Recording</div>
+      <!-- hidden ring for JS compat -->
+      <svg id="voiceRingFg" style="display:none"></svg>
+      <div id="voiceProgressFill" style="display:none"></div>
     </div>
 
-    <!-- Controls: Stop / Preview / Re-record / Send (no-hold, single mic toggle) -->
-    <div id="voiceControls" class="flex flex-col gap-3 relative z-10">
-      <div class="grid grid-cols-2 gap-2">
-        <button id="voiceStopBtn" type="button" class="hidden chad-btn w-full flex items-center justify-center gap-2" style="background:#1a1a1a;border:1px solid rgba(239,68,68,.35);pointer-events:auto"><span class="material-symbols-outlined text-base" style="color:#F87171">stop_circle</span> Stop</button>
-        <button id="voiceRerecordBtn" type="button" class="hidden chad-btn w-full flex items-center justify-center gap-2 relative z-10" style="pointer-events:auto"><span class="material-symbols-outlined text-base">refresh</span> Re-record</button>
+    <!-- Controls -->
+    <div id="voiceControls" class="flex flex-col gap-2">
+      <div class="flex gap-2 justify-center">
+        <button id="voiceStopBtn" type="button" class="hidden chad-btn flex items-center justify-center gap-1.5" style="background:#1a1a1a;border:1px solid rgba(239,68,68,.35)"><span class="material-symbols-outlined text-sm" style="color:#F87171">stop_circle</span> Stop</button>
+        <button id="voiceRerecordBtn" type="button" class="hidden chad-btn flex items-center justify-center gap-1.5"><span class="material-symbols-outlined text-sm">refresh</span> Re-record</button>
         <button id="voiceStopOnlySpacer" type="button" class="hidden chad-btn" style="visibility:hidden" aria-hidden="true"></button>
       </div>
-      <button id="voiceSendBtn" type="button" class="hidden chad-btn chad-btn-gold w-full flex items-center justify-center gap-2 relative z-10 shadow-[0_8px_24px_rgba(212,175,55,.35)]" style="pointer-events:auto"><span class="material-symbols-outlined text-base">send</span> Send my voice</button>
+      <button id="voiceSendBtn" type="button" class="hidden chad-btn chad-btn-gold w-full flex items-center justify-center gap-2"><span class="material-symbols-outlined text-base">send</span> Send my voice</button>
     </div>
 
     <!-- Preview player -->
-    <div id="voicePreviewWrap" class="hidden space-y-3 pt-1">
-      <div class="rounded-2xl border border-gold/20 bg-black/30 p-3">
-        <div class="flex items-center justify-between gap-3 mb-2">
-          <span class="inline-flex items-center gap-1.5 font-label-sm text-gold/80" style="font-size:.64rem;letter-spacing:.12em;text-transform:uppercase"><span class="material-symbols-outlined text-sm">graphic_eq</span> Preview</span>
-          <span id="voicePreviewDur" class="font-label-sm text-white/70" style="font-size:.64rem;letter-spacing:.06em">0:00</span>
-        </div>
-        <audio id="voicePreviewAudio" class="voice-audio w-full" controls preload="metadata"></audio>
-        <p class="chad-label text-center !mb-0" style="font-size:.60rem;opacity:.5;margin-top:6px">Listen back — if you love it, send it. It stays private until after New Year’s.</p>
-      </div>
+    <div id="voicePreviewWrap" class="hidden pt-1">
+      <audio id="voicePreviewAudio" class="voice-audio w-full" controls preload="metadata"></audio>
+      <p id="voicePreviewDur" class="chad-label text-center !mb-0" style="font-size:.58rem;opacity:.45;margin-top:4px">Listen back, then send when ready</p>
     </div>
 
     <!-- Sent state -->
     <div id="voiceSent" class="hidden rounded-2xl border border-emerald-500/25 bg-emerald-500/10 p-4 text-center space-y-2">
-      <div class="w-12 h-12 mx-auto rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-300"><span class="material-symbols-outlined">check_circle</span></div>
-      <p class="font-label-sm text-emerald-200" style="font-size:.72rem;letter-spacing:.08em">Voice note sent — they’ll hear it after the celebration 💛</p>
-      <p class="font-body-md" style="font-size:.74rem;color:rgba(255,255,255,.68)">From: <span id="voiceSentName" class="text-gold-light">you</span> • one note per guest — you can re-record to replace it before the wedding.</p>
-      <button id="voiceReplaceBtn" type="button" class="chad-btn w-full mt-1 flex items-center justify-center gap-2"><span class="material-symbols-outlined text-base">mic</span> Record a new one</button>
-      <a href="voice-messages.html" class="inline-flex items-center gap-1.5 font-label-sm text-gold/80 hover:text-gold underline underline-offset-4" style="font-size:.66rem;letter-spacing:.08em">Hear all voice notes after Dec 31 →</a>
+      <span class="material-symbols-outlined text-emerald-300 text-3xl">check_circle</span>
+      <p class="font-label-sm text-emerald-200" style="font-size:.70rem;letter-spacing:.08em">Voice note sent 💛</p>
+      <p class="font-body-md" style="font-size:.72rem;color:rgba(255,255,255,.65)">From: <span id="voiceSentName" class="text-gold-light">you</span> — you can re-record before the wedding.</p>
+      <button id="voiceReplaceBtn" type="button" class="chad-btn mt-1 flex items-center justify-center gap-2 mx-auto"><span class="material-symbols-outlined text-base">mic</span> Record a new one</button>
     </div>
   </div>
 </div>
@@ -754,7 +754,6 @@ select:-webkit-autofill {
 <div id="toggleWrittenWrap" class="text-center success-pop" style="order:3">
   <button id="toggleWrittenBtn" type="button" class="font-label-sm text-gold/60 hover:text-gold underline underline-offset-4 py-2" style="font-size:.68rem;letter-spacing:.08em">Prefer to write a note instead? →</button>
 </div>
-
 
 
 <div id="sucCalendarBlock" class="success-pop bg-white/5 border border-gold/30 rounded-2xl p-5 text-center space-y-3">
@@ -776,9 +775,7 @@ select:-webkit-autofill {
 </div>
 
 <div class="success-pop flex flex-col gap-3 pt-2 max-w-md mx-auto">
-<a id="songRequestBtn" href="music.html" class="hidden chad-btn chad-btn-gold w-full flex items-center justify-center gap-2 no-underline">
-  <span class="material-symbols-outlined text-xl">music_note</span> Make Song Request &amp; Vote
-</a>
+
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
   <button onclick="resetForAnother()" class="chad-btn w-full">
     RSVP for another guest
@@ -1392,21 +1389,17 @@ select:-webkit-autofill {
   }
 
   window.savePostLove = function () {
-    var song = (document.getElementById('postSong') ? document.getElementById('postSong').value.trim() : '');
     var msg = (document.getElementById('postMessage') ? document.getElementById('postMessage').value.trim() : '');
-    if (!song && !msg) { showError('Add something', 'Drop a song or a little love note — even one word counts.'); return; }
+    if (!msg) { showError('Add something', 'Write a little love note — even one word counts.'); return; }
     var btn = document.getElementById('postLoveBtn');
     var ok = document.getElementById('postLoveOk');
     if (btn) { btn.disabled = true; btn.innerHTML = '<span class="material-symbols-outlined text-base animate-spin">progress_activity</span> Sending…'; }
-    // also mirror into hidden fields for local storage consistency
-    var sEl = document.getElementById('song'); if (sEl) sEl.value = song;
     var mEl = document.getElementById('message'); if (mEl) mEl.value = msg;
-    postRsvp({ guestId: guestId, name: guestName || 'Guest', attendance: 'yes', guests: 0, song: song, message: msg, postLove: true }, function(err){
+    postRsvp({ guestId: guestId, name: guestName || 'Guest', attendance: 'yes', guests: 0, song: '', message: msg, postLove: true }, function(err){
       if (btn) { btn.disabled = false; btn.innerHTML = '<span class="material-symbols-outlined text-base">send</span> Send my love'; }
       if (ok) { ok.classList.remove('hidden'); setTimeout(function(){ ok.classList.add('hidden'); }, 3500); }
-      // also save locally
       try {
-        var d = loadAll(); if (!d[guestId]) d[guestId]=[]; d[guestId].push({ song: song, message: msg, at: new Date().toISOString(), postLove: true }); saveAll(d);
+        var d = loadAll(); if (!d[guestId]) d[guestId]=[]; d[guestId].push({ message: msg, at: new Date().toISOString(), postLove: true }); saveAll(d);
       } catch(e){}
     });
   };
@@ -1852,7 +1845,7 @@ select:-webkit-autofill {
     document.getElementById('rsvpForm').classList.remove('hidden');
     document.getElementById('success').classList.add('hidden');
     var hd2 = document.getElementById('rsvpHeading'); if (hd2) hd2.classList.remove('hidden');
-    ['name', 'lastName', 'nameA', 'lastNameA', 'nameB', 'lastNameB', 'phone', 'plusOneName', 'plusNames', 'song', 'message', 'postSong', 'postMessage'].forEach(function (id) {
+    ['name', 'lastName', 'nameA', 'lastNameA', 'nameB', 'lastNameB', 'phone', 'plusOneName', 'plusNames', 'song', 'message', 'postMessage'].forEach(function (id) {
       var el = document.getElementById(id);
       if (el) el.value = '';
     });
