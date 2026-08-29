@@ -280,43 +280,67 @@ export default function App() {
 
         {/* Tab Content */}
         {activeTab === 'guests' && (
-          <div className="bg-slate-900/40 border border-slate-800 rounded-xl overflow-hidden shadow-xl">
-            <table className="w-full text-left text-xs text-slate-300">
-              <thead className="bg-slate-900 border-b border-slate-800 text-slate-400 uppercase tracking-wider font-semibold">
-                <tr>
-                  <th className="p-4">Name</th>
-                  <th className="p-4">Phone</th>
-                  <th className="p-4">Status</th>
-                  <th className="p-4">Party Size</th>
-                  <th className="p-4">Message</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-800/60">
-                {filteredGuests.map((g) => (
-                  <tr key={g._id} className="hover:bg-slate-800/30 transition">
-                    <td className="p-4 font-semibold text-white">
-                      {g.first_name} {g.last_name}
-                    </td>
-                    <td className="p-4 text-slate-400">{g.phone || '—'}</td>
-                    <td className="p-4">
-                      <span
-                        className={`inline-block px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+          <div className="space-y-4">
+            {/* Desktop table */}
+            <div className="hidden md:block bg-slate-900/40 border border-slate-800 rounded-xl overflow-hidden shadow-xl">
+              <table className="w-full text-left text-xs text-slate-300">
+                <thead className="bg-slate-900 border-b border-slate-800 text-slate-400 uppercase tracking-wider font-semibold">
+                  <tr>
+                    <th className="p-4">Name</th>
+                    <th className="p-4">Phone</th>
+                    <th className="p-4">Status</th>
+                    <th className="p-4">Party Size</th>
+                    <th className="p-4">Message</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-800/60">
+                  {filteredGuests.map((g) => (
+                    <tr key={g._id} className="hover:bg-slate-800/30 transition">
+                      <td className="p-4 font-semibold text-white">{g.first_name} {g.last_name}</td>
+                      <td className="p-4 text-slate-400">{g.phone || '—'}</td>
+                      <td className="p-4">
+                        <span className={`inline-block px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
                           g.attendance === 'attending'
                             ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30'
                             : g.attendance === 'declined'
                             ? 'bg-rose-500/10 text-rose-400 border border-rose-500/30'
                             : 'bg-amber-500/10 text-amber-400 border border-amber-500/30'
-                        }`}
-                      >
-                        {g.attendance || 'Invited'}
-                      </span>
-                    </td>
-                    <td className="p-4">{g.max_party || 1}</td>
-                    <td className="p-4 max-w-xs truncate text-slate-400">{g.message || '—'}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                        }`}>{g.attendance || 'Invited'}</span>
+                      </td>
+                      <td className="p-4">{g.max_party || 1}</td>
+                      <td className="p-4 max-w-xs truncate text-slate-400">{g.message || '—'}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Mobile cards */}
+            <div className="md:hidden space-y-3">
+              {filteredGuests.map((g) => (
+                <div key={g._id} className="bg-slate-900/60 border border-slate-800 rounded-lg p-3 shadow-sm">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="font-semibold text-white">{g.first_name} {g.last_name}</div>
+                      <div className="text-xs text-slate-400">{g.phone || '—'}</div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-xs mb-1">Party: <span className="font-semibold">{g.max_party || 1}</span></div>
+                      <div>
+                        <span className={`inline-block px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                          g.attendance === 'attending'
+                            ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30'
+                            : g.attendance === 'declined'
+                            ? 'bg-rose-500/10 text-rose-400 border border-rose-500/30'
+                            : 'bg-amber-500/10 text-amber-400 border border-amber-500/30'
+                        }`}>{g.attendance || 'Invited'}</span>
+                      </div>
+                    </div>
+                  </div>
+                  {g.message && <div className="mt-3 text-sm text-slate-300 italic">"{g.message}"</div>}
+                </div>
+              ))}
+            </div>
           </div>
         )}
 
