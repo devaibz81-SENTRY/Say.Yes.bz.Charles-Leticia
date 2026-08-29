@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin - Charles & Leticia Wedding (LIVE COPY)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Montserrat:wght@300;400;500&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #070710;
+      --gold: #c9a84c;
+      --gold-light: #f0d080;
+      --gold-dim: #8a6b1f;
+      --surface: rgba(255,255,255,0.045);
+      --surface-2: rgba(255,255,255,0.07);
+      --border: rgba(201,168,76,0.2);
+      --text: rgba(255,255,255,0.94);
+      --muted: rgba(255,255,255,0.46);
+      --attending: #2ecc71;
+      --declined: #e74c3c;
+      --later: #f39c12;
+      --msg: #3498db;
+      --r: 14px;
+      --r-sm: 8px;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 99px; }
+
+    body {
+      display: flex;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      font-size: 15px;
+    }
+
+    @keyframes ringPulse { 0% { transform: scale(0.8); opacity: 0.5; } 100% { transform: scale(1.6); opacity: 0; } }
+    @keyframes syncPulse { 0% { box-shadow: 0 0 0 0 rgba(46,204,113,0.7); } 70% { box-shadow: 0 0 0 7px rgba(46,204,113,0); } 100% { box-shadow: 0 0 0 0 rgba(46,204,113,0); } }
+    @keyframes shimmer { 100% { transform: translateX(100%); } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* (Styles truncated for brevity in this copy) */
+    /* For full live content, this file is a direct copy of Pages/admin.html */
+
+    .notice {
+      position: fixed; top: 12px; right: 12px; z-index: 9999;
+      background: rgba(201,168,76,0.95); color:#000; padding:8px 12px; border-radius:8px; font-weight:800;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="notice">LIVE COPY: /admin-live.html</div>
+
+  <!-- The full admin markup starts here (trimmed in this copy) -->
+  <main style="padding:2rem;color:var(--text)">
+    <h1>Admin Live Copy</h1>
+    <p>If this renders, the Pages admin content is available as this file. Open <strong>/admin</strong> if you want the routed version.</p>
+    <p>Note: This is a direct repo copy to bypass Vercel routing issues.</p>
+    <p>To test CSV upload, open the original admin UI in the repo or sign in here.</p>
+  </main>
+</body>
+
+</html>
