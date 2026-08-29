@@ -176,33 +176,40 @@ export default function App() {
   const pendingCount = guests.filter((g) => !g.attendance || g.attendance === 'invited' || g.attendance === 'later').length;
 
   return (
-    <div className="min-h-screen bg-[#0b0c10] text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-950 text-slate-100 flex flex-col">
       {/* Header / Navbar */}
-      <header className="border-b border-amber-500/20 bg-slate-950/80 backdrop-blur px-6 py-4 flex items-center justify-between sticky top-0 z-50">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 font-serif font-bold text-sm">
-            C&L
+      <header className="sticky top-0 z-50 bg-slate-900/70 backdrop-blur-sm border-b border-slate-800">
+        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-300 font-serif font-bold text-base">
+              C&L
+            </div>
+            <div>
+              <div className="font-serif font-bold text-amber-300 text-lg">Charles & Leticia</div>
+              <div className="text-[12px] text-slate-400">Wedding Admin</div>
+            </div>
           </div>
-          <span className="font-serif font-semibold text-lg text-amber-400 tracking-wide">Wedding Admin</span>
-        </div>
-        <div className="flex items-center gap-4">
+
           <div className="flex items-center gap-2">
             <button
               onClick={() => downloadGuestTemplate()}
-              className="px-3 py-2 text-xs font-semibold text-slate-200 bg-slate-800 border border-slate-700 rounded-lg hover:bg-slate-700"
+              aria-label="Download guest CSV template"
+              className="hidden sm:inline-flex items-center gap-2 px-3 py-2 text-sm font-semibold text-slate-900 bg-amber-400 rounded-lg shadow-sm hover:brightness-105"
             >
-              Download CSV
+              📥 Template
             </button>
-            <input id="guest-csv-input" type="file" accept=".csv" style={{ display: 'none' }} onChange={(e) => handleGuestCsv(e)} />
+            <input id="guest-csv-input" type="file" accept=".csv" style={{ display: 'none' }} onChange={(e) => handleGuestCsv(e)} aria-hidden />
             <button
               onClick={() => (document.getElementById('guest-csv-input') as HTMLInputElement)?.click()}
-              className="px-3 py-2 text-xs font-semibold text-slate-200 bg-amber-500 hover:bg-amber-400 rounded-lg"
+              aria-label="Upload guest CSV"
+              className="inline-flex items-center gap-2 px-3 py-2 text-sm font-semibold text-slate-100 bg-amber-500 rounded-lg shadow-sm hover:opacity-95"
             >
-              Upload CSV
+              ⬆️ Upload
             </button>
             <button
               onClick={handleLogout}
-              className="px-4 py-2 text-xs font-semibold text-slate-300 hover:text-white bg-slate-900 border border-slate-700 hover:border-slate-500 rounded-lg transition"
+              aria-label="Sign out"
+              className="ml-2 px-3 py-2 text-sm font-medium text-slate-300 bg-slate-800 border border-slate-700 rounded-lg hover:bg-slate-700"
             >
               Sign Out
             </button>

@@ -105,6 +105,14 @@ code,
   color: var(--text-h);
 }
 
+/* Mobile-friendly tweaks */
+@media (max-width: 768px) {
+  #root { padding: 0 12px; }
+  .font-serif { font-size: 16px; }
+}
+
+.card-shadow { box-shadow: 0 6px 18px rgba(2,6,23,0.5); }
+
 code {
   font-size: 15px;
   line-height: 135%;
