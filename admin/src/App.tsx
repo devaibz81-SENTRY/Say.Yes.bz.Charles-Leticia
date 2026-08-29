@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const CONVEX_URL = 'https://neat-bee-452.convex.site';
+const CONVEX_URL = 'https://canny-hummingbird-920.convex.site';
 
 interface Guest {
   _id: string;
@@ -79,6 +79,56 @@ export default function App() {
     if (token) fetchData(token);
   }, [token]);
 
+  function downloadGuestTemplate() {
+    const headers = ['first_name','last_name','spouse_name','guest_type','max_party','phone','email','deadline','attendance','easy_mode','plus_names','song','message'];
+    const example = ['Charles','Smith','','single','1','555-123-4567','charles@example.com','2026-10-31','invited','false','','',''];
+    const csv = [headers.join(','), example.join(',')].join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'guest-import-template.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  async function handleGuestCsv(e: React.ChangeEvent<HTMLInputElement> | Event) {
+    const input = e instanceof Event ? (e.target as HTMLInputElement) : e.target;
+    const file = input && input.files && input.files[0];
+    if (!file || !token) return;
+    const text = await file.text();
+    const rows = text.split(/\r?\n/).map(r => r.trim()).filter(Boolean);
+    if (rows.length < 2) { alert('CSV contains no data rows.'); return; }
+    const headers = rows[0].split(',').map(h => h.trim());
+    const data: any[] = [];
+    for (let i = 1; i < rows.length; i++) {
+      const cols = rows[i].split(',');
+      const obj: Record<string, string> = {};
+      for (let j = 0; j < headers.length; j++) {
+        obj[headers[j]] = cols[j] !== undefined ? cols[j].trim() : '';
+      }
+      data.push(obj);
+    }
+
+    const confirmed = window.confirm(`Import ${data.length} guests? This will add them to Convex.`);
+    if (!confirmed) return;
+
+    try {
+      const res = await fetch(`${CONVEX_URL}/api/guests/import`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ guests: data })
+      });
+      if (!res.ok) throw new Error(await res.text());
+      const result = await res.json();
+      alert(`Import complete. Inserted: ${result.inserted || 0}. Errors: ${result.errors ? result.errors.length : 0}`);
+      fetchData(token);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      alert(`Import failed: ${msg}`);
+    }
+  }
+
   if (!token) {
     return (
       <div className="min-h-screen bg-[#090a0f] text-slate-100 flex items-center justify-center p-4">
@@ -136,12 +186,27 @@ export default function App() {
           <span className="font-serif font-semibold text-lg text-amber-400 tracking-wide">Wedding Admin</span>
         </div>
         <div className="flex items-center gap-4">
-          <button
-            onClick={handleLogout}
-            className="px-4 py-2 text-xs font-semibold text-slate-300 hover:text-white bg-slate-900 border border-slate-700 hover:border-slate-500 rounded-lg transition"
-          >
-            Sign Out
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => downloadGuestTemplate()}
+              className="px-3 py-2 text-xs font-semibold text-slate-200 bg-slate-800 border border-slate-700 rounded-lg hover:bg-slate-700"
+            >
+              Download CSV
+            </button>
+            <input id="guest-csv-input" type="file" accept=".csv" style={{ display: 'none' }} onChange={(e) => handleGuestCsv(e)} />
+            <button
+              onClick={() => (document.getElementById('guest-csv-input') as HTMLInputElement)?.click()}
+              className="px-3 py-2 text-xs font-semibold text-slate-200 bg-amber-500 hover:bg-amber-400 rounded-lg"
+            >
+              Upload CSV
+            </button>
+            <button
+              onClick={handleLogout}
+              className="px-4 py-2 text-xs font-semibold text-slate-300 hover:text-white bg-slate-900 border border-slate-700 hover:border-slate-500 rounded-lg transition"
+            >
+              Sign Out
+            </button>
+          </div>
         </div>
       </header>
 
