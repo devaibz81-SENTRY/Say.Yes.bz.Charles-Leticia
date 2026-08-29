@@ -351,6 +351,7 @@
     .action-btn.danger:hover { color: #fb7185; background: rgba(244,63,94,0.12); }
 
     /* ===================== MOBILE GUEST COMPACT CARD ===================== */
+    .g-mobile-cell-wrapper { display: none; }
     .g-mobile-card { display: none; }
     .guest-details { display: none; }
     .g-toggle-mini { display: none; }
@@ -516,6 +517,7 @@
       tbody td { display: block; padding: 0 !important; border: none !important; }
       
       .g-desktop-col { display: none !important; }
+      .g-mobile-cell-wrapper { display: block !important; width: 100%; }
       .g-mobile-card { display: flex !important; align-items: center; justify-content: space-between; gap: 0.5rem; }
       .g-mobile-main { flex: 1; min-width: 0; cursor: pointer; }
       .g-mobile-info { display: flex; flex-direction: column; gap: 0.18rem; min-width: 0; }
@@ -1358,7 +1360,7 @@ Amelie	Guerra	Julian	couple	2	6140942"
         return `
         <tr class="guest-row">
           <!-- Mobile row -->
-          <td class="g-mobile-cell-wrapper" style="display:none;">
+          <td class="g-mobile-cell-wrapper">
             <div class="g-mobile-card">
               <div class="g-mobile-main" onclick="toggleGuestDetails(this)">
                 <div class="g-mobile-info">
