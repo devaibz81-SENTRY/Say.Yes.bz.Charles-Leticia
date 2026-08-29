@@ -723,6 +723,8 @@
       </div>
       <div class="top-bar-actions">
         <button class="btn-sm" onclick="fetchGuests()">Refresh</button>
+        <button id="csv-template-btn" class="btn-sm" onclick="downloadCsvTemplate()" title="Download blank CSV template" style="display:none;">⬇ CSV Template</button>
+        <button id="import-csv-btn" class="btn-sm" onclick="openImportCsv()" title="Import guests from CSV" style="display:none;">⬆ Import CSV</button>
         <button id="add-guest-btn" class="btn-sm primary" onclick="openAddGuest()">+ Add Guest</button>
       </div>
     </div>
@@ -911,7 +913,51 @@ Charles and Leticia</textarea>
     </div>
   </div>
 
+  <!-- CSV IMPORT MODAL -->
+  <div class="modal-overlay" id="import-modal">
+    <div class="modal" style="max-width:660px;width:96vw;">
+      <h2>Import Guest List from CSV</h2>
+      <p style="font-size:0.77rem;color:var(--muted);margin-bottom:1.2rem;line-height:1.6;">
+        Upload a CSV file to bulk-add guests. Download the template first to see the expected columns.
+        Existing guests are <em>not</em> overwritten — only new rows are inserted.
+      </p>
+
+      <!-- Drop zone / file input -->
+      <div id="csv-drop-zone" style="border:2px dashed var(--border);border-radius:8px;padding:1.6rem;text-align:center;cursor:pointer;transition:border-color .2s;"
+           onclick="document.getElementById('csv-file-input').click()"
+           ondragover="event.preventDefault();this.style.borderColor='var(--gold)'"
+           ondragleave="this.style.borderColor='var(--border)'"
+           ondrop="handleCsvDrop(event)">
+        <div style="font-size:2rem;margin-bottom:0.5rem;">📂</div>
+        <div style="font-size:0.82rem;color:var(--muted);">Click or drag &amp; drop a <strong style="color:var(--text);">.csv</strong> file here</div>
+        <input type="file" id="csv-file-input" accept=".csv,text/csv" style="display:none;" onchange="handleCsvFile(this.files[0])">
+      </div>
+
+      <!-- Preview area -->
+      <div id="csv-preview-area" style="display:none;margin-top:1.2rem;">
+        <div id="csv-preview-stats" style="font-size:0.78rem;color:var(--muted);margin-bottom:0.6rem;"></div>
+        <div style="max-height:220px;overflow-y:auto;border:1px solid var(--border);border-radius:6px;">
+          <table id="csv-preview-table" style="width:100%;border-collapse:collapse;font-size:0.73rem;">
+            <thead id="csv-preview-thead" style="position:sticky;top:0;background:var(--bg);"></thead>
+            <tbody id="csv-preview-tbody"></tbody>
+          </table>
+        </div>
+        <div id="csv-preview-errors" style="margin-top:0.75rem;font-size:0.72rem;color:#e74c3c;display:none;"></div>
+      </div>
+
+      <div class="modal-footer" style="display:flex;justify-content:space-between;align-items:center;gap:0.75rem;margin-top:1.4rem;">
+        <button class="btn-sm" onclick="downloadCsvTemplate()" style="border-color:var(--gold);color:var(--gold);">⬇ Download Template</button>
+        <div style="display:flex;gap:0.6rem;">
+          <button class="btn-sm" onclick="closeImportCsv()">Cancel</button>
+          <button id="csv-import-submit" class="btn-sm primary" onclick="submitCsvImport()" disabled>Import Guests</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>function countUp(id,target){var el=document.getElementById(id);var start=0;var dur=600;var startTime=null;function step(ts){if(!startTime)startTime=ts;var p=Math.min((ts-startTime)/dur,1);el.textContent=Math.floor(p*target);if(p<1)requestAnimationFrame(step);}requestAnimationFrame(step);}</script>
+
+
 
   <script>
     const CONVEX_HTTP_URL = 'https://canny-hummingbird-920.convex.site';
@@ -1004,6 +1050,8 @@ Charles and Leticia</textarea>
       document.getElementById('view-whatsapp').style.display = view === 'whatsapp' ? 'block' : 'none';
       document.getElementById('view-seating').style.display = view === 'seating' ? 'block' : 'none';
       document.getElementById('add-guest-btn').style.display = view === 'guests' ? 'inline-flex' : 'none';
+      document.getElementById('csv-template-btn').style.display = view === 'guests' ? 'inline-flex' : 'none';
+      document.getElementById('import-csv-btn').style.display = view === 'guests' ? 'inline-flex' : 'none';
 
       const titles = {
         guests: 'Guest Management',
@@ -1768,7 +1816,209 @@ Charles and Leticia</textarea>
       });
     }
 
+
     window.__PREASSIGNED_TABLES = [{"guestName":"Ivana DePaz","guestId":"j971wzcxajdvrayrgg81wr8ws182pe6s","tableNum":"1"},{"guestName":"Joaquin DePaz","guestId":"j97bn3q7ap3myf1xeag011pds182ppvj","tableNum":"1"},{"guestName":"Diana","guestId":"j979s035s6zgj88fdt403e27xx867ej7","tableNum":"1"},{"guestName":"Vana","guestId":"j97a67wxycmvv0fcsanpn09wfx866msf","tableNum":"1"},{"guestName":"Yasmini Matus","guestId":"j975fr1n1g0m6rf2f7pnm93gbx82p3f8","tableNum":"1"},{"guestName":"Jean Harrison","guestId":"j979zc0cgddthkax8r4svs7dk98804qq","tableNum":"1"},{"guestName":"Sian DePaz","guestId":"j970rzr4hjcr4e5gkb4n03zhvh82p25p","tableNum":"2"},{"guestName":"Mathew Preston","guestId":"j974a42bkvtsgkb3xfprx33tm187mc8r","tableNum":"2"},{"guestName":"Josue","guestId":"j978k6wxfzj068k2t29bv4684h87nw0s","tableNum":"2"},{"guestName":"Maleek","guestId":"j973nssdwp0jk8kc676d39r3d183jd03","tableNum":"2"},{"guestName":"Devin Peyrefitte","guestId":"j9728weej33q8w9z4drq3zt4wh82ps9d","tableNum":"2"},{"guestName":"Yojalma Moleterno","guestId":"j970q38r7drywmfak3w78q4rkn83k0xt","tableNum":"2"},{"guestName":"Carlitos Guest","guestId":"j974eyfw4nd20tsb6y98sdwsnh83nb5y","tableNum":"2"},{"guestName":"Jose DePaz","guestId":"j9779nj6rm2evfk2mshprdmbxx82qsmd","tableNum":"3"},{"guestName":"Mr. Mike Gonzalez","guestId":"j976r18cn1d4spx64nxefwdaq983k46s","tableNum":"3"},{"guestName":"Ingrid Gonzalez","guestId":"j975ts0zvb15sp3hfjat223zt983k5c3","tableNum":"3"},{"guestName":"Aldo DePaz","guestId":"j97aj0dy6h9p02672ba7bxk3qs82qtz5","tableNum":"3"},{"guestName":"Keisha Dwyer","guestId":"j9748he50px1603j46x3yk5yxh83j2zr","tableNum":"3"},{"guestName":"Ms. Marie DePaz","guestId":"j978xes1ygrzmsgyjny5akpb8x82pbq9","tableNum":"3"},{"guestName":"Lily Lane","guestId":"j972v6mnprgccewr4hwpfn5adn82p58b","tableNum":"3"},{"guestName":"Lucille Valladarez","guestId":"j97a2dx1b52gc2vbjg1smjzejh82qv64","tableNum":"4"},{"guestName":"Norberto DePaz","guestId":"j973n8avtrmnksns4fv09rzssh86511r","tableNum":"4"},{"guestName":"David DePaz","guestId":"j97b76d4grx1pdca3k5av8jj5n865m4v","tableNum":"4"},{"guestName":"Vanessa Cuellar","guestId":"j978qmqz95pqmwy47vancj5n2583n973","tableNum":"4"},{"guestName":"Javier DePaz","guestId":"j977htyadsppdp6vvk53t692vx83d126","tableNum":"4"},{"guestName":"Miguel DePaz","guestId":"j975kk313252vwfpjr5ff8m12x83jxqz","tableNum":"4"},{"guestName":"Andre & Adrian DePaz","guestId":"j971qsnrvkm7kzc8ewrkjyca7x83c10j","tableNum":"4"},{"guestName":"Olga Mendoza","guestId":"j97avdn0db3xmfcwsvfh6hw5vn83ddkx","tableNum":"5"},{"guestName":"Xenia","guestId":"j978tqxrywv38d1h81m3k53t9h83m3xb","tableNum":"5"},{"guestName":"Sandino Mendoza","guestId":"j97df8pdsjtygy2w650whv3ns982pgza","tableNum":"5"},{"guestName":"Stephanie Hernandes","guestId":"j974f17byz2whz0c8a4s6wa1md82pm29","tableNum":"6"},{"guestName":"Jahan Guerra","guestId":"j9758ts6ne5tgxas32zhf9bnf182pv7c","tableNum":"6"},{"guestName":"Anthony Joseph","guestId":"j975ybqvr13196w84dwayhpy8s88wdyr","tableNum":"6"},{"guestName":"Ceasar Quiroz","guestId":"j97byy0e2tq8f3pzyejphkwt0988w9pp","tableNum":"6"},{"guestName":"Zane Oliver","guestId":"j97dr8vspqmdzzfzed9v24me1x83n07r","tableNum":"6"},{"guestName":"The Paniagua Family","guestId":"j970wpkgxg5xgkk1p9rpqr9xk183j0rr","tableNum":"6"},{"guestName":"Sonia Harris","guestId":"j97079jaxwafcexhwwndzg7d9182p623","tableNum":"7"},{"guestName":"Floyd Haylock","guestId":"j974ttd8bgyj0w1gsqgsmm0hgd82pfq4","tableNum":"7"},{"guestName":"Carol Joiner","guestId":"j97az3083f8ad4t1wqtq8hfag583j3sy","tableNum":"7"},{"guestName":"Garry Flowers","guestId":"j978pm1tej93gyn9wqzw321sgs83kjvn","tableNum":"7"},{"guestName":"Mirianne Martinez","guestId":"j978xg5z4p9zgkfsgb5fy85t7x83nmf3","tableNum":"7"},{"guestName":"Cindy Lisbey","guestId":"j97a6580w8xtv0c4st6wtevbks83mqer","tableNum":"7"},{"guestName":"Oscar Lisbey","guestId":"j97a1xsa1n669hbazajeq66ddh83mwa0","tableNum":"7"},{"guestName":"Macarena","guestId":"j9707tftdce93875nry1ks807x898vjg","tableNum":"7"},{"guestName":"Brian Silver","guestId":"j97d0hfre9w8dm6hqrdb68nbs582q6g6","tableNum":"8"},{"guestName":"Justin Mendoza","guestId":"j97327yapettbmz065edyvwf7d83kt2y","tableNum":"8"},{"guestName":"Dave Dacak","guestId":"j97718yx8sp7r00n3nt3mz918983jhy8","tableNum":"8"},{"guestName":"Shonda Matinez","guestId":"j978kp4d1g5hj8qs54m9p4xd1s83cpdx","tableNum":"8"},{"guestName":"Marlon Andrews","guestId":"j97av8es3xz2g33svtycf1nmw583jnh3","tableNum":"8"},{"guestName":"Maria Estella Recinos","guestId":"j971fvhtdwejyr4j8s2t8dy2xs86k6xz","tableNum":"9"},{"guestName":"karl Recinos","guestId":"j97ew0avwt97k8e8zp0z46tx4x84gays","tableNum":"9"},{"guestName":"Calos Dito Vega","guestId":"j9725yjs1rsgws5ph6rskec2vn866q0c","tableNum":"9"},{"guestName":"Emma Romero","guestId":"j979nh8rtsc0p3xqtn8nfyb00n82qb49","tableNum":"9"},{"guestName":"Destiny Wagner","guestId":"j97a61krgsehdw74kcnkt4m4zn82qqxb","tableNum":"9"},{"guestName":"Vaneen Juan","guestId":"j97fybrkqn1sr7faba85pn8hkh883q5y","tableNum":"9"},{"guestName":"Krista Cruz","guestId":"j976wnb229brp7v0ysgs2s30g582p85n","tableNum":"9"},{"guestName":"Earlyn Hutchinson","guestId":"j97ag7bbaenynsjc40c2a1j2a182q6pq","tableNum":"9"},{"guestName":"Emil Pinelo","guestId":"j973k5ssahd6pgnghrfdtnhpeh82qy7f","tableNum":"10"},{"guestName":"Grandpa Pinelo","guestId":"j972vvpyhsjeh8vrdd89zr9kqx85s9vr","tableNum":"10"},{"guestName":"Adrian Miller","guestId":"j97ax2tkwbc6yswj76q83v0nb583kpfc","tableNum":"10"},{"guestName":"Maria Elena Heredia","guestId":"j97bebrr3ab51bjs8yrrd3vvds83js5q","tableNum":"10"},{"guestName":"Luby Clemans","guestId":"j97f3x5ajr9q3wbkqzsb4ecyn583jp8q","tableNum":"10"},{"guestName":"Leticia","guestId":"j976szg4e12zpx3q63e7fcv5c182pqr4","tableNum":"11"},{"guestName":"Dijon McNab","guestId":"j97d6pf5rzh2c90wds5paf1rnd87c0rp","tableNum":"11"},{"guestName":"Hector Andrews","guestId":"j97dhwegfx27c2awr4qa68hdzn83mzr7","tableNum":"11"},{"guestName":"Richard Cordova","guestId":"j97fp3rmrxc2b3z8bw3dvv784d83mz3t","tableNum":"11"},{"guestName":"Brandon Guest","guestId":"j97fwqxrt82xph7nm3v5jtrng982pk0k","tableNum":"11"},{"guestName":"Natasha Stuart","guestId":"j9736crqfjwyvmw61m22fpxt2584ekdk","tableNum":"11"},{"guestName":"Britney and Camile Guy","guestId":"j976tmgby99phq60rnb9b34r6182pwgz","tableNum":"12"},{"guestName":"Shenny Boiton","guestId":"j97cknk1vq4yq7gf5fhcej9wk982q33h","tableNum":"12"},{"guestName":"Ryan Smith","guestId":"j97adnsrmwpk28gcz0a1fjxqms82q3jk","tableNum":"12"},{"guestName":"Joseph & Lorain Smith","guestId":"j97am0qb1aafp1vwx9zkj6t2r583kq5h","tableNum":"12"},{"guestName":"Carlos Habet","guestId":"j97an0gzmf59d8d8t26ragdzb983mfb7","tableNum":"12"},{"guestName":"David Morales","guestId":"j97dcpwezhjwjmm46ce3g9zqmn82ps7k","tableNum":"12"},{"guestName":"Angela kuylen","guestId":"j974nr19nx1bs683ssa9dqf33n82q36k","tableNum":"13"},{"guestName":"karina Farias","guestId":"j97909fkmqndz49npe299ejzzx84wf8h","tableNum":"13"},{"guestName":"Keidi Tejada","guestId":"j9728tmvr6h36zxw3rvghd6ad182q66t","tableNum":"13"},{"guestName":"Renee Pine","guestId":"j97231k9xztgn2evp6zb03df4n83nk2m","tableNum":"13"},{"guestName":"kylon Eiley","guestId":"j971wgg77zgmrfs5sxt2b8zr1d83nbz4","tableNum":"13"},{"guestName":"Michel Chebat","guestId":"j971hzqhfv3hmhm1jscphv0gd98836z9","tableNum":"1"},{"guestName":"Geoffrey Waight","guestId":"j97d491aeadetmjtxvf1dxps7s882scw","tableNum":"1"},{"guestName":"Lawrence Thompson","guestId":"j974jr4e9fkmj8ahh4r05eq069882q6c","tableNum":"1"},{"guestName":"Miron Ortega","guestId":"j97797jnbehfy506wmckga9d4s883r7z","tableNum":"1"},{"guestName":"Fabian Perez","guestId":"j975yapbatywz1ca8tqyewj2eh84xhrc","tableNum":"1"},{"guestName":"Wayne","guestId":"j970kft7yvv5rc19d81ae59dsn866s9f","tableNum":"1"},{"guestName":"Oscar Trujeque","guestId":"j976awqwyr4q0s4zrmwv3rpgvd83ntv3","tableNum":"8"},{"guestName":"Marcel Graniel","guestId":"j9759ekyrtnn66cxtegzg64pfs83m24h","tableNum":"8"},{"guestName":"karim Espat","guestId":"j97evedwdw3hwncj343j0fp63h8980d5","tableNum":"8"},{"guestName":"Elvis Usher","guestId":"j97drejyv188z5expjzje923cd899h8g","tableNum":"8"},{"guestName":"Fiona Rudon","guestId":"j97aekbrzh6vmhk3rj9hz07c65867fhq","tableNum":"8"},{"guestName":"Ayden DePaz","guestId":"j97d1mtc4tn0nvrv7p5fcbwcp583js8d","tableNum":"Teens"},{"guestName":"Lori","guestId":"j97c5fgdkzjmyjc3h82zkjx2nx82paxk","tableNum":"14"},{"guestName":"Karine Cisneros","guestId":"j9712tc9rsa8thj4w9zk4zswpx82q534","tableNum":"14"},{"guestName":"Norine Haylock","guestId":"j9759jj25nszn5rk0p642nj7kn82p2re","tableNum":"14"},{"guestName":"Mrs Veronica","guestId":"j97bd87z30cbzhm44gzq4qhccs83kf17","tableNum":"14"},{"guestName":"Estella Saucedo","guestId":"j977nqwbxhr32mdvqw6ykx1adh84gd1j","tableNum":"14"},{"guestName":"Dianne Haylock","guestId":"j978gjybqe0y85jsw8dp7d7ss583mvc1","tableNum":"14"},{"guestName":"Miss Gilda","guestId":"j977xzvazk3gfwp4zq7ehzppcn85sqt7","tableNum":"14"},{"guestName":"Mrs Almira August","guestId":"j976sfsk9jc8kmjmkghr902ked87c82w","tableNum":"14"}];
+
+    // ===================== CSV TEMPLATE & IMPORT =====================
+
+    const CSV_COLUMNS = [
+      'first_name', 'last_name', 'spouse_name',
+      'guest_type', 'max_party', 'phone',
+      'attendance', 'deadline', 'easy_mode'
+    ];
+
+    const CSV_EXAMPLE_ROWS = [
+      ['John', 'Doe', '', 'single', '1', '+15015550100', 'invited', '2026-10-31', 'false'],
+      ['Jane', 'Smith', 'Bob Smith', 'couple', '2', '+15015550101', 'invited', '2026-10-31', 'false'],
+      ['Maria', 'Garcia', '', 'family', '4', '+15015550102', 'invited', '2026-10-31', 'true'],
+    ];
+
+    function downloadCsvTemplate() {
+      const rows = [CSV_COLUMNS, ...CSV_EXAMPLE_ROWS];
+      const content = rows.map(r => r.map(cell => {
+        const s = String(cell ?? '');
+        return s.includes(',') || s.includes('"') || s.includes('\n')
+          ? '"' + s.replace(/"/g, '""') + '"'
+          : s;
+      }).join(',')).join('\r\n');
+
+      const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'guest_list_template.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // RFC-4180 compliant CSV parser
+    function parseCsv(text) {
+      const rows = [];
+      let row = [], field = '', inQuotes = false;
+      const push = () => { row.push(field); field = ''; };
+      const newRow = () => { push(); rows.push(row); row = []; };
+
+      for (let i = 0; i < text.length; i++) {
+        const ch = text[i], nx = text[i + 1];
+        if (inQuotes) {
+          if (ch === '"' && nx === '"') { field += '"'; i++; }
+          else if (ch === '"') { inQuotes = false; }
+          else { field += ch; }
+        } else {
+          if (ch === '"') { inQuotes = true; }
+          else if (ch === ',') { push(); }
+          else if (ch === '\r' && nx === '\n') { newRow(); i++; }
+          else if (ch === '\n' || ch === '\r') { newRow(); }
+          else { field += ch; }
+        }
+      }
+      push();
+      if (row.length > 1 || row[0] !== '') rows.push(row);
+      return rows;
+    }
+
+    let csvParsedGuests = null; // holds array of guest objects ready for import
+
+    function handleCsvDrop(event) {
+      event.preventDefault();
+      document.getElementById('csv-drop-zone').style.borderColor = 'var(--border)';
+      const file = event.dataTransfer.files[0];
+      if (file) handleCsvFile(file);
+    }
+
+    function handleCsvFile(file) {
+      if (!file) return;
+      if (!file.name.endsWith('.csv') && file.type !== 'text/csv') {
+        alert('Please select a .csv file.');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (e) => renderCsvPreview(e.target.result);
+      reader.readAsText(file, 'UTF-8');
+    }
+
+    function renderCsvPreview(text) {
+      const rows = parseCsv(text.trim());
+      if (rows.length < 2) {
+        document.getElementById('csv-preview-stats').textContent = 'CSV appears empty or has no data rows.';
+        document.getElementById('csv-preview-area').style.display = 'block';
+        document.getElementById('csv-import-submit').disabled = true;
+        csvParsedGuests = null;
+        return;
+      }
+
+      const headers = rows[0].map(h => h.trim().toLowerCase());
+      const dataRows = rows.slice(1).filter(r => r.some(c => c.trim() !== ''));
+
+      // Map column indices
+      const col = (name) => headers.indexOf(name);
+      const knownCols = CSV_COLUMNS.map(c => ({ name: c, idx: col(c) }));
+      const missingRequired = [];
+      if (col('first_name') === -1) missingRequired.push('first_name');
+
+      const errors = [];
+      const guests = dataRows.map((r, i) => {
+        const get = (name) => {
+          const idx = col(name);
+          return idx !== -1 ? (r[idx] || '').trim() : '';
+        };
+        const g = {
+          first_name: get('first_name') || undefined,
+          last_name: get('last_name') || undefined,
+          spouse_name: get('spouse_name') || undefined,
+          guest_type: get('guest_type') || undefined,
+          max_party: get('max_party') ? Number(get('max_party')) : undefined,
+          phone: get('phone') || undefined,
+          attendance: get('attendance') || 'invited',
+          deadline: get('deadline') || undefined,
+          easy_mode: get('easy_mode') === 'true' ? true : undefined,
+        };
+        if (!g.first_name) errors.push(`Row ${i + 2}: missing first_name`);
+        return g;
+      });
+
+      csvParsedGuests = guests;
+
+      // Build preview table
+      const visibleCols = CSV_COLUMNS.filter(c => col(c) !== -1);
+      const thead = document.getElementById('csv-preview-thead');
+      const tbody = document.getElementById('csv-preview-tbody');
+      const cellStyle = 'padding:5px 8px;border-bottom:1px solid var(--border);white-space:nowrap;';
+      const headStyle = cellStyle + 'background:var(--bg);color:var(--muted);font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;font-weight:600;';
+
+      thead.innerHTML = '<tr>' + visibleCols.map(c => `<th style="${headStyle}">${c}</th>`).join('') + '</tr>';
+      const preview = guests.slice(0, 20);
+      tbody.innerHTML = preview.map((g, i) => {
+        const bg = i % 2 === 0 ? 'background:rgba(255,255,255,0.02);' : '';
+        return '<tr style="' + bg + '">' + visibleCols.map(c => {
+          const v = g[c] !== undefined ? String(g[c]) : '';
+          const warn = c === 'first_name' && !v ? 'color:#e74c3c;' : '';
+          return `<td style="${cellStyle}${warn}">${v || '<span style="opacity:0.3">—</span>'}</td>`;
+        }).join('') + '</tr>';
+      }).join('');
+
+      const statsEl = document.getElementById('csv-preview-stats');
+      statsEl.innerHTML = `<strong style="color:var(--text);">${dataRows.length}</strong> rows detected` +
+        (dataRows.length > 20 ? ` <span style="color:var(--muted)">(showing first 20)</span>` : '') +
+        (missingRequired.length ? ` · <span style="color:#e74c3c;">Missing columns: ${missingRequired.join(', ')}</span>` : '');
+
+      const errEl = document.getElementById('csv-preview-errors');
+      if (errors.length) {
+        errEl.style.display = 'block';
+        errEl.innerHTML = '⚠ ' + errors.slice(0, 5).join('<br>') + (errors.length > 5 ? `<br>…and ${errors.length - 5} more` : '');
+      } else {
+        errEl.style.display = 'none';
+      }
+
+      document.getElementById('csv-preview-area').style.display = 'block';
+      document.getElementById('csv-import-submit').disabled = guests.length === 0 || missingRequired.length > 0;
+    }
+
+    function openImportCsv() {
+      csvParsedGuests = null;
+      document.getElementById('csv-file-input').value = '';
+      document.getElementById('csv-preview-area').style.display = 'none';
+      document.getElementById('csv-import-submit').disabled = true;
+      document.getElementById('csv-drop-zone').style.borderColor = 'var(--border)';
+      document.getElementById('import-modal').classList.add('open');
+    }
+
+    function closeImportCsv() {
+      document.getElementById('import-modal').classList.remove('open');
+    }
+
+    async function submitCsvImport() {
+      if (!csvParsedGuests || csvParsedGuests.length === 0) return;
+
+      const btn = document.getElementById('csv-import-submit');
+      btn.textContent = 'Importing…'; btn.disabled = true;
+
+      try {
+        const res = await fetch(`${CONVEX_HTTP_URL}/api/guests/import`, {
+          method: 'POST',
+          headers: authHeaders({ 'Content-Type': 'application/json' }),
+          body: JSON.stringify({ guests: csvParsedGuests })
+        });
+
+        if (res.status === 401) { await logout(); throw new Error('Session expired.'); }
+        if (!res.ok) throw new Error(await res.text());
+
+        const result = await res.json();
+        const errCount = (result.errors || []).length;
+        const msg = `✅ Imported ${result.inserted} guest(s).` +
+          (errCount ? `\n⚠ ${errCount} row(s) failed — check console for details.` : '');
+
+        if (errCount) console.warn('Import errors:', result.errors);
+
+        closeImportCsv();
+        alert(msg);
+        fetchGuests();
+      } catch (err) {
+        alert('Import failed: ' + err.message);
+        btn.textContent = 'Import Guests'; btn.disabled = false;
+      }
+    }
+
   </script>
 
   <!-- Mobile bottom nav -->
