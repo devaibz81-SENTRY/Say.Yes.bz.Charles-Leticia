@@ -409,11 +409,11 @@
 .memory-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
 .memory-card:hover img{transform:scale(1.04)}
 .memory-card-mat{position:absolute;inset:7px;border-radius:12px;border:1px solid rgba(255,255,255,0.35);pointer-events:none;box-shadow:inset 0 0 0 1px rgba(212,175,55,0.12)}
-.dresscode-visual{position:relative;overflow:hidden;border-radius:24px;border:1px solid rgba(212,175,55,0.35);background:#0d0c0b;box-shadow:0 20px 60px rgba(0,0,0,0.45);margin:0 auto 1.25rem;max-width:600px;cursor:pointer;transition:transform .25s ease, box-shadow .25s ease}
+.dresscode-visual{position:relative;overflow:hidden;border-radius:24px;border:1px solid rgba(212,175,55,0.35);background:#0d0c0b;box-shadow:0 20px 60px rgba(0,0,0,0.45);margin:0 auto 1.25rem;max-width:420px;cursor:pointer;transition:transform .25s ease, box-shadow .25s ease}
 .dresscode-visual:hover{transform:translateY(-4px);box-shadow:0 24px 70px rgba(0,0,0,0.58)}
 .dresscode-visual img{display:block;width:100%;height:auto;object-fit:cover;filter:saturate(1.06) contrast(1.02)}
 .dresscode-visual::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.0), rgba(10,8,8,0.34));pointer-events:none}
-.dresscode-visual{position:relative;overflow:hidden;border-radius:24px;border:1px solid rgba(212,175,55,0.35);background:#0d0c0b;box-shadow:0 20px 60px rgba(0,0,0,0.45);margin:0 auto 1.25rem;max-width:600px;cursor:pointer;transition:transform .25s ease, box-shadow .25s ease}
+.dresscode-visual{position:relative;overflow:hidden;border-radius:24px;border:1px solid rgba(212,175,55,0.35);background:#0d0c0b;box-shadow:0 20px 60px rgba(0,0,0,0.45);margin:0 auto 1.25rem;max-width:420px;cursor:pointer;transition:transform .25s ease, box-shadow .25s ease}
 .dresscode-visual:hover{transform:translateY(-4px);box-shadow:0 24px 70px rgba(0,0,0,0.58)}
 .dresscode-visual img{display:block;width:100%;height:auto;object-fit:cover;filter:saturate(1.06) contrast(1.02)}
 .dresscode-visual::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.0), rgba(10,8,8,0.34));pointer-events:none}
@@ -962,17 +962,26 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
   padding: 0.06em 0.12em;
 }
 .word-reveal.rv-in { opacity: 1; transform: translateY(0) rotate(0); }
-/* SHIP GUARANTEE: Honeymoon Fund + closing copy can never be hidden by reveal animations */
+/* SHIP GUARANTEE: Honeymoon Fund + closing copy — plain text, never hidden, natural spacing */
 .gift-section h2,
-.gift-section h2 .word-reveal,
-.closing-hero .ch-content,
-.closing-hero .ch-content p,
-.closing-hero .ch-content .word-reveal {
+.closing-hero .ch-content p.font-script-accent {
   opacity: 1 !important;
-  transform: translateY(0) rotate(0) !important;
+  transform: none !important;
   visibility: visible !important;
-  display: inline-block !important;
+}
+.gift-section h2 .word-reveal,
+.gift-section h2 .word-reveal-wrap,
+.closing-hero .ch-content .word-reveal,
+.closing-hero .ch-content .word-reveal-wrap {
+  opacity: 1 !important;
+  transform: none !important;
+  visibility: visible !important;
   transition: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: inline !important;
+  letter-spacing: normal !important;
+  word-spacing: normal !important;
 }
 /* headings that get word-split should not also fly as a block — let words drive */
 [data-wrapped].rv-up, [data-wrapped].rv-left, [data-wrapped].rv-right { opacity: 1 !important; transform: none !important; }
@@ -1423,7 +1432,7 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
   </div>
   <div class="dc-fade" aria-hidden="true"></div>
   <div class="inner max-w-[1200px] mx-auto px-5 sm:px-container-padding py-12">
-    <div id="dresscode" class="mx-auto max-w-[720px] text-center rounded-[20px] p-6 sm:p-8 rv-up" style="background: rgba(18,16,12,0.96); border: 1px solid #7d541b; box-shadow: 0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04);">
+    <div id="dresscode" class="mx-auto max-w-[520px] text-center rounded-[20px] p-6 sm:p-8 rv-up" style="background: rgba(18,16,12,0.96); border: 1px solid #7d541b; box-shadow: 0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04);">
       <div class="dresscode-visual" onclick="if (window.openDressCode) openDressCode()" aria-label="Open the dress code guide">
         <img src="dress%20code.png" alt="Dress code guide" loading="lazy"/>
       </div>
@@ -1532,18 +1541,19 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
 <!-- ============================================================ -->
 <!-- GIFT SECTION                                                 -->
 <!-- ============================================================ -->
-<div class="gift-section py-20 border-b border-gold/10" id="gift">
+<div class="gift-section py-16 sm:py-20 border-b border-gold/10" id="gift">
   <div class="inner max-w-[1200px] mx-auto px-5 sm:px-container-padding">
-    <div class="rv rv-in bento-card bento-card-dark rounded-[28px] p-10 sm:p-14 text-center relative overflow-hidden max-w-2xl mx-auto" style="opacity:1 !important;transform:none !important">
-      <div class="absolute inset-0 gold-shimmer pointer-events-none"></div>
-      <div class="sparkle-bg absolute inset-0 pointer-events-none"></div>
+    <div class="mx-auto max-w-[520px] text-center rounded-[28px] p-8 sm:p-10 relative overflow-hidden rv" style="background: linear-gradient(180deg, rgba(18,16,12,0.96) 0%, rgba(10,10,10,0.98) 100%); border: 1px solid rgba(196,153,72,0.14); box-shadow: 0 20px 60px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.04);">
+      <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(600px 360px at 50% 0%, rgba(196,153,72,0.07), transparent 62%);"></div>
       <div class="relative z-10">
-        <div class="w-20 h-20 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center mx-auto mb-8">
-          <span class="material-symbols-outlined bento-accent text-4xl" data-icon="card_travel" style="font-variation-settings:'FILL' 1;">card_travel</span>
+        <div class="w-14 h-14 rounded-full bg-gold/10 border border-gold/20 flex items-center justify-center mx-auto mb-5">
+          <span class="material-symbols-outlined text-gold text-[26px]" style="font-variation-settings:'FILL' 1">redeem</span>
         </div>
-        <h2 class="font-script-accent text-[42px] text-gold-gradient italic mb-4">Honeymoon Fund</h2>
-        <p class="font-body-lg bento-body max-w-[52ch] mx-auto mb-8">Your presence is our greatest gift. Should you wish to honor us with a contribution, a monetary gift is preferred. A card and gift box will be available at the reception.</p>
-        <p class="font-label-sm label-premium text-gold/70 italic mt-6">Thank you for celebrating with us &mdash; your kindness means the world.</p>
+        <span class="block text-[10px] tracking-[0.32em] uppercase mb-3" style="color:#c49948; font-family:'Be Vietnam Pro',sans-serif;">With gratitude</span>
+        <h2 class="font-script-accent text-gold-gradient italic leading-none mb-4" style="font-size: clamp(34px, 5.5vw, 44px); letter-spacing: normal; word-spacing: normal;">Honeymoon Fund</h2>
+        <div class="w-12 h-[1px] bg-gradient-to-r from-transparent via-[#c49948] to-transparent mx-auto mb-5 opacity-60"></div>
+        <p class="text-[14px] leading-relaxed max-w-[44ch] mx-auto" style="color: rgba(255,248,230,0.74); font-family:'Be Vietnam Pro',sans-serif;">Your presence is our greatest gift. Should you wish to honor us with a contribution, a monetary gift is preferred. A card and gift box will be available at the reception.</p>
+        <p class="mt-6 text-[11px] tracking-[0.14em] italic" style="color: rgba(252,228,160,0.62); font-family:'Be Vietnam Pro',sans-serif;">Thank you for celebrating with us — your kindness means the world.</p>
       </div>
     </div>
   </div>
@@ -1552,14 +1562,16 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
 <!-- ============================================================ -->
 <!-- CLOSING HERO — cinematic farewell                            -->
 <!-- ============================================================ -->
-<div class="closing-hero">
-  <div class="ch-photo"><img src="../galery%20(1).jpeg" alt="Charles and Leticia"/></div>
-  <div class="ch-vignette"></div>
-  <div class="ch-content rv-up rv-in" style="opacity:1 !important;transform:none !important">
-    <div class="cb-ornament mb-4"></div>
-    <p class="font-script-accent text-[clamp(56px,12vw,110px)] text-gold-gradient italic leading-tight mb-3" style="opacity:1 !important">Charles &amp; Leticia</p>
-    <p class="font-label-sm label-premium dark-section-subheading uppercase tracking-[0.3em]" style="opacity:1 !important">December 31, 2026 &bull; Belize City</p>
-    <div class="cb-ornament mt-4"></div>
+<div class="closing-hero" style="min-height: 72vh">
+  <div class="ch-photo"><img src="galery%20(1).jpeg" alt="Charles and Leticia" loading="lazy"/></div>
+  <div class="ch-vignette" style="background: linear-gradient(to bottom, rgba(10,10,10,0.22) 0%, rgba(10,10,10,0.58) 68%, rgba(10,10,10,0.92) 100%)"></div>
+  <div class="ch-content text-center px-6 py-16 sm:py-20">
+    <div class="cb-ornament mb-6"></div>
+    <span class="block text-[10px] tracking-[0.32em] uppercase mb-3" style="color: rgba(252,228,160,0.75); font-family:'Be Vietnam Pro',sans-serif;">With love</span>
+    <h2 class="font-script-accent text-gold-gradient italic leading-[0.95] m-0" style="font-size: clamp(48px, 9vw, 86px); letter-spacing: -0.02em; word-spacing: normal;">Charles <span style="font-size:0.68em; opacity:0.9; font-style: italic; vertical-align: middle; margin: 0 0.08em;">&</span> Leticia</h2>
+    <div class="w-16 h-[1px] bg-gradient-to-r from-transparent via-[#c49948] to-transparent mx-auto my-5 opacity-60"></div>
+    <p class="text-[11px] tracking-[0.28em] uppercase" style="color: rgba(255,248,230,0.88); font-family:'Cinzel',serif;">December 31, 2026 — Belize City</p>
+    <div class="cb-ornament mt-6"></div>
   </div>
 </div>
 
@@ -1763,9 +1775,7 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
     '.cinematic-break .cb-content span.font-label-sm',   // Style / With love labels
     '.dresscode-section h2',                 // Guest Attire Palette
     '#gallery h2',                           // Our Moments
-    '.rsvp-photo-section h2',                // RSVP
-    '.gift-section h2',                      // Honeymoon Fund
-    '.closing-hero .ch-content p.font-script-accent' // Charles & Leticia closing
+    '.rsvp-photo-section h2'                // RSVP — gift + closing stay plain text
   ].join(',');
 
   function wrapWords(el) {
@@ -1821,7 +1831,7 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
   else document.addEventListener('DOMContentLoaded', init);
 
   // ---- Ensure EVERY heading gets consistent word reveal (fallback) ----
-  var FALLBACK_SEL = 'h2.font-headline-lg, h3.bento-heading, .gift-section h2, .rsvp-photo-section h2, #gallery h2, .cinematic-break p.font-script-accent, .closing-hero p.font-script-accent';
+  var FALLBACK_SEL = 'h2.font-headline-lg, h3.bento-heading, .rsvp-photo-section h2, #gallery h2, .cinematic-break p.font-script-accent';
   function fallbackWrap() {
     document.querySelectorAll(FALLBACK_SEL).forEach(function (h) {
       if (!h.dataset.wrapped && h.textContent.trim().length > 1) wrapWords(h);
