@@ -1599,7 +1599,13 @@ Amelie	Guerra	Julian	couple	2	6140942"
     }
 
     function normalizeWaPhone(phone) {
-      return String(phone || '').replace(/[^\d]/g, '');
+      let digits = String(phone || '').replace(/[^\d]/g, '');
+      if (!digits) return '';
+      // 7-digit Belize numbers (e.g. 6373007 -> 5016373007)
+      if (digits.length === 7) return '501' + digits;
+      // 10-digit US numbers (e.g. 2818652080 -> 12818652080)
+      if (digits.length === 10) return '1' + digits;
+      return digits;
     }
 
     function getGuestsForTarget(tgt, requirePhone = false) {
