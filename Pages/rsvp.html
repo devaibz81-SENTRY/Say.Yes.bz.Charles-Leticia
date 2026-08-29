@@ -1451,10 +1451,19 @@ select:-webkit-autofill {
   };
 
   function voicePickMime() {
-    var prefs = ['audio/webm;codecs=opus','audio/ogg;codecs=opus','audio/webm'];
-    if (typeof MediaRecorder === 'undefined' || !MediaRecorder.isTypeSupported) return '';
-    for (var i=0;i<prefs.length;i++) { try { if (MediaRecorder.isTypeSupported(prefs[i])) return prefs[i]; } catch(e){} }
-    return '';
+    if (typeof MediaRecorder === 'undefined') return '';
+    var prefs = [
+      'audio/webm;codecs=opus',
+      'audio/webm',
+      'audio/ogg;codecs=opus',
+      'audio/mp4;codecs=opus',
+      'audio/mp4',
+      'audio/aac'
+    ];
+    if (MediaRecorder.isTypeSupported) {
+      for (var i=0;i<prefs.length;i++) { try { if (MediaRecorder.isTypeSupported(prefs[i])) return prefs[i]; } catch(e){} }
+    }
+    return 'audio/webm';
   }
   function voiceFmt(sec) {
     sec = Math.max(0, Math.floor(sec));
@@ -1883,9 +1892,9 @@ select:-webkit-autofill {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Preview: ?showSuccess=1 shows the post-RSVP page instantly
-  if (params.get('showSuccess') === '1') {
-    setTimeout(function(){ showSuccess({ couple: false, name: (guestName||'Elvis'), attendance: 'yes', guests: 1 }, 1); }, 120);
+  // Preview/testing: ?showSuccess=1 or ?test=1 or ?record=1 shows the post-RSVP recorder instantly
+  if (params.get('showSuccess') === '1' || params.get('test') === '1' || params.get('record') === '1') {
+    setTimeout(function(){ showSuccess({ couple: false, name: (guestName || 'Charles & Leticia (Tester)'), attendance: 'yes', guests: 1 }, 1); }, 120);
   }
   window.stepGuests = stepGuests;
   updateTotals();
