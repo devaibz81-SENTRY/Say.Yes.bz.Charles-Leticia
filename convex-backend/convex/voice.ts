@@ -61,14 +61,12 @@ export const saveVoiceNote = httpAction(async (ctx, request) => {
     return json({ error: "Duration must be 1..60 seconds" }, 400, origin);
   }
 
-  // Strict Opus allow-list (Opus only per product decision)
+  // Allow all standard web audio types (WebM, Ogg, MP4, AAC)
   const mimeLow = mimeType.toLowerCase();
-  const allowedPrefixes = ["audio/webm", "audio/ogg"];
-  const isOpus = mimeLow.includes("opus");
-  // Allow audio/webm;codecs=opus and audio/ogg;codecs=opus and plain fallbacks if browser lied
+  const allowedPrefixes = ["audio/webm", "audio/ogg", "audio/mp4", "audio/aac", "audio/"];
   const isAllowedType = allowedPrefixes.some((p) => mimeLow.startsWith(p));
   if (!isAllowedType) {
-    return json({ error: "Unsupported audio type — Opus/WebM only" }, 400, origin);
+    return json({ error: "Unsupported audio type" }, 400, origin);
   }
   // Enforce Opus when possible, but don't hard-block if browser reports audio/webm without codec string
   // (Chrome sometimes sends audio/webm alone). We log it.

@@ -402,30 +402,30 @@ select:-webkit-autofill {
   75% { transform: translateX(6px); }
 }
 
-/* === Minimal Voice Note Recorder === */
+/* === Voice Note Recorder === */
 .voice-mic-btn {
   position: relative;
-  width: 64px;
-  height: 64px;
+  width: 68px;
+  height: 68px;
   border-radius: 50%;
   border: 1.5px solid rgba(196, 153, 72, 0.5);
-  background: linear-gradient(135deg, rgba(252, 228, 160, 0.15) 0%, rgba(196, 153, 72, 0.25) 100%);
+  background: linear-gradient(135deg, rgba(252, 228, 160, 0.18) 0%, rgba(196, 153, 72, 0.28) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fce4a0;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transition: all 0.22s ease;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 .voice-mic-btn:hover {
-  transform: scale(1.05);
+  transform: scale(1.06);
   border-color: #fce4a0;
-  background: linear-gradient(135deg, rgba(252, 228, 160, 0.25) 0%, rgba(196, 153, 72, 0.35) 100%);
-  box-shadow: 0 6px 20px rgba(196, 153, 72, 0.3);
+  background: linear-gradient(135deg, rgba(252, 228, 160, 0.3) 0%, rgba(196, 153, 72, 0.4) 100%);
+  box-shadow: 0 6px 24px rgba(196, 153, 72, 0.35);
 }
 .voice-mic-btn:active {
-  transform: scale(0.96);
+  transform: scale(0.95);
 }
 .voice-mic-btn:disabled {
   opacity: 0.45;
@@ -434,17 +434,17 @@ select:-webkit-autofill {
 }
 .voice-mic-btn.rec {
   border-color: #ef4444;
-  background: rgba(239, 68, 68, 0.2);
-  color: #f87171;
-  box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.25);
+  color: #ffffff;
+  box-shadow: 0 0 24px rgba(239, 68, 68, 0.5);
   animation: voiceRecPulse 1.2s infinite ease-in-out;
 }
 @keyframes voiceRecPulse {
-  0%, 100% { transform: scale(1); box-shadow: 0 0 12px rgba(239, 68, 68, 0.4); }
-  50% { transform: scale(1.06); box-shadow: 0 0 24px rgba(239, 68, 68, 0.7); }
+  0%, 100% { transform: scale(1); box-shadow: 0 0 14px rgba(239, 68, 68, 0.4); }
+  50% { transform: scale(1.06); box-shadow: 0 0 28px rgba(239, 68, 68, 0.75); }
 }
 .voice-bars {
-  height: 26px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -475,9 +475,8 @@ select:-webkit-autofill {
 #success > .success-pop{width:100%}
 #voiceNoteCard{order:1}
 #postRsvpLove{order:2}
-#toggleWrittenWrap{order:3}
-#sucCalendarBlock{order:4}
-#success .success-pop.flex.flex-col.gap-3{order:5}
+#sucCalendarBlock{order:3}
+#success .success-pop.flex.flex-col.gap-3{order:4}
 </style>
 </head>
 <body class="bg-background font-body-md text-on-background min-h-screen relative overflow-x-hidden">
@@ -700,93 +699,91 @@ select:-webkit-autofill {
 <p id="sucSummary" class="hidden"></p>
 <p id="sucTotal" class="success-pop font-label-sm text-on-surface-variant uppercase tracking-[0.15em]"></p>
 
-<!-- Post-RSVP: written note (song requests live on voting page) -->
-<div id="postRsvpLove" class="success-pop chad-form text-left space-y-3 mt-1">
-<div id="writtenExtra" class="hidden space-y-3">
-<div>
-<label class="chad-label" for="postMessage" style="color:rgba(245,215,110,.9)">Whisper to the couple <span style="opacity:.5">— leave a little love</span></label>
-<div class="chad-field chad-field-textarea">
-<span class="material-symbols-outlined chad-ic">favorite</span>
-<textarea class="chad-input chad-area" id="postMessage" placeholder="A sweet or funny note for Charles & Leticia… make them smile" rows="2"></textarea>
-</div>
-</div>
-<button onclick="savePostLove()" type="button" class="chad-btn w-full flex items-center justify-center gap-2">
-<span class="material-symbols-outlined text-base">send</span> Send my note
-</button>
-</div>
-</div>
-
-<!-- VOICE NOTE — post-RSVP (60s max) -->
+<!-- VOICE NOTE RECORDER (Live Counter + Progress Bar + Visualizer) -->
 <div id="voiceNoteCard" class="success-pop chad-form text-center space-y-3">
-
-  <!-- Unsupported -->
-  <div id="voiceUnsupported" class="hidden rounded-2xl border border-amber-500/30 bg-amber-500/10 p-4 space-y-2">
-    <p class="font-label-sm text-amber-200" style="font-size:.72rem;letter-spacing:.08em">Voice notes need Chrome or Edge</p>
-    <p class="font-body-md" style="font-size:.76rem;color:rgba(255,255,255,.70);line-height:1.5">Safari doesn't support this yet — open in <strong style="color:#F5D76E">Chrome</strong> to record, or leave a written note.</p>
+  <!-- Unsupported warning -->
+  <div id="voiceUnsupported" class="hidden rounded-2xl border border-amber-500/30 bg-amber-500/10 p-4 space-y-2 text-left">
+    <p class="font-label-sm text-amber-200 text-xs font-semibold tracking-wide">Microphone Note</p>
+    <p class="font-body-md text-xs text-white/70 leading-relaxed">Microphone access is not supported in this view. Please leave a written love note right below!</p>
   </div>
 
   <!-- Recorder core -->
   <div id="voiceCore" class="space-y-3">
-    <p class="font-label-sm uppercase tracking-[0.2em] text-gold" style="font-size:.68rem">Leave a voice note</p>
+    <div class="text-center pb-0.5">
+      <p class="font-script-accent text-gold italic text-xl">Leave a voice note</p>
+      <p class="chad-label !mb-0 text-[10px] tracking-widest uppercase opacity-60">A 60-second whisper for Charles &amp; Leticia</p>
+    </div>
 
-    <!-- Mic button + active visualizer & timer -->
+    <!-- Central Mic Button + Live Indicators -->
     <div class="flex flex-col items-center gap-2.5">
       <button id="voiceRecordBtn" type="button" class="voice-mic-btn" aria-label="Record voice note">
-        <span class="material-symbols-outlined mic-icon" style="font-size:30px">mic</span>
+        <span class="material-symbols-outlined mic-icon" style="font-size:32px">mic</span>
       </button>
 
-      <!-- Realtime Audio Recording Meter (Live EQ Bars) -->
-      <div id="voiceBars" class="voice-bars hidden flex items-center justify-center gap-1 my-1">
+      <!-- Live Audio Equalizer Meter (Realtime Voice Waveform) -->
+      <div id="voiceBars" class="voice-bars hidden flex items-center justify-center gap-1 my-0.5">
         <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
         <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
       </div>
 
-      <!-- Live Recording Timer Badge -->
-      <div id="voiceTimerBadge" class="hidden inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/15 border border-red-500/35 text-red-400 font-semibold tracking-wider my-0.5" style="font-size:0.75rem;">
+      <!-- Live Counter Badge -->
+      <div id="voiceTimerBadge" class="hidden inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/15 border border-red-500/35 text-red-400 font-semibold tracking-wider my-0.5 text-xs">
         <span class="w-2 h-2 rounded-full bg-red-500 animate-ping inline-block"></span>
         <span id="voiceTimer">0:00 / 1:00</span>
       </div>
 
-      <!-- Clean Minimal Progress Bar -->
-      <div id="voiceProgressTrack" class="hidden w-full max-w-[200px] h-1.5 bg-white/10 rounded-full overflow-hidden mx-auto my-1">
-        <div id="voiceProgressFill" class="h-full bg-gradient-to-r from-[#c49948] via-[#fce4a0] to-[#ef4444] rounded-full transition-all duration-150" style="width: 0%;"></div>
+      <!-- Live Progress Bar -->
+      <div id="voiceProgressTrack" class="hidden w-full max-w-[220px] h-1.5 bg-white/10 rounded-full overflow-hidden mx-auto my-0.5">
+        <div id="voiceProgressFill" class="h-full bg-gradient-to-r from-[#c49948] via-[#fce4a0] to-[#ef4444] rounded-full transition-all duration-100" style="width: 0%;"></div>
       </div>
 
-      <p id="voiceProgressLabel" class="font-label-sm uppercase tracking-wider text-gold/80" style="font-size:0.68rem;">Tap mic to record (60s max)</p>
+      <!-- Action Prompt / Subtitle -->
+      <p id="voiceProgressLabel" class="font-label-sm uppercase tracking-wider text-gold/80 text-[11px]">Tap mic to record (60s max)</p>
       <p id="voiceErr" class="hidden font-label-sm text-xs text-red-400 tracking-wide"></p>
-      <div id="voiceTimerSub" class="voice-timer sub hidden"><span class="voice-rec-dot inline-block align-middle" style="margin-right:6px"></span>Recording</div>
-      <svg id="voiceRingFg" style="display:none"></svg>
     </div>
 
-    <!-- Controls -->
-    <div id="voiceControls" class="flex flex-col gap-2">
+    <!-- Controls (Stop / Re-record / Send) -->
+    <div id="voiceControls" class="flex flex-col gap-2 pt-1">
       <div class="flex gap-2 justify-center">
-        <button id="voiceStopBtn" type="button" class="hidden chad-btn flex items-center justify-center gap-1.5" style="background:#1a1a1a;border:1px solid rgba(239,68,68,.35)"><span class="material-symbols-outlined text-sm" style="color:#F87171">stop_circle</span> Stop</button>
-        <button id="voiceRerecordBtn" type="button" class="hidden chad-btn flex items-center justify-center gap-1.5"><span class="material-symbols-outlined text-sm">refresh</span> Re-record</button>
-        <button id="voiceStopOnlySpacer" type="button" class="hidden chad-btn" style="visibility:hidden" aria-hidden="true"></button>
+        <button id="voiceRerecordBtn" type="button" class="hidden chad-btn flex items-center justify-center gap-1.5 text-xs py-2 px-4"><span class="material-symbols-outlined text-sm">refresh</span> Re-record</button>
       </div>
-      <button id="voiceSendBtn" type="button" class="hidden chad-btn chad-btn-gold w-full flex items-center justify-center gap-2"><span class="material-symbols-outlined text-base">send</span> Send my voice</button>
+      <button id="voiceSendBtn" type="button" class="hidden chad-btn chad-btn-gold w-full flex items-center justify-center gap-2 py-3"><span class="material-symbols-outlined text-base">send</span> Send my voice note</button>
     </div>
 
-    <!-- Preview player -->
-    <div id="voicePreviewWrap" class="hidden pt-1">
+    <!-- Audio Preview Player -->
+    <div id="voicePreviewWrap" class="hidden pt-1 space-y-1.5">
       <audio id="voicePreviewAudio" class="voice-audio w-full" controls preload="metadata"></audio>
-      <p id="voicePreviewDur" class="chad-label text-center !mb-0" style="font-size:.58rem;opacity:.45;margin-top:4px">Listen back, then send when ready</p>
+      <p id="voicePreviewDur" class="chad-label text-center !mb-0 text-[11px] opacity-60">Listen back — send when you love it</p>
     </div>
 
-    <!-- Sent state -->
+    <!-- Sent Success Badge -->
     <div id="voiceSent" class="hidden rounded-2xl border border-emerald-500/25 bg-emerald-500/10 p-4 text-center space-y-2">
       <span class="material-symbols-outlined text-emerald-300 text-3xl">check_circle</span>
-      <p class="font-label-sm text-emerald-200" style="font-size:.70rem;letter-spacing:.08em">Voice note sent 💛</p>
-      <p class="font-body-md" style="font-size:.72rem;color:rgba(255,255,255,.65)">From: <span id="voiceSentName" class="text-gold-light">you</span> — you can re-record before the wedding.</p>
-      <button id="voiceReplaceBtn" type="button" class="chad-btn mt-1 flex items-center justify-center gap-2 mx-auto"><span class="material-symbols-outlined text-base">mic</span> Record a new one</button>
+      <p class="font-label-sm text-emerald-200 text-xs tracking-wider uppercase font-semibold">Voice note sent with love 💛</p>
+      <p class="font-body-md text-xs text-white/70">From: <span id="voiceSentName" class="text-gold-light">you</span></p>
+      <button id="voiceReplaceBtn" type="button" class="chad-btn mt-2 flex items-center justify-center gap-2 mx-auto text-xs py-2 px-4"><span class="material-symbols-outlined text-base">mic</span> Record a new one</button>
     </div>
   </div>
 </div>
 
-<div id="toggleWrittenWrap" class="text-center success-pop" style="order:3">
-  <button id="toggleWrittenBtn" type="button" class="font-label-sm text-gold/60 hover:text-gold underline underline-offset-4 py-2" style="font-size:.68rem;letter-spacing:.08em">Prefer to write a note instead? →</button>
+<!-- Post-RSVP: Simple written love note to the couple -->
+<div id="postRsvpLove" class="success-pop chad-form text-left space-y-3 mt-1">
+  <div class="text-center pb-1">
+    <p class="font-script-accent text-gold italic" style="font-size:1.35rem">Leave a note for the couple</p>
+    <p class="chad-label !mb-0" style="font-size:.66rem;opacity:.6;letter-spacing:.12em;text-transform:uppercase">A sweet or funny message — make them smile</p>
+  </div>
+  <div>
+    <div class="chad-field chad-field-textarea">
+      <span class="material-symbols-outlined chad-ic">favorite</span>
+      <textarea class="chad-input chad-area" id="postMessage" placeholder="Write a note for Charles & Leticia…" rows="3"></textarea>
+    </div>
+  </div>
+  <button onclick="savePostLove()" id="postLoveBtn" type="button" class="chad-btn chad-btn-gold w-full flex items-center justify-center gap-2">
+    <span class="material-symbols-outlined text-base">send</span> Send my note
+  </button>
+  <p id="postLoveOk" class="hidden text-center text-emerald-400 font-label-sm" style="font-size:.70rem;letter-spacing:.08em">Note sent with love 💛</p>
 </div>
+
 
 
 <div id="sucCalendarBlock" class="success-pop bg-white/5 border border-gold/30 rounded-2xl p-5 text-center space-y-3">
@@ -1726,7 +1723,7 @@ select:-webkit-autofill {
     voiceHideErr();
     var mime = voicePickMime();
     if (!mime) {
-      voiceShowErr('Voice notes need Opus — please open in Chrome or Edge.');
+      voiceShowErr('Audio recording is not supported in this browser.');
       if (voiceEls.unsupported) voiceEls.unsupported.classList.remove('hidden');
       if (voiceEls.core) voiceEls.core.classList.add('hidden');
       return;
@@ -1802,13 +1799,10 @@ select:-webkit-autofill {
     if (dur < 1 || dur > 62) { voiceShowErr('Please record 1–60 seconds.'); return; }
     var btn = voiceEls.sendBtn;
     if (btn) { btn.disabled = true; btn.innerHTML = '<span class="material-symbols-outlined text-base animate-spin">progress_activity</span> Sending…'; }
-    var mimeToSend = voiceState.blob.type || voiceState.mime || 'audio/webm;codecs=opus';
-    // Opus-only guard
+    var mimeToSend = voiceState.blob.type || voiceState.mime || 'audio/webm';
     var low = mimeToSend.toLowerCase();
-    if (!(low.startsWith('audio/webm') || low.startsWith('audio/ogg'))) {
-      voiceShowErr('Please record as Opus — try Chrome.');
-      if (btn) { btn.disabled=false; btn.innerHTML = '<span class="material-symbols-outlined text-base">send</span> Send my voice'; }
-      return;
+    if (!low.startsWith('audio/')) {
+      mimeToSend = 'audio/webm';
     }
     var guestDisplayName = (voiceEls.fromName ? voiceEls.fromName.textContent : '') || guestName || 'Guest';
     var lastNameVal = '';
