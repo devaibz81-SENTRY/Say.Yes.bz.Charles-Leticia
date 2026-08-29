@@ -775,6 +775,8 @@ section[id] { scroll-margin-top: 5rem; }
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  z-index: 1;
+  margin-top: 0;
 }
 .closing-hero .ch-photo {
   position: absolute; inset: 0; z-index: 0;
@@ -868,9 +870,12 @@ section[id] { scroll-margin-top: 5rem; }
 
 .gift-section {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+  z-index: 5;
+  padding-bottom: 3rem !important;
 }
-.gift-section > .inner { position: relative; z-index: 2; }
+.gift-section > .inner { position: relative; z-index: 5; }
+.gift-section .bento-card{position:relative;z-index:6;opacity:1 !important;transform:none !important;visibility:visible !important}
 
 /* ---- Heading text color in dark photo sections ---- */
 .dark-section-heading { color: #F5F0E8 !important; }
