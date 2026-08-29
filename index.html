@@ -972,6 +972,7 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
   transform: translateY(0) rotate(0) !important;
   visibility: visible !important;
   display: inline-block !important;
+  transition: none !important;
 }
 /* headings that get word-split should not also fly as a block — let words drive */
 [data-wrapped].rv-up, [data-wrapped].rv-left, [data-wrapped].rv-right { opacity: 1 !important; transform: none !important; }
@@ -1913,6 +1914,7 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
 <script>
 (function () {
   function reveal(el) {
+    el.style.transition = 'none';
     el.style.opacity = '1';
     el.style.transform = 'none';
     el.style.visibility = 'visible';
