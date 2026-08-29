@@ -3197,43 +3197,29 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
   // stagger: names in first, photo holds ~2.5s before gif scrubs
   animateNames();
   if (hintPill) { hintPill.classList.add('hidden'); hintPill.style.opacity = '0'; }
-  if (loaderCard) { loaderCard.classList.remove('hidden'); }
+  if (loaderCard) { loaderCard.classList.add('hidden'); loaderCard.style.display='none'; }
   if (firstImg) { firstImg.style.display = 'block'; firstImg.style.opacity = '1'; }
   if (lastImg) { lastImg.style.display = 'none'; lastImg.style.opacity = '0'; }
   if (seqImg) { seqImg.style.display = 'none'; seqImg.classList.add('hidden'); }
 
-  // loading for best playback — preload all 127 webp
+  // No jarring loader — let it load in background, show scroll hint immediately
+  state = 'scrolling';
+  if (hintPill) { hintPill.classList.remove('hidden'); hintPill.style.opacity = '1'; hintPill.style.transform = 'translateY(0)'; }
+  if (hint) hint.textContent = 'scroll';
+  render(0);
+  // background preload all 127 webp (no blocking UI)
   var loadedFrames = 0;
-  function updateLoader() {
-    var pct = Math.round((loadedFrames / frameCount) * 100);
-    if (loadProgress) loadProgress.style.width = pct + '%';
-    if (loadText) loadText.textContent = 'Loading for best playback… ' + pct + '%';
-    if (pct >= 100) {
-      setTimeout(function(){
-        state = 'scrolling';
-        if (loaderCard) { loaderCard.style.opacity = '0'; loaderCard.style.transform = 'translateY(8px)'; setTimeout(function(){ loaderCard.classList.add('hidden'); }, 320); }
-        if (hintPill) { hintPill.classList.remove('hidden'); hintPill.style.opacity = '1'; hintPill.style.transform = 'translateY(0)'; }
-        if (hint) hint.textContent = 'scroll';
-        // photo holds for ~2.5s before gif becomes draggable — keep firstImg visible, seq hidden until scroll
-        render(0);
-        warmCache();
-      }, 420);
-    }
-  }
-  // kick off preload
   for (var i = 1; i <= frameCount; i++) {
     (function(idx){
       var src = frameSrc(idx);
       var im = new Image();
       im.decoding = 'async';
-      im.onload = im.onerror = function(){ loadedFrames++; updateLoader(); };
+      im.onload = im.onerror = function(){ loadedFrames++; };
       im.src = src;
       if (!window.__frameCache) window.__frameCache = {};
       window.__frameCache[src] = im;
     })(i);
   }
-  // safety: if no frames, still enable after 4s
-  setTimeout(function(){ if (state === 'loading' && loadedFrames < frameCount) { state='scrolling'; if(loaderCard) loaderCard.classList.add('hidden'); if(hintPill) hintPill.classList.remove('hidden'); render(0); } }, 4200);
 
   window.addEventListener('wheel', onWheel, { passive: false });
   window.addEventListener('touchstart', onTouchStart, { passive: false });
