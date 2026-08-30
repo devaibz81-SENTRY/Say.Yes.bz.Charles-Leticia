@@ -303,7 +303,7 @@ body{min-height:100dvh;background:#0a0a0a}
         + '<span class="font-label-sm text-on-surface-variant" style="font-size:.60rem;letter-spacing:.08em">'+escapeHtml(when)+'</span>'
         + '</div>'
         + '<div class="voice-wave mt-3">'+wave+'</div>'
-        + '<audio class="w-full mt-3 rounded-full" style="height:38px" controls preload="none" controlsList="nodownload">'
+        + '<audio class="w-full mt-3 rounded-full" style="height:38px" controls preload="none" controlsList="nodownload" src="'+(url ? escapeHtml(url) : '')+'">'
         + (url ? '<source src="'+escapeHtml(url)+'" type="'+mime+'">' : '')
         + '</audio>'
         + '<p class="font-label-sm text-on-surface-variant mt-2" style="font-size:.62rem;letter-spacing:.06em">Opus • '+mime+' • tap play to hear their voice</p>'

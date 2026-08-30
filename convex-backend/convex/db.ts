@@ -449,14 +449,9 @@ export const saveVoiceNote = internalMutation({
   },
   handler: async (ctx, args) => {
     const mime = (args.mimeType || "").toLowerCase();
-    const allowed = [
-      "audio/webm;codecs=opus",
-      "audio/webm",
-      "audio/ogg;codecs=opus",
-      "audio/ogg",
-    ];
-    const isAllowed = allowed.some((a) => mime === a || mime.startsWith(a.split(";")[0]));
-    if (!isAllowed) throw new Error("Unsupported audio type — Opus/WebM only");
+    const allowedPrefixes = ["audio/webm", "audio/ogg", "audio/mp4", "audio/aac", "audio/wav", "audio/x-m4a", "audio/"];
+    const isAllowed = allowedPrefixes.some((p) => mime.startsWith(p));
+    if (!isAllowed) throw new Error("Unsupported audio type");
     const dur = Math.round(args.durationSec);
     if (dur < 1 || dur > 62) throw new Error("Duration must be 1..60 seconds");
 
@@ -540,6 +535,20 @@ export const getVoiceNoteByGuestId = internalQuery({
       audioUrl = null;
     }
     return { ...note, audioUrl };
+  },
+});
+
+export const deleteAllVoiceNotes = internalMutation({
+  args: {},
+  handler: async (ctx) => {
+    const notes = await ctx.db.query("voice_notes").collect();
+    for (const note of notes) {
+      try {
+        await ctx.storage.delete(note.storageId);
+      } catch {}
+      await ctx.db.delete(note._id);
+    }
+    return { deletedCount: notes.length };
   },
 });
 

@@ -3,7 +3,7 @@ import { login, logout, me } from "./auth";
 import { listGuests, upsertGuest, deleteGuest, importGuests } from "./guests";
 import { submitRsvp, rsvpStatus, rsvpCount } from "./rsvp";
 import { listSongsHttp, createSongHttp, voteSongHttp } from "./songs";
-import { generateUploadUrl, saveVoiceNote, listVoiceNotes, getMyVoiceNote } from "./voice";
+import { generateUploadUrl, saveVoiceNote, listVoiceNotes, getMyVoiceNote, clearAllVoiceNotes } from "./voice";
 
 const http = httpRouter();
 
@@ -57,5 +57,8 @@ http.route({ path: "/api/voice/list", method: "OPTIONS", handler: listVoiceNotes
 
 http.route({ path: "/api/voice/mine", method: "GET", handler: getMyVoiceNote });
 http.route({ path: "/api/voice/mine", method: "OPTIONS", handler: getMyVoiceNote });
+
+http.route({ path: "/api/voice/clear-all", method: "POST", handler: clearAllVoiceNotes });
+http.route({ path: "/api/voice/clear-all", method: "OPTIONS", handler: clearAllVoiceNotes });
 
 export default http;

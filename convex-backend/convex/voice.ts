@@ -68,6 +68,7 @@ export const saveVoiceNote = httpAction(async (ctx, request) => {
   if (!isAllowedType) {
     return json({ error: "Unsupported audio type" }, 400, origin);
   }
+  const isOpus = mimeLow.includes("opus");
   // Enforce Opus when possible, but don't hard-block if browser reports audio/webm without codec string
   // (Chrome sometimes sends audio/webm alone). We log it.
   if (!isOpus && mimeLow === "audio/webm") {
@@ -137,5 +138,18 @@ export const getMyVoiceNote = httpAction(async (ctx, request) => {
     return json(note || null, 200, origin);
   } catch (err: any) {
     return json({ error: "Could not load" }, 500, origin);
+  }
+});
+
+// POST /api/voice/clear-all
+export const clearAllVoiceNotes = httpAction(async (ctx, request) => {
+  const origin = request.headers.get("origin");
+  if (request.method === "OPTIONS") return json({ ok: true }, 200, origin);
+  if (request.method !== "POST") return json({ error: "Method not allowed" }, 405, origin);
+  try {
+    const res = await ctx.runMutation(internal.db.deleteAllVoiceNotes, {});
+    return json({ ok: true, ...res }, 200, origin);
+  } catch (err: any) {
+    return json({ error: err?.message || "Failed to clear voice notes" }, 500, origin);
   }
 });

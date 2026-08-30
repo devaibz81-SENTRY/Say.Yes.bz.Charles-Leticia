@@ -470,6 +470,24 @@ select:-webkit-autofill {
 .voice-audio::-webkit-media-controls-panel {
   background: #1c1c1c;
 }
+#voiceProgressTrack {
+  position: relative;
+  width: 100%;
+  max-width: 240px;
+  height: 6px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+  overflow: hidden;
+  margin: 6px auto;
+}
+#voiceProgressFill {
+  height: 100%;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #c49948 0%, #fce4a0 60%, #ef4444 100%);
+  box-shadow: 0 0 10px rgba(212,175,55,0.6);
+  transition: width 0.12s linear;
+}
 /* success stack: voice first, then written note, then calendar */
 #success{display:flex;flex-direction:column;gap:1.25rem}
 #success > .success-pop{width:100%}
@@ -1487,14 +1505,19 @@ select:-webkit-autofill {
       'audio/webm;codecs=opus',
       'audio/webm',
       'audio/ogg;codecs=opus',
+      'audio/ogg',
       'audio/mp4;codecs=opus',
       'audio/mp4',
       'audio/aac'
     ];
     if (MediaRecorder.isTypeSupported) {
-      for (var i=0;i<prefs.length;i++) { try { if (MediaRecorder.isTypeSupported(prefs[i])) return prefs[i]; } catch(e){} }
+      for (var i=0;i<prefs.length;i++) {
+        try {
+          if (MediaRecorder.isTypeSupported(prefs[i])) return prefs[i];
+        } catch(e){}
+      }
     }
-    return 'audio/webm';
+    return '';
   }
   function voiceFmt(sec) {
     sec = Math.max(0, Math.floor(sec));
@@ -1513,7 +1536,7 @@ select:-webkit-autofill {
     if (!voiceEls.err) return;
     voiceEls.err.textContent = msg;
     voiceEls.err.classList.remove('hidden');
-    setTimeout(function(){ voiceEls.err.classList.add('hidden'); }, 4200);
+    setTimeout(function(){ voiceEls.err.classList.add('hidden'); }, 4500);
   }
   function voiceHideErr(){ if(voiceEls.err) voiceEls.err.classList.add('hidden'); }
   function voiceUpdateBarsFake() {
@@ -1525,7 +1548,7 @@ select:-webkit-autofill {
       for (var i=0;i<bars.length;i++) {
         var idx = Math.floor(i * data.length / bars.length);
         var v = data[idx] || 0;
-        var h = 4 + (v / 255) * 22;
+        var h = 4 + (v / 255) * 24;
         if (i%3===0) h *= 0.8;
         bars[i].style.height = Math.round(h) + 'px';
         bars[i].style.opacity = 0.65 + (v/255)*0.35;
@@ -1558,7 +1581,7 @@ select:-webkit-autofill {
       voiceEls.bars.classList.toggle('rec', isRec);
     }
     if (voiceEls.timerBadge) voiceEls.timerBadge.classList.toggle('hidden', !isRec);
-    if (voiceEls.progressTrack) voiceEls.progressTrack.classList.toggle('hidden', !isRec);
+    if (voiceEls.progressTrack) voiceEls.progressTrack.classList.remove('hidden');
     if (voiceEls.progressLabel) {
       voiceEls.progressLabel.textContent = isRec ? 'Recording — tap mic to finish' : 'Tap mic to record (60s max)';
     }
@@ -1640,7 +1663,7 @@ select:-webkit-autofill {
     if (voiceEls.sentName) voiceEls.sentName.textContent = nameForSent || 'you';
     if (voiceEls.recordBtn) voiceEls.recordBtn.disabled = true;
     if (voiceEls.progressFill) { voiceEls.progressFill.style.width = '100%'; voiceEls.progressFill.classList.remove('rec'); }
-    if (voiceEls.progressLabel) voiceEls.progressLabel.textContent = 'Sent — 60s max';
+    if (voiceEls.progressLabel) voiceEls.progressLabel.textContent = 'Sent with love 💛';
     try { localStorage.setItem('cl_voice_sent_'+guestId, String(Date.now())); } catch(e){}
   }
   function voiceExitSent() {
@@ -1649,7 +1672,7 @@ select:-webkit-autofill {
     voiceHidePreview();
     voiceSetRing(0);
     if (voiceEls.progressFill) { voiceEls.progressFill.style.width = '0%'; voiceEls.progressFill.classList.remove('rec'); }
-    if (voiceEls.progressLabel) voiceEls.progressLabel.textContent = 'Tap the mic — 60s';
+    if (voiceEls.progressLabel) voiceEls.progressLabel.textContent = 'Tap mic to record (60s max)';
     if (voiceEls.timer) voiceEls.timer.textContent = '0:00 / 1:00';
     if (voiceEls.recordBtn) { voiceEls.recordBtn.disabled = false; var ic4=voiceEls.recordBtn.querySelector('.mic-icon'); if(ic4){ic4.textContent='mic';} }
     voiceHideErr();
@@ -1662,7 +1685,6 @@ select:-webkit-autofill {
         else voiceStartRecording();
       });
     }
-    // separate Stop button kept hidden — hero mic does both (no hold)
     if (voiceEls.stopBtn && !voiceEls.stopBtn._bound) {
       voiceEls.stopBtn._bound = true;
       voiceEls.stopBtn.addEventListener('click', voiceStopRecording);
@@ -1689,9 +1711,9 @@ select:-webkit-autofill {
     if (voiceEls.fromLine) voiceEls.fromLine.classList.remove('hidden');
     // check support
     var mime = voicePickMime();
-    voiceState.mime = mime;
-    voiceState.isSupported = !!mime;
-    if (!mime) {
+    voiceState.mime = mime || 'audio/webm;codecs=opus';
+    voiceState.isSupported = typeof navigator !== 'undefined' && !!navigator.mediaDevices;
+    if (!voiceState.isSupported && !mime) {
       if (voiceEls.unsupported) voiceEls.unsupported.classList.remove('hidden');
       if (voiceEls.core) voiceEls.core.classList.add('hidden');
       return;
@@ -1701,18 +1723,14 @@ select:-webkit-autofill {
     // check if already sent
     try {
       var already = localStorage.getItem('cl_voice_sent_'+guestId);
-      // also check server if we want (silent)
       fetch(CONVEX_HTTP_URL + '/api/voice/mine?guestId=' + encodeURIComponent(guestId))
-        .then(function(r){ return r.json().catch(function(){return null}); })
+        .then(function(r){ return r.json().catch(function(){return null;}); })
         .then(function(data){
           if (data && data.storageId) {
             voiceState.sentOnce = true;
             voiceEnterSent(from);
           }
         }).catch(function(){});
-      if (already && !voiceState.sentOnce) {
-        // don't auto-show sent until confirmed, but hint
-      }
     } catch(e){}
     voiceSetRing(0);
     voiceResetBarsIdle();
@@ -1721,25 +1739,18 @@ select:-webkit-autofill {
   }
   function voiceStartRecording() {
     voiceHideErr();
-    var mime = voicePickMime();
-    if (!mime) {
-      voiceShowErr('Audio recording is not supported in this browser.');
-      if (voiceEls.unsupported) voiceEls.unsupported.classList.remove('hidden');
-      if (voiceEls.core) voiceEls.core.classList.add('hidden');
-      return;
-    }
-    voiceState.mime = mime;
-    voiceHidePreview();
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
       voiceShowErr('Microphone not available in this browser.');
       return;
     }
-    // guard: already recording?
     if (voiceState.isRecording) return;
+    voiceHidePreview();
+    var mime = voicePickMime();
+    voiceState.mime = mime || 'audio/webm;codecs=opus';
+
     navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1, noiseSuppression: true, echoCancellation: true, autoGainControl: true } })
       .then(function(stream){
         voiceState.stream = stream;
-        // analyser for bars
         try {
           var AC = window.AudioContext || window.webkitAudioContext;
           if (AC) {
@@ -1753,24 +1764,35 @@ select:-webkit-autofill {
         } catch(e){ voiceState.ctx=null; voiceState.analyser=null; }
         voiceState.chunks = [];
         var rec;
-        try { rec = new MediaRecorder(stream, { mimeType: mime }); }
-        catch(e){ try { rec = new MediaRecorder(stream); voiceState.mime = rec.mimeType || mime; } catch(e2){ voiceShowErr('Could not start recorder — try Chrome.'); voiceStopTracks(); return; } }
+        try {
+          rec = mime ? new MediaRecorder(stream, { mimeType: mime, audioBitsPerSecond: 64000 }) : new MediaRecorder(stream);
+        } catch(e) {
+          try {
+            rec = new MediaRecorder(stream);
+            voiceState.mime = rec.mimeType || mime || 'audio/webm;codecs=opus';
+          } catch(e2) {
+            voiceShowErr('Could not start recorder — please try Chrome or Safari.');
+            voiceStopTracks();
+            return;
+          }
+        }
         voiceState.recorder = rec;
-        rec.ondataavailable = function(ev){ if (ev.data && ev.data.size>0) voiceState.chunks.push(ev.data); };
+        if (rec.mimeType) voiceState.mime = rec.mimeType;
+        rec.ondataavailable = function(ev){ if (ev.data && ev.data.size > 0) voiceState.chunks.push(ev.data); };
         rec.onstop = function(){
           var elapsed = (Date.now() - voiceState.startMs)/1000;
           var dur = Math.min(VOICE_MAX_SEC, Math.max(1, Math.round(elapsed)));
           voiceState.durationSec = dur;
-          var blobType = voiceState.mime || mime;
+          var blobType = rec.mimeType || voiceState.mime || 'audio/webm;codecs=opus';
           var blob = new Blob(voiceState.chunks, { type: blobType });
           voiceStopTracks();
-          if (blob.size < 800) {
-            voiceShowErr('That was too short — hold the mic and try again.');
+          if (blob.size === 0) {
+            voiceShowErr('No audio was captured — please tap mic and try again.');
             voiceHidePreview();
             return;
           }
-          if (blob.size > 2 * 1024 * 1024) {
-            voiceShowErr('That note is a bit large — try a shorter one (max 1 min).');
+          if (blob.size > 10 * 1024 * 1024) {
+            voiceShowErr('Audio file too large — max 1 minute.');
             return;
           }
           voiceState.blob = blob;
@@ -1787,7 +1809,7 @@ select:-webkit-autofill {
       })
       .catch(function(err){
         var msg = 'Microphone blocked — please allow access and tap again.';
-        if (err && err.name === 'NotAllowedError') msg = 'Microphone permission denied — allow it in your browser settings, then tap again.';
+        if (err && err.name === 'NotAllowedError') msg = 'Microphone permission denied — allow it in browser settings, then tap again.';
         else if (err && err.name === 'NotFoundError') msg = 'No microphone found on this device.';
         voiceShowErr(msg);
         voiceSetUiRecording(false);
@@ -1795,15 +1817,25 @@ select:-webkit-autofill {
   }
   function voiceSend() {
     if (!voiceState.blob) { voiceShowErr('Record something first — tap the mic.'); return; }
-    var dur = voiceState.durationSec || VOICE_MAX_SEC;
-    if (dur < 1 || dur > 62) { voiceShowErr('Please record 1–60 seconds.'); return; }
+    var dur = voiceState.durationSec || 1;
+    dur = Math.min(60, Math.max(1, Math.round(dur)));
     var btn = voiceEls.sendBtn;
     if (btn) { btn.disabled = true; btn.innerHTML = '<span class="material-symbols-outlined text-base animate-spin">progress_activity</span> Sending…'; }
-    var mimeToSend = voiceState.blob.type || voiceState.mime || 'audio/webm';
-    var low = mimeToSend.toLowerCase();
-    if (!low.startsWith('audio/')) {
-      mimeToSend = 'audio/webm';
+    
+    // Normalize MIME format for Convex storage and mutation
+    var rawMime = (voiceState.blob.type || voiceState.mime || 'audio/webm').toLowerCase();
+    var mimeToSend = 'audio/webm;codecs=opus';
+    if (rawMime.indexOf('ogg') !== -1) {
+      mimeToSend = 'audio/ogg;codecs=opus';
+    } else if (rawMime.indexOf('mp4') !== -1 || rawMime.indexOf('aac') !== -1) {
+      mimeToSend = 'audio/mp4';
+    } else if (rawMime.indexOf('webm') !== -1) {
+      mimeToSend = 'audio/webm;codecs=opus';
     }
+
+    // Clean base MIME for uploadUrl header (avoid strict header parsing failure on cloud storage)
+    var uploadContentType = rawMime.split(';')[0].trim() || 'audio/webm';
+
     var guestDisplayName = (voiceEls.fromName ? voiceEls.fromName.textContent : '') || guestName || 'Guest';
     var lastNameVal = '';
     try {
@@ -1814,42 +1846,61 @@ select:-webkit-autofill {
         if (lnA && lnA.value) lastNameVal = lnA.value.trim();
       }
     } catch(e){}
-    // 1) get upload url
+
+    // 1) get upload url from Convex
     fetch(CONVEX_HTTP_URL + '/api/voice/upload-url', { method: 'POST' })
-      .then(function(r){ return r.json().catch(function(){return {};}).then(function(j){ if(!r.ok) throw new Error(j.error||'Could not get upload URL'); return j; }); })
+      .then(function(r){
+        return r.json().catch(function(){return {};}).then(function(j){
+          if (!r.ok) throw new Error(j.error || 'Could not get upload URL');
+          return j;
+        });
+      })
       .then(function(j){
         var uploadUrl = j.uploadUrl;
-        if (!uploadUrl) throw new Error('No upload URL');
-        return fetch(uploadUrl, { method: 'POST', headers: { 'Content-Type': mimeToSend }, body: voiceState.blob })
-          .then(function(res){
-            return res.json().catch(function(){return {};}).then(function(j2){
-              if (!res.ok) throw new Error(j2.error||'Upload failed');
-              return j2.storageId || j2.storage_id || j2.id;
-            });
+        if (!uploadUrl) throw new Error('No upload URL from server');
+        return fetch(uploadUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': uploadContentType },
+          body: voiceState.blob
+        }).then(function(res){
+          return res.json().catch(function(){return {};}).then(function(j2){
+            if (!res.ok) throw new Error(j2.error || 'Upload failed');
+            return j2.storageId || j2.storage_id || j2.id;
           });
+        });
       })
       .then(function(storageId){
         if (!storageId) throw new Error('Upload failed — no file saved');
         return fetch(CONVEX_HTTP_URL + '/api/voice/save', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ guestId: guestId, guestName: guestDisplayName, lastName: lastNameVal || undefined, storageId: storageId, mimeType: mimeToSend, durationSec: dur })
-        }).then(function(r){ return r.json().catch(function(){return {};}).then(function(j){ if(!r.ok) throw new Error(j.error||'Could not save'); return j; }); });
+          body: JSON.stringify({
+            guestId: guestId,
+            guestName: guestDisplayName,
+            lastName: lastNameVal || undefined,
+            storageId: storageId,
+            mimeType: mimeToSend,
+            durationSec: dur
+          })
+        }).then(function(r){
+          return r.json().catch(function(){return {};}).then(function(j){
+            if (!r.ok) throw new Error(j.error || 'Could not save voice note');
+            return j;
+          });
+        });
       })
       .then(function(){
-        if (btn) { btn.disabled=false; btn.innerHTML = '<span class="material-symbols-outlined text-base">send</span> Send my voice'; }
-        // success — show sent, keep blob until re-record
+        if (btn) { btn.disabled = false; btn.innerHTML = '<span class="material-symbols-outlined text-base">send</span> Send my voice note'; }
         voiceEnterSent(guestDisplayName);
         voiceHideErr();
-        // revoke preview url but keep blob for potential re-send? no need
-        // clean preview audio
         try { if (voiceEls.previewAudio && voiceEls.previewAudio.src) URL.revokeObjectURL(voiceEls.previewAudio.src); } catch(e){}
       })
       .catch(function(err){
-        if (btn) { btn.disabled=false; btn.innerHTML = '<span class="material-symbols-outlined text-base">send</span> Send my voice'; }
-        voiceShowErr(err && err.message ? err.message : 'Could not send — check your connection and try again.');
+        if (btn) { btn.disabled = false; btn.innerHTML = '<span class="material-symbols-outlined text-base">send</span> Send my voice note'; }
+        voiceShowErr(err && err.message ? err.message : 'Could not send — check connection and try again.');
       });
   }
+
   // Toggle written extra (song stays open, message is optional)
   (function(){
     var tBtn = document.getElementById('toggleWrittenBtn');
@@ -1862,6 +1913,14 @@ select:-webkit-autofill {
       });
     }
   })();
+
+  // Initialize voice note card on load so it's always ready
+  document.addEventListener('DOMContentLoaded', function(){
+    voiceInitCard();
+  });
+  // Also call immediately
+  try { voiceInitCard(); } catch(e){}
+
   // expose for showSuccess hook and debugging
   window._voiceInitCard = voiceInitCard;
   window._voiceStart = voiceStartRecording;
