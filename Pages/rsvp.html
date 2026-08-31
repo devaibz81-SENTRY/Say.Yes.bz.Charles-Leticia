@@ -760,7 +760,7 @@ select:-webkit-autofill {
       <p id="voiceErr" class="hidden font-label-sm text-xs text-red-400 tracking-wide"></p>
     </div>
 
-    <!-- Controls (Stop / Re-record / Send) -->
+    <!-- Controls (Re-record / Send) -->
     <div id="voiceControls" class="flex flex-col gap-2 pt-1">
       <div class="flex gap-2 justify-center">
         <button id="voiceRerecordBtn" type="button" class="hidden chad-btn flex items-center justify-center gap-1.5 text-xs py-2 px-4"><span class="material-symbols-outlined text-sm">refresh</span> Re-record</button>
@@ -768,11 +768,10 @@ select:-webkit-autofill {
       <button id="voiceSendBtn" type="button" class="hidden chad-btn chad-btn-gold w-full flex items-center justify-center gap-2 py-3"><span class="material-symbols-outlined text-base">send</span> Send my voice note</button>
     </div>
 
-    <!-- Audio Preview Player -->
-    <div id="voicePreviewWrap" class="hidden pt-1 space-y-1.5">
-      <audio id="voicePreviewAudio" class="voice-audio w-full" controls preload="metadata"></audio>
-      <p id="voicePreviewDur" class="chad-label text-center !mb-0 text-[11px] opacity-60">Listen back — send when you love it</p>
-    </div>
+    <!-- Audio element hidden — no playback UI, just used internally -->
+    <audio id="voicePreviewAudio" style="display:none" preload="none"></audio>
+    <div id="voicePreviewWrap" class="hidden"></div>
+    <p id="voicePreviewDur" class="hidden"></p>
 
     <!-- Sent Success Badge -->
     <div id="voiceSent" class="hidden rounded-2xl border border-emerald-500/25 bg-emerald-500/10 p-4 text-center space-y-2">
@@ -1631,16 +1630,12 @@ select:-webkit-autofill {
     }
   }
   function voiceShowPreview() {
-    if (!voiceState.blob || !voiceEls.previewAudio) return;
-    var url = URL.createObjectURL(voiceState.blob);
-    voiceEls.previewAudio.src = url;
-    voiceEls.previewAudio.load();
-    if (voiceEls.previewDur) voiceEls.previewDur.textContent = 'Voice note recorded (' + voiceFmt(voiceState.durationSec) + ') — Listen back & send';
-    if (voiceEls.previewWrap) voiceEls.previewWrap.classList.remove('hidden');
+    if (!voiceState.blob) return;
+    // No playback UI — just show Re-record + Send buttons
     if (voiceEls.rerecordBtn) voiceEls.rerecordBtn.classList.remove('hidden');
     if (voiceEls.sendBtn) voiceEls.sendBtn.classList.remove('hidden');
     if (voiceEls.recordBtn) { voiceEls.recordBtn.disabled = true; }
-    if (voiceEls.progressLabel) voiceEls.progressLabel.textContent = 'Ready to send';
+    if (voiceEls.progressLabel) voiceEls.progressLabel.textContent = voiceFmt(voiceState.durationSec) + ' recorded — tap send!';
     voiceHideErr();
   }
   function voiceHidePreview() {
