@@ -1715,22 +1715,13 @@ select:-webkit-autofill {
     }
     if (voiceEls.unsupported) voiceEls.unsupported.classList.add('hidden');
     if (voiceEls.core) voiceEls.core.classList.remove('hidden');
-    // check if already sent
-    try {
-      var already = localStorage.getItem('cl_voice_sent_'+guestId);
-      fetch(CONVEX_HTTP_URL + '/api/voice/mine?guestId=' + encodeURIComponent(guestId))
-        .then(function(r){ return r.json().catch(function(){return null;}); })
-        .then(function(data){
-          if (data && data.storageId) {
-            voiceState.sentOnce = true;
-            voiceEnterSent(from);
-          }
-        }).catch(function(){});
-    } catch(e){}
+    // Always start fresh — mic always visible, user can re-record any time
     voiceSetRing(0);
     voiceResetBarsIdle();
     voiceBindOnce();
     if (voiceEls.timer) voiceEls.timer.textContent = '0:00 / 1:00';
+    if (voiceEls.progressFill) voiceEls.progressFill.style.width = '0%';
+    if (voiceEls.progressLabel) voiceEls.progressLabel.textContent = 'Tap mic to record (60s max)';
   }
   function voiceStartRecording() {
     voiceHideErr();
