@@ -34,6 +34,7 @@ export const upsertGuest = httpAction(async (ctx, request) => {
     phone: body.phone,
     deadline: body.deadline,
     attendance: body.attendance,
+    invite_sent: body.invite_sent,
   };
 
   if (action === "add_guest") {
@@ -115,4 +116,17 @@ export const importGuests = httpAction(async (ctx, request) => {
   }
 
   return json(results);
+});
+
+export const markInviteSentAction = httpAction(async (ctx, request) => {
+  if (request.method === "OPTIONS") return json({ ok: true });
+  if (request.method !== "POST") return json({ error: "Method not allowed" }, 405);
+  if (!(await hasSession(ctx, request))) return json({ error: "Unauthorized" }, 401);
+
+  const body = await request.json().catch(() => ({}));
+  const guestId = body.guestId || body.guest_id;
+  if (!guestId) return json({ error: "Missing guestId" }, 400);
+
+  const result = await ctx.runMutation(internal.db.markInviteSent, { guestId });
+  return json(result);
 });

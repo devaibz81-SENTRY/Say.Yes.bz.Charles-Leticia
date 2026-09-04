@@ -13,6 +13,7 @@ export default defineSchema({
     attending_count: v.optional(v.number()),
     deadline: v.optional(v.string()),
     easy_mode: v.optional(v.boolean()),
+    invite_sent: v.optional(v.boolean()),
     plus_names: v.optional(v.string()),
     song: v.optional(v.string()),
     message: v.optional(v.string()),

@@ -55,6 +55,7 @@ export const insertGuest = internalMutation({
     deadline: v.optional(v.string()),
     attendance: v.optional(v.string()),
     easy_mode: v.optional(v.boolean()),
+    invite_sent: v.optional(v.boolean()),
   },
   handler: async (ctx, args) =>
     await ctx.db.insert("guests", {
@@ -67,6 +68,7 @@ export const insertGuest = internalMutation({
       deadline: args.deadline,
       attendance: args.attendance ?? "not_invited",
       easy_mode: args.easy_mode ?? undefined,
+      invite_sent: args.invite_sent ?? false,
     }),
 });
 
@@ -82,6 +84,7 @@ export const patchGuest = internalMutation({
     deadline: v.optional(v.string()),
     attendance: v.optional(v.string()),
     easy_mode: v.optional(v.boolean()),
+    invite_sent: v.optional(v.boolean()),
   },
   handler: async (ctx, args) => {
     const guestId = args.guestId as Id<"guests">;
@@ -96,6 +99,7 @@ export const patchGuest = internalMutation({
       "deadline",
       "attendance",
       "easy_mode",
+      "invite_sent",
     ];
     for (const key of keys) {
       if (args[key] !== undefined) patch[key] = args[key];
@@ -127,6 +131,20 @@ export const resetAllGuestsToNotInvited = internalMutation({
       }
     }
     return count;
+  },
+});
+
+export const markInviteSent = internalMutation({
+  args: { guestId: v.optional(v.string()) },
+  handler: async (ctx, { guestId }) => {
+    if (!guestId) return { ok: false, error: "Missing guestId" };
+    const cleanId = String(guestId).split(":")[0];
+    const existing = await ctx.db.get(cleanId as Id<"guests">).catch(() => null);
+    if (!existing) return { ok: false, error: "Guest not found" };
+    if (existing.invite_sent !== true) {
+      await ctx.db.patch(existing._id, { invite_sent: true });
+    }
+    return { ok: true, guestId: existing._id };
   },
 });
 

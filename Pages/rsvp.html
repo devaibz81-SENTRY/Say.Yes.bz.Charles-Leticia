@@ -1026,37 +1026,14 @@ select:-webkit-autofill {
   window.handleSubmit = function (e) {
     e.preventDefault();
     if (isSubmitting) return;
-    // === Rule 1: main guest must be on list ===
-    // If link has no id (guest_...) -> not on list (no tailored message) -> block
-    // If link has id + invited name, entered name must match invited name (blocks friend sharing link)
+    // === Guest resolution (soft — never blocks an invited guest) ===
+    // The backend resolves a guest by id, then by normalized name, and only
+    // then auto-registers — guaranteed 0% rejection rate. The old hard gate
+    // here turned away real invited guests (esp. singles) whose link carried
+    // no personal id, so it is replaced with best-effort resolution only.
     var _isTempId = !guestId || guestId.indexOf('guest_') === 0;
-    if (_isTempId) {
-      showError('Not on guest list', 'This invitation link is personal. Please use your own link or contact Charles & Leticia for your invitation.');
-      var _m2 = document.getElementById('notOnListModal'); if (_m2) _m2.classList.remove('hidden');
-      return;
-    }
-    var _enteredSingle = (val('name') + ' ' + val('lastName')).trim().toLowerCase();
-    var _invitedSingle = (guestName || '').trim().toLowerCase();
-    // For single mode, if invited name exists and entered differs -> friend sharing -> block
-    if (!isCouple && _invitedSingle && _enteredSingle && _enteredSingle !== _invitedSingle) {
-      // Allow if entered is prefix of invited or vice versa? No, strict: must match invited
-      showError('Not on guest list', 'This invitation link is personal. Please use your own link or contact Charles & Leticia for your invitation.');
-      var _m3 = document.getElementById('notOnListModal'); if (_m3) _m3.classList.remove('hidden');
-      return;
-    }
-    // For couple, at least one of the two must match invited names (guestName + spouseName)
-    if (isCouple) {
-      var _enteredA = (val('nameA') + ' ' + val('lastNameA')).trim().toLowerCase();
-      var _enteredB = (val('nameB') + ' ' + val('lastNameB')).trim().toLowerCase();
-      var _invA = (guestName || '').trim().toLowerCase();
-      var _invB = (spouseName || '').trim().toLowerCase();
-      var _matchA = _invA && (_enteredA === _invA || _enteredB === _invA);
-      var _matchB = !_invB || _invB === '' || (_enteredA === _invB || _enteredB === _invB);
-      if (!(_matchA && _matchB)) {
-        showError('Not on guest list', 'This couple invitation is personal. Please use your own link.');
-        var _m4 = document.getElementById('notOnListModal'); if (_m4) _m4.classList.remove('hidden');
-        return;
-      }
+    if (_isTempId && (guestName || val('name') || val('lastName'))) {
+      console.warn('Name-based RSVP (no personal id in link) for', (guestName || (val('name') + ' ' + val('lastName'))).trim());
     }
 
     var confirmEl = document.getElementById('confirmCheck');
