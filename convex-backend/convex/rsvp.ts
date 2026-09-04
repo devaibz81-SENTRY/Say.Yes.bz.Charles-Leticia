@@ -65,7 +65,7 @@ export const rsvpStatus = httpAction(async (ctx, request) => {
   if (!guest) return json({ status: "unknown" });
 
   return json({
-    status: guest.attendance || "invited",
+    status: guest.attendance || "not_invited",
     name: `${guest.first_name || ""} ${guest.last_name || ""}`.trim() || guest.spouse_name || "",
   });
 });

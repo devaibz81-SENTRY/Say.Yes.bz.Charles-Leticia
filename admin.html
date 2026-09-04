@@ -320,10 +320,15 @@
       border-color: rgba(245,158,11,0.25);
       color: #fbbf24;
     }
+    .pill-not-invited {
+      background: rgba(245,158,11,0.08);
+      border: 1px dashed rgba(245,158,11,0.4);
+      color: #f59e0b;
+    }
     .pill-invited {
-      background: rgba(255,255,255,0.06);
-      border-color: rgba(255,255,255,0.12);
-      color: var(--text-muted);
+      background: rgba(59,130,246,0.12);
+      border: 1px solid rgba(59,130,246,0.3);
+      color: #60a5fa;
     }
 
     /* ===================== ACTION BUTTONS ===================== */
@@ -652,17 +657,21 @@
     <div id="content">
       <!-- GUEST VIEW -->
       <div id="view-guests">
-        <div class="stats-grid">
+        <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));">
+          <div class="stat-card" style="border-left: 3px dashed #f59e0b;"><div class="stat-label">Not Invited</div><div class="stat-num" id="st-not-invited" style="color:#f59e0b;">0</div></div>
+          <div class="stat-card blue"><div class="stat-label">Invited (Sent)</div><div class="stat-num" id="st-invited">0</div></div>
           <div class="stat-card green"><div class="stat-label">Attending</div><div class="stat-num" id="st-attending">0</div></div>
           <div class="stat-card red"><div class="stat-label">Declined</div><div class="stat-num" id="st-declined">0</div></div>
           <div class="stat-card yellow"><div class="stat-label">Ask Later</div><div class="stat-num" id="st-later">0</div></div>
-          <div class="stat-card blue"><div class="stat-label">Total Invited Seats</div><div class="stat-num" id="st-total">0</div></div>
+          <div class="stat-card" style="border-left: 3px solid var(--border);"><div class="stat-label">Total Seats</div><div class="stat-num" id="st-total">0</div></div>
         </div>
         <div class="filter-bar">
           <button class="filter-btn active" onclick="setFilter('all', this)">All</button>
+          <button class="filter-btn" onclick="setFilter('not_invited', this)">Not Invited</button>
+          <button class="filter-btn" onclick="setFilter('invited', this)">Invited (Sent)</button>
           <button class="filter-btn" onclick="setFilter('attending', this)">Attending</button>
+          <button class="filter-btn" onclick="setFilter('declined', this)">Declined</button>
           <button class="filter-btn" onclick="setFilter('later', this)">Ask Again Later</button>
-          <button class="filter-btn" onclick="setFilter('invited', this)">Not Responded</button>
           <button class="filter-btn" onclick="setFilter('single', this)">Singles</button>
           <button class="filter-btn" onclick="setFilter('couple', this)">Couples</button>
           <button class="filter-btn" onclick="setFilter('family', this)">Families</button>
@@ -717,7 +726,8 @@
           <p class="wa-muted">Send to groups or one guest at a time from a cleaner flow. Individual sends still use RSVP-aware messages automatically.</p>
           <div class="wa-kpis">
             <div class="wa-kpi"><strong id="wa-kpi-phones">0</strong><span>With WhatsApp</span></div>
-            <div class="wa-kpi"><strong id="wa-kpi-invited">0</strong><span>Not Responded</span></div>
+            <div class="wa-kpi"><strong id="wa-kpi-not-invited" style="color:#f59e0b;">0</strong><span>Not Invited</span></div>
+            <div class="wa-kpi"><strong id="wa-kpi-invited" style="color:#60a5fa;">0</strong><span>Invited (Pending RSVP)</span></div>
             <div class="wa-kpi"><strong id="wa-kpi-later">0</strong><span>Ask Later</span></div>
             <div class="wa-kpi"><strong id="wa-kpi-attending">0</strong><span>Attending</span></div>
           </div>
@@ -726,8 +736,9 @@
               <h3>Group Send</h3>
               <div class="wa-row" style="margin-bottom:0.6rem;">
                 <select id="wa-group" onchange="updateWaPreview()">
-                  <option value="all">All Guests (Initial Invite)</option>
-                  <option value="invited">Not Responded Yet (Reminders)</option>
+                  <option value="not_invited">Not Invited Yet (Initial Invitations)</option>
+                  <option value="invited">Invited / Sent (Follow-ups & Reminders)</option>
+                  <option value="all">All Guests (Broadcast)</option>
                   <option value="later">Ask Later / Waitlist (Follow-ups)</option>
                   <option value="attending">Attending (Event Updates)</option>
                 </select>
@@ -818,6 +829,18 @@ Charles and Leticia</textarea>
         <div class="modal-row">
           <div class="modal-group"><label>WhatsApp Number</label><input type="tel" inputmode="tel" id="m-phone" placeholder="+501..." /></div>
           <div class="modal-group"><label>RSVP Deadline</label><input type="date" id="m-due" value="2026-06-10" /></div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-group" style="grid-column:1/-1;">
+            <label>Status / Attendance</label>
+            <select id="m-attendance">
+              <option value="not_invited">Not Invited</option>
+              <option value="invited">Invited (Sent)</option>
+              <option value="attending">Attending (Yes)</option>
+              <option value="declined">Declined (No)</option>
+              <option value="later">Ask Later</option>
+            </select>
+          </div>
         </div>
         <div class="modal-row">
           <div class="modal-group" style="grid-column:1/-1;">
@@ -1335,21 +1358,27 @@ Amelie	Guerra	Julian	couple	2	6140942"
     }
 
     function updateStats() {
+      const notInv = guests.filter(g => !g.attendance || g.attendance === 'not_invited').length;
+      const inv = guests.filter(g => g.attendance === 'invited').length;
       const att = guests.filter(g => g.attendance === 'attending').reduce((sum, g) => sum + (Number(g.max_party) || 1), 0);
       const dec = guests.filter(g => g.attendance === 'declined').length;
       const lat = guests.filter(g => g.attendance === 'later').length;
       const totalSeats = guests.reduce((sum, g) => sum + (Number(g.max_party) || 1), 0);
-      document.getElementById('st-total').textContent = totalSeats;
-      document.getElementById('st-attending').textContent = att;
-      document.getElementById('st-declined').textContent = dec;
-      document.getElementById('st-later').textContent = lat;
+
+      const elNotInv = document.getElementById('st-not-invited'); if (elNotInv) elNotInv.textContent = notInv;
+      const elInv = document.getElementById('st-invited'); if (elInv) elInv.textContent = inv;
+      const elAtt = document.getElementById('st-attending'); if (elAtt) elAtt.textContent = att;
+      const elDec = document.getElementById('st-declined'); if (elDec) elDec.textContent = dec;
+      const elLat = document.getElementById('st-later'); if (elLat) elLat.textContent = lat;
+      const elTot = document.getElementById('st-total'); if (elTot) elTot.textContent = totalSeats;
     }
 
     function renderTable() {
       let filtered = guests.filter(g => {
         if (currentFilter === 'all') return true;
         if (currentFilter === 'single' || currentFilter === 'couple' || currentFilter === 'family') return g.guest_type === currentFilter;
-        if (currentFilter === 'invited') return (!g.attendance || g.attendance === 'invited');
+        if (currentFilter === 'not_invited') return (!g.attendance || g.attendance === 'not_invited');
+        if (currentFilter === 'invited') return (g.attendance === 'invited');
         return g.attendance === currentFilter;
       });
 
@@ -1357,9 +1386,9 @@ Amelie	Guerra	Julian	couple	2	6140942"
       if (!filtered.length) { tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:2rem;">No guests matching filter.</td></tr>`; return; }
 
       tbody.innerHTML = filtered.map(g => {
-        const st = g.attendance || 'invited';
-        const pClass = { attending: 'pill-attending', declined: 'pill-declined', later: 'pill-later', invited: 'pill-invited' }[st];
-        const pLabel = { attending: 'Yes', declined: 'No', later: 'Ask Later', invited: 'Invited' }[st];
+        const st = g.attendance || 'not_invited';
+        const pClass = { attending: 'pill-attending', declined: 'pill-declined', later: 'pill-later', invited: 'pill-invited', not_invited: 'pill-not-invited' }[st] || 'pill-not-invited';
+        const pLabel = { attending: 'Yes', declined: 'No', later: 'Ask Later', invited: 'Invited', not_invited: 'Not Invited' }[st] || 'Not Invited';
         const key = getGuestKey(g);
         const hasPhone = !!normalizeWaPhone(g.phone);
         const n1 = (g.first_name || '').trim();
@@ -1457,6 +1486,7 @@ Amelie	Guerra	Julian	couple	2	6140942"
       document.getElementById('m-phone').value = '';
       document.getElementById('m-due').value = '2026-10-31';
       document.getElementById('m-spouse').value = '';
+      document.getElementById('m-attendance').value = 'not_invited';
       syncPartySize();
       document.getElementById('add-modal').classList.add('open');
     }
@@ -1473,6 +1503,7 @@ Amelie	Guerra	Julian	couple	2	6140942"
       document.getElementById('m-phone').value = g.phone || '';
       document.getElementById('m-due').value = (g.deadline || '2026-10-31').split('T')[0];
       document.getElementById('m-spouse').value = g.spouse_name || '';
+      document.getElementById('m-attendance').value = g.attendance || 'not_invited';
       document.getElementById('m-easy').checked = g.easy_mode === true;
       syncPartySize();
       document.getElementById('add-modal').classList.add('open');
@@ -1501,7 +1532,7 @@ Amelie	Guerra	Julian	couple	2	6140942"
         phone: document.getElementById('m-phone').value.trim(),
         deadline: document.getElementById('m-due').value,
         spouse_name: document.getElementById('m-spouse').value.trim(),
-        attendance: editingGuestId ? undefined : 'invited',
+        attendance: document.getElementById('m-attendance').value || 'not_invited',
         easy_mode: document.getElementById('m-easy').checked ? true : undefined
       };
 
@@ -1565,17 +1596,48 @@ Amelie	Guerra	Julian	couple	2	6140942"
       const list = guests.filter(g => (
         tgt === 'all'
           ? true
-          : tgt === 'invited'
-            ? (!g.attendance || g.attendance === 'invited')
-            : g.attendance === tgt
+          : tgt === 'not_invited'
+            ? (!g.attendance || g.attendance === 'not_invited')
+            : tgt === 'invited'
+              ? g.attendance === 'invited'
+              : g.attendance === tgt
       ));
       return requirePhone ? list.filter(g => normalizeWaPhone(g.phone)) : list;
+    }
+
+    async function updateGuestStatus(guest, newStatus) {
+      if (!guest || guest.attendance === newStatus) return;
+      guest.attendance = newStatus;
+      updateStats();
+      renderTable();
+      updateWaMetrics();
+
+      try {
+        const guestId = guest._id || guest.id;
+        if (!guestId) return;
+        await fetch(`${CONVEX_HTTP_URL}/api/guest`, {
+          method: 'POST',
+          headers: authHeaders({ 'Content-Type': 'application/json' }),
+          body: JSON.stringify({
+            action: 'update_guest',
+            guest_id: guestId,
+            attendance: newStatus
+          })
+        });
+      } catch (err) {
+        console.error('Failed to update guest attendance in Convex backend:', err);
+      }
     }
 
     function openGuestWhatsApp(g, customText = null) {
       if (!g) return false;
       const phone = normalizeWaPhone(g.phone);
       if (!phone) return false;
+
+      if (!g.attendance || g.attendance === 'not_invited') {
+        updateGuestStatus(g, 'invited');
+      }
+
       const text = customText !== null ? customText : buildPersonalizedText(g);
       window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
       return true;
@@ -1730,12 +1792,12 @@ Amelie	Guerra	Julian	couple	2	6140942"
         box.textContent = 'Could not load selected guest details.';
         return;
       }
-      const statusMap = { attending: 'Attending', declined: 'Declined', later: 'Ask Later', invited: 'Invited' };
-      const status = statusMap[person.attendance || 'invited'] || 'Invited';
+      const statusMap = { attending: 'Attending', declined: 'Declined', later: 'Ask Later', invited: 'Invited (Sent)', not_invited: 'Not Invited' };
+      const status = statusMap[person.attendance || 'not_invited'] || 'Not Invited';
       const due = person.deadline ? new Date(person.deadline).toLocaleDateString() : 'Not set';
-      
+
       box.textContent = `${person.first_name} ${person.last_name || ''} | ${person.guest_type || 'single'} | ${status} | RSVP deadline: ${due}`;
-      
+
       const previewBox = document.getElementById('wa-preview');
       if(previewBox && previewBox.tagName === 'TEXTAREA') {
           previewBox.value = buildPersonalizedText(person);
@@ -1744,14 +1806,16 @@ Amelie	Guerra	Julian	couple	2	6140942"
 
     function updateWaMetrics() {
       const withPhone = guests.filter(g => normalizeWaPhone(g.phone)).length;
+      const notInvitedWithPhone = getGuestsForTarget('not_invited', true).length;
       const invitedWithPhone = getGuestsForTarget('invited', true).length;
       const laterWithPhone = getGuestsForTarget('later', true).length;
       const attendingWithPhone = getGuestsForTarget('attending', true).length;
 
-      document.getElementById('wa-kpi-phones').textContent = withPhone;
-      document.getElementById('wa-kpi-invited').textContent = invitedWithPhone;
-      document.getElementById('wa-kpi-later').textContent = laterWithPhone;
-      document.getElementById('wa-kpi-attending').textContent = attendingWithPhone;
+      const elPhones = document.getElementById('wa-kpi-phones'); if (elPhones) elPhones.textContent = withPhone;
+      const elNotInvited = document.getElementById('wa-kpi-not-invited'); if (elNotInvited) elNotInvited.textContent = notInvitedWithPhone;
+      const elInvited = document.getElementById('wa-kpi-invited'); if (elInvited) elInvited.textContent = invitedWithPhone;
+      const elLater = document.getElementById('wa-kpi-later'); if (elLater) elLater.textContent = laterWithPhone;
+      const elAttending = document.getElementById('wa-kpi-attending'); if (elAttending) elAttending.textContent = attendingWithPhone;
     }
 
     function sendOneWA() {
@@ -1803,9 +1867,9 @@ Amelie	Guerra	Julian	couple	2	6140942"
     ];
 
     const CSV_EXAMPLE_ROWS = [
-      ['John', 'Doe', '', 'single', '1', '+15015550100', 'invited', '2026-10-31', 'false'],
-      ['Jane', 'Smith', 'Bob Smith', 'couple', '2', '+15015550101', 'invited', '2026-10-31', 'false'],
-      ['Maria', 'Garcia', '', 'family', '4', '+15015550102', 'invited', '2026-10-31', 'true'],
+      ['John', 'Doe', '', 'single', '1', '+15015550100', 'not_invited', '2026-10-31', 'false'],
+      ['Jane', 'Smith', 'Bob Smith', 'couple', '2', '+15015550101', 'not_invited', '2026-10-31', 'false'],
+      ['Maria', 'Garcia', '', 'family', '4', '+15015550102', 'not_invited', '2026-10-31', 'true'],
     ];
 
     function downloadCsvTemplate() {
@@ -2002,8 +2066,7 @@ Amelie	Guerra	Julian	couple	2	6140942"
           else maxParty = 1;
         }
 
-        const phone = phIdx !== -1 && r[phIdx] ? String(r[phIdx]).trim() : '';
-        const attendance = atIdx !== -1 && r[atIdx] && String(r[atIdx]).trim() ? String(r[atIdx]).trim().toLowerCase() : 'invited';
+        const attendance = atIdx !== -1 && r[atIdx] && String(r[atIdx]).trim() ? String(r[atIdx]).trim().toLowerCase() : 'not_invited';
         const deadline = dlIdx !== -1 && r[dlIdx] ? String(r[dlIdx]).trim() : '2026-10-31';
         const easyVal = ezIdx !== -1 && r[ezIdx] ? String(r[ezIdx]).trim().toLowerCase() : '';
         const easyMode = easyVal === 'true' || easyVal === '1' || easyVal === 'yes' ? true : undefined;
@@ -2015,7 +2078,7 @@ Amelie	Guerra	Julian	couple	2	6140942"
           guest_type: guestType || 'single',
           max_party: maxParty,
           phone: phone || undefined,
-          attendance: attendance || 'invited',
+          attendance: attendance || 'not_invited',
           deadline: deadline || undefined,
           easy_mode: easyMode
         };

@@ -39,7 +39,7 @@ export const upsertGuest = httpAction(async (ctx, request) => {
   if (action === "add_guest") {
     const id = await ctx.runMutation(internal.db.insertGuest, {
       ...fields,
-      attendance: fields.attendance ?? "invited",
+      attendance: fields.attendance ?? "not_invited",
       guest_type: fields.guest_type ?? "single",
       max_party: fields.max_party ?? 1,
       easy_mode: body.easy_mode === true ? true : undefined,

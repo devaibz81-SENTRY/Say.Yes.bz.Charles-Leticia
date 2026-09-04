@@ -65,7 +65,7 @@ export const insertGuest = internalMutation({
       max_party: args.max_party ?? 1,
       phone: args.phone,
       deadline: args.deadline,
-      attendance: args.attendance ?? "invited",
+      attendance: args.attendance ?? "not_invited",
       easy_mode: args.easy_mode ?? undefined,
     }),
 });
