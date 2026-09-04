@@ -2122,7 +2122,7 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
             if (!words.length) { out += tok; }
             else {
               var wrappedWords = words.map(function (w) {
-                var s = '<span class="word-reveal-wrap"><span class="word-reveal" style="transition-delay:' + (wordIndex * 45) + 'ms">' + w + '</span></span>';
+                var s = '<span class="word-reveal-wrap"><span class="word-reveal" style="transition-delay:' + (wordIndex * 95) + 'ms; filter:blur(14px)">' + w + '</span></span>';
                 wordIndex++;
                 return s;
               }).join(' ');
@@ -2212,8 +2212,9 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
         var progress = (vh - rect.top) / (vh + rect.height);
         progress = Math.max(0, Math.min(1, progress));
         // subtle 36px total travel (-18 to +18) + scale 1.08
-        var y = (progress - 0.5) * 36;
-        img.style.transform = 'translate3d(0,' + y.toFixed(2) + 'px,0) scale(1.08)';
+        var y = (progress - 0.5) * 64;
+        var scale = 1.12 - Math.abs(progress - 0.5) * 0.04;
+        img.style.transform = 'translate3d(0,' + y.toFixed(2) + 'px,0) scale(' + scale.toFixed(3) + ')';
       });
       ticking = false;
     }
