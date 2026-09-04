@@ -1340,7 +1340,7 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
 <!-- SCROLL BREAK 1 — cinematic chapter break after hero         -->
 <!-- ============================================================ -->
 <div class="cinematic-break" style="min-height: clamp(500px, 70vw, 760px);">
-  <div class="cb-photo"><img src="galery%20(4).jpeg" alt="Charles and Leticia" style="object-position:center 34%; filter:brightness(0.48) saturate(0.70); transform: scale(1.06);"/></div>
+  <div class="cb-photo"><img src="galery%20(4).jpeg" alt="Charles and Leticia" style="object-position:center 34%; filter:brightness(0.48) saturate(0.70);"/></div>
   <div class="cb-vignette" style="background: linear-gradient(to bottom, rgba(10,10,10,0.82) 0%, rgba(10,10,10,0.45) 28%, rgba(10,10,10,0.35) 50%, rgba(10,10,10,0.55) 78%, rgba(10,10,10,0.88) 100%), radial-gradient(900px 500px at 50% 50%, transparent 42%, rgba(10,10,10,0.45) 100%);"></div>
   <div class="cb-content rv-up" style="padding: 2.8rem 1.5rem;">
     <div class="cb-ornament"></div>
@@ -2222,8 +2222,9 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
     }
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll, { passive: true });
-    // initial
+    // initial — run now and again after fonts/images settle
     updateParallax();
+    setTimeout(updateParallax, 300);
   }
 
   // ---- 3. Cards feel interactive — 3D tilt + glare, keeps black ----
