@@ -196,34 +196,9 @@ export const submitRsvp = internalMutation({
     const requestedSeats = Math.max(1, args.guests || 1);
     const confirmedCount = attendance === "attending" ? requestedSeats : 0;
 
-    // 3. Fallback: If not found in pre-seeded list, AUTO-REGISTER the guest!
-    // This guarantees 0% error/rejection rate for any invited or walk-in guest.
+    // 3. Strict Check: If guest is not found on invitation guest list, reject RSVP.
     if (!existing) {
-      const rawName = (args.name || "").trim();
-      const rawLast = (args.lastName || "").trim();
-      let firstName = rawName;
-      let lastName = rawLast;
-
-      if (!lastName && rawName.includes(" ")) {
-        const parts = rawName.split(/\s+/);
-        firstName = parts[0];
-        lastName = parts.slice(1).join(" ");
-      }
-
-      const newGuestId = await ctx.db.insert("guests", {
-        first_name: firstName || "Guest",
-        last_name: lastName || undefined,
-        guest_type: requestedSeats > 1 ? "couple" : "single",
-        max_party: requestedSeats,
-        attending_count: confirmedCount,
-        phone: args.phone ? String(args.phone).trim() : undefined,
-        attendance,
-        plus_names: args.plus_names ? String(args.plus_names).trim() : undefined,
-        song: args.song ? String(args.song).trim() : undefined,
-        message: args.message ? String(args.message).trim() : undefined,
-      });
-
-      return { ok: true, attendance, guestId: newGuestId, isNew: true };
+      return { error: "Name not found on invitation guest list. Please contact Charles & Leticia." };
     }
 
     // 4. Update existing guest

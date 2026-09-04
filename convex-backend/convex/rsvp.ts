@@ -31,6 +31,10 @@ export const submitRsvp = httpAction(async (ctx, request) => {
       message: body.message ?? undefined,
     });
 
+    if ((result as any)?.error) {
+      return json({ error: (result as any).error }, 400);
+    }
+
     if (body.song && String(body.song).trim()) {
       try {
         await ctx.runMutation(internal.db.createSong, {
