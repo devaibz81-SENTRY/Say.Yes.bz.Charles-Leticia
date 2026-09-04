@@ -294,14 +294,14 @@
   );
 }
 
-/* ---- 5. Frosted countdown pill — solid black as requested ---- */
+/* ---- 5. Frosted countdown pill — solid black as requested — REDUCED per request ---- */
 .countdown-pill {
   background: #000000;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   border: 1px solid rgba(212,175,55,0.28);
   border-radius: 9999px;
-  padding: 0.6rem 1.4rem;
+  padding: 7px 16px;
   display: inline-flex;
   align-items: center;
   gap: 0;
@@ -310,24 +310,24 @@
 }
 .countdown-pill .cd-sep {
   color: rgba(212,175,55,0.45);
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 300;
   line-height: 1;
   padding: 0 2px;
   align-self: center;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 .countdown-pill .cd-unit {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 0.5rem;
-  min-width: 46px;
+  padding: 0 0.38rem;
+  min-width: 38px;
   overflow: visible;
 }
 .cd-digit {
   font-family: 'Rapodhite', 'Cinzel', 'Playfair Display', serif !important;
-  font-size: 24px !important;
+  font-size: 18px !important;
   line-height: 1.15 !important;
   font-weight: 700 !important;
   display: inline-block !important;
@@ -335,9 +335,15 @@
   overflow: visible !important;
 }
 @media (min-width: 640px) {
-  .cd-digit { font-size: 30px !important; }
-  .countdown-pill .cd-unit { min-width: 56px; padding: 0 0.65rem; }
+  .cd-digit { font-size: 22px !important; }
+  .countdown-pill .cd-unit { min-width: 46px; padding: 0 0.5rem; }
 }
+/* countdown label + invite note — reduced */
+#countdown-block .font-label-sm.label-premium { font-size: 11px !important; letter-spacing: 0.24em !important; opacity: 0.85; }
+#countdown-block p.font-body-md { font-size: 11px !important; }
+@media (min-width: 640px) { #countdown-block p.font-body-md { font-size: 12.5px !important; } }
+#countdown .font-label-sm { font-size: 7.5px !important; }
+@media (min-width: 640px) { #countdown .font-label-sm { font-size: 8.5px !important; } }
 
 /* ---- 6. Gallery fan card: cream photo mat ---- */
 .fan-card-mat {
@@ -711,16 +717,16 @@ section[id] { scroll-margin-top: 5rem; }
 
 <!-- ===================== LUXURY REDESIGN STYLES ===================== -->
 <style>
-/* ---- Directional scroll reveals ---- */
-.rv-left  { opacity: 0; transform: translateX(-60px); transition: opacity .75s ease, transform .75s cubic-bezier(.22,1,.36,1); }
-.rv-right { opacity: 0; transform: translateX(60px);  transition: opacity .75s ease, transform .75s cubic-bezier(.22,1,.36,1); }
-.rv-up    { opacity: 0; transform: translateY(40px);  transition: opacity .75s ease, transform .75s cubic-bezier(.22,1,.36,1); }
-.rv-left.rv-in, .rv-right.rv-in, .rv-up.rv-in { opacity: 1; transform: none; }
+/* ---- Directional scroll reveals — XHIGH elegant: far fly + blur + spring 1.4s ---- */
+.rv-left  { opacity: 0; transform: translateX(-140px) scale(0.96); filter: blur(14px); transition: transform 1.45s cubic-bezier(.16,1,.3,1), opacity 1.1s ease, filter 1.25s ease; }
+.rv-right { opacity: 0; transform: translateX(140px) scale(0.96); filter: blur(14px); transition: transform 1.45s cubic-bezier(.16,1,.3,1), opacity 1.1s ease, filter 1.25s ease; }
+.rv-up    { opacity: 0; transform: translateY(72px) scale(0.97); filter: blur(12px); transition: transform 1.35s cubic-bezier(.16,1,.3,1), opacity 1.05s ease, filter 1.15s ease; }
+.rv-left.rv-in, .rv-right.rv-in, .rv-up.rv-in { opacity: 1; transform: none; filter: blur(0); }
 
-/* ---- Word-by-word heading reveal ---- */
+/* ---- Word-by-word heading reveal — blur bloom + 1.15s spring ---- */
 .word-reveal-wrap { overflow: hidden; display: inline-block; }
-.word-reveal { display: inline-block; opacity: 0; transform: translateY(100%); transition: opacity .65s ease, transform .65s cubic-bezier(.22,1,.36,1); }
-.word-reveal.rv-in { opacity: 1; transform: none; }
+.word-reveal { display: inline-block; opacity: 0; transform: translateY(115%) rotate(1.2deg); filter: blur(12px); transition: transform 1.15s cubic-bezier(.16,1,.3,1), opacity 0.85s ease, filter 1.05s ease; }
+.word-reveal.rv-in { opacity: 1; transform: translateY(0) rotate(0); filter: blur(0); text-shadow: 0 0 22px rgba(252,228,160,0.45); }
 
 /* ---- Cinematic scroll break ---- */
 .cinematic-break {
@@ -943,28 +949,29 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
 .celebration-section .cel-photo-bg,
 .celebration-section .cel-fade { display: block !important; }
 
-/* ---- Remotion-inspired polish: spring reveals, word stagger, card lift ---- */
+/* ---- Remotion-inspired polish: spring reveals, word stagger, card lift — XHIGH (farther, slower, blurred) ---- */
 .rv, .rv-left, .rv-right, .rv-up {
-  will-change: transform, opacity;
+  will-change: transform, opacity, filter;
 }
-.rv-left  { transform: translateX(-82px); }
-.rv-right { transform: translateX(82px); }
-.rv-up    { transform: translateY(36px); }
-.rv-left.rv-in, .rv-right.rv-in, .rv-up.rv-in { transform: none; }
-.rv-scale { opacity: 0; transform: scale(.96) translateY(14px); transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
-.rv-scale.rv-in { opacity: 1; transform: scale(1) translateY(0); }
-.rv-blur { opacity: 0; filter: blur(10px); transform: translateY(12px); transition: opacity .85s cubic-bezier(.22,1,.36,1), transform .85s cubic-bezier(.22,1,.36,1), filter .85s ease; }
-.rv-blur.rv-in { opacity: 1; filter: blur(0); transform: translateY(0); }
+.rv-left  { transform: translateX(-160px) scale(0.94); filter: blur(16px); }
+.rv-right { transform: translateX(160px) scale(0.94); filter: blur(16px); }
+.rv-up    { transform: translateY(68px) scale(0.96); filter: blur(14px); }
+.rv-left.rv-in, .rv-right.rv-in, .rv-up.rv-in { transform: none; filter: blur(0); }
+.rv-scale { opacity: 0; transform: scale(.92) translateY(22px); filter: blur(14px); transition: transform 1.35s cubic-bezier(.16,1,.3,1), opacity 1.15s ease, filter 1.25s ease; }
+.rv-scale.rv-in { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+.rv-blur { opacity: 0; filter: blur(18px); transform: translateY(28px) scale(0.98); transition: transform 1.45s cubic-bezier(.16,1,.3,1), opacity 1.25s ease, filter 1.35s ease; }
+.rv-blur.rv-in { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); }
 .word-reveal-wrap { overflow: visible !important; display: inline-block; padding: 0 0.12em; }
 .word-reveal {
   display: inline-block;
   opacity: 0;
-  transform: translateY(110%) rotate(0.4deg);
-  transition: transform .7s cubic-bezier(.16,1,.3,1), opacity .55s ease;
+  transform: translateY(118%) rotate(1.4deg);
+  filter: blur(14px);
+  transition: transform 1.15s cubic-bezier(.16,1,.3,1), opacity 0.90s ease, filter 1.10s ease;
   overflow: visible !important;
   padding: 0.06em 0.12em;
 }
-.word-reveal.rv-in { opacity: 1; transform: translateY(0) rotate(0); }
+.word-reveal.rv-in { opacity: 1; transform: translateY(0) rotate(0); filter: blur(0); text-shadow: 0 0 26px rgba(252,228,160,0.55); }
 /* SHIP GUARANTEE: Honeymoon Fund + closing copy — plain text, never hidden, natural spacing */
 .gift-section h2,
 .closing-hero .ch-content p.font-script-accent {
@@ -1052,11 +1059,11 @@ a.bento-card.bento-card-dark:hover .bg-black\/10 { background-color: rgba(0,0,0,
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .rv-left, .rv-right, .rv-up { opacity: 1 !important; transform: none !important; transition: none !important; }
-  .word-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
-  .rv-scale, .rv-blur { opacity: 1 !important; transform: none !important; filter: none !important; }
-  .cb-photo img, .ch-photo img, .rsvp-bg-photo img, .gal-photo-bg img, .dc-photo-bg img { transform: none !important; }
-  .bento-card-dark, .bento-card, .fan-card { transform: none !important; }
+  .rv-left, .rv-right, .rv-up { opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; }
+  .word-reveal { opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; }
+  .rv-scale, .rv-blur { opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; }
+  .cb-photo img, .ch-photo img, .rsvp-bg-photo img, .gal-photo-bg img, .dc-photo-bg img { transform: none !important; filter: none !important; }
+  .bento-card-dark, .bento-card, .fan-card { transform: none !important; filter: none !important; }
 }
 </style>
 <style>
@@ -1084,13 +1091,13 @@ body { background: #0a0a0a !important; color: var(--cream) !important; }
   padding-right: clamp(14px, 2.8vw, 36px) !important;
   box-sizing: border-box !important;
 }
-/* hero & intro — extra large Charles & Leticia with generous side padding */
-#heroHead h2 { font-family: 'Butterline', 'The Feeling', 'Angel Wedding', cursive !important; font-size: clamp(32px, 5.5vw, 56px) !important; font-weight: 400 !important; letter-spacing: 0.02em !important; color: #fce4a0 !important; line-height: 1.25 !important; overflow: visible !important; padding: 0.12em clamp(14px, 2.5vw, 32px) !important; }
+/* hero & intro — extra large Charles & Leticia with generous side padding — ENLARGED per request (2nd bump) */
+#heroHead h2 { font-family: 'Butterline', 'The Feeling', 'Angel Wedding', cursive !important; font-size: clamp(40px, 6.2vw, 68px) !important; font-weight: 400 !important; letter-spacing: 0.02em !important; color: #fce4a0 !important; line-height: 1.25 !important; overflow: visible !important; padding: 0.12em clamp(14px, 2.5vw, 32px) !important; }
 #heroNames, .intro-hero-names {
   font-family: 'Wedding Party', 'Brother Signature', cursive !important;
   font-weight: 400 !important;
-  font-size: clamp(68px, 16vw, 175px) !important;
-  line-height: 1.14 !important;
+  font-size: clamp(86px, 18vw, 212px) !important;
+  line-height: 1.10 !important;
   letter-spacing: 0.01em !important;
   padding-left: clamp(18px, 3.5vw, 44px) !important;
   padding-right: clamp(18px, 3.5vw, 44px) !important;
@@ -1336,9 +1343,8 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
   <div class="cb-photo"><img src="galery%20(4).jpeg" alt="Charles and Leticia" style="object-position:center 34%; filter:brightness(0.48) saturate(0.70); transform: scale(1.06);"/></div>
   <div class="cb-vignette" style="background: linear-gradient(to bottom, rgba(10,10,10,0.82) 0%, rgba(10,10,10,0.45) 28%, rgba(10,10,10,0.35) 50%, rgba(10,10,10,0.55) 78%, rgba(10,10,10,0.88) 100%), radial-gradient(900px 500px at 50% 50%, transparent 42%, rgba(10,10,10,0.45) 100%);"></div>
   <div class="cb-content rv-up" style="padding: 2.8rem 1.5rem;">
-    <span class="font-label-sm label-premium uppercase tracking-[0.3em] block mb-3" style="color: rgba(252,228,160,0.85); text-shadow: 0 1px 12px rgba(0,0,0,0.55);">A love story — Belize City, 2026</span>
     <div class="cb-ornament"></div>
-    <p class="italic leading-[1.32] block" style="font-size: clamp(28px,4.8vw,50px); font-family:'Cormorant Garamond','Playfair Display',Georgia,serif; font-weight:500; color: rgba(255,255,255,0.96); text-shadow: 0 2px 18px rgba(0,0,0,0.62), 0 1px 0 rgba(0,0,0,0.35); padding: 0.15em 0; letter-spacing: 0.01em;">Mientras uno esté vivo, uno debe amar lo más que pueda</p>
+    <p class="italic leading-[1.28] block" style="font-size: clamp(24px,4.2vw,44px); font-family:'Cormorant Garamond','Playfair Display',Georgia,serif; font-weight:500; color: rgba(255,255,255,0.96); text-shadow: 0 2px 18px rgba(0,0,0,0.62), 0 1px 0 rgba(0,0,0,0.35); padding: 0.15em 0; letter-spacing: 0.01em;"><span aria-hidden="true" style="color:#c49948; opacity:0.45; font-size:1.28em; line-height:0; vertical-align:-0.08em; margin-right:0.05em;">“</span>Mientras uno esté vivo, uno debe amar lo más que pueda<span aria-hidden="true" style="color:#c49948; opacity:0.45; font-size:1.28em; line-height:0; vertical-align:-0.08em; margin-left:0.05em;">”</span></p>
     <div class="cb-ornament"></div>
   </div>
 </div>
@@ -1506,9 +1512,9 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
   <div class="cb-content rv-up">
     <span class="font-label-sm label-premium text-gold/80 uppercase tracking-[0.3em] block mb-3">With love</span>
     <div class="cb-ornament"></div>
-    <p class="italic leading-[1.2] block heading-standout" style="font-size: clamp(28px,5vw,54px); font-family:'Cormorant Garamond','Playfair Display',Georgia,serif; font-weight:500; color: rgba(255,255,255,0.98); text-shadow: 0 3px 24px rgba(0,0,0,0.62), 0 1px 0 rgba(0,0,0,0.45); letter-spacing: 0.01em;">Y fuiste tú mi baile inolvidable 💙</p>
+    <p class="italic leading-[1.28] block heading-standout" style="font-size: clamp(26px,4.4vw,48px); font-family:'Cormorant Garamond','Playfair Display',Georgia,serif; font-weight:500; color: rgba(255,255,255,0.98); text-shadow: 0 3px 24px rgba(0,0,0,0.62), 0 1px 0 rgba(0,0,0,0.45); letter-spacing: 0.01em;"><span aria-hidden="true" style="color:#c49948; opacity:0.45; font-size:1.28em; line-height:0; vertical-align:-0.08em; margin-right:0.05em;">“</span>Y fuiste tú mi baile inolvidable<span aria-hidden="true" style="color:#c49948; opacity:0.45; font-size:1.28em; line-height:0; vertical-align:-0.08em; margin-left:0.05em;">”</span></p>
     <div class="cb-ornament"></div>
-    <p class="font-body-md dark-section-body mt-2">Charles &amp; Leticia</p>
+    <p class="font-body-md dark-section-body mt-2" style="font-size:15px;">Charles <span style="color:#c49948;">&amp;</span> Leticia</p>
   </div>
 </div>
 
@@ -1571,7 +1577,7 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
   <div class="ch-content text-center px-6 py-16 sm:py-20">
     <div class="cb-ornament mb-6"></div>
     <span class="block text-[10px] tracking-[0.32em] uppercase mb-3" style="color: rgba(252,228,160,0.75); font-family:'Be Vietnam Pro',sans-serif;">With love</span>
-    <h2 class="font-script-accent text-gold-gradient italic leading-[0.95] m-0" style="font-size: clamp(48px, 9vw, 86px); letter-spacing: -0.02em; word-spacing: normal;">Charles <span style="font-size:0.68em; opacity:0.9; font-style: italic; vertical-align: middle; margin: 0 0.08em;">&</span> Leticia</h2>
+    <h2 class="font-script-accent text-gold-gradient italic leading-[0.95] m-0" style="font-size: clamp(48px, 9vw, 86px); letter-spacing: -0.02em; word-spacing: normal; overflow:visible; padding:0.12em 0.2em;">Charles <span style="color:#c49948; font-size:0.82em; opacity:1; font-family:'Cormorant Garamond','Playfair Display',serif; font-weight:300; font-style: italic; vertical-align: baseline; margin: 0 0.06em; text-shadow: 0 1px 12px rgba(0,0,0,0.35);">&amp;</span> Leticia</h2>
     <div class="w-16 h-[1px] bg-gradient-to-r from-transparent via-[#c49948] to-transparent mx-auto my-5 opacity-60"></div>
     <p class="text-[11px] tracking-[0.28em] uppercase" style="color: rgba(255,248,230,0.88); font-family:'Cinzel',serif;">December 31, 2026 — Belize City</p>
     <div class="cb-ornament mt-6"></div>
@@ -1684,51 +1690,62 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
       });
       h3.innerHTML = out;
     }
-    // initial states — photo stays visible (photo first), text/cards staged
+    // initial states — XHIGH elegant: far fly + heavy blur, photo first
     var inviteNote = document.querySelector('#countdown-block p.font-body-md');
     var countPill = document.querySelector('#countdown-block .countdown-pill');
-    if (photoImg) gsap.set(photoImg, {scale:1.14});
-    if (h2) gsap.set(h2, {opacity:0, y:-28});
+    if (photoImg) gsap.set(photoImg, {scale:1.22, filter:'blur(14px) brightness(0.85)'});
+    if (h2) gsap.set(h2, {opacity:0, y:-62, filter:'blur(12px)'});
     if (h3) {
       var wrds = h3.querySelectorAll('.word-reveal');
-      if (wrds.length) gsap.set(wrds, {opacity:0, y:-34, rotation:0.5});
-      else gsap.set(h3, {opacity:0, y:-28, scale:0.97});
+      if (wrds.length) gsap.set(wrds, {opacity:0, y:-68, rotation:1.4, filter:'blur(14px)'});
+      else gsap.set(h3, {opacity:0, y:-52, scale:0.92, filter:'blur(12px)'});
     }
-    if (card) gsap.set(card, {opacity:0, y:-36, scale:0.94});
-    if (countPill) gsap.set(countPill, {opacity:0, y:-22});
-    if (inviteNote) gsap.set(inviteNote, {opacity:0, y:-16});
+    if (card) gsap.set(card, {opacity:0, y:-72, scale:0.88, filter:'blur(14px)'});
+    if (countPill) gsap.set(countPill, {opacity:0, y:-44, filter:'blur(10px)', scale:0.92});
+    if (inviteNote) gsap.set(inviteNote, {opacity:0, y:-34, filter:'blur(10px)'});
     if (countdown) { countdown.style.opacity='1'; countdown.style.transform='none'; }
     els.forEach(function(el){ el.classList.remove('hd-anim'); el.style.transitionDelay=''; });
     var tl = gsap.timeline({defaults:{ease:'power3.out'}});
-    // 2-sec top-to-bottom cascade — all hero parts fly in from top
-    if (photoImg) tl.to(photoImg, {scale:1, duration:1.6, ease:'power1.out'}, 0);
-    if (h2) tl.to(h2, {opacity:1, y:0, duration:0.55, ease:'back.out(1.15)'}, 0.10);
+    // 3.5-sec top-to-bottom cascade — slow elegant blur bloom
+    if (photoImg) tl.to(photoImg, {scale:1, filter:'blur(0px) brightness(1)', duration:2.15, ease:'power2.out'}, 0);
+    if (h2) tl.to(h2, {opacity:1, y:0, filter:'blur(0px)', duration:1.05, ease:'expo.out'}, 0.22);
     if (h3) {
       var wrds2 = h3.querySelectorAll('.word-reveal');
-      if (wrds2.length) tl.to(wrds2, {opacity:1, y:0, rotation:0, duration:0.5, stagger:0.07, ease:'back.out(1.25)'}, 0.32);
-      else tl.to(h3, {opacity:1, y:0, scale:1, duration:0.6, ease:'back.out(1.2)'}, 0.32);
+      if (wrds2.length) tl.to(wrds2, {opacity:1, y:0, rotation:0, filter:'blur(0px)', duration:0.95, stagger:0.13, ease:'expo.out'}, 0.52);
+      else tl.to(h3, {opacity:1, y:0, scale:1, filter:'blur(0px)', duration:1.05, ease:'expo.out'}, 0.52);
     }
-    if (card) tl.to(card, {opacity:1, y:0, scale:1, duration:0.65, ease:'back.out(1.3)'}, 0.72);
-    if (countPill) tl.to(countPill, {opacity:1, y:0, duration:0.5, ease:'back.out(1.2)'}, 1.15);
-    if (inviteNote) tl.to(inviteNote, {opacity:1, y:0, duration:0.5, ease:'power2.out'}, 1.45);
+    if (card) tl.to(card, {opacity:1, y:0, scale:1, filter:'blur(0px)', duration:1.15, ease:'expo.out'}, 1.18);
+    if (countPill) tl.to(countPill, {opacity:1, y:0, filter:'blur(0px)', scale:1, duration:0.95, ease:'expo.out'}, 1.92);
+    if (inviteNote) tl.to(inviteNote, {opacity:1, y:0, filter:'blur(0px)', duration:0.95, ease:'power3.out'}, 2.35);
     tl.call(function(){
       try{ sessionStorage.setItem('heroIntroDone','1'); }catch(e){}
       els.forEach(function(el){ el.classList.add('hd-anim'); });
-      if (h2) h2.style.transform='none';
-      if (h3) h3.querySelectorAll('.word-reveal').forEach(function(w){ w.classList.add('rv-in'); w.style.transform='none'; });
-      if (card) card.style.transform='none';
-      if (countPill) countPill.style.transform='none';
-      if (inviteNote) inviteNote.style.transform='none';
-    }, null, 2.0);
+      if (h2) { h2.style.transform='none'; h2.style.filter='none'; }
+      if (h3) h3.querySelectorAll('.word-reveal').forEach(function(w){ w.classList.add('rv-in'); w.style.transform='none'; w.style.filter='none'; });
+      if (card) { card.style.transform='none'; card.style.filter='none'; }
+      if (countPill) { countPill.style.transform='none'; countPill.style.filter='none'; }
+      if (inviteNote) { inviteNote.style.transform='none'; inviteNote.style.filter='none'; }
+      if (photoImg) photoImg.style.filter='none';
+    }, null, 3.5);
   }
   function setupReveal() {
     document.querySelectorAll('.rv-g').forEach(function (g) {
       Array.prototype.forEach.call(g.children, function (c, i) {
         c.classList.add('rv');
-        c.style.transitionDelay = (i * 110) + 'ms';
+        c.style.transitionDelay = (i * 280) + 'ms';
       });
     });
-    var items = document.querySelectorAll('.rv, .rv-left, .rv-right, .rv-up');
+    // add deep stagger for celebration grid photos — really put it in there
+    document.querySelectorAll('.celebration-section .grid > div').forEach(function(el, i){
+      el.style.transitionDelay = (i * 320) + 'ms';
+    });
+    document.querySelectorAll('.memories-grid .memory-card').forEach(function(el, i){
+      el.style.transitionDelay = (i * 180) + 'ms';
+      el.classList.add('rv-scale');
+    });
+    // body paragraphs — keep clean / subtle (no heavy blur) — XHIGH kept only for quotes
+    // intentionally not adding rv-blur to bento/dark bodies — keep them crisp as before
+    var items = document.querySelectorAll('.rv, .rv-left, .rv-right, .rv-up, .rv-blur, .rv-scale');
     if (!items.length) return;
     if (!('IntersectionObserver' in window)) {
       items.forEach(function (el) { el.classList.add('rv-in'); });
@@ -1750,10 +1767,10 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
   window.addEventListener('load', function () {
     if (!document.querySelector('#heroHead .hd-fade.hd-anim')) animateHero();
   });
-  // Safety net: never leave the hero invisible (e.g. if the intro path is skipped).
+  // Safety net: never leave the hero invisible — extended for XHIGH 3.5s hero
   setTimeout(function () {
     if (!document.querySelector('#heroHead .hd-fade.hd-anim')) animateHero();
-  }, 2500);
+  }, 4000);
 })();
 </script>
 
@@ -1764,34 +1781,68 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduce) return;
 
-  // 1) Enhance side fly-ins: make distance + spring more pronounced (85px, spring bezier already in CSS)
-  // Add stagger to bento grid if missing
+  // 1) Enhance side fly-ins: XHIGH — far, slow, blurred, deeply staggered
   document.querySelectorAll('.celebration-section .grid > div, .gift-section .bento-card, #dresscode').forEach(function (el, i) {
-    if (!el.style.transitionDelay) el.style.transitionDelay = (i * 90) + 'ms';
+    if (!el.style.transitionDelay || el.style.transitionDelay === '90ms') el.style.transitionDelay = (i * 320) + 'ms';
+    else el.style.transitionDelay = (i * 320) + 'ms';
   });
+  // extra heavy delay for left/right alternation — photos fly from side long
+  document.querySelectorAll('.rv-left').forEach(function(el, i){ if (!el.style.transitionDelay) el.style.transitionDelay = (i * 220) + 'ms'; });
+  document.querySelectorAll('.rv-right').forEach(function(el, i){ if (!el.style.transitionDelay) el.style.transitionDelay = (i * 260) + 'ms'; });
+  document.querySelectorAll('.rv-up').forEach(function(el, i){ if (el.closest('.celebration-section') || el.closest('.gallery-section') || el.closest('.dresscode-section')) el.style.transitionDelay = (i * 180) + 'ms'; });
 
   // 2) Word-split for every main heading / script line — single consistent style (Remotion spring)
   var SELECTOR = [
     '#details h2',                           // The Celebration
-    '.celebration-section h3',               // Our Journey, Ceremony, Reception
-    '.cinematic-break .cb-content p.font-script-accent', // Dress to Celebrate + With love quote
-    '.cinematic-break .cb-content span.font-label-sm',   // Style / With love labels
-    '.dresscode-section h2',                 // Guest Attire Palette
-    '#gallery h2',                           // Our Moments
-    '.rsvp-photo-section h2'                // RSVP — gift + closing stay plain text
+    '.celebration-section h3',               // Ceremony, Reception, etc
+    '.cinematic-break .cb-content p',        // both quotes — kept XHIGH elegant
+    '.dresscode-section h2',
+    '#gallery h2',
+    '.rsvp-photo-section h2'
   ].join(',');
 
   function wrapWords(el) {
     if (el.dataset.wrapped) return;
-    // Preserve <br> as forced breaks
     var html = el.innerHTML;
-    // Split on <br> first
     var parts = html.split(/<br\s*\/?>/i);
     var wrapped = parts.map(function (part) {
-      var words = part.trim().split(/\s+/).filter(Boolean);
-      return words.map(function (w, i) {
-        return '<span class="word-reveal-wrap"><span class="word-reveal" style="transition-delay:' + (i * 45) + 'ms">' + w + '</span></span>';
-      }).join(' ');
+      // Split preserving tags — fixes quote <span aria-hidden>“</span> from being broken into words
+      var tokens = part.split(/(<[^>]+>)/g);
+      var wordIndex = 0;
+      var out = '';
+      var inSpan = false;
+      var spanDepth = 0;
+      for (var t = 0; t < tokens.length; t++) {
+        var tok = tokens[t];
+        if (!tok) continue;
+        if (tok.charAt(0) === '<') {
+          // track any <span> depth — keep styled ampersand & quote marks intact
+          if (tok.indexOf('<span') === 0) { inSpan = true; spanDepth++; }
+          else if (tok === '</span>' && spanDepth > 0) { spanDepth--; if (spanDepth === 0) inSpan = false; }
+          out += tok;
+        } else {
+          if (inSpan) {
+            // inside any <span>...</span> (gold &, quote marks) — keep raw, don't split into word-reveals
+            out += tok;
+          } else {
+            var leadingSpace = /^\s/.test(tok) ? ' ' : '';
+            var trailingSpace = /\s$/.test(tok) ? ' ' : '';
+            var words = tok.trim().split(/\s+/).filter(Boolean);
+            if (!words.length) { out += tok; }
+            else {
+              var wrappedWords = words.map(function (w) {
+                var s = '<span class="word-reveal-wrap"><span class="word-reveal" style="transition-delay:' + (wordIndex * 95) + 'ms; filter:blur(14px)">' + w + '</span></span>';
+                wordIndex++;
+                return s;
+              }).join(' ');
+              if (leadingSpace) out += ' ';
+              out += wrappedWords;
+              if (trailingSpace) out += ' ';
+            }
+          }
+        }
+      }
+      return out;
     }).join('<br/>');
     el.innerHTML = wrapped;
     el.dataset.wrapped = '1';
@@ -1809,7 +1860,7 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
           var parent = en.target.closest('[data-wrapped]') || el;
           var all = parent.querySelectorAll('.word-reveal');
           all.forEach(function (w, idx) {
-            setTimeout(function () { w.classList.add('rv-in'); }, idx * 45);
+            setTimeout(function () { w.classList.add('rv-in'); w.style.filter='none'; }, idx * 95);
           });
           io.unobserve(en.target);
         }
@@ -1856,9 +1907,11 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
   // handled above fallback; this block adds staggered delay consistency check
   // (already word-reveal CSS handles 45ms per word — consistent across all headings)
 
-  // ---- 2. Subtle parallax for bg photos — crisp premium, 6-8% move ----
+  // ---- 2. Premium parallax — now heavier, slower, more elegant 12% move + gentle zoom ----
   var parallaxImgs = document.querySelectorAll('.cb-photo img, .ch-photo img, .rsvp-bg-photo img, .gal-photo-bg img, .dc-photo-bg img');
   if (parallaxImgs.length && 'IntersectionObserver' in window) {
+    // add slow Ken Burns zoom on enter
+    parallaxImgs.forEach(function(img){ img.style.transition = 'transform 14s cubic-bezier(.16,1,.3,1), filter 1.4s ease'; });
     var ticking = false;
     function updateParallax() {
       var vh = window.innerHeight;
@@ -1866,12 +1919,12 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
         var sec = img.closest('.cinematic-break, .closing-hero, .rsvp-photo-section, .gallery-section, .dresscode-section');
         if (!sec) return;
         var rect = sec.getBoundingClientRect();
-        // progress 0 (below viewport) -> 1 (above viewport)
         var progress = (vh - rect.top) / (vh + rect.height);
         progress = Math.max(0, Math.min(1, progress));
-        // subtle 36px total travel (-18 to +18) + scale 1.08 already in CSS
-        var y = (progress - 0.5) * 36;
-        img.style.transform = 'translate3d(0,' + y.toFixed(2) + 'px,0) scale(1.08)';
+        // heavier 64px total travel (-32 to +32) + scale 1.12 — elegant slow drift
+        var y = (progress - 0.5) * 64;
+        var scale = 1.12 - Math.abs(progress - 0.5) * 0.04;
+        img.style.transform = 'translate3d(0,' + y.toFixed(2) + 'px,0) scale(' + scale.toFixed(3) + ')';
       });
       ticking = false;
     }
@@ -1887,7 +1940,6 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
   // ---- 3. Cards feel interactive — 3D tilt + glare, keeps black ----
   var cards = document.querySelectorAll('.bento-card-dark, .bento-card, .fan-card');
   cards.forEach(function (card) {
-    // inject glare layer once
     if (!card.querySelector('.tilt-glare')) {
       var glare = document.createElement('span');
       glare.className = 'tilt-glare';
@@ -1897,13 +1949,15 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
       card.appendChild(glare);
     }
     var glareEl = card.querySelector('.tilt-glare');
+    // slower, heavier spring
+    card.style.transition = 'transform 0.85s cubic-bezier(.16,1,.3,1), box-shadow 0.85s ease, border-color 0.6s ease, background 0.6s ease, filter 0.85s ease';
     card.addEventListener('mousemove', function (e) {
       var r = card.getBoundingClientRect();
       var x = (e.clientX - r.left) / r.width;
       var y = (e.clientY - r.top) / r.height;
-      var rotY = (x - 0.5) * 9;   // subtle 9deg max
-      var rotX = (0.5 - y) * 7;
-      card.style.transform = 'perspective(900px) rotateX(' + rotX.toFixed(2) + 'deg) rotateY(' + rotY.toFixed(2) + 'deg) translateY(-4px) scale(1.01)';
+      var rotY = (x - 0.5) * 12;
+      var rotX = (0.5 - y) * 9;
+      card.style.transform = 'perspective(900px) rotateX(' + rotX.toFixed(2) + 'deg) rotateY(' + rotY.toFixed(2) + 'deg) translateY(-6px) scale(1.015)';
       card.style.setProperty('--mx', (x * 100) + '%');
       card.style.setProperty('--my', (y * 100) + '%');
       if (glareEl) glareEl.style.opacity = '1';
