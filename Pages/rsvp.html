@@ -445,6 +445,10 @@ select:-webkit-autofill {
 
 <p id="totalLine" class="font-label-sm text-gold uppercase tracking-[0.2em] mt-3" style="font-size:.66rem;"></p>
 <p id="coupleNote" class="font-label-sm text-gold-light uppercase tracking-[0.2em] mt-1.5 hidden" style="font-size:.66rem;">RSVPing for the two of you</p>
+<div id="singleNote" class="hidden mt-2 inline-flex items-center justify-center gap-1.5 px-3.5 py-1 rounded-full bg-gold/10 border border-gold/35 font-label-sm text-gold uppercase tracking-[0.18em]" style="font-size:.64rem;">
+  <span class="material-symbols-outlined text-[14px]">person</span> 1 Guest Allowed
+</div>
+<p id="singleSub" class="hidden text-[11px] text-white/50 tracking-wide mt-1">This invitation is reserved for one guest &bull; No plus-ones</p>
 <div id="priorStatus" class="hidden mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-gold/40 bg-gold/10 font-label-sm text-gold uppercase tracking-[0.15em]" style="font-size:.66rem;">
 <span class="material-symbols-outlined text-base" style="font-variation-settings:'FILL' 1">verified</span>
 <span id="priorStatusText"></span>
@@ -667,8 +671,8 @@ select:-webkit-autofill {
 
 <div class="success-pop flex flex-col gap-3 pt-2 max-w-md mx-auto">
 
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-  <button onclick="resetForAnother()" class="chad-btn w-full">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="successNavGrid">
+  <button id="resetForAnotherBtn" onclick="resetForAnother()" class="chad-btn w-full">
     RSVP for another guest
   </button>
   <a id="doneLink" href="index.html" class="chad-btn w-full flex items-center justify-center no-underline">
@@ -784,16 +788,27 @@ select:-webkit-autofill {
     // Note: lastNameField and optionalFields are intentionally NOT hidden — we need first/last + Yes/No/Ask Later hooked to backend
   }
 
+  var singleNote = document.getElementById('singleNote');
+  var singleSub = document.getElementById('singleSub');
+
   if (isCouple) {
     singleFields.classList.add('hidden');
     coupleFields.classList.remove('hidden');
     if (coupleNote) coupleNote.classList.remove('hidden');
+    if (singleNote) singleNote.classList.add('hidden');
+    if (singleSub) singleSub.classList.add('hidden');
     var pA = splitName(guestName);
     var pB = splitName(spouseName);
     if (pA.first) document.getElementById('nameA').value = pA.first;
     if (pA.last) document.getElementById('lastNameA').value = pA.last;
     if (pB.first) document.getElementById('nameB').value = pB.first;
     if (pB.last) document.getElementById('lastNameB').value = pB.last;
+  } else {
+    singleFields.classList.remove('hidden');
+    coupleFields.classList.add('hidden');
+    if (coupleNote) coupleNote.classList.add('hidden');
+    if (singleNote) singleNote.classList.remove('hidden');
+    if (singleSub) singleSub.classList.remove('hidden');
   }
 
   // Pre-fill name from link
@@ -1110,17 +1125,21 @@ select:-webkit-autofill {
         lastName = parts.slice(1).join(' ');
       }
       var attendance = singleToggle.current();
-      var plusOneRaw = val('plusOneName');
-      var plusNames = plusOneRaw ? plusOneRaw.trim() : '';
+
+      // Enforce strictly 1 guest allowed: reject companion words
+      var nameCombined = ((name || '') + ' ' + (lastName || '')).toLowerCase();
+      if (nameCombined.includes(' & ') || nameCombined.includes(' and ') || nameCombined.includes(' + ') || nameCombined.includes('plus one') || nameCombined.includes('plus 1') || nameCombined.includes('guest')) {
+        showError('1 Guest Allowed', 'This invitation is reserved for 1 guest only. Please enter only your personal name.');
+        return;
+      }
 
       if (!name) { showError('Missing information', 'Please add your name — first name is enough.'); return; }
       if (!lastName) { showError('Missing information', 'Please add your last name — required for main guest.'); return; }
       if (!attendance) { showError('Choose an option', 'Please tap Yes, No, or Ask Later.'); return; }
       var yes = attendance === 'yes';
-      var isPlus = !!(yes && plusNames);
       var singleGuests = yes ? 1 : 0;
-      guests = isPlus ? 2 : singleGuests;
-      // keep plusNames for backend display
+      guests = singleGuests;
+      var plusNames = '';
 
       // Rule 2: same name updates instead of duplicates
       var _allCheck = loadAll();
@@ -1133,32 +1152,19 @@ select:-webkit-autofill {
       }
       var record = {
         id: guestId, name: name, lastName: lastName, phone: phone,
-        attendance: attendance, guests: singleGuests, plusNames: plusNames,
+        attendance: attendance, guests: singleGuests, plusNames: '',
         song: song, message: message, at: new Date().toISOString()
       };
       records.push(record);
-      // plus-one as separate local record — 1 + 1 = 2, not 2 + 1 = 3
-      if (isPlus) {
-        var pParts = plusNames.split(/\s+/);
-        var pFirst = pParts[0] || plusNames;
-        var pLast = pParts.slice(1).join(' ');
-        records.push({
-          id: guestId + ':plus1', name: pFirst, lastName: pLast, phone: phone,
-          attendance: 'yes', guests: 1, plusNames: '', song: '', message: '', at: new Date().toISOString()
-        });
-      }
 
       setSubmittingState(true);
 
       var d = loadAll();
       if (!d[guestId]) d[guestId] = [];
-      // push both you + plus-one so local count = 2 when plus
-      // Rule 2: update if same name exists, else push (handles plusOne as well)
       records.forEach(function(rec){
         var _sIdx = -1;
         for (var _si=0; _si<d[guestId].length; _si++) {
           var _sr = d[guestId][_si];
-          // match by id or by name/lastName for plusOne case
           if (_sr.id === rec.id || ((_sr.name||'').toLowerCase() === (rec.name||'').toLowerCase() && (_sr.lastName||'').toLowerCase() === (rec.lastName||'').toLowerCase())) { _sIdx=_si; break; }
         }
         if (_sIdx !== -1) d[guestId][_sIdx]=rec; else d[guestId].push(rec);
@@ -1170,18 +1176,14 @@ select:-webkit-autofill {
         name: (name + (lastName ? ' ' + lastName : '')).trim(),
         lastName: lastName,
         attendance: attendance,
-        guests: guests,
+        guests: singleGuests,
         phone: phone,
-        plusNames: plusNames,
+        plusNames: '',
         song: song,
         message: message
       }, function (err, result) {
         setSubmittingState(false);
-        if (isPlus) {
-          showSuccess({ couple: true, nameA: name, nameB: plusNames, attendance: attendance, guests: guests }, d[guestId].length);
-        } else {
-          showSuccess({ couple: false, name: name, attendance: attendance, guests: guests }, d[guestId].length);
-        }
+        showSuccess({ couple: false, name: name, attendance: attendance, guests: singleGuests }, d[guestId].length);
       });
     }
   };
@@ -1251,6 +1253,17 @@ select:-webkit-autofill {
     document.getElementById('sucResponses').textContent = count > 1
       ? 'Both RSVPs received from this link'
       : 'Your RSVP has been received';
+
+    var resetBtn = document.getElementById('resetForAnotherBtn');
+    var navGrid = document.getElementById('successNavGrid');
+    if (!info.couple) {
+      if (resetBtn) resetBtn.classList.add('hidden');
+      if (navGrid) { navGrid.classList.remove('sm:grid-cols-2'); navGrid.classList.add('grid-cols-1'); }
+    } else {
+      if (resetBtn) resetBtn.classList.remove('hidden');
+      if (navGrid) { navGrid.classList.remove('grid-cols-1'); navGrid.classList.add('sm:grid-cols-2'); }
+    }
+
     updateTotals();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -1292,6 +1305,7 @@ select:-webkit-autofill {
   };
 
   window.resetForAnother = function () {
+    if (!isCouple) return; // Singles are strictly 1 guest and cannot RSVP for another
     setSubmittingState(false);
     document.getElementById('rsvpForm').classList.remove('hidden');
     document.getElementById('success').classList.add('hidden');

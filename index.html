@@ -2122,7 +2122,7 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
             if (!words.length) { out += tok; }
             else {
               var wrappedWords = words.map(function (w) {
-                var s = '<span class="word-reveal-wrap"><span class="word-reveal" style="transition-delay:' + (wordIndex * 95) + 'ms; filter:blur(14px)">' + w + '</span></span>';
+                var s = '<span class="word-reveal-wrap"><span class="word-reveal" style="transition-delay:' + (wordIndex * 45) + 'ms">' + w + '</span></span>';
                 wordIndex++;
                 return s;
               }).join(' ');
@@ -2151,7 +2151,7 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
           var parent = en.target.closest('[data-wrapped]') || el;
           var all = parent.querySelectorAll('.word-reveal');
           all.forEach(function (w, idx) {
-            setTimeout(function () { w.classList.add('rv-in'); w.style.filter='none'; }, idx * 95);
+            setTimeout(function () { w.classList.add('rv-in'); w.style.filter='none'; }, idx * 45);
           });
           io.unobserve(en.target);
         }
@@ -2198,11 +2198,9 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
   // handled above fallback; this block adds staggered delay consistency check
   // (already word-reveal CSS handles 45ms per word — consistent across all headings)
 
-  // ---- 2. Premium parallax — now heavier, slower, more elegant 12% move + gentle zoom ----
+  // ---- 2. Subtle parallax for bg photos — crisp premium from commit f01e19c ----
   var parallaxImgs = document.querySelectorAll('.cb-photo img, .ch-photo img, .rsvp-bg-photo img, .gal-photo-bg img, .dc-photo-bg img');
   if (parallaxImgs.length && 'IntersectionObserver' in window) {
-    // add slow Ken Burns zoom on enter
-    parallaxImgs.forEach(function(img){ img.style.transition = 'transform 14s cubic-bezier(.16,1,.3,1), filter 1.4s ease'; });
     var ticking = false;
     function updateParallax() {
       var vh = window.innerHeight;
@@ -2210,12 +2208,12 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
         var sec = img.closest('.cinematic-break, .closing-hero, .rsvp-photo-section, .gallery-section, .dresscode-section');
         if (!sec) return;
         var rect = sec.getBoundingClientRect();
+        // progress 0 (below viewport) -> 1 (above viewport)
         var progress = (vh - rect.top) / (vh + rect.height);
         progress = Math.max(0, Math.min(1, progress));
-        // heavier 64px total travel (-32 to +32) + scale 1.12 — elegant slow drift
-        var y = (progress - 0.5) * 64;
-        var scale = 1.12 - Math.abs(progress - 0.5) * 0.04;
-        img.style.transform = 'translate3d(0,' + y.toFixed(2) + 'px,0) scale(' + scale.toFixed(3) + ')';
+        // subtle 36px total travel (-18 to +18) + scale 1.08
+        var y = (progress - 0.5) * 36;
+        img.style.transform = 'translate3d(0,' + y.toFixed(2) + 'px,0) scale(1.08)';
       });
       ticking = false;
     }
