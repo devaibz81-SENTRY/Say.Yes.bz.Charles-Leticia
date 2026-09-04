@@ -1483,15 +1483,301 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
       </div>
       <p class="font-body-md dark-section-body max-w-md mx-auto mt-5 rv-up" style="transition-delay:.3s">A glimpse of the laughter, love and light that brought us here.</p>
     </div>
-    <!-- Memories grid — all 5 photos visible (changed from fanned holder as requested) -->
-    <div class="memories-grid">
-      <div class="memory-card cursor-pointer touch-manipulation select-none active:scale-[0.98]" role="button" tabindex="0" aria-label="Tap for hearts"><img src="galery%20(1).jpeg" alt="Charles and Leticia moment"/><div class="memory-card-mat"></div></div>
-      <div class="memory-card cursor-pointer touch-manipulation select-none active:scale-[0.98]" role="button" tabindex="0" aria-label="Tap for hearts"><img src="galery%20(2).jpeg" alt="Charles and Leticia moment"/><div class="memory-card-mat"></div></div>
-      <div class="memory-card cursor-pointer touch-manipulation select-none active:scale-[0.98]" role="button" tabindex="0" aria-label="Tap for hearts"><img src="galery%20(4).jpeg" alt="Charles and Leticia moment" style="object-position:center 38%"/><div class="memory-card-mat"></div></div>
-      <div class="memory-card cursor-pointer touch-manipulation select-none active:scale-[0.98]" role="button" tabindex="0" aria-label="Tap for hearts"><img src="galery%20(5).jpeg" alt="Charles and Leticia moment"/><div class="memory-card-mat"></div></div>
-      <div class="memory-card cursor-pointer touch-manipulation select-none active:scale-[0.98]" role="button" tabindex="0" aria-label="Tap for hearts"><img src="galery%20(3).jpeg" alt="Charles and Leticia moment"/><div class="memory-card-mat"></div></div>
+    <!-- CREATIVE FILM VAULT — cinematic depth carousel (drag, swipe, dots, lightbox) — show-off build -->
+    <style>
+      .film-vault{position:relative;max-width:1120px;margin:0 auto;padding:10px 0 0}
+      .fv-viewport{position:relative;overflow:visible;perspective:1600px;height:clamp(380px,48vw,560px);display:flex;align-items:center;justify-content:center;touch-action:pan-y;user-select:none}
+      .fv-track{position:relative;display:flex;align-items:center;justify-content:center;width:100%;height:100%;transform-style:preserve-3d}
+      .fv-slide{position:absolute;left:50%;top:50%;width:clamp(220px,28vw,340px);aspect-ratio:4/5;border-radius:22px;overflow:hidden;border:1px solid rgba(212,175,55,0.22);background:#0f0f0f;box-shadow:0 24px 70px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.06);cursor:grab;will-change:transform,opacity,filter;transition:transform 1.15s cubic-bezier(.22,1,.28,1), opacity 1.05s ease, filter 1.05s ease, box-shadow 1.05s ease}
+      .fv-slide:active{cursor:grabbing}
+      .fv-slide img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;transition:transform 1.6s cubic-bezier(.22,1,.28,1)}
+      .fv-slide:hover img{transform:scale(1.03)}
+      .fv-slide.is-center{z-index:5;box-shadow:0 28px 80px rgba(0,0,0,0.65), 0 0 0 1px rgba(212,175,55,0.35), 0 0 32px rgba(212,175,55,0.18)}
+      .fv-slide.is-center .fv-mat{opacity:1}
+      .fv-mat{position:absolute;inset:7px;border-radius:16px;border:1px solid rgba(255,255,255,0.32);box-shadow:inset 0 0 0 1px rgba(212,175,55,0.10);pointer-events:none;opacity:0.88}
+      /* film perforations */
+      .fv-slide::before,.fv-slide::after{content:'';position:absolute;left:0;right:0;height:10px;background:repeating-linear-gradient(90deg, transparent 0 14px, rgba(0,0,0,0.72) 14px 20px, transparent 20px 26px);opacity:0.55;z-index:2;pointer-events:none}
+      .fv-slide::before{top:6px}
+      .fv-slide::after{bottom:6px}
+      .fv-controls{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:18px}
+      .fv-arrow{width:42px;height:42px;border-radius:9999px;border:1px solid rgba(212,175,55,0.26);background:rgba(18,16,12,0.72);backdrop-filter:blur(12px);color:#F5D76E;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform 0.25s ease, background 0.25s ease, border-color 0.25s ease}
+      .fv-arrow:hover{transform:scale(1.08);background:rgba(18,16,12,0.95);border-color:rgba(212,175,55,0.45)}
+      .fv-arrow:active{transform:scale(0.96)}
+      .fv-dots{display:flex;align-items:center;gap:8px;padding:6px 14px;border-radius:9999px;background:rgba(0,0,0,0.42);border:1px solid rgba(212,175,55,0.18);backdrop-filter:blur(10px)}
+      .fv-dot{width:7px;height:7px;border-radius:50%;background:rgba(212,175,55,0.28);border:none;cursor:pointer;transition:all 0.4s cubic-bezier(.16,1,.3,1);padding:0}
+      .fv-dot.is-active{width:22px;background:#D4AF37;box-shadow:0 0 10px rgba(212,175,55,0.65)}
+      .fv-hint{text-align:center;margin-top:10px;font-family:'Be Vietnam Pro',sans-serif;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,248,230,0.48)}
+      .fv-lightbox{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(5,4,2,0.92);backdrop-filter:blur(18px);opacity:0;pointer-events:none;transition:opacity 0.45s ease}
+      .fv-lightbox.is-open{opacity:1;pointer-events:auto}
+      .fv-lightbox img{max-width:min(92vw,920px);max-height:82vh;width:auto;height:auto;object-fit:contain;border-radius:18px;border:1px solid rgba(212,175,55,0.28);box-shadow:0 30px 90px rgba(0,0,0,0.75)}
+      .fv-lb-close{position:absolute;top:18px;right:18px;width:44px;height:44px;border-radius:9999px;border:1px solid rgba(212,175,55,0.26);background:rgba(18,16,12,0.72);color:#F5D76E;display:flex;align-items:center;justify-content:center;cursor:pointer}
+      .fv-lb-cap{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.62);border:1px solid rgba(212,175,55,0.22);color:#F5F0E8;padding:8px 14px;border-radius:9999px;font-family:'Be Vietnam Pro',sans-serif;font-size:11px;letter-spacing:0.08em;backdrop-filter:blur(10px)}
+      @media(max-width:640px){
+        .fv-viewport{height:clamp(360px,78vw,480px)}
+        .fv-slide{width:clamp(200px,68vw,300px)}
+        .fv-controls{gap:10px;margin-top:14px}
+        .fv-arrow{width:38px;height:38px}
+      }
+    </style>
+    <div class="film-vault" id="filmVault">
+      <div class="fv-viewport" id="fvViewport">
+        <div class="fv-track" id="fvTrack">
+          <div class="fv-slide" data-index="0" role="button" tabindex="0" aria-label="Open moment 1"><img src="galery%20(1).jpeg" alt="Charles and Leticia — laughter"/><div class="fv-mat"></div></div>
+          <div class="fv-slide" data-index="1" role="button" tabindex="0" aria-label="Open moment 2"><img src="galery%20(2).jpeg" alt="Charles and Leticia — golden hour"/><div class="fv-mat"></div></div>
+          <div class="fv-slide" data-index="2" role="button" tabindex="0" aria-label="Open moment 3"><img src="galery%20(4).jpeg" alt="Charles and Leticia — together" style="object-position:center 38%"/><div class="fv-mat"></div></div>
+          <div class="fv-slide" data-index="3" role="button" tabindex="0" aria-label="Open moment 4"><img src="galery%20(5).jpeg" alt="Charles and Leticia — celebration"/><div class="fv-mat"></div></div>
+          <div class="fv-slide" data-index="4" role="button" tabindex="0" aria-label="Open moment 5"><img src="galery%20(3).jpeg" alt="Charles and Leticia — light"/><div class="fv-mat"></div></div>
+        </div>
+      </div>
+      <div class="fv-controls">
+        <button class="fv-arrow prev" id="fvPrev" aria-label="Previous moment"><span class="material-symbols-outlined">chevron_left</span></button>
+        <div class="fv-dots" id="fvDots" role="tablist" aria-label="Gallery navigation"></div>
+        <button class="fv-arrow next" id="fvNext" aria-label="Next moment"><span class="material-symbols-outlined">chevron_right</span></button>
+      </div>
+      <p class="fv-hint">Drag or tap center to enlarge</p>
+    </div>
+    <div id="fvLightbox" class="fv-lightbox" aria-hidden="true" role="dialog" aria-label="Enlarged moment">
+      <button class="fv-lb-close" id="fvLbClose" aria-label="Close"><span class="material-symbols-outlined">close</span></button>
+      <img id="fvLbImg" alt="Enlarged moment"/>
     </div>
     <div id="galleryHeartsGrid" class="pointer-events-none" aria-hidden="true" style="position:relative;height:0"></div>
+    <script>
+    (function(){
+      var track = document.getElementById('fvTrack');
+      var viewport = document.getElementById('fvViewport');
+      var slides = Array.prototype.slice.call(track.querySelectorAll('.fv-slide'));
+      var dotsEl = document.getElementById('fvDots');
+      var prevBtn = document.getElementById('fvPrev');
+      var nextBtn = document.getElementById('fvNext');
+      var lb = document.getElementById('fvLightbox');
+      var lbImg = document.getElementById('fvLbImg');
+      var lbCap = document.getElementById('fvLbCap');
+      var lbClose = document.getElementById('fvLbClose');
+      var n = slides.length;
+      var cur = 2; // start center on Together
+      var autoTimer = null;
+      var isDragging = false;
+      var startX = 0, curStart = 0, dragDx = 0;
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // build dots
+      for (var i=0;i<n;i++){
+        var b=document.createElement('button');
+        b.className='fv-dot'; b.setAttribute('role','tab'); b.setAttribute('aria-label','Go to '+(i+1));
+        b.dataset.index=i;
+        b.addEventListener('click', (function(idx){return function(){go(idx,true);};})(i));
+        dotsEl.appendChild(b);
+      }
+      var dots = Array.prototype.slice.call(dotsEl.children);
+
+      function layout(){
+        var vw = viewport.offsetWidth;
+        var isMobile = window.innerWidth < 640;
+        var gap = isMobile ? 22 : 36;
+        var baseW = slides[0].offsetWidth;
+        for (var i=0;i<n;i++){
+          var s = slides[i];
+          var rawOffset = i - cur;
+          var offset = rawOffset;
+          if (offset > n/2) offset -= n;
+          if (offset < -n/2) offset += n;
+          var abs = Math.abs(offset);
+          // hide far slides completely — prevents the "flying back across" wrap you disliked
+          var isFar = abs > 1;
+          var z = isFar ? 0 : 5 - abs;
+          var scale = isFar ? 0.82 : 1 - abs * 0.08;
+          if (isMobile && !isFar) scale = 1 - abs * 0.09;
+          var x = offset * (baseW * 0.82 + gap);
+          if (isDragging && !isFar) {
+            var damp = Math.max(0, 1 - abs * 0.22);
+            x += dragDx * 0.16 * damp;
+          }
+          var rotY = isFar ? 0 : offset * (isMobile ? 8 : 11);
+          var y = isFar ? 0 : abs * 2;
+          var blur = isFar ? 8 : abs * 0.45;
+          var bright = isFar ? 0.62 : 1 - abs * 0.04;
+          var opacity = isFar ? 0 : 1;
+          // if this slide just wrapped far side (jump > n/2), snap without transition to avoid flying across
+          var prev = s._prevOffset;
+          var wrapped = prev !== undefined && Math.abs(offset - prev) > 2;
+          if (wrapped) {
+            s.style.transition = 'none';
+            // force reflow then restore
+            s.getBoundingClientRect();
+            setTimeout((function(el){return function(){ el.style.transition=''; };})(s), 20);
+          }
+          s._prevOffset = offset;
+          s.style.zIndex = isFar ? 0 : z;
+          s.style.opacity = opacity;
+          s.style.pointerEvents = isFar ? 'none' : 'auto';
+          // keep in flow for fade — no visibility snap, just opacity 0
+          s.style.filter = 'brightness('+bright+') blur('+blur+'px) saturate('+(1 - abs*0.04)+')';
+          s.style.transform = 'translate3d(-50%, -50%, 0) translateX('+x+'px) translateY('+y+'px) rotateY('+rotY+'deg) scale('+scale+')';
+          s.classList.toggle('is-center', offset===0);
+          s.setAttribute('aria-selected', offset===0 ? 'true':'false');
+        }
+        dots.forEach(function(d, idx){ d.classList.toggle('is-active', idx===cur); });
+      }
+
+      function go(idx, user){
+        cur = (idx % n + n) % n;
+        layout();
+        if (user) restartAuto();
+        // haptic
+        if (navigator.vibrate && user) try{navigator.vibrate(10);}catch(e){}
+      }
+      function next(){ go(cur+1, true); }
+      function prev(){ go(cur-1, true); }
+
+      prevBtn.addEventListener('click', prev);
+      nextBtn.addEventListener('click', next);
+
+      // keyboard
+      viewport.addEventListener('keydown', function(e){
+        if (e.key==='ArrowLeft') prev();
+        if (e.key==='ArrowRight') next();
+        if (e.key==='Enter' && document.activeElement.classList.contains('fv-slide')) {
+          var idx = parseInt(document.activeElement.dataset.index,10);
+          if (idx===cur) openLb(idx); else go(idx,true);
+        }
+      });
+
+      // click center to open, click side to go
+      slides.forEach(function(s){
+        s.addEventListener('click', function(){
+          var idx = parseInt(s.dataset.index,10);
+          if (idx===cur) openLb(idx);
+          else go(idx,true);
+        });
+      });
+
+      // drag / swipe
+      function onDown(e){
+        isDragging = true;
+        startX = e.touches ? e.touches[0].clientX : e.clientX;
+        curStart = cur;
+        dragDx = 0;
+        viewport.style.cursor='grabbing';
+        if (autoTimer) clearInterval(autoTimer);
+      }
+      function onMove(e){
+        if (!isDragging) return;
+        var x = e.touches ? e.touches[0].clientX : e.clientX;
+        dragDx = x - startX;
+        // dead zone 6px — ignore tiny jitter
+        if (Math.abs(dragDx) < 6) return;
+        layout();
+        if (e.cancelable && Math.abs(dragDx) > 12) e.preventDefault();
+      }
+      function onUp(){
+        if (!isDragging) return;
+        isDragging = false;
+        viewport.style.cursor='';
+        var thresh = 72;
+        var vel = Math.abs(dragDx);
+        // elegant: require deliberate swipe, not flicker
+        if (dragDx < -thresh) go(cur+1, true);
+        else if (dragDx > thresh) go(cur-1, true);
+        else layout();
+        dragDx = 0;
+        restartAuto();
+      }
+      viewport.addEventListener('mousedown', onDown);
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('mouseup', onUp);
+      viewport.addEventListener('touchstart', onDown, {passive:false});
+      viewport.addEventListener('touchmove', onMove, {passive:false});
+      viewport.addEventListener('touchend', onUp);
+
+      // autoplay — slower, more elegant
+      function startAuto(){
+        if (reduce) return;
+        autoTimer = setInterval(function(){ go(cur+1,false); }, 5200);
+      }
+      function restartAuto(){
+        if (autoTimer) clearInterval(autoTimer);
+        startAuto();
+      }
+      viewport.addEventListener('mouseenter', function(){ if(autoTimer) clearInterval(autoTimer); });
+      viewport.addEventListener('mouseleave', function(){ restartAuto(); });
+
+      // lightbox — elegant, no labels
+      function openLb(idx){
+        var s = slides[idx];
+        var img = s.querySelector('img');
+        lbImg.src = img.src;
+        if (lbCap) lbCap.textContent = '';
+        lb.classList.add('is-open');
+        lb.setAttribute('aria-hidden','false');
+        document.documentElement.style.overflow='hidden';
+        burstHearts(s);
+      }
+      function closeLb(){
+        lb.classList.remove('is-open');
+        lb.setAttribute('aria-hidden','true');
+        document.documentElement.style.overflow='';
+      }
+      lb.addEventListener('click', function(e){ if(e.target===lb) closeLb(); });
+      lbClose.addEventListener('click', closeLb);
+      document.addEventListener('keydown', function(e){ if(e.key==='Escape' && lb.classList.contains('is-open')) closeLb(); });
+
+      function burstHearts(anchor){
+        var host = document.getElementById('galleryHearts') || document.getElementById('galleryHeartsGrid');
+        if(!host) return;
+        var rect = anchor.getBoundingClientRect();
+        var cx = rect.left + rect.width/2;
+        var cy = rect.top + rect.height/2;
+        for(var i=0;i<10;i++){
+          (function(j){
+            setTimeout(function(){
+              var h=document.createElement('span');
+              h.textContent = j%2===0 ? '♥' : '♡';
+              h.style.position='fixed';
+              h.style.left=cx+'px';
+              h.style.top=cy+'px';
+              h.style.fontSize=(14+Math.random()*14)+'px';
+              h.style.color = j%3===0 ? '#F5D76E' : j%3===1 ? '#D4AF37' : 'rgba(255,248,230,0.9)';
+              h.style.pointerEvents='none';
+              h.style.zIndex='9998';
+              h.style.setProperty('--tx', (Math.random()*120-60)+'px');
+              h.style.setProperty('--ty', (-80 - Math.random()*90)+'px');
+              h.style.animation='heartBurst 0.95s cubic-bezier(.16,1,.3,1) forwards';
+              document.body.appendChild(h);
+              setTimeout(function(){ h.remove(); }, 1000);
+            }, j*45);
+          })(i);
+        }
+      }
+      // inject heartBurst keyframes once
+      if (!document.getElementById('fvHeartStyle')){
+        var st=document.createElement('style');
+        st.id='fvHeartStyle';
+        st.textContent='@keyframes heartBurst{0%{transform:translate(-50%,-50%) scale(0.6) rotate(0deg); opacity:1} 100%{transform:translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1.15) rotate(12deg); opacity:0}}';
+        document.head.appendChild(st);
+      }
+
+      // init
+      layout();
+      startAuto();
+      window.addEventListener('resize', layout);
+      // reveal on scroll
+      if('IntersectionObserver' in window){
+        var io=new IntersectionObserver(function(ents){
+          ents.forEach(function(en){
+            if(en.isIntersecting){
+              en.target.classList.add('rv-in');
+              // staggered entrance
+              slides.forEach(function(s, idx){
+                s.style.transitionDelay = (Math.abs(idx-cur)*90)+'ms';
+              });
+              io.unobserve(en.target);
+            }
+          });
+        },{threshold:0.15});
+        io.observe(document.getElementById('filmVault'));
+      }
+    })();
+    </script>
     <!-- Love Story — editorial narrative (Our / JOURNEY TOGETHER) -->
     <div id="story" class="relative overflow-hidden rounded-[28px] rv-up mt-10 max-w-3xl mx-auto text-center" style="background: linear-gradient(180deg, rgba(18,16,12,0.96) 0%, rgba(10,10,10,0.98) 100%); border: 1px solid rgba(196,153,72,0.14); box-shadow: 0 20px 60px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.04);">
       <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(700px 420px at 50% 0%, rgba(196,153,72,0.07), transparent 62%);"></div>
