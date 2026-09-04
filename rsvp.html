@@ -783,6 +783,8 @@ select:-webkit-autofill {
   var spouseName = (params.get('spouse') || '').trim();
   var guestType = (params.get('type') || '').toLowerCase();
   var isEasy = params.get('easy') === '1';
+  var max_party = parseInt(params.get('max') || params.get('max_party') || params.get('maxParty') || '', 10);
+  if (isNaN(max_party) || max_party < 1) max_party = 2; // default 2 so couple logic works; single Max=1 via ?max=1 hides Guest2
   var isCouple = !isEasy && (guestType === 'couple' || !!spouseName) && (max_party > 1);
 
   var STORAGE_KEY = 'cl_rsvps';

@@ -211,7 +211,17 @@ export const submitRsvp = internalMutation({
           ? "later"
           : "declined";
 
-    const requestedSeats = Math.max(1, args.guests || 1);
+    // Max=1 single — cap at 1, ignore plus_names
+    const maxParty = (existing as any)?.max_party ?? (existing as any)?.maxParty;
+    const effectiveMax = typeof maxParty === 'number' ? maxParty : undefined;
+    let requestedSeats = Math.max(1, args.guests || 1);
+    if (effectiveMax === 1) {
+      requestedSeats = 1;
+      (args as any).plus_names = undefined;
+      (args as any).plusNames = undefined;
+    } else if (effectiveMax !== undefined) {
+      requestedSeats = Math.min(requestedSeats, effectiveMax);
+    }
     const confirmedCount = attendance === "attending" ? requestedSeats : 0;
 
     // 3. Strict Check: If guest is not found on invitation guest list, reject RSVP.
