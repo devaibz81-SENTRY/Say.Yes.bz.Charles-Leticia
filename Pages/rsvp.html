@@ -783,7 +783,7 @@ select:-webkit-autofill {
   var spouseName = (params.get('spouse') || '').trim();
   var guestType = (params.get('type') || '').toLowerCase();
   var isEasy = params.get('easy') === '1';
-  var isCouple = !isEasy && (guestType === 'couple' || !!spouseName);
+  var isCouple = !isEasy && (guestType === 'couple' || !!spouseName) && (max_party > 1);
 
   var STORAGE_KEY = 'cl_rsvps';
 
