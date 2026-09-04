@@ -648,6 +648,7 @@
       </div>
       <div class="top-bar-actions">
         <button class="btn-sm" onclick="fetchGuests()">Refresh</button>
+        <button id="reset-status-btn" class="btn-sm" onclick="resetAllGuestsToNotInvited()" title="Set all unresponded guests to Not Invited">🔄 Reset All to Not Invited</button>
         <button id="csv-template-btn" class="btn-sm" onclick="downloadCsvTemplate()" title="Download blank CSV template">⬇ CSV Template</button>
         <button id="import-csv-btn" class="btn-sm" onclick="openImportCsv()" title="Import guests from CSV">⬆ Import CSV</button>
         <button id="add-guest-btn" class="btn-sm primary" onclick="openAddGuest()">+ Add Guest</button>
@@ -1475,6 +1476,52 @@ Amelie	Guerra	Julian	couple	2	6140942"
 
     // Adding from dashboard
     let editingGuestId = null;
+
+    async function resetAllGuestsToNotInvited() {
+      const targetGuests = guests.filter(g => !g.attendance || g.attendance === 'invited');
+      if (!targetGuests.length) {
+        alert('All unresponded guests are already set to Not Invited.');
+        return;
+      }
+
+      const confirmMsg = `Set status of ${targetGuests.length} unresponded guest(s) to "Not Invited"?\n\nOnce set, clicking their WhatsApp button will move them to "Invited".`;
+      if (!confirm(confirmMsg)) return;
+
+      const btn = document.getElementById('reset-status-btn');
+      const origText = btn ? btn.textContent : '';
+      if (btn) { btn.textContent = 'Resetting...'; btn.disabled = true; }
+
+      try {
+        const res = await fetch(`${CONVEX_HTTP_URL}/api/guest`, {
+          method: 'POST',
+          headers: authHeaders({ 'Content-Type': 'application/json' }),
+          body: JSON.stringify({ action: 'reset_not_invited' })
+        });
+
+        if (res.status === 401) {
+          await logout();
+          throw new Error('Session expired. Please log in again.');
+        }
+        if (!res.ok) throw new Error(await res.text());
+
+        const data = await res.json();
+        guests.forEach(g => {
+          if (!g.attendance || g.attendance === 'invited') {
+            g.attendance = 'not_invited';
+          }
+        });
+
+        updateStats();
+        renderTable();
+        updateWaMetrics();
+        alert(`Successfully reset ${data.count !== undefined ? data.count : targetGuests.length} guest(s) to "Not Invited"!`);
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        alert('Failed to reset statuses: ' + msg);
+      } finally {
+        if (btn) { btn.textContent = origText; btn.disabled = false; }
+      }
+    }
 
     function openAddGuest() {
       editingGuestId = null;

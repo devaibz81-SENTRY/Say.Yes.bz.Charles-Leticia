@@ -61,6 +61,11 @@ export const upsertGuest = httpAction(async (ctx, request) => {
     return json({ ok: true });
   }
 
+  if (action === "reset_not_invited") {
+    const count = await ctx.runMutation(internal.db.resetAllGuestsToNotInvited);
+    return json({ ok: true, count });
+  }
+
   return json({ error: `Unknown action: ${action}` }, 400);
 });
 

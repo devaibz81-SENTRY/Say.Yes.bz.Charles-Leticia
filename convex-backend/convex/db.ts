@@ -115,6 +115,21 @@ export const deleteGuest = internalMutation({
   },
 });
 
+export const resetAllGuestsToNotInvited = internalMutation({
+  args: {},
+  handler: async (ctx) => {
+    const guests = await ctx.db.query("guests").collect();
+    let count = 0;
+    for (const g of guests) {
+      if (!g.attendance || g.attendance === "invited") {
+        await ctx.db.patch(g._id, { attendance: "not_invited" });
+        count++;
+      }
+    }
+    return count;
+  },
+});
+
 // ---------- public RSVP ----------
 
 function normalizeText(str?: string | null): string {
