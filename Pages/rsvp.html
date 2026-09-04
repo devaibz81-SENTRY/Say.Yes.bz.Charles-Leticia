@@ -457,52 +457,85 @@ select:-webkit-autofill {
 
 <!-- FORM -->
 <form id="rsvpForm" class="chad-form relative z-10" onsubmit="handleSubmit(event)">
-<!-- SINGLE MODE -->
+<!-- SINGLE MODE (Strictly 1 Guest) -->
 <div id="singleFields" class="space-y-4">
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-<div>
-<label class="chad-label" for="name">First Name</label>
-<div class="chad-field">
-<span class="material-symbols-outlined chad-ic">person</span>
-<input class="chad-input" id="name" name="name" placeholder="First name" type="text" autocomplete="given-name"/>
-</div>
-</div>
-<div id="lastNameField">
-<label class="chad-label" for="lastName">Last Name</label>
-<div class="chad-field">
-<span class="material-symbols-outlined chad-ic">badge</span>
-<input class="chad-input" id="lastName" name="lastName" placeholder="Last name" type="text" autocomplete="family-name"/>
-</div>
-</div>
-</div>
-<div class="space-y-4">
-<p class="chad-prompt">Will you be attending?</p>
-<div class="att-choices pt-1" id="attChoices" role="radiogroup" aria-label="Attendance">
-<label class="att-choice" data-val="yes">
-<input class="sr-only" id="att-yes" name="attendance" type="radio" value="yes"/>
-<span class="att-ic material-symbols-outlined">check_circle</span>
-<span class="att-lbl">Yes</span>
-<span class="att-sub">I&rsquo;ll be there</span>
-</label>
-<label class="att-choice" data-val="no">
-<input class="sr-only" id="att-no" name="attendance" type="radio" value="no"/>
-<span class="att-ic material-symbols-outlined">cancel</span>
-<span class="att-lbl">No</span>
-<span class="att-sub">Can&rsquo;t make it</span>
-</label>
-<label class="att-choice" data-val="maybe">
-<input class="sr-only" id="att-maybe" name="attendance" type="radio" value="maybe"/>
-<span class="att-ic material-symbols-outlined">schedule</span>
-<span class="att-lbl">Ask Later</span>
-<span class="att-sub">I&rsquo;ll confirm soon</span>
-</label>
-</div>
-<!-- Status indicator -->
-<div class="flex justify-center pt-3">
-<span id="statusPill" class="att-status hidden"><span class="material-symbols-outlined text-base"></span><span class="att-status-text"></span></span>
-</div>
+
+<!-- Hidden inputs: populated by JS from URL params — required by submit/validation logic -->
+<input type="hidden" id="name" name="name" value=""/>
+<input type="hidden" id="lastName" name="lastName" value=""/>
+
+<!-- Read-only Invited Guest Card -->
+<div id="singleGuestCard" style="
+  background: linear-gradient(135deg, rgba(212,175,55,0.08) 0%, rgba(212,175,55,0.03) 100%);
+  border: 1px solid rgba(212,175,55,0.30);
+  border-radius: 14px;
+  padding: 1rem 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+">
+  <div style="
+    width: 40px; height: 40px; flex-shrink:0;
+    border-radius: 50%;
+    background: rgba(212,175,55,0.15);
+    border: 1px solid rgba(212,175,55,0.35);
+    display: flex; align-items:center; justify-content:center;
+  ">
+    <span class="material-symbols-outlined" style="color:#d4af37;font-size:20px;" aria-hidden="true">person</span>
+  </div>
+  <div style="flex:1; min-width:0;">
+    <p style="font-size:0.6rem; text-transform:uppercase; letter-spacing:0.18em; color:rgba(212,175,55,0.7); margin:0 0 0.2rem;">Invited Guest</p>
+    <p id="singleGuestName" style="font-size:1.05rem; font-weight:600; color:#fff; margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"></p>
+  </div>
+  <div style="
+    flex-shrink:0;
+    background: rgba(212,175,55,0.12);
+    border: 1px solid rgba(212,175,55,0.30);
+    border-radius: 20px;
+    padding: 0.2rem 0.55rem;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #d4af37;
+    display:flex; align-items:center; gap:0.3rem;
+  ">
+    <span class="material-symbols-outlined" style="font-size:12px;" aria-hidden="true">lock</span>
+    1 Seat
+  </div>
 </div>
 
+<div class="space-y-4">
+  <p class="chad-prompt">Will you be attending? <span class="text-gold-light text-xs font-serif font-normal">(1 Seat Reserved)</span></p>
+  <div class="att-choices pt-1" id="attChoices" role="radiogroup" aria-label="Attendance">
+    <label class="att-choice" data-val="yes">
+      <input class="sr-only" id="att-yes" name="attendance" type="radio" value="yes"/>
+      <span class="att-ic material-symbols-outlined">check_circle</span>
+      <span class="att-lbl">Yes</span>
+      <span class="att-sub">1 seat confirmed</span>
+    </label>
+    <label class="att-choice" data-val="no">
+      <input class="sr-only" id="att-no" name="attendance" type="radio" value="no"/>
+      <span class="att-ic material-symbols-outlined">cancel</span>
+      <span class="att-lbl">No</span>
+      <span class="att-sub">Can&rsquo;t make it</span>
+    </label>
+    <label class="att-choice" data-val="maybe">
+      <input class="sr-only" id="att-maybe" name="attendance" type="radio" value="maybe"/>
+      <span class="att-ic material-symbols-outlined">schedule</span>
+      <span class="att-lbl">Ask Later</span>
+      <span class="att-sub">I&rsquo;ll confirm soon</span>
+    </label>
+  </div>
+  <!-- Status indicator -->
+  <div class="flex justify-center pt-3">
+    <span id="statusPill" class="att-status hidden"><span class="material-symbols-outlined text-base"></span><span class="att-status-text"></span></span>
+  </div>
+</div>
+<div class="rounded-xl p-3 bg-white/[0.03] border border-gold/15 text-center">
+  <p class="text-[11.5px] text-white/60 leading-relaxed font-sans">
+    This invitation is strictly for <strong class="text-white font-semibold">1 guest</strong>. To request an additional seat, please reach out directly to Charles &amp; Leticia.
+  </p>
+</div>
 </div>
 <!-- COUPLE MODE -->
 <div id="coupleFields" class="hidden space-y-5">
@@ -815,10 +848,13 @@ select:-webkit-autofill {
   var nameInput = document.getElementById('name');
   if (guestName) {
     if (!isCouple) {
+      nameInput.value = guestName;
       var p = splitName(guestName);
-      nameInput.value = p.first;
       var ln = document.getElementById('lastName');
-      if (ln && !ln.value) ln.value = p.last;
+      if (ln) ln.value = p.last;
+      // Populate the read-only guest card display
+      var _sgn = document.getElementById('singleGuestName');
+      if (_sgn) _sgn.textContent = guestName;
     }
     var greeting = document.getElementById('greeting');
     greeting.classList.remove('hidden');
@@ -1116,25 +1152,20 @@ select:-webkit-autofill {
       });
 
     } else {
-      var name = nameInput.value.trim();
-      var lastName = val('lastName');
-      // allow full name in first field — split smartly, impossible to mess up
-      if (name && !lastName && name.indexOf(' ') > 0) {
-        var parts = name.split(/\s+/);
-        name = parts[0];
-        lastName = parts.slice(1).join(' ');
-      }
+      var rawName = nameInput.value.trim();
+      var parts = rawName.split(/\s+/);
+      var name = parts[0] || '';
+      var lastName = parts.slice(1).join(' ') || val('lastName');
       var attendance = singleToggle.current();
 
       // Enforce strictly 1 guest allowed: reject companion words
-      var nameCombined = ((name || '') + ' ' + (lastName || '')).toLowerCase();
+      var nameCombined = rawName.toLowerCase();
       if (nameCombined.includes(' & ') || nameCombined.includes(' and ') || nameCombined.includes(' + ') || nameCombined.includes('plus one') || nameCombined.includes('plus 1') || nameCombined.includes('guest')) {
-        showError('1 Guest Allowed', 'This invitation is reserved for 1 guest only. Please enter only your personal name.');
+        showError('1 Guest Allowed', 'This invitation is reserved for 1 guest only. Please enter only your personal name without additional guests.');
         return;
       }
 
-      if (!name) { showError('Missing information', 'Please add your name — first name is enough.'); return; }
-      if (!lastName) { showError('Missing information', 'Please add your last name — required for main guest.'); return; }
+      if (!name) { showError('Missing information', 'Please enter your name.'); return; }
       if (!attendance) { showError('Choose an option', 'Please tap Yes, No, or Ask Later.'); return; }
       var yes = attendance === 'yes';
       var singleGuests = yes ? 1 : 0;
