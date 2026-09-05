@@ -1603,12 +1603,18 @@ Amelie	Guerra	Julian	couple	2	6140942"
     function generatePersonalLink(g) {
       const base = String(WEDDING_URL || '').replace(/\/+$/, '');
       if (!g || !g.first_name) return `${base}/`;
+      // Invite link — always to main invitation (/) — RSVP button there will route to single/couple from these params
       const p = new URLSearchParams({ id: g._id || g.id || '' });
       const displayName = `${g.first_name} ${g.last_name || ''}`.trim();
       if (displayName) p.set('name', displayName);
-      const isSingle = (g.max_party === 1) || (g.guest_type === 'single' && !g.spouse_name);
-      const page = isSingle ? 'single.html' : 'couple.html';
-      return `${base}/${page}?${p.toString()}`;
+      if (g.spouse_name) p.set('spouse', String(g.spouse_name).trim());
+      const max = parseInt(g.max_party, 10);
+      if (!Number.isNaN(max) && max > 0) p.set('max', String(max));
+      const type = String(g.guest_type || '').toLowerCase();
+      if (type) p.set('type', type);
+      if (g.deadline) p.set('due', String(g.deadline).slice(0, 10));
+      if (g.easy_mode) p.set('easy', '1');
+      return `${base}/?${p.toString()}`;
     }
 
     function getGuestKey(g) {
