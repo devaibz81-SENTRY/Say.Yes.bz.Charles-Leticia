@@ -1687,20 +1687,8 @@ Amelie	Guerra	Julian	couple	2	6140942"
     }
 
     function buildPersonalizedText(g) {
-      let msg = buildText(g);
-      if (!g) return msg;
-
-      const firstName = String(g.first_name || '').trim();
-      if (firstName && !msg.toLowerCase().includes(firstName.toLowerCase())) {
-        msg = `Hi ${firstName},\n\n${msg}`;
-      }
-
-      const link = generatePersonalLink(g);
-      if (link && !msg.includes(link)) {
-        msg = `${msg}\n\nRSVP link:\n${link}`;
-      }
-
-      return tidyMessage(msg);
+      // Single clean message — the wa-text template is the one source of truth.
+      return tidyMessage(buildText(g));
     }
 
     function sendQuickWA(key) {
@@ -1891,9 +1879,19 @@ Amelie	Guerra	Julian	couple	2	6140942"
       const tgt = document.getElementById('wa-group').value;
       const list = getGuestsForTarget(tgt, true);
       if (!list.length) { alert('No guests with phones match this filter.'); return; }
-      if (!confirm(`Deploy WhatsApp msg to ${list.length} guest(s)?`)) return;
+      // Dedupe by WhatsApp phone + invite link — one person must never be opened twice
+      // (two tabs to the same chat merge into one doubled message in WhatsApp).
+      const seen = new Set();
+      const unique = [];
+      list.forEach((g) => {
+        const ph = normalizeWaPhone(g.phone);
+        const key = ph + '|' + generatePersonalLink(g);
+        if (ph && !seen.has(key)) { seen.add(key); unique.push(g); }
+      });
+      if (!unique.length) { alert('No guests with phones match this filter.'); return; }
+      if (!confirm(`Deploy WhatsApp msg to ${unique.length} guest(s)?`)) return;
 
-      list.forEach((g, i) => {
+      unique.forEach((g, i) => {
         setTimeout(() => { openGuestWhatsApp(g); }, i * 800);
       });
     }

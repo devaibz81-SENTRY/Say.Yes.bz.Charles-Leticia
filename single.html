@@ -450,8 +450,19 @@ select:-webkit-autofill {
 })();
 </script>
 <!-- Dark cinematic couple photo background -->
+<style>
+/* Continuously moving dream-drift — not tied to scroll, just slow ambient motion */
+@keyframes kenburnsDrift {
+  0%   { transform: scale(1.06) translate(0px, 0px); }
+  33%  { transform: scale(1.20) translate(-1.4%, -2.0%); }
+  66%  { transform: scale(1.14) translate(1.2%, 1.4%); }
+  100% { transform: scale(1.06) translate(0px, 0px); }
+}
+#bgPhoto { animation: kenburnsDrift 46s ease-in-out infinite; will-change: transform; }
+@media (prefers-reduced-motion: reduce) { #bgPhoto { animation: none; } }
+</style>
 <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
-  <img src="galery%20(3).jpeg" alt="" class="w-full h-full object-cover object-center scale-105" style="filter: brightness(0.18) saturate(0.5) blur(1px);"/>
+  <img id="bgPhoto" src="galery%20(3).jpeg" alt="" class="w-full h-full object-cover object-center scale-105" style="filter: brightness(0.18) saturate(0.5) blur(1px);"/>
   <div class="absolute inset-0 bg-gradient-to-b from-[#050505]/90 via-[#050505]/70 to-[#050505]/95"></div>
   <div class="absolute inset-0" style="background: radial-gradient(ellipse 80% 60% at 50% 50%, transparent 20%, rgba(5,4,2,0.85) 100%);"></div>
 </div>
@@ -761,7 +772,13 @@ select:-webkit-autofill {
   var singleNote = document.getElementById('singleNote');
   var singleSub = document.getElementById('singleSub');
 
-  if (isCouple) {
+  var nameAEl = document.getElementById('nameA');
+  var lastNameAEl = document.getElementById('lastNameA');
+  var nameBEl = document.getElementById('nameB');
+  var lastNameBEl = document.getElementById('lastNameB');
+  var hasCoupleDOM = !!coupleFields && !!nameBEl;
+
+  if (isCouple && hasCoupleDOM) {
     singleFields.classList.add('hidden');
     coupleFields.classList.remove('hidden');
     if (coupleNote) coupleNote.classList.remove('hidden');
@@ -769,13 +786,13 @@ select:-webkit-autofill {
     if (singleSub) singleSub.classList.add('hidden');
     var pA = splitName(guestName);
     var pB = splitName(spouseName);
-    if (pA.first) document.getElementById('nameA').value = pA.first;
-    if (pA.last) document.getElementById('lastNameA').value = pA.last;
-    if (pB.first) document.getElementById('nameB').value = pB.first;
-    if (pB.last) document.getElementById('lastNameB').value = pB.last;
+    if (pA.first && nameAEl) nameAEl.value = pA.first;
+    if (pA.last && lastNameAEl) lastNameAEl.value = pA.last;
+    if (pB.first && nameBEl) nameBEl.value = pB.first;
+    if (pB.last && lastNameBEl) lastNameBEl.value = pB.last;
   } else {
     singleFields.classList.remove('hidden');
-    coupleFields.classList.add('hidden');
+    if (coupleFields) coupleFields.classList.add('hidden');
     if (coupleNote) coupleNote.classList.add('hidden');
     if (singleNote) singleNote.classList.remove('hidden');
     if (singleSub) singleSub.classList.remove('hidden');
@@ -879,8 +896,15 @@ select:-webkit-autofill {
   }
 
   var singleToggle = makeChoices({ group: 'attChoices', yes: 'att-yes', no: 'att-no', maybe: 'att-maybe', guestField: 'guestField', pill: 'statusPill' });
-  var coupleA = makeChoices({ group: 'attChoicesA', yes: 'att-yes-a', no: 'att-no-a', maybe: 'att-maybe-a', guestField: 'guestFieldA', pill: 'statusPillA' });
-  var coupleB = makeChoices({ group: 'attChoicesB', yes: 'att-yes-b', no: 'att-no-b', maybe: 'att-maybe-b', guestField: 'guestFieldB', pill: 'statusPillB' });
+  // Couple choice groups are absent on the standalone single page — build them only when they exist
+  function makeChoicesIfPresent(ids) {
+    if (!document.getElementById(ids.yes)) {
+      return { current: function () { return ''; }, sync: function () {}, radios: [], guestField: null };
+    }
+    return makeChoices(ids);
+  }
+  var coupleA = makeChoicesIfPresent({ group: 'attChoicesA', yes: 'att-yes-a', no: 'att-no-a', maybe: 'att-maybe-a', guestField: 'guestFieldA', pill: 'statusPillA' });
+  var coupleB = makeChoicesIfPresent({ group: 'attChoicesB', yes: 'att-yes-b', no: 'att-no-b', maybe: 'att-maybe-b', guestField: 'guestFieldB', pill: 'statusPillB' });
 
   // Easy plus-one: always visible — partner + you, impossible to mess up
   (function(){
