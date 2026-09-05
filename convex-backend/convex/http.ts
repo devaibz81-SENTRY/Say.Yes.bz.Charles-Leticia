@@ -3,6 +3,7 @@ import { login, logout, me } from "./auth";
 import { listGuests, upsertGuest, deleteGuest, importGuests, markInviteSentAction } from "./guests";
 import { submitRsvp, rsvpStatus, rsvpCount } from "./rsvp";
 import { listSongsHttp, createSongHttp, voteSongHttp } from "./songs";
+import { listMessagesHttp } from "./messages";
 
 const http = httpRouter();
 
@@ -47,5 +48,8 @@ http.route({ path: "/api/song", method: "OPTIONS", handler: createSongHttp });
 
 http.route({ path: "/api/song/vote", method: "POST", handler: voteSongHttp });
 http.route({ path: "/api/song/vote", method: "OPTIONS", handler: voteSongHttp });
+
+http.route({ path: "/api/messages", method: "GET", handler: listMessagesHttp });
+http.route({ path: "/api/messages", method: "OPTIONS", handler: listMessagesHttp });
 
 export default http;
