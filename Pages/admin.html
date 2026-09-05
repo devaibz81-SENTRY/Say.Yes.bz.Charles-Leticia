@@ -1618,7 +1618,10 @@ Amelie	Guerra	Julian	couple	2	6140942"
         p.set('easy', '1');
       }
       
-      return `${base}/?${p.toString()}`;
+      // Direct to single/couple for clean WhatsApp routing
+      const isSingle = (g.max_party === 1) || (g.guest_type === 'single' && !g.spouse_name);
+      const page = isSingle ? 'single.html' : 'couple.html';
+      return `${base}/${page}?${p.toString()}`;
     }
 
     function getGuestKey(g) {
