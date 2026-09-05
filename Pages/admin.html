@@ -1603,22 +1603,9 @@ Amelie	Guerra	Julian	couple	2	6140942"
     function generatePersonalLink(g) {
       const base = String(WEDDING_URL || '').replace(/\/+$/, '');
       if (!g || !g.first_name) return `${base}/`;
-
-      const p = new URLSearchParams({
-        id: g._id || g.id || '',
-        name: `${g.first_name} ${g.last_name || ''}`.trim(),
-        spouse: g.spouse_name || '',
-        type: g.guest_type || 'single',
-        max: g.max_party || 1,
-        due: g.deadline || ''
-      });
-      
-      // Add easy=1 if guest has Easy Mode enabled
-      if (g.easy_mode === true) {
-        p.set('easy', '1');
-      }
-      
-      // Direct to single/couple for clean WhatsApp routing
+      const p = new URLSearchParams({ id: g._id || g.id || '' });
+      const displayName = `${g.first_name} ${g.last_name || ''}`.trim();
+      if (displayName) p.set('name', displayName);
       const isSingle = (g.max_party === 1) || (g.guest_type === 'single' && !g.spouse_name);
       const page = isSingle ? 'single.html' : 'couple.html';
       return `${base}/${page}?${p.toString()}`;
