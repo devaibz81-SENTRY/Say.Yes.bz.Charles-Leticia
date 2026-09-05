@@ -1603,12 +1603,10 @@ Amelie	Guerra	Julian	couple	2	6140942"
     function generatePersonalLink(g) {
       const base = String(WEDDING_URL || '').replace(/\/+$/, '');
       if (!g || !g.first_name) return `${base}/`;
-      const p = new URLSearchParams({ id: g._id || g.id || '' });
-      const displayName = `${g.first_name} ${g.last_name || ''}`.trim();
-      if (displayName) p.set('name', displayName);
+      const slug = `${String(g.first_name).trim()}-${String(g.last_name||'').trim()}`.replace(/\s+/g,'-').replace(/[^A-Za-z0-9-]/g,'').replace(/-+/g,'-').replace(/^-|-$/g,'') || 'guest';
       const isSingle = (g.max_party === 1) || (g.guest_type === 'single' && !g.spouse_name);
-      const page = isSingle ? 'single.html' : 'couple.html';
-      return `${base}/${page}?${p.toString()}`;
+      const page = isSingle ? 'single' : 'couple';
+      return `${base}/${page}/${slug}#${g._id || g.id || ''}`;
     }
 
     function getGuestKey(g) {

@@ -25,6 +25,10 @@
   ],
   "rewrites": [
     { "source": "/admin", "destination": "/Pages/admin.html" },
-    { "source": "/admin/", "destination": "/Pages/admin.html" }
+    { "source": "/admin/", "destination": "/Pages/admin.html" },
+    { "source": "/invite/:slug", "destination": "/single.html" },
+    { "source": "/single/:slug", "destination": "/single.html" },
+    { "source": "/couple/:slug", "destination": "/couple.html" },
+    { "source": "/single.html/:slug", "destination": "/single.html" }
   ]
 }
