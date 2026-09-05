@@ -858,13 +858,13 @@ select:-webkit-autofill {
   function makeChoices(ids) {
     var radios = [ids.yes, ids.no, ids.maybe].map(function (id) {
       return document.getElementById(id);
-    });
+    }).filter(function (el) { return !!el; });
     var guestField = document.getElementById(ids.guestField);
     var pill = document.getElementById(ids.pill);
     var cards = Array.prototype.slice.call(document.querySelectorAll('#' + ids.group + ' .att-choice'));
 
     function current() {
-      for (var i = 0; i < radios.length; i++) if (radios[i].checked) return radios[i].value;
+      for (var i = 0; i < radios.length; i++) if (radios[i] && radios[i].checked) return radios[i].value;
       return '';
     }
     function sync() {
@@ -875,7 +875,7 @@ select:-webkit-autofill {
         cards[i].classList.toggle('selected', cards[i].getAttribute('data-val') === v);
       }
     }
-    for (var i = 0; i < radios.length; i++) radios[i].addEventListener('change', sync);
+    for (var i = 0; i < radios.length; i++) if (radios[i]) radios[i].addEventListener('change', sync);
     return { radios: radios, guestField: guestField, current: current, sync: sync };
   }
 
