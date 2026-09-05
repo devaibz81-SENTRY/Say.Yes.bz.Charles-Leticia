@@ -413,14 +413,16 @@ select:-webkit-autofill {
 <body class="bg-background font-body-md text-on-background min-h-screen relative overflow-x-hidden">
 <!-- Dark cinematic couple photo background -->
 <style>
-/* Continuously moving dream-drift — not tied to scroll, just slow ambient motion */
+/* Continuously moving dream-drift — not tied to scroll, smooth ambient bounce */
 @keyframes kenburnsDrift {
-  0%   { transform: scale(1.06) translate(0px, 0px); }
-  33%  { transform: scale(1.20) translate(-1.4%, -2.0%); }
-  66%  { transform: scale(1.14) translate(1.2%, 1.4%); }
-  100% { transform: scale(1.06) translate(0px, 0px); }
+  0%   { transform: scale(1.05) translate(0px, 0px); }
+  18%  { transform: scale(1.16) translate(-1.2%, -2.0%); }
+  36%  { transform: scale(1.24) translate(-1.9%, -2.7%); }
+  54%  { transform: scale(1.14) translate(0.7%, 1.1%); }
+  72%  { transform: scale(1.06) translate(1.5%, 1.7%); }
+  100% { transform: scale(1.05) translate(0px, 0px); }
 }
-#bgPhoto { animation: kenburnsDrift 46s ease-in-out infinite; will-change: transform; }
+#bgPhoto { animation: kenburnsDrift 52s ease-in-out infinite; will-change: transform; }
 @media (prefers-reduced-motion: reduce) { #bgPhoto { animation: none; } }
 </style>
 <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
