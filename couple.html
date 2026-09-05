@@ -411,44 +411,6 @@ select:-webkit-autofill {
 </style>
 </head>
 <body class="bg-background font-body-md text-on-background min-h-screen relative overflow-x-hidden">
-<script>
-// Router: single vs couple — keeps parallax perfect, routes to dedicated html
-(function(){
-  try {
-    var p = new URLSearchParams(location.search);
-    // Don't redirect if already on single/couple
-    if (location.pathname.endsWith('single.html') || location.pathname.endsWith('couple.html')) return;
-    var max = parseInt(p.get('max') || p.get('max_party') || p.get('maxParty') || '', 10);
-    var isMaxOne = !isNaN(max) && max === 1;
-    var isCoupleParam = p.get('type') === 'couple' || !!p.get('spouse');
-    // If URL already tells us, route immediately (fast, no fetch)
-    if (isMaxOne) { var q=p.toString(); location.replace('single.html' + (q?'?'+q:'')); return; }
-    if (isCoupleParam) { var q2=p.toString(); location.replace('couple.html' + (q2?'?'+q2:'')); return; }
-    // Otherwise, try to fetch guest's max_party from Convex and route correctly
-    var gid = p.get('id');
-    if (gid && !gid.startsWith('guest_')) {
-      fetch('https://canny-hummingbird-920.convex.site/api/guest?guestId=' + encodeURIComponent(gid))
-        .then(function(r){ return r.json().catch(function(){return {};}); })
-        .then(function(g){
-          var mp = g && (g.max_party ?? g.maxParty ?? g.maxParty);
-          if (mp === 1) {
-            var q3=p.toString(); location.replace('single.html' + (q3?'?'+q3:''));
-          } else if (g && (g.guest_type==='couple' || g.spouse_name)) {
-            var q4=p.toString(); location.replace('couple.html' + (q4?'?'+q4:''));
-          } else {
-            // default single for Max=1 or unknown
-            var q5=p.toString(); location.replace('single.html' + (q5?'?'+q5:''));
-          }
-        })
-        .catch(function(){});
-    } else {
-      // no id or guest_ temp id — default to single (no Guest2)
-      var q6=p.toString();
-      // keep rsvp.html as fallback for direct access without params, but single is safer
-    }
-  } catch(e){}
-})();
-</script>
 <!-- Dark cinematic couple photo background -->
 <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
   <img src="galery%20(3).jpeg" alt="" class="w-full h-full object-cover object-center scale-105" style="filter: brightness(0.18) saturate(0.5) blur(1px);"/>
@@ -496,87 +458,8 @@ select:-webkit-autofill {
 <!-- FORM -->
 <form id="rsvpForm" class="chad-form relative z-10" onsubmit="handleSubmit(event)">
 <!-- SINGLE MODE (Strictly 1 Guest) -->
-<div id="singleFields" class="space-y-4">
-
-<!-- Hidden inputs: populated by JS from URL params — required by submit/validation logic -->
-<input type="hidden" id="name" name="name" value=""/>
-<input type="hidden" id="lastName" name="lastName" value=""/>
-
-<!-- Read-only Invited Guest Card -->
-<div id="singleGuestCard" style="
-  background: linear-gradient(135deg, rgba(212,175,55,0.08) 0%, rgba(212,175,55,0.03) 100%);
-  border: 1px solid rgba(212,175,55,0.30);
-  border-radius: 14px;
-  padding: 1rem 1.2rem;
-  display: flex;
-  align-items: center;
-  gap: 0.9rem;
-">
-  <div style="
-    width: 40px; height: 40px; flex-shrink:0;
-    border-radius: 50%;
-    background: rgba(212,175,55,0.15);
-    border: 1px solid rgba(212,175,55,0.35);
-    display: flex; align-items:center; justify-content:center;
-  ">
-    <span class="material-symbols-outlined" style="color:#d4af37;font-size:20px;" aria-hidden="true">person</span>
-  </div>
-  <div style="flex:1; min-width:0;">
-    <p style="font-size:0.6rem; text-transform:uppercase; letter-spacing:0.18em; color:rgba(212,175,55,0.7); margin:0 0 0.2rem;">Invited Guest</p>
-    <p id="singleGuestName" style="font-size:1.05rem; font-weight:600; color:#fff; margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"></p>
-  </div>
-  <div style="
-    flex-shrink:0;
-    background: rgba(212,175,55,0.12);
-    border: 1px solid rgba(212,175,55,0.30);
-    border-radius: 20px;
-    padding: 0.2rem 0.55rem;
-    font-size: 0.6rem;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: #d4af37;
-    display:flex; align-items:center; gap:0.3rem;
-  ">
-    <span class="material-symbols-outlined" style="font-size:12px;" aria-hidden="true">lock</span>
-    1 Seat
-  </div>
-</div>
-
-<div class="space-y-4">
-  <p class="chad-prompt">Will you be attending? <span class="text-gold-light text-xs font-serif font-normal">(1 Seat Reserved)</span></p>
-  <div class="att-choices pt-1" id="attChoices" role="radiogroup" aria-label="Attendance">
-    <label class="att-choice" data-val="yes">
-      <input class="sr-only" id="att-yes" name="attendance" type="radio" value="yes"/>
-      <span class="att-ic material-symbols-outlined">check_circle</span>
-      <span class="att-lbl">Yes</span>
-      <span class="att-sub">1 seat confirmed</span>
-    </label>
-    <label class="att-choice" data-val="no">
-      <input class="sr-only" id="att-no" name="attendance" type="radio" value="no"/>
-      <span class="att-ic material-symbols-outlined">cancel</span>
-      <span class="att-lbl">No</span>
-      <span class="att-sub">Can&rsquo;t make it</span>
-    </label>
-    <label class="att-choice" data-val="maybe">
-      <input class="sr-only" id="att-maybe" name="attendance" type="radio" value="maybe"/>
-      <span class="att-ic material-symbols-outlined">schedule</span>
-      <span class="att-lbl">Ask Later</span>
-      <span class="att-sub">I&rsquo;ll confirm soon</span>
-    </label>
-  </div>
-  <!-- Status indicator -->
-  <div class="flex justify-center pt-3">
-    <span id="statusPill" class="att-status hidden"><span class="material-symbols-outlined text-base"></span><span class="att-status-text"></span></span>
-  </div>
-</div>
-<div class="rounded-xl p-3 bg-white/[0.03] border border-gold/15 text-center">
-  <p class="text-[11.5px] text-white/60 leading-relaxed font-sans">
-    This invitation is strictly for <strong class="text-white font-semibold">1 guest</strong>. To request an additional seat, please reach out directly to Charles &amp; Leticia.
-  </p>
-</div>
-</div>
 <!-- COUPLE MODE -->
-<div id="coupleFields" class="hidden space-y-5">
+<div id="coupleFields" class="space-y-5">
 <!-- Guest 1 -->
 <div class="space-y-4">
 <div class="flex items-center gap-3">
