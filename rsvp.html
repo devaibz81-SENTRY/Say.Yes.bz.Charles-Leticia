@@ -417,7 +417,7 @@ select:-webkit-autofill {
   try {
     var p = new URLSearchParams(location.search);
     // Don't redirect if already on single/couple
-    if (location.pathname.endsWith('single.html') || location.pathname.endsWith('couple.html')) return;
+    if (location.pathname.replace(/\/+$/, '').endsWith('single') || location.pathname.replace(/\/+$/, '').endsWith('single.html') || location.pathname.replace(/\/+$/, '').endsWith('couple') || location.pathname.replace(/\/+$/, '').endsWith('couple.html')) return;
     var max = parseInt(p.get('max') || p.get('max_party') || p.get('maxParty') || '', 10);
     var isMaxOne = !isNaN(max) && max === 1;
     var isCoupleParam = p.get('type') === 'couple' || !!p.get('spouse');
