@@ -1010,8 +1010,8 @@ select:-webkit-autofill {
       if (nameB && attB === 'yes' && !nameB) missing.push('guest 2 first name');
       if (missing.length) { showError('Missing information', 'Please add ' + missing.join(', ') + '.'); return; }
       if (!attA) { showError('Choose an option', 'Please select an option for Guest 1.'); return; }
-      // Guest 2 attendance only required if name is provided
-      if (nameB && !attB) { showError('Choose an option', 'Please select an option for Guest 2 or leave Guest 2 blank.'); return; }
+      // Guest 2 defaults to Ask Later if not chosen — never block Guest 1's submission
+      if (!attB) attB = 'maybe';
       if (!nameB) attB = 'maybe'; // treat blank secondary as Ask Later / not yet confirmed
       if (!lastNameA) { showError('Missing information', 'Please add Guest 1 last name — required for main guest.'); return; }
       if (!nameA) nameA = 'Guest 1';
