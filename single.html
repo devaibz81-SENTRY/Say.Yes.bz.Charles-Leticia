@@ -451,17 +451,16 @@ select:-webkit-autofill {
 </script>
 <!-- Dark cinematic couple photo background -->
 <style>
-/* Continuously moving dream-drift — not tied to scroll, smooth ambient bounce */
+/* Continuously moving dream-drift — always on, no scrolling needed */
 @keyframes kenburnsDrift {
-  0%   { transform: scale(1.05) translate(0px, 0px); }
-  18%  { transform: scale(1.16) translate(-1.2%, -2.0%); }
-  36%  { transform: scale(1.24) translate(-1.9%, -2.7%); }
-  54%  { transform: scale(1.14) translate(0.7%, 1.1%); }
-  72%  { transform: scale(1.06) translate(1.5%, 1.7%); }
-  100% { transform: scale(1.05) translate(0px, 0px); }
+  0%   { transform: translate3d(-1.0%, -0.6%, 0) scale(1.12); }
+  25%  { transform: translate3d(0.9%, 1.1%, 0) scale(1.18); }
+  50%  { transform: translate3d(1.3%, -0.9%, 0) scale(1.24); }
+  75%  { transform: translate3d(-0.9%, -1.3%, 0) scale(1.15); }
+  100% { transform: translate3d(-1.0%, -0.6%, 0) scale(1.12); }
 }
-#bgPhoto { animation: kenburnsDrift 52s ease-in-out infinite; will-change: transform; }
-@media (prefers-reduced-motion: reduce) { #bgPhoto { animation: none; } }
+#bgPhoto { animation: kenburnsDrift 22s ease-in-out infinite; will-change: transform; }
+#bgPhoto { min-width: 112%; min-height: 112%; margin-left: -6%; margin-top: -6%; }
 </style>
 <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
   <img id="bgPhoto" src="galery%20(3).jpeg" alt="" class="w-full h-full object-cover object-center scale-105" style="filter: brightness(0.18) saturate(0.5) blur(1px);"/>
