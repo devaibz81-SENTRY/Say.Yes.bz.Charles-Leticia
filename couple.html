@@ -760,7 +760,7 @@ select:-webkit-autofill {
   var singleSub = document.getElementById('singleSub');
 
   if (isCouple) {
-    singleFields.classList.add('hidden');
+    if (singleFields) singleFields.classList.add('hidden');
     coupleFields.classList.remove('hidden');
     if (coupleNote) coupleNote.classList.remove('hidden');
     if (singleNote) singleNote.classList.add('hidden');
@@ -772,7 +772,7 @@ select:-webkit-autofill {
     if (pB.first) document.getElementById('nameB').value = pB.first;
     if (pB.last) document.getElementById('lastNameB').value = pB.last;
   } else {
-    singleFields.classList.remove('hidden');
+    if (singleFields) singleFields.classList.remove('hidden');
     coupleFields.classList.add('hidden');
     if (coupleNote) coupleNote.classList.add('hidden');
     if (singleNote) singleNote.classList.remove('hidden');
@@ -783,7 +783,7 @@ select:-webkit-autofill {
   var nameInput = document.getElementById('name');
   if (guestName) {
     if (!isCouple) {
-      nameInput.value = guestName;
+      if (nameInput) nameInput.value = guestName;
       var p = splitName(guestName);
       var ln = document.getElementById('lastName');
       if (ln) ln.value = p.last;
@@ -792,8 +792,11 @@ select:-webkit-autofill {
       if (_sgn) _sgn.textContent = guestName;
     }
     var greeting = document.getElementById('greeting');
-    greeting.classList.remove('hidden');
-    greeting.querySelector('span').textContent = guestName;
+    if (greeting) {
+      greeting.classList.remove('hidden');
+      var _gs = greeting.querySelector('span');
+      if (_gs) _gs.textContent = guestName;
+    }
   }
 
   // Carry params onto invitation links
