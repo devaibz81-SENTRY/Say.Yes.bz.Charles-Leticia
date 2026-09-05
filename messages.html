@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Charles &amp; Leticia — Guest Messages</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;family=Great+Vibes&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "gold": { "DEFAULT": "#D4AF37", "light": "#F5D76E", "dark": "#A8862B" },
+                    "ink": "#0a0a0a",
+                    "background": "#0a0a0a",
+                    "on-background": "#f5f5f5",
+                    "on-surface": "#f5f5f5",
+                    "on-surface-variant": "#b9b9b9",
+                    "surface": "#121212",
+                    "surface-container": "#151515",
+                    "outline-variant": "#2e2e2e"
+            },
+            "fontFamily": {
+                    "headline-xl": ["Noto Serif"],
+                    "headline-md": ["Noto Serif"],
+                    "body-md": ["Be Vietnam Pro"],
+                    "body-lg": ["Be Vietnam Pro"],
+                    "label-sm": ["Be Vietnam Pro"],
+                    "script-accent": ["Great Vibes", "cursive"],
+                    "serif": ["Noto Serif", "Georgia", "serif"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(18, 18, 18, 0.55);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.16);
+        }
+        .satin-gradient {
+            background:
+                radial-gradient(1100px 500px at 80% -10%, rgba(212, 175, 55, 0.10), transparent 60%),
+                radial-gradient(900px 600px at -10% 110%, rgba(212, 175, 55, 0.06), transparent 55%),
+                linear-gradient(160deg, #050505 0%, #100e09 45%, #060606 100%);
+        }
+        .text-gold-gradient {
+            background: linear-gradient(120deg, #F5D76E 0%, #D4AF37 45%, #8A6B1F 80%, #F5D76E 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fade-up { animation: fadeUp .7s cubic-bezier(.22,1,.36,1) both; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+        .message-card { transition: border-color .3s ease, transform .3s ease; }
+        .message-card:hover { border-color: rgba(212,175,55,0.28); transform: translateY(-2px); }
+        .nav-ic { display: inline-flex; font-size: 22px; line-height: 1; }
+</style>
+<style> body { min-height: 100dvh; background: #0a0a0a; } </style>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-gold/30 selection:text-white satin-gradient">
+
+<div class="fixed top-0 left-0 right-0 z-40">
+<div class="max-w-[1200px] mx-auto px-5 sm:px-8 pt-6 flex items-center justify-between">
+<a href="index.html" class="w-11 h-11 rounded-full glass-panel border border-gold/25 flex items-center justify-center text-gold hover:scale-105 transition-transform no-underline" aria-label="Back to invitation"><span class="material-symbols-outlined">arrow_back</span></a>
+<span class="font-label-sm text-on-surface-variant uppercase tracking-[0.2em] hidden sm:block">Charles &amp; Leticia &bull; 2026</span>
+</div>
+</div>
+
+<main class="max-w-[900px] mx-auto px-5 sm:px-8 py-24 sm:py-32 relative">
+<div class="text-center mb-12 fade-up">
+<div class="font-script-accent text-[32px] text-gold-gradient italic mb-3">Words of love</div>
+<h1 class="font-headline-xl text-[48px] font-bold text-gold italic leading-none">Guest Messages</h1>
+<div class="w-24 h-[1px] bg-gold mx-auto mt-6"></div>
+<p class="font-body-lg text-on-surface-variant max-w-xl mx-auto mt-6">Every note left with your RSVP lives here — a keepsake from those celebrating with us.</p>
+</div>
+
+<div class="glass-panel rounded-[28px] p-6 sm:p-10 fade-up" style="animation-delay:.12s">
+<div class="flex items-center justify-between mb-6">
+<span class="font-label-sm text-gold uppercase tracking-[0.2em]">Inbox</span>
+<span id="msg-count" class="inline-flex items-center gap-1 rounded-full border border-gold/30 bg-gold/10 text-gold-light font-label-sm px-3 py-1">…</span>
+</div>
+<div id="messages-list" class="grid grid-cols-1 gap-4">
+<div class="text-center py-12"><span class="material-symbols-outlined text-gold/50 text-4xl block mb-3">mail</span><p class="font-body-md text-on-surface-variant">Loading messages…</p></div>
+</div>
+<p class="font-body-md text-on-surface-variant/60 text-center mt-8 text-sm">Messages appear here as guests RSVP. This page is read-only.</p>
+</div>
+
+<div class="text-center mt-10 fade-up" style="animation-delay:.2s">
+<a href="index.html" class="inline-flex items-center gap-2 text-gold hover:text-gold-light font-label-sm uppercase tracking-widest transition-colors no-underline"><span class="material-symbols-outlined text-base">favorite</span> Back to invitation</a>
+</div>
+</main>
+
+<nav class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1 px-2 py-2 rounded-full bg-white/[0.08] backdrop-blur-2xl border border-gold/20 shadow-[0_8px_32px_rgba(0,0,0,0.6)]" aria-label="Site navigation">
+<a href="index.html#story" class="px-3 sm:px-4 py-2 rounded-full text-on-surface-variant hover:text-gold transition-colors no-underline"><span class="nav-ic material-symbols-outlined">auto_stories</span></a>
+<a href="index.html#gallery" class="px-3 sm:px-4 py-2 rounded-full text-on-surface-variant hover:text-gold transition-colors no-underline"><span class="nav-ic material-symbols-outlined">photo_library</span></a>
+<a href="music.html" class="px-3 sm:px-4 py-2 rounded-full text-on-surface-variant hover:text-gold transition-colors no-underline"><span class="nav-ic material-symbols-outlined">music_note</span></a>
+<a href="messages.html" class="px-3 sm:px-4 py-2 rounded-full bg-gold text-black"><span class="nav-ic material-symbols-outlined" style="font-variation-settings:'FILL' 1">mail</span></a>
+</nav>
+
+<script>
+(function () {
+  const CONVEX_HTTP_URL = 'https://canny-hummingbird-920.convex.site';
+  const SESSION_KEY = 'cl_admin_token';
+  const listEl = document.getElementById('messages-list');
+  const countEl = document.getElementById('msg-count');
+
+  function escapeHtml(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function render(messages) {
+    countEl.textContent = messages.length === 1 ? '1 message' : messages.length + ' messages';
+    if (!messages.length) {
+      listEl.innerHTML = '<div class="text-center py-12 rounded-2xl border border-dashed border-gold/20 bg-white/[0.02]"><span class="material-symbols-outlined text-gold/40 text-4xl block mb-3">inbox</span><p class="font-headline-md text-white italic text-lg">No messages yet</p><p class="font-body-md text-on-surface-variant mt-2 text-sm">When guests leave a note with their RSVP, it will appear here.</p></div>';
+      return;
+    }
+    listEl.innerHTML = messages.map(function (m) {
+      const attendance = m.attendance === 'attending' ? 'Attending' : m.attendance === 'declined' ? 'Declined' : m.attendance === 'later' ? 'Ask Later' : 'Invited';
+      const songLine = m.song ? '<p class="font-label-sm text-gold/80 mt-3 flex items-center gap-1.5"><span class="material-symbols-outlined text-sm">music_note</span>' + escapeHtml(m.song) + '</p>' : '';
+      return '<div class="message-card glass-panel rounded-2xl p-6 border border-gold/15 bg-white/[0.03]">'
+        + '<div class="flex items-start justify-between gap-4 mb-3">'
+        + '<p class="font-headline-md text-white italic text-[18px] leading-tight">' + escapeHtml(m.name || 'Anonymous Guest') + '</p>'
+        + '<span class="shrink-0 inline-flex items-center rounded-full border border-gold/20 bg-gold/10 text-gold-light font-label-sm px-2.5 py-1 text-[10px]">' + escapeHtml(attendance) + '</span>'
+        + '</div>'
+        + '<p class="font-body-md text-on-surface-variant leading-relaxed whitespace-pre-wrap border-l-2 border-gold/20 pl-4">“' + escapeHtml(m.message) + '”</p>'
+        + songLine
+        + '</div>';
+    }).join('');
+  }
+
+  function showLoginPrompt() {
+    countEl.textContent = '—';
+    listEl.innerHTML = '<div class="text-center py-10 rounded-2xl border border-gold/20 bg-white/[0.03] p-8"><span class="material-symbols-outlined text-gold text-3xl block mb-3">lock</span><p class="font-headline-md text-white italic">Admin access required</p><p class="font-body-md text-on-surface-variant mt-2 text-sm">Messages are private. Please log in via the admin page to view them.</p><a href="Pages/admin.html" class="inline-flex items-center gap-2 mt-6 border border-gold/30 text-gold font-label-sm uppercase px-5 py-2.5 rounded-full hover:bg-gold/10 transition-colors no-underline">Go to Admin Login</a></div>';
+  }
+
+  async function load() {
+    // Try public endpoint first (once backend is deployed)
+    try {
+      const res = await fetch(CONVEX_HTTP_URL + '/api/messages');
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data)) { render(data); return; }
+      }
+    } catch (e) {}
+
+    // Fallback: authenticated fetch via existing /api/guests (admin-only, no new deploy needed)
+    const token = localStorage.getItem(SESSION_KEY);
+    if (!token) { showLoginPrompt(); return; }
+    try {
+      const res = await fetch(CONVEX_HTTP_URL + '/api/guests', { headers: { Authorization: 'Bearer ' + token } });
+      if (res.status === 401) { showLoginPrompt(); return; }
+      if (!res.ok) throw new Error('bad status');
+      const guests = await res.json();
+      const messages = (Array.isArray(guests) ? guests : []).filter(function (g) { return g.message && String(g.message).trim() !== ''; }).map(function (g) {
+        return { name: ((g.first_name || '') + ' ' + (g.last_name || '')).trim() || 'Anonymous Guest', message: g.message, attendance: g.attendance, song: g.song || null };
+      });
+      render(messages);
+    } catch (e) {
+      listEl.innerHTML = '<div class="text-center py-10"><p class="font-body-md text-on-surface-variant">Could not load messages right now. Please try again in a moment.</p></div>';
+      countEl.textContent = '—';
+    }
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>
