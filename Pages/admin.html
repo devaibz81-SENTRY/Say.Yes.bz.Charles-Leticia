@@ -853,6 +853,12 @@ Charles and Leticia</textarea>
             </label>
           </div>
         </div>
+        <div class="modal-row" id="m-plus-row" style="display:none;">
+          <div class="modal-group" style="grid-column:1/-1;">
+            <label>Plus One(s) from RSVP</label>
+            <div id="m-plus-val" style="background:var(--surface-2);border:1px solid var(--border);border-radius:6px;padding:0.5rem 0.7rem;font-size:0.85rem;color:var(--gold);"></div>
+          </div>
+        </div>
       </div>
       <div class="modal-footer" style="display:flex;justify-content:flex-end;gap:0.75rem;">
         <button class="btn-sm" onclick="document.getElementById('add-modal').classList.remove('open')">Cancel</button>
@@ -1539,6 +1545,8 @@ Amelie	Guerra	Julian	couple	2	6140942"
       document.getElementById('m-due').value = '2026-10-31';
       document.getElementById('m-spouse').value = '';
       document.getElementById('m-attendance').value = 'not_invited';
+      document.getElementById('m-plus-row').style.display = 'none';
+      document.getElementById('m-plus-val').textContent = '';
       syncPartySize();
       document.getElementById('add-modal').classList.add('open');
     }
@@ -1557,6 +1565,9 @@ Amelie	Guerra	Julian	couple	2	6140942"
       document.getElementById('m-spouse').value = g.spouse_name || '';
       document.getElementById('m-attendance').value = g.attendance || 'not_invited';
       document.getElementById('m-easy').checked = g.easy_mode === true;
+      const plus = (g.plus_names || '').trim();
+      document.getElementById('m-plus-row').style.display = plus ? '' : 'none';
+      document.getElementById('m-plus-val').textContent = plus || '';
       syncPartySize();
       document.getElementById('add-modal').classList.add('open');
     }
