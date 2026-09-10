@@ -130,3 +130,26 @@ export const markInviteSentAction = httpAction(async (ctx, request) => {
   const result = await ctx.runMutation(internal.db.markInviteSent, { guestId });
   return json(result);
 });
+
+// Public guest lookup for RSVP prefill fallback — no auth required
+// Returns full RSVP-relevant fields so the form can auto-correct missing URL params
+export const getGuestPublic = httpAction(async (ctx, request) => {
+  if (request.method === "OPTIONS") return json({ ok: true });
+  if (request.method !== "GET") return json({ error: "Method not allowed" }, 405);
+  const url = new URL(request.url);
+  const guestId = url.searchParams.get("guestId") || url.searchParams.get("id") || "";
+  if (!guestId || guestId.startsWith("guest_")) return json({ error: "Missing or invalid guestId" }, 400);
+  const guest: any = await ctx.runQuery(internal.db.getGuest, { guestId });
+  if (!guest) return json({ error: "Guest not found" }, 404);
+  return json({
+    _id: guest._id,
+    first_name: guest.first_name || "",
+    last_name: guest.last_name || "",
+    spouse_name: guest.spouse_name || "",
+    guest_type: guest.guest_type || "single",
+    max_party: guest.max_party ?? 1,
+    deadline: guest.deadline || "2026-10-31",
+    attendance: guest.attendance || "not_invited",
+    easy_mode: !!guest.easy_mode,
+  });
+});

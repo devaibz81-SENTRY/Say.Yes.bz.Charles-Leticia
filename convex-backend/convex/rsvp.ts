@@ -71,6 +71,14 @@ export const rsvpStatus = httpAction(async (ctx, request) => {
   return json({
     status: guest.attendance || "not_invited",
     name: `${guest.first_name || ""} ${guest.last_name || ""}`.trim() || guest.spouse_name || "",
+    // Extended fields for RSVP fallback — ensures prefill never silently drops Guest2
+    first_name: guest.first_name || "",
+    last_name: guest.last_name || "",
+    spouse_name: guest.spouse_name || "",
+    guest_type: guest.guest_type || "single",
+    max_party: guest.max_party ?? 1,
+    deadline: guest.deadline || "2026-10-31",
+    easy_mode: !!guest.easy_mode,
   });
 });
 

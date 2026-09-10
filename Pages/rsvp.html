@@ -861,14 +861,60 @@ select:-webkit-autofill {
     greeting.querySelector('span').textContent = guestName;
   }
 
-  // Carry params onto invitation links
-  function withParams(path) {
-    if (!params.toString()) return path;
-    return path + '?' + params.toString();
-  }
-  document.getElementById('backLink').href = withParams('index.html');
-  document.getElementById('doneLink').href = withParams('index.html');
-  document.getElementById('navHome').href = withParams('index.html');
+  // === ROBUST FALLBACK: fetch guest truth from Convex if URL stale/missing spouse ===
+  (function () {
+    if (!guestId || guestId.indexOf('guest_') === 0) return;
+    fetch(CONVEX_HTTP_URL + '/api/guest?guestId=' + encodeURIComponent(guestId))
+      .then(function (r) { return r.json().catch(function () { return null; }); })
+      .then(function (g) {
+        if (!g || g.error) {
+          return fetch(CONVEX_HTTP_URL + '/api/rsvp/status?guestId=' + encodeURIComponent(guestId))
+            .then(function (r2) { return r2.json().catch(function () { return null; }); })
+            .then(function (g2) { if (g2 && !g2.error && g2.first_name) return g2; return g; });
+        }
+        return g;
+      })
+      .then(function (g) {
+        if (!g || g.error || !g.first_name) return;
+        var dbName = ((g.first_name || '') + ' ' + (g.last_name || '')).trim();
+        var dbSpouse = (g.spouse_name || '').trim();
+        var dbType = String(g.guest_type || '').toLowerCase();
+        var dbMax = parseInt(g.max_party, 10); if (isNaN(dbMax) || dbMax < 1) dbMax = 1;
+        var dbIsCouple = !isEasy && (dbType === 'couple' || !!dbSpouse) && dbMax > 1;
+        var needRerender = (dbIsCouple !== isCouple) || (!spouseName && dbSpouse) || (!guestName && dbName);
+        if (needRerender) {
+          isCouple = dbIsCouple; guestName = dbName || guestName; spouseName = dbSpouse || spouseName; guestType = dbType || guestType; max_party = dbMax;
+          if (isCouple) {
+            if (singleFields) singleFields.classList.add('hidden');
+            if (coupleFields) coupleFields.classList.remove('hidden');
+            if (coupleNote) coupleNote.classList.remove('hidden');
+            if (singleNote) singleNote.classList.add('hidden');
+            if (singleSub) singleSub.classList.add('hidden');
+          } else {
+            if (singleFields) singleFields.classList.remove('hidden');
+            if (coupleFields) coupleFields.classList.add('hidden');
+            if (coupleNote) coupleNote.classList.add('hidden');
+            if (singleNote) singleNote.classList.remove('hidden');
+            if (singleSub) singleSub.classList.remove('hidden');
+          }
+          var pA2 = splitName(guestName); var pB2 = splitName(spouseName);
+          var elA = document.getElementById('nameA'), elLA = document.getElementById('lastNameA'), elB = document.getElementById('nameB'), elLB = document.getElementById('lastNameB');
+          if (elA && !elA.value && pA2.first) elA.value = pA2.first;
+          if (elLA && !elLA.value && pA2.last) elLA.value = pA2.last;
+          if (elB && !elB.value && pB2.first) elB.value = pB2.first;
+          if (elLB && !elLB.value && pB2.last) elLB.value = pB2.last;
+          if (!isCouple) {
+            var sgn = document.getElementById('singleGuestName'); if (sgn && guestName) sgn.textContent = guestName;
+            var ni = document.getElementById('name'); if (ni && !ni.value) ni.value = guestName;
+            var ln2 = document.getElementById('lastName'); if (ln2 && !ln2.value) { var pp = splitName(guestName); ln2.value = pp.last; }
+          }
+          var greet2 = document.getElementById('greeting'); if (greet2 && guestName) { greet2.classList.remove('hidden'); var gs2 = greet2.querySelector('span'); if (gs2) gs2.textContent = guestName; }
+          try { if (dbName) params.set('name', dbName); if (dbSpouse) params.set('spouse', dbSpouse); if (dbType) params.set('type', dbType); params.set('max', String(dbMax)); var q2 = params.toString(); document.getElementById('backLink').href = 'index.html' + (q2 ? '?' + q2 : ''); document.getElementById('doneLink').href = 'index.html' + (q2 ? '?' + q2 : ''); document.getElementById('navHome').href = 'index.html' + (q2 ? '?' + q2 : ''); } catch (e) {}
+        } else {
+          var elB3 = document.getElementById('nameB'); if (elB3 && !elB3.value && dbSpouse) { var pB3 = splitName(dbSpouse); if (pB3.first) elB3.value = pB3.first; var elLB3 = document.getElementById('lastNameB'); if (elLB3 && !elLB3.value && pB3.last) elLB3.value = pB3.last; }
+        }
+      }).catch(function () {});
+  })();
 
   function updateTotals() {
     var line = document.getElementById('totalLine');

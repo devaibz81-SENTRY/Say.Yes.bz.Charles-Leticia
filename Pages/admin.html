@@ -1583,6 +1583,22 @@ Amelie	Guerra	Julian	couple	2	6140942"
         easy_mode: document.getElementById('m-easy').checked ? true : undefined
       };
 
+      // === Guard: never silently save a broken couple ===
+      if (payload.guest_type === 'couple' && !payload.spouse_name) {
+        if (!confirm('You are saving a COUPLE with empty Spouse/Partner name.\n\nGuest 2 will show as an empty optional field for the guest to fill (plus-one).\n\nIs this intentional?\n\nOK = Save as plus-one (empty Guest 2)\nCancel = Go back and enter the spouse name')) {
+          btn.textContent = originalText; btn.disabled = false; return;
+        }
+      }
+      if (payload.guest_type === 'couple' && payload.max_party !== 2) {
+        alert('Couples must have Max Party = 2. Auto-correcting.');
+        payload.max_party = 2; document.getElementById('m-max').value = '2';
+      }
+      if (payload.guest_type === 'single' && payload.max_party !== 1) {
+        alert('Singles must have Max Party = 1. Auto-correcting.');
+        payload.max_party = 1; document.getElementById('m-max').value = '1';
+      }
+      if (!payload.first_name) { alert('First Name is required.'); btn.textContent = originalText; btn.disabled = false; return; }
+
       fetch(`${CONVEX_HTTP_URL}/api/guest`, {
         method: 'POST',
         headers: authHeaders({ 'Content-Type': 'application/json' }),
@@ -1603,6 +1619,7 @@ Amelie	Guerra	Julian	couple	2	6140942"
     function generatePersonalLink(g) {
       const base = String(WEDDING_URL || '').replace(/\/+$/, '');
       if (!g || !g.first_name) return `${base}/`;
+      // Invite link — always to main invitation (/) — RSVP button there will route to single/couple from these params
       const p = new URLSearchParams({ id: g._id || g.id || '' });
       const displayName = `${g.first_name} ${g.last_name || ''}`.trim();
       if (displayName) p.set('name', displayName);
