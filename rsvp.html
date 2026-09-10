@@ -412,42 +412,10 @@ select:-webkit-autofill {
 </head>
 <body class="bg-background font-body-md text-on-background min-h-screen relative overflow-x-hidden">
 <script>
-// Router: single vs couple — keeps parallax perfect, routes to dedicated html
-(function(){
-  try {
-    var p = new URLSearchParams(location.search);
-    // Don't redirect if already on single/couple
-    if (location.pathname.replace(/\/+$/, '').endsWith('single') || location.pathname.replace(/\/+$/, '').endsWith('single.html') || location.pathname.replace(/\/+$/, '').endsWith('couple') || location.pathname.replace(/\/+$/, '').endsWith('couple.html')) return;
-    var max = parseInt(p.get('max') || p.get('max_party') || p.get('maxParty') || '', 10);
-    var isMaxOne = !isNaN(max) && max === 1;
-    var isCoupleParam = p.get('type') === 'couple' || !!p.get('spouse');
-    // If URL already tells us, route immediately (fast, no fetch)
-    if (isMaxOne) { var q=p.toString(); location.replace('single.html' + (q?'?'+q:'')); return; }
-    if (isCoupleParam) { var q2=p.toString(); location.replace('couple.html' + (q2?'?'+q2:'')); return; }
-    // Otherwise, try to fetch guest's max_party from Convex and route correctly
-    var gid = p.get('id');
-    if (gid && !gid.startsWith('guest_')) {
-      fetch('https://canny-hummingbird-920.convex.site/api/guest?guestId=' + encodeURIComponent(gid))
-        .then(function(r){ return r.json().catch(function(){return {};}); })
-        .then(function(g){
-          var mp = g && (g.max_party ?? g.maxParty ?? g.maxParty);
-          if (mp === 1) {
-            var q3=p.toString(); location.replace('single.html' + (q3?'?'+q3:''));
-          } else if (g && (g.guest_type==='couple' || g.spouse_name)) {
-            var q4=p.toString(); location.replace('couple.html' + (q4?'?'+q4:''));
-          } else {
-            // default single for Max=1 or unknown
-            var q5=p.toString(); location.replace('single.html' + (q5?'?'+q5:''));
-          }
-        })
-        .catch(function(){});
-    } else {
-      // no id or guest_ temp id — default to single (no Guest2)
-      var q6=p.toString();
-      // keep rsvp.html as fallback for direct access without params, but single is safer
-    }
-  } catch(e){}
-})();
+// Router disabled — rsvp.html now handles both single & couple modes inline.
+// Previously this redirected to single.html/couple.html which are 404 on Vercel (cleanUrls).
+// Keeping user on rsvp.html guarantees Guest2 prefill works regardless of Vercel routing.
+// Single/couple mode is decided bottom-side via isCouple + DB fallback fetch.
 </script>
 <!-- Dark cinematic couple photo background -->
 <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
