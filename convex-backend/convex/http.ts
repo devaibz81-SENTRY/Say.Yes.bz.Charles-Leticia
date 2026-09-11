@@ -26,7 +26,6 @@ http.route({ path: "/api/guest", method: "GET", handler: getGuestPublic });
 http.route({ path: "/api/guest", method: "OPTIONS", handler: getGuestPublic });
 
 http.route({ path: "/api/guest", method: "POST", handler: upsertGuest });
-http.route({ path: "/api/guest", method: "OPTIONS", handler: upsertGuest });
 
 http.route({ path: "/api/guest/delete", method: "POST", handler: deleteGuest });
 http.route({ path: "/api/guest/delete", method: "OPTIONS", handler: deleteGuest });
