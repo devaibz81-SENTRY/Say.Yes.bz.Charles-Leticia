@@ -412,10 +412,18 @@ select:-webkit-autofill {
 </head>
 <body class="bg-background font-body-md text-on-background min-h-screen relative overflow-x-hidden">
 <script>
-// Router disabled — rsvp.html now handles both single & couple modes inline.
-// Previously this redirected to single.html/couple.html which are 404 on Vercel (cleanUrls).
-// Keeping user on rsvp.html guarantees Guest2 prefill works regardless of Vercel routing.
-// Single/couple mode is decided bottom-side via isCouple + DB fallback fetch.
+// Dispatcher: decisive URL params route singles to single.html (NO Guest 2) and couples to couple.html.
+// Links without params (e.g. generic story RSVP buttons) stay on this universal fallback page.
+(function () {
+  try {
+    var p = new URLSearchParams(location.search || '');
+    var max = parseInt(p.get('max') || p.get('max_party') || p.get('maxParty') || '', 10);
+    var isSingle = (p.get('type') || '').toLowerCase() === 'single' || max === 1;
+    var isCouple = !!p.get('spouse') || (p.get('type') || '').toLowerCase() === 'couple' || (max > 1);
+    if (isSingle) { location.replace('single.html' + (location.search || '')); return; }
+    if (isCouple) { location.replace('couple.html' + (location.search || '')); return; }
+  } catch (e) {}
+})();
 </script>
 <!-- Dark cinematic couple photo background -->
 <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">

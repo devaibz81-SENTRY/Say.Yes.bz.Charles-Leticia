@@ -3618,14 +3618,18 @@ h2.font-headline-lg, h2.font-headline-xl, h3.font-headline-md { transform-origin
 })();
 </script>
 
-<!-- Guest params passthrough: invitation.html?name=Elvis&id=abc123 carries to rsvp.html -->
+<!-- Guest params passthrough: root link params decide the RSVP path — single.html for singles, couple.html for couples, rsvp.html fallback -->
 <script>
 (function () {
   var params = new URLSearchParams(window.location.search || '');
   if (params.toString()) {
     var query = '?' + params.toString();
+    var max = parseInt(params.get('max') || params.get('max_party') || params.get('maxParty') || '', 10);
+    var isSingle = params.get('type') === 'single' || max === 1;
+    var isCouple = !!params.get('spouse') || params.get('type') === 'couple' || (max > 1);
+    var target = isSingle ? 'single.html' : (isCouple ? 'couple.html' : 'rsvp.html');
     document.querySelectorAll('a[href="rsvp.html"]').forEach(function (link) {
-      link.href = 'rsvp.html' + query;
+      link.href = target + query;
     });
   }
 })();
