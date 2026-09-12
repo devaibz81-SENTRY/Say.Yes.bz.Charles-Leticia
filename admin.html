@@ -1640,11 +1640,17 @@ Amelie	Guerra	Julian	couple	2	6140942"
       const p = new URLSearchParams({ id: g._id || g.id || '' });
       const displayName = `${g.first_name} ${g.last_name || ''}`.trim();
       if (displayName) p.set('name', displayName);
-      if (g.spouse_name) p.set('spouse', String(g.spouse_name).trim());
       const max = parseInt(g.max_party, 10);
-      if (!Number.isNaN(max) && max > 0) p.set('max', String(max));
-      const type = String(g.guest_type || '').toLowerCase();
-      if (type) p.set('type', type);
+      const gType = String(g.guest_type || '').toLowerCase();
+      const isSingleLink = gType === 'single' || max === 1;
+      if (isSingleLink) {
+        p.set('max', '1');
+        p.set('type', 'single');
+      } else {
+        if (g.spouse_name) p.set('spouse', String(g.spouse_name).trim());
+        if (!Number.isNaN(max) && max > 0) p.set('max', String(max));
+        if (gType) p.set('type', gType);
+      }
       if (g.deadline) p.set('due', String(g.deadline).slice(0, 10));
       if (g.easy_mode) p.set('easy', '1');
       return `${base}/?${p.toString()}`;
