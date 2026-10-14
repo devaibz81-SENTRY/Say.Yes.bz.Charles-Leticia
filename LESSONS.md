@@ -120,14 +120,14 @@ The fix appeared "verified" with `document.body.innerText.indexOf('Guest 2')` �
 
 ---
 
-## 9. Countdown → Belize Central Standard Time (verified + updated 5 PM)
+## 9. Countdown → Belize Central Standard Time (verified + LOCKED at 4 PM — do not change)
 
 **Source (`index.html:1901`):**
 ```js
-var wedding = new Date('2026-12-31T17:00:00-06:00');
+var wedding = new Date('2026-12-31T16:00:00-06:00');
 ```
 
-- Target = **Dec 31, 2026, 5:00 PM Belize time** = `2026-12-31T23:00:00.000Z` (epoch `1798765200000`). Updated from 6:00 PM per the couple's 5 PM start; ceremony card is now 5 PM, cocktail 6 PM, reception 7 PM (`index.html:1330`, `1387`, `1395`, `1403`). Calendar links + ICS on rsvp/single/couple shifted DTSTART `20261231T230000Z` / DTEND `20270101T070000Z` and `Time: 5:00 PM`.
+- Target = **Dec 31, 2026, 4:00 PM Belize time** = `2026-12-31T22:00:00.000Z` (epoch `1798761600000`). LOCKED per the couple: ceremony 4 PM, cocktail 5 PM, reception 6 PM (`index.html:1330`, `1387`, `1395`, `1403`). Calendar links + ICS on rsvp/single/couple at DTSTART `20261231T220000Z` / DTEND `20270101T060000Z` and `Time: 4:00 PM`. Do NOT move this time again without the couple's explicit sign-off.
 - **Belize is UTC-6 (Central Standard Time) year-round — no DST,** so `-06:00` is correct for every day of the year.
 - The math is epoch-based (`wedding.getTime() - Date.now()`), so it is identical on every device/browser regardless of the viewer's timezone.
 - After the wedding moment, the countdown **flips to count-up** (`elapsed = Date.now() - wedding.getTime()`), label swaps to "Forever & a day" — it becomes "how long we've been married". No more "big night arrived" dead panel.
